@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using StackNucleus.DDD.Domain.EventHandlers;
 using StackNucleus.DDD.Domain.EventPublishers;
 using StackNucleus.DDD.Domain.Images;
+using StackNucleus.DDD.Domain.Images.Uploaders;
+using StackNucleus.DDD.Domain.ResultModels;
 using Wolverine;
 
 namespace Hiscary.Media.EventHandlers.IntegrationEvents;
@@ -23,51 +25,63 @@ public sealed class ImageUploadRequestedIntegrationEventHandler(
     {
         var file = integrationEvent.Content;
         var requesterId = integrationEvent.RequesterId;
-
-        var fileUrl = await UploadFileAndGetUrlAsync(requesterId, file);
+        var sizes = integrationEvent.Sizes;
 
         try
         {
-            if (string.IsNullOrWhiteSpace(fileUrl))
+            var result = await UploadFileAsync(requesterId, file, sizes);
+
+            if (!result.IsSuccess || !result.HasValue || result.Value is null)
+            {
+                await PublishFail(requesterId, result.Error ?? "Unexpected error occured.");
+                return;
+            }
+
+            if (result.Value.Images.All(_ => string.IsNullOrWhiteSpace(_.Url)))
             {
                 await PublishFail(requesterId, "Could not generate URL. No details can be provided.");
             }
             else
             {
-                await PublishSuccess(requesterId, fileUrl);
+                await PublishSuccess(requesterId, result.Value.Images);
             }
         }
-        catch (Exception exception)
+        catch (Exception ex)
         {
-            await PublishFail(requesterId, exception.Message);
+            _logger.LogError("Unexpected error occured while generating image url for {RequesterId}; Error: {Error}.", requesterId, ex.Message);
+            await PublishFail(requesterId, "Unexpected error occured.");
         }
     }
 
-    private async Task PublishSuccess(Guid requesterId, string fileUrl)
+    private async Task PublishSuccess(Guid requesterId, ImageUrlToSize[] fileUrls)
     {
-        await _publisher.Publish(new ImageUploadedIntegrationEvent(requesterId, fileUrl));
+        await _publisher.Publish(new ImageUploadedIntegrationEvent(requesterId, fileUrls));
     }
 
-    private Task PublishFail(Guid requesterId, string details)
+    private async Task PublishFail(Guid requesterId, string details)
     {
-        // TODO: publish event ImageUploadFailedDomainEvent with details
-        throw new NotImplementedException();
+        await _publisher.Publish(new ImageUploadFailedDomainEvent(requesterId, details));
     }
 
-    private async Task<string?> UploadFileAndGetUrlAsync(
+    private async Task<ValueOrNull<UploadImageResponse>> UploadFileAsync(
         Guid fileId,
         byte[] imagePreview,
+        ImageSize[] sizes,
         CancellationToken cancellationToken = default)
     {
         if (imagePreview is null || imagePreview.Length <= 0)
         {
-            return null;
+            return ValueOrNull<UploadImageResponse>.Failure("Empty information about an image was provided.");
         }
 
         return await _imageUploader.UploadImageAsync(
-            fileId,
-            imagePreview,
-            cancellationToken: cancellationToken
+            new UploadImageRequest
+            {
+                FileId = fileId,
+                ImageAsBytes = imagePreview,
+                Sizes = sizes
+            },
+            cancellationToken
         );
     }
 }

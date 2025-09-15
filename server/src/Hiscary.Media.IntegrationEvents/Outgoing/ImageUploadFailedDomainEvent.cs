@@ -1,13 +1,13 @@
 ﻿using StackNucleus.DDD.Domain.Events;
-using StackNucleus.DDD.Domain.Images.Uploaders;
 
 namespace Hiscary.Media.IntegrationEvents.Outgoing;
 
-public sealed class ImageUploadedIntegrationEvent(
+public sealed class ImageUploadFailedDomainEvent(
     Guid RequesterId,
-    ImageUrlToSize[] ImageUrls
+    string Error
     ) : BaseIntegrationEvent
 {
     public Guid RequesterId { get; set; } = RequesterId;
-    public ImageUrlToSize[] ImageUrls { get; set; } = ImageUrls;
+    // TODO: maybe error type smth too?
+    public string Error { get; set; } = Error;
 }
