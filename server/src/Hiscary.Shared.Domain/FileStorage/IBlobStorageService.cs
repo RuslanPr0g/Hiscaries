@@ -1,11 +1,19 @@
-﻿namespace Hiscary.Shared.Domain.FileStorage;
+﻿using StackNucleus.DDD.Domain.ResultModels;
+
+namespace Hiscary.Shared.Domain.FileStorage;
 
 public interface IBlobStorageService
 {
-    Task<string> UploadAsync(
+    Task<ValueOrNull<string>> UploadAsync(
         string containerName,
         string blobName,
         byte[] data,
+        string contentType = "application/octet-stream",
+        CancellationToken cancellationToken = default);
+
+    Task<ValueOrNull<FileNameToUrlDictionary>> UploadMultipleAsync(
+        string containerName,
+        List<FileWithData> files,
         string contentType = "application/octet-stream",
         CancellationToken cancellationToken = default);
 
