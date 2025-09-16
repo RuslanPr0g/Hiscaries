@@ -1,4 +1,4 @@
-﻿using StackNucleus.DDD.Domain.ResultModels;
+﻿using StackNucleus.DDD.Domain;
 
 namespace Hiscary.Shared.Domain.FileStorage;
 

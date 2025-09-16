@@ -1,4 +1,4 @@
-﻿using StackNucleus.DDD.Domain.Images.Uploaders;
+﻿using StackNucleus.DDD.Domain.Images;
 
 namespace Hiscary.Shared.Domain.ValueObjects;
 

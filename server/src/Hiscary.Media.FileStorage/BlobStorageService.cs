@@ -3,7 +3,7 @@ using Azure.Storage.Blobs.Models;
 using Hiscary.Shared.Domain.FileStorage;
 using Hiscary.Shared.Domain.Options;
 using Microsoft.Extensions.Logging;
-using StackNucleus.DDD.Domain.ResultModels;
+using StackNucleus.DDD.Domain;
 
 namespace Hiscary.Media.FileStorage;
 

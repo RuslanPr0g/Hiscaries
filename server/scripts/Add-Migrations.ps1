@@ -25,4 +25,4 @@ dotnet ef migrations add $migrationName `
     --startup-project $startupProject `
     --output-dir Migrations
 
-Write-Host "Migration '$migrationName' added successfully."
+Write-Host "Migration '$migrationName' finished."
