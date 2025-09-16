@@ -1,5 +1,6 @@
 ﻿using Hiscary.Media.IntegrationEvents.Outgoing;
 using Hiscary.PlatformUsers.Domain.DataAccess;
+using Hiscary.Shared.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using StackNucleus.DDD.Domain.EventHandlers;
 using Wolverine;
@@ -16,10 +17,10 @@ public sealed class ImageUploadedIntegrationEventHandler(
     public async Task Handle(
         ImageUploadedIntegrationEvent integrationEvent, IMessageContext context)
     {
-        var imageUrl = integrationEvent.ImageUrl;
+        var imageUrls = integrationEvent.ImageUrls;
         var libraryId = integrationEvent.RequesterId;
 
-        if (string.IsNullOrWhiteSpace(imageUrl))
+        if (imageUrls is null || imageUrls.Length == 0)
         {
             return;
         }
@@ -31,8 +32,10 @@ public sealed class ImageUploadedIntegrationEventHandler(
             return;
         }
 
-        user.UpdateAvatarUrl(libraryId, imageUrl);
+        user.UpdateAvatarUrl(libraryId, ImageContainer.FromImageUrlToSize(imageUrls));
 
         await _platformUserRepository.SaveChanges();
+
+        logger.LogInformation("{Handler} handled.", nameof(ImageUploadedIntegrationEventHandler));
     }
 }

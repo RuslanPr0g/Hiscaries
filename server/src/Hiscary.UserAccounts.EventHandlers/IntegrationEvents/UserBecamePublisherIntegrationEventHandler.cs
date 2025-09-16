@@ -1,7 +1,7 @@
-﻿using StackNucleus.DDD.Domain.EventHandlers;
-using Hiscary.PlatformUsers.IntegrationEvents.Outgoing;
+﻿using Hiscary.PlatformUsers.IntegrationEvents.Outgoing;
 using Hiscary.UserAccounts.Domain.DataAccess;
 using Microsoft.Extensions.Logging;
+using StackNucleus.DDD.Domain.EventHandlers;
 using Wolverine;
 
 namespace Hiscary.UserAccounts.EventHandlers.IntegrationEvents;
@@ -26,5 +26,7 @@ public sealed class UserBecamePublisherIntegrationEventHandler(
         user.BecomePublisher();
 
         await _repository.SaveChanges();
+
+        logger.LogInformation("{Handler} handled.", nameof(UserBecamePublisherIntegrationEventHandler));
     }
 }

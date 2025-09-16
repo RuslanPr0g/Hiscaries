@@ -1,4 +1,5 @@
-﻿using StackNucleus.DDD.Domain.ReadModels;
+﻿using Hiscary.Shared.Domain.ReadModels;
+using StackNucleus.DDD.Domain.ReadModels;
 
 namespace Hiscary.Notifications.Domain.ReadModels;
 
@@ -10,7 +11,7 @@ public class NotificationReadModel : IReadModel
     public bool IsRead { get; set; }
     public string Type { get; set; }
     public Guid? RelatedObjectId { get; set; }
-    public string? PreviewUrl { get; set; }
+    public ImageUrlsDto? ImageUrls { get; set; }
 
     public static NotificationReadModel FromDomainModel(Notification notification)
     {
@@ -22,7 +23,7 @@ public class NotificationReadModel : IReadModel
             IsRead = notification.IsRead,
             Type = notification.Type,
             RelatedObjectId = notification.RelatedObjectId,
-            PreviewUrl = notification.PreviewUrl
+            ImageUrls = ImageUrlsDto.FromDomainModel(notification.ImageUrls)
         };
     }
 }

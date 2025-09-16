@@ -1,7 +1,8 @@
-﻿using StackNucleus.DDD.Persistence.EF.Postgres.Extensions;
+﻿using Hiscary.Shared.Persistence.EF.Postgres;
 using Hiscary.Stories.Domain.Stories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using StackNucleus.DDD.Persistence.EF.Postgres.Extensions;
 
 namespace Hiscary.Stories.Persistence.Context.Configurations;
 
@@ -40,6 +41,11 @@ public class StoryConfigurations : IEntityTypeConfiguration<Story>
             .WithOne()
             .HasForeignKey(sr => sr.StoryId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Property(s => s.ImagePreviewUrl)
+            .HasColumnName("ImagePreviewUrl")
+            .HasColumnType("jsonb")
+            .HasImageContainerConversion();
 
         builder.Navigation(x => x.Genres).AutoInclude();
         builder.Navigation(x => x.Ratings).AutoInclude();

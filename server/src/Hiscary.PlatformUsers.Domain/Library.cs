@@ -1,4 +1,5 @@
-﻿using StackNucleus.DDD.Domain;
+﻿using Hiscary.Shared.Domain.ValueObjects;
+using StackNucleus.DDD.Domain;
 
 namespace Hiscary.PlatformUsers.Domain;
 
@@ -21,7 +22,7 @@ public sealed class Library : Entity<LibraryId>
     public PlatformUser PlatformUser { get; init; }
 
     public string? Bio { get; private set; }
-    public string? AvatarUrl { get; private set; }
+    public ImageContainer? AvatarImageUrls { get; private set; }
     public List<string> LinksToSocialMedia { get; private set; } = [];
 
     public int SubscribersCount { get; set; }
@@ -45,9 +46,9 @@ public sealed class Library : Entity<LibraryId>
         LinksToSocialMedia = linksToSocialMedia;
     }
 
-    public void UpdateAvatarUrl(string? avatarUrl)
+    public void UpdateAvatarUrl(ImageContainer? avatarUrls)
     {
-        AvatarUrl = avatarUrl;
+        AvatarImageUrls = avatarUrls;
     }
 
     private Library()

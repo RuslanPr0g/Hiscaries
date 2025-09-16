@@ -4,6 +4,7 @@ using Hiscary.PlatformUsers.Domain.DataAccess;
 using Hiscary.PlatformUsers.Domain.Services;
 using Hiscary.PlatformUsers.IntegrationEvents.Outgoing;
 using Hiscary.Shared.Domain.Constants;
+using Hiscary.Shared.Domain.Extensions;
 using Microsoft.Extensions.Logging;
 using StackNucleus.DDD.Domain.EventPublishers;
 using StackNucleus.DDD.Domain.Generators;
@@ -155,7 +156,7 @@ public sealed class PlatformUserWriteService(
         {
             await _publisher.Publish(
                 new ImageUploadRequestedIntegrationEvent(
-                    avatar, libraryId, "users"));
+                    avatar, libraryId, "users", ImageSizeExtensions.AllImageSizes()));
         }
 
         await _repository.SaveChanges();

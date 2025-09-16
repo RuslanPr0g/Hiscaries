@@ -1,6 +1,7 @@
 ﻿using Hiscary.Notifications.Domain;
 using Hiscary.Notifications.Domain.DataAccess;
 using Hiscary.PlatformUsers.IntegrationEvents.Outgoing;
+using Hiscary.Shared.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 using StackNucleus.DDD.Domain.EventHandlers;
 using StackNucleus.DDD.Domain.Generators;
@@ -34,12 +35,14 @@ public sealed class UserPublishedStoryIntegrationEventHandler(
                 // TODO: should be in consts
                 "StoryPublished",
                 integrationEvent.StoryId,
-                integrationEvent.PreviewUrl);
+                ImageContainer.FromImageUrlToSize(integrationEvent.ImageUrls));
             notifications.Add(notification);
         }
 
         await _repository.AddRange(notifications.ToArray());
 
         await _repository.SaveChanges();
+
+        logger.LogInformation("{Handler} handled.", nameof(UserPublishedStoryIntegrationEventHandler));
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Hiscary.Media.IntegrationEvents.Incoming;
 using Hiscary.Shared.Domain.Constants;
+using Hiscary.Shared.Domain.Extensions;
 using Hiscary.Stories.Domain.DataAccess;
 using Hiscary.Stories.Domain.Genres;
 using Hiscary.Stories.Domain.Stories;
@@ -172,7 +173,7 @@ public sealed class StoryWriteService(
             dateWritten);
 
         await _publisher.Publish(
-            new StoryPublishedIntegrationEvent(libraryId, storyId, title, null));
+            new StoryPublishedIntegrationEvent(libraryId, storyId, title, []));
 
         var imageIsEmpty = imagePreview is null || imagePreview.Length <= 0;
 
@@ -184,7 +185,7 @@ public sealed class StoryWriteService(
         if (shouldUpdateImage && !imageIsEmpty && imagePreview is not null)
         {
             await _publisher.Publish(
-                new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories"));
+                new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories", ImageSizeExtensions.AllImageSizes()));
         }
 
         await _repository.Add(story);
@@ -245,7 +246,7 @@ public sealed class StoryWriteService(
         if (shouldUpdateImage && !imageIsEmpty && imagePreview is not null)
         {
             await _publisher.Publish(
-                new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories"));
+                new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories", ImageSizeExtensions.AllImageSizes()));
         }
 
         if (contents is not null && contents.Any())

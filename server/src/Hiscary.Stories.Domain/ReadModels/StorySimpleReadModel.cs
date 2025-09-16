@@ -1,5 +1,6 @@
-﻿using StackNucleus.DDD.Domain.ReadModels;
+﻿using Hiscary.Shared.Domain.ReadModels;
 using Hiscary.Stories.Domain.Stories;
+using StackNucleus.DDD.Domain.ReadModels;
 
 namespace Hiscary.Stories.Domain.ReadModels;
 
@@ -10,7 +11,7 @@ public class StorySimpleReadModel : IReadModel
     public string Description { get; set; }
     public string AuthorName { get; set; }
     public int AgeLimit { get; set; }
-    public string? ImagePreviewUrl { get; protected set; }
+    public ImageUrlsDto? ImagePreviewUrl { get; set; }
     public DateTime DatePublished { get; set; }
     public DateTime DateWritten { get; set; }
     public Guid LibraryId { get; set; }
@@ -28,7 +29,7 @@ public class StorySimpleReadModel : IReadModel
             DatePublished = story.CreatedAt,
             DateWritten = story.DateWritten,
             LibraryId = story.LibraryId,
-            ImagePreviewUrl = story.ImagePreviewUrl,
+            ImagePreviewUrl = ImageUrlsDto.FromDomainModel(story.ImagePreviewUrl),
             TotalPages = story.TotalPages
         };
     }

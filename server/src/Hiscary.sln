@@ -130,6 +130,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hiscary.Shared.Jwt", "Hisca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hiscary.Shared.Api.Rest", "Hiscary.Shared.Api.Rest\Hiscary.Shared.Api.Rest.csproj", "{D2705092-2D76-47A5-A8DA-B2B355A37145}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hiscary.Shared.Persistence.EF.Postgres", "Hiscary.Shared.Persistence.EF.Postgres\Hiscary.Shared.Persistence.EF.Postgres.csproj", "{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -776,6 +778,18 @@ Global
 		{D2705092-2D76-47A5-A8DA-B2B355A37145}.Release|x64.Build.0 = Release|Any CPU
 		{D2705092-2D76-47A5-A8DA-B2B355A37145}.Release|x86.ActiveCfg = Release|Any CPU
 		{D2705092-2D76-47A5-A8DA-B2B355A37145}.Release|x86.Build.0 = Release|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Debug|x64.Build.0 = Debug|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Debug|x86.Build.0 = Debug|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Release|x64.ActiveCfg = Release|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Release|x64.Build.0 = Release|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Release|x86.ActiveCfg = Release|Any CPU
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -841,6 +855,7 @@ Global
 		{CC34A3B1-2A39-4AFF-90BD-7B9973563762} = {3C771BE2-C96E-4027-9615-D043040626AE}
 		{6965CC1C-910B-4C80-AE79-35E59BA3EE26} = {3C771BE2-C96E-4027-9615-D043040626AE}
 		{D2705092-2D76-47A5-A8DA-B2B355A37145} = {3C771BE2-C96E-4027-9615-D043040626AE}
+		{9FA9B2B3-3A0E-4268-A4EE-5FA9BCC27760} = {3C771BE2-C96E-4027-9615-D043040626AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16994D4B-7F71-40F8-90BD-7BF9D9A9EAE9}

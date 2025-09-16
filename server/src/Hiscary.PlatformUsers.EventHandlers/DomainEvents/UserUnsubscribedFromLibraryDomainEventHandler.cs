@@ -33,5 +33,7 @@ public sealed class UserUnsubscribedFromLibraryDomainEventHandler(
         library.UnsubscribeUser();
 
         await _repository.SaveChanges();
+
+        logger.LogInformation("{Handler} handled.", nameof(UserUnsubscribedFromLibraryDomainEventHandler));
     }
 }

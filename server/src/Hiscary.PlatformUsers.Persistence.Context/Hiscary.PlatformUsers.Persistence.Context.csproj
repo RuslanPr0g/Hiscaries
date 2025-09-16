@@ -9,5 +9,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hiscary.PlatformUsers.Domain\Hiscary.PlatformUsers.Domain.csproj" />
+    <ProjectReference Include="..\Hiscary.Shared.Persistence.EF.Postgres\Hiscary.Shared.Persistence.EF.Postgres.csproj" />
   </ItemGroup>
 </Project>

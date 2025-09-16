@@ -91,6 +91,6 @@ public sealed class ImageUploader(
 
     private static string BuildFileName(Guid fileId, string extension, ImageSize size)
     {
-        return $"{fileId}-{size}.{extension}";
+        return $"{fileId}-{size.ToString().ToLowerInvariant()}.{extension}";
     }
 }
