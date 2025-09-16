@@ -4,7 +4,7 @@
 
 namespace Hiscary.Stories.Persistence.Context.Migrations
 {
-    public partial class ChangeImagePreviewUrlToJsonb : Migration
+    public partial class AddAbilityToHandleMultipleImageUrls : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
