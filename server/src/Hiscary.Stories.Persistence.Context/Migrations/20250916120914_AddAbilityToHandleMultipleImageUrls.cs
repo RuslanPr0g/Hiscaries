@@ -4,12 +4,16 @@
 
 namespace Hiscary.Stories.Persistence.Context.Migrations
 {
-    /// <inheritdoc />
-    public partial class AddAbilityToHandleMultipleImageUrls : Migration
+    public partial class ChangeImagePreviewUrlToJsonb : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(@"
+                UPDATE ""stories"".""Stories""
+                SET ""ImagePreviewUrl"" = jsonb_build_object('large', ""ImagePreviewUrl"")
+                WHERE ""ImagePreviewUrl"" IS NOT NULL;
+            ");
+
             migrationBuilder.AlterColumn<string>(
                 name: "ImagePreviewUrl",
                 schema: "stories",
@@ -21,7 +25,6 @@ namespace Hiscary.Stories.Persistence.Context.Migrations
                 oldNullable: true);
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
@@ -33,6 +36,12 @@ namespace Hiscary.Stories.Persistence.Context.Migrations
                 oldClrType: typeof(string),
                 oldType: "jsonb",
                 oldNullable: true);
+
+            migrationBuilder.Sql(@"
+                UPDATE ""stories"".""Stories""
+                SET ""ImagePreviewUrl"" = ""ImagePreviewUrl""->>'large'
+                WHERE ""ImagePreviewUrl"" IS NOT NULL;
+            ");
         }
     }
 }
