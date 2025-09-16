@@ -8,6 +8,7 @@
     <PackageReference Include="StackNucleus.DDD.Persistence.EF.Postgres" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hiscary.Shared.Persistence.EF.Postgres\Hiscary.Shared.Persistence.EF.Postgres.csproj" />
     <ProjectReference Include="..\Hiscary.Stories.Domain\Hiscary.Stories.Domain.csproj" />
   </ItemGroup>
 </Project>

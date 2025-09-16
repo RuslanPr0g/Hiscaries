@@ -1,9 +1,9 @@
-﻿using StackNucleus.DDD.Domain.Generators;
-using StackNucleus.DDD.Domain.EventHandlers;
-using Hiscary.PlatformUsers.Domain;
+﻿using Hiscary.PlatformUsers.Domain;
 using Hiscary.PlatformUsers.Domain.DataAccess;
 using Hiscary.UserAccounts.IntegrationEvents.Outgoing;
 using Microsoft.Extensions.Logging;
+using StackNucleus.DDD.Domain.EventHandlers;
+using StackNucleus.DDD.Domain.Generators;
 using Wolverine;
 
 namespace Hiscary.PlatformUsers.EventHandlers.IntegrationEvents;
@@ -31,5 +31,7 @@ public sealed class UserAccountCreatedIntegrationEventHandler(
 
         await _repository.Add(platformUser);
         await _repository.SaveChanges();
+
+        logger.LogInformation("{Handler} handled.", nameof(UserAccountCreatedIntegrationEventHandler));
     }
 }

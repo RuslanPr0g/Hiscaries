@@ -1,9 +1,9 @@
-﻿using StackNucleus.DDD.Domain.EventPublishers;
-using StackNucleus.DDD.Domain.EventHandlers;
-using Hiscary.PlatformUsers.Domain.DataAccess;
+﻿using Hiscary.PlatformUsers.Domain.DataAccess;
 using Hiscary.PlatformUsers.IntegrationEvents.Outgoing;
 using Hiscary.Stories.IntegrationEvents.Outgoing;
 using Microsoft.Extensions.Logging;
+using StackNucleus.DDD.Domain.EventHandlers;
+using StackNucleus.DDD.Domain.EventPublishers;
 using Wolverine;
 
 namespace Hiscary.PlatformUsers.EventHandlers.IntegrationEvents;
@@ -27,8 +27,10 @@ public sealed class StoryPublishedIntegrationEventHandler(
             integrationEvent.LibraryId,
             integrationEvent.StoryId,
             integrationEvent.Title,
-            integrationEvent.PreviewUrl);
+            integrationEvent.ImageUrls);
 
         await _publisher.Publish(integrationEventForNotification);
+
+        logger.LogInformation("{Handler} handled.", nameof(StoryPublishedIntegrationEventHandler));
     }
 }

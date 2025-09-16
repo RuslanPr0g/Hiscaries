@@ -1,4 +1,5 @@
-﻿using Hiscary.Stories.Domain.Stories;
+﻿using Hiscary.Shared.Domain.ReadModels;
+using Hiscary.Stories.Domain.Stories;
 
 namespace Hiscary.Stories.Domain.ReadModels;
 
@@ -25,7 +26,7 @@ public sealed class StoryWithContentsReadModel : StorySimpleReadModel
             LibraryId = story.LibraryId,
             Genres = story.Genres?.Select(GenreReadModel.FromDomainModel) ?? [],
             Contents = story.Contents?.Select(StoryPageReadModel.FromDomainModel) ?? [],
-            ImagePreviewUrl = story.ImagePreviewUrl,
+            ImagePreviewUrl = ImageUrlsDto.FromDomainModel(story.ImagePreviewUrl),
             TotalPages = story.TotalPages
         };
     }

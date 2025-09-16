@@ -1,5 +1,6 @@
 ﻿using Hiscary.Media.IntegrationEvents.Outgoing;
 using Hiscary.Notifications.IntegrationEvents.Incoming;
+using Hiscary.Shared.Domain.ValueObjects;
 using Hiscary.Stories.Domain.DataAccess;
 using Microsoft.Extensions.Logging;
 using StackNucleus.DDD.Domain.EventHandlers;
@@ -20,10 +21,10 @@ public sealed class ImageUploadedIntegrationEventHandler(
     public async Task Handle(
         ImageUploadedIntegrationEvent integrationEvent, IMessageContext context)
     {
-        var imageUrl = integrationEvent.ImageUrl;
+        var imageUrls = integrationEvent.ImageUrls;
         var storyId = integrationEvent.RequesterId;
 
-        if (string.IsNullOrWhiteSpace(imageUrl))
+        if (imageUrls is null || imageUrls.Length == 0)
         {
             return;
         }
@@ -35,11 +36,13 @@ public sealed class ImageUploadedIntegrationEventHandler(
             return;
         }
 
-        story.UpdatePreviewUrl(imageUrl);
+        story.UpdatePreviewUrl(ImageContainer.FromImageUrlToSize(imageUrls));
 
         await _publisher.Publish(
-            new NotificationReferenceObjectIdPreviewChangedIntegrationEvent(storyId, imageUrl));
+            new NotificationReferenceObjectIdPreviewChangedIntegrationEvent(storyId, imageUrls));
 
         await _repository.SaveChanges();
+
+        logger.LogInformation("{Handler} handled.", nameof(ImageUploadedIntegrationEventHandler));
     }
 }

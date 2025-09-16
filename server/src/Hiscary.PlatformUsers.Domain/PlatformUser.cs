@@ -1,5 +1,6 @@
-﻿using StackNucleus.DDD.Domain;
-using Hiscary.PlatformUsers.DomainEvents;
+﻿using Hiscary.PlatformUsers.DomainEvents;
+using Hiscary.Shared.Domain.ValueObjects;
+using StackNucleus.DDD.Domain;
 
 namespace Hiscary.PlatformUsers.Domain;
 
@@ -141,13 +142,13 @@ public sealed class PlatformUser : AggregateRoot<PlatformUserId>
 
     public void UpdateAvatarUrl(
         LibraryId libraryId,
-        string? avatarUrl)
+        ImageContainer? avatarUrls)
     {
         var library = GetCurrentLibrary();
 
         if (library is not null && library.Id == libraryId)
         {
-            library.UpdateAvatarUrl(avatarUrl);
+            library.UpdateAvatarUrl(avatarUrls);
         }
     }
 

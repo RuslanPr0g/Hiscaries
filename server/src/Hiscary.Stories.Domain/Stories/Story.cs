@@ -1,5 +1,6 @@
-﻿using StackNucleus.DDD.Domain;
+﻿using Hiscary.Shared.Domain.ValueObjects;
 using Hiscary.Stories.Domain.Genres;
+using StackNucleus.DDD.Domain;
 
 namespace Hiscary.Stories.Domain.Stories;
 
@@ -57,12 +58,12 @@ public sealed class Story : AggregateRoot<StoryId>
     public int AgeLimit { get; private set; }
     public DateTime DateWritten { get; private set; }
 
-    public string? ImagePreviewUrl { get; private set; }
+    public ImageContainer? ImagePreviewUrl { get; private set; }
 
     public int TotalPages => Contents.Count;
 
     public void UpdatePreviewUrl(
-        string? previewUrl)
+        ImageContainer? previewUrl)
     {
         ImagePreviewUrl = previewUrl;
     }

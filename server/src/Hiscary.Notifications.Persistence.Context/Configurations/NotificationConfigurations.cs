@@ -1,7 +1,8 @@
-﻿using StackNucleus.DDD.Persistence.EF.Postgres.Extensions;
-using Hiscary.Notifications.Domain;
+﻿using Hiscary.Notifications.Domain;
+using Hiscary.Shared.Persistence.EF.Postgres;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using StackNucleus.DDD.Persistence.EF.Postgres.Extensions;
 
 namespace Hiscary.Notifications.Persistence.Context.Configurations;
 
@@ -16,6 +17,10 @@ public class NotificationConfigurations : IEntityTypeConfiguration<Notification>
         builder.Property(c => c.Message).IsRequired();
         builder.Property(c => c.IsRead).IsRequired();
         builder.Property(c => c.RelatedObjectId);
-        builder.Property(c => c.PreviewUrl);
+
+        builder.Property(s => s.ImageUrls)
+            .HasColumnName("ImageUrls")
+            .HasColumnType("jsonb")
+            .HasImageContainerConversion();
     }
 }

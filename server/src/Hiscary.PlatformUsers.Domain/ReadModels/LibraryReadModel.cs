@@ -1,4 +1,6 @@
-﻿namespace Hiscary.PlatformUsers.Domain.ReadModels;
+﻿using Hiscary.Shared.Domain.ReadModels;
+
+namespace Hiscary.PlatformUsers.Domain.ReadModels;
 
 public class LibraryReadModel
 {
@@ -6,7 +8,7 @@ public class LibraryReadModel
 
     public Guid Id { get; set; }
     public string? Bio { get; set; }
-    public string? AvatarUrl { get; set; }
+    public ImageUrlsDto? AvatarImageUrls { get; set; }
     public List<string> LinksToSocialMedia { get; set; } = [];
 
     public bool IsLibraryOwner { get; set; }
@@ -20,7 +22,7 @@ public class LibraryReadModel
             PlatformUser = PlatformUserReadModel.FromDomainModel(library.PlatformUser),
             Id = library.Id,
             Bio = library.Bio,
-            AvatarUrl = library.AvatarUrl,
+            AvatarImageUrls = ImageUrlsDto.FromDomainModel(library.AvatarImageUrls),
             LinksToSocialMedia = library.LinksToSocialMedia,
             IsLibraryOwner = library.PlatformUser.UserAccountId == requesterId,
             IsSubscribed = isUserSubscribed,

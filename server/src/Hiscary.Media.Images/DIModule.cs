@@ -1,6 +1,6 @@
 ﻿using Hiscary.Media.Images.Uploaders;
 using Microsoft.Extensions.DependencyInjection;
-using StackNucleus.DDD.Domain.Images;
+using StackNucleus.DDD.Domain.Images.Uploaders;
 
 namespace Hiscary.Media.Images;
 

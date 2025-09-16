@@ -3,6 +3,8 @@ Set-Location ../src
 dotnet workload update
 dotnet workload restore
 
+dotnet tool install --global dotnet-ef
+
 $projectPath = "Hiscary.AppHost/Hiscary.AppHost.csproj"
 dotnet user-secrets init --project $projectPath
 

@@ -1,7 +1,7 @@
-﻿using StackNucleus.DDD.Domain.EventHandlers;
-using Hiscary.PlatformUsers.Domain.DataAccess;
+﻿using Hiscary.PlatformUsers.Domain.DataAccess;
 using Hiscary.PlatformUsers.DomainEvents;
 using Microsoft.Extensions.Logging;
+using StackNucleus.DDD.Domain.EventHandlers;
 using Wolverine;
 
 namespace Hiscary.PlatformUsers.EventHandlers.DomainEvents;
@@ -33,5 +33,7 @@ public sealed class UserSubscribedToLibraryDomainEventHandler(
         library.SubscribeUser();
 
         await _repository.SaveChanges();
+
+        logger.LogInformation("{Handler} handled.", nameof(UserSubscribedToLibraryDomainEventHandler));
     }
 }

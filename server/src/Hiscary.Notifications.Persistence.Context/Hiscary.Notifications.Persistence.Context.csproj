@@ -17,5 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hiscary.Notifications.Domain\Hiscary.Notifications.Domain.csproj" />
+    <ProjectReference Include="..\Hiscary.Shared.Persistence.EF.Postgres\Hiscary.Shared.Persistence.EF.Postgres.csproj" />
   </ItemGroup>
 </Project>

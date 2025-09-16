@@ -9,5 +9,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hiscary.PlatformUsers.DomainEvents\Hiscary.PlatformUsers.DomainEvents.csproj" />
+    <ProjectReference Include="..\Hiscary.Shared.Domain\Hiscary.Shared.Domain.csproj" />
   </ItemGroup>
 </Project>

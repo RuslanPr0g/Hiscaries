@@ -1,11 +1,12 @@
 ﻿using StackNucleus.DDD.Domain.Events;
+using StackNucleus.DDD.Domain.Images.Uploaders;
 
 namespace Hiscary.Notifications.IntegrationEvents.Incoming;
 
 public sealed class NotificationReferenceObjectIdPreviewChangedIntegrationEvent(
     Guid ObjectReferenceId,
-    string? PreviewUrl) : BaseIntegrationEvent
+    ImageUrlToSize[] ImageUrls) : BaseIntegrationEvent
 {
     public Guid ObjectReferenceId { get; set; } = ObjectReferenceId;
-    public string? PreviewUrl { get; set; } = PreviewUrl;
+    public ImageUrlToSize[] ImageUrls { get; set; } = ImageUrls;
 }

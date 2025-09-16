@@ -1,5 +1,6 @@
-﻿using StackNucleus.DDD.Domain;
-using Hiscary.Notifications.DomainEvents;
+﻿using Hiscary.Notifications.DomainEvents;
+using Hiscary.Shared.Domain.ValueObjects;
+using StackNucleus.DDD.Domain;
 
 namespace Hiscary.Notifications.Domain;
 
@@ -11,13 +12,13 @@ public sealed class Notification : AggregateRoot<NotificationId>
         string message,
         string type,
         Guid? refId = null,
-        string? previewUrl = null) : base(id)
+        ImageContainer? imageUrls = null) : base(id)
     {
         UserId = userId;
         Message = message;
         Type = type;
         RelatedObjectId = refId;
-        PreviewUrl = previewUrl;
+        ImageUrls = imageUrls;
 
         IsRead = false;
 
@@ -30,7 +31,7 @@ public sealed class Notification : AggregateRoot<NotificationId>
         string message,
         string type,
         Guid objectReferenceId,
-        string? previewUrl)
+        ImageContainer? imageUrls = null)
     {
         return new Notification(
             id,
@@ -38,7 +39,7 @@ public sealed class Notification : AggregateRoot<NotificationId>
             message,
             type,
             objectReferenceId,
-            previewUrl);
+            imageUrls);
     }
 
     public Guid UserId { get; }
@@ -46,7 +47,13 @@ public sealed class Notification : AggregateRoot<NotificationId>
     public bool IsRead { get; private set; }
     public string Type { get; }
     public Guid? RelatedObjectId { get; }
-    public string? PreviewUrl { get; private set; }
+
+    public ImageContainer? ImageUrls { get; private set; }
+
+    public void UpdateImageUrls(ImageContainer container)
+    {
+        ImageUrls = container;
+    }
 
     public void Read()
     {
@@ -56,11 +63,6 @@ public sealed class Notification : AggregateRoot<NotificationId>
     private void PublishNotificationCreatedEvent()
     {
         PublishEvent(new NotificationCreatedDomainEvent(Id, UserId, Type, Message));
-    }
-
-    public void UpdatePreviewUrl(string? previewUrl)
-    {
-        PreviewUrl = previewUrl;
     }
 
     private Notification()
