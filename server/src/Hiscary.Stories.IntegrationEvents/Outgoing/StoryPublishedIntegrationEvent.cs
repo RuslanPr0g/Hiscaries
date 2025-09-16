@@ -1,5 +1,5 @@
 ﻿using StackNucleus.DDD.Domain.Events;
-using StackNucleus.DDD.Domain.Images.Uploaders;
+using StackNucleus.DDD.Domain.Images;
 
 namespace Hiscary.Stories.IntegrationEvents.Outgoing;
 

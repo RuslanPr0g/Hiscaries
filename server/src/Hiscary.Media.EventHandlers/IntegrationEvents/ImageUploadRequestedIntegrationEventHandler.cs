@@ -1,11 +1,11 @@
 ﻿using Hiscary.Media.IntegrationEvents.Incoming;
 using Hiscary.Media.IntegrationEvents.Outgoing;
 using Microsoft.Extensions.Logging;
+using StackNucleus.DDD.Domain;
 using StackNucleus.DDD.Domain.EventHandlers;
 using StackNucleus.DDD.Domain.EventPublishers;
 using StackNucleus.DDD.Domain.Images;
 using StackNucleus.DDD.Domain.Images.Uploaders;
-using StackNucleus.DDD.Domain.ResultModels;
 using Wolverine;
 
 namespace Hiscary.Media.EventHandlers.IntegrationEvents;
