@@ -19,7 +19,7 @@ export class UploadFileControlComponent {
 
   requiredErrorMessage = 'Image is required.';
 
-  maxFileSize = 10 * 1024 * 1024; // 10 MB
+  maxFileSize = 5 * 1024 * 1024; // 10 MB
 
   get hasImageSelected(): boolean {
     return !!this.control?.value;

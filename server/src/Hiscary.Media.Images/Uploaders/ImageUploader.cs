@@ -41,9 +41,9 @@ public sealed class ImageUploader(
         {
             CompressionSettings settings = size switch
             {
-                ImageSize.Small => new CompressionSettings { MaxWidth = 320, FormatWidth = 16, FormatHeight = 9 },
-                ImageSize.Medium => new CompressionSettings { MaxWidth = 720, FormatWidth = 16, FormatHeight = 9 },
-                ImageSize.Large => new CompressionSettings { MaxWidth = 1080, FormatWidth = 16, FormatHeight = 9 },
+                ImageSize.Small => new CompressionSettings { MaxWidth = 640, FormatWidth = 16, FormatHeight = 9 },
+                ImageSize.Medium => new CompressionSettings { MaxWidth = 1080, FormatWidth = 16, FormatHeight = 9 },
+                ImageSize.Large => new CompressionSettings { MaxWidth = 2048, FormatWidth = 16, FormatHeight = 9 },
                 _ => request.CompressionSettings ?? CompressionSettings.Default
             };
 
