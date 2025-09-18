@@ -8,6 +8,23 @@ namespace Hiscary.Notifications.Persistence.Context.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(@"
+                ALTER TABLE ""notifications"".""Notifications"" 
+                ADD COLUMN ""ImageUrls_Temp"" jsonb DEFAULT '{}'::jsonb;
+
+                UPDATE ""notifications"".""Notifications""
+                SET ""ImageUrls_Temp"" = jsonb_build_object('large', ""PreviewUrl"")
+                WHERE ""PreviewUrl"" IS NOT NULL;
+
+                UPDATE ""notifications"".""Notifications""
+                SET ""PreviewUrl"" = NULL;
+            ");
+
+            migrationBuilder.DropColumn(
+                name: "PreviewUrl",
+                schema: "notifications",
+                table: "Notifications");
+
             migrationBuilder.AddColumn<string>(
                 name: "ImageUrls",
                 schema: "notifications",
@@ -18,14 +35,11 @@ namespace Hiscary.Notifications.Persistence.Context.Migrations
 
             migrationBuilder.Sql(@"
                 UPDATE ""notifications"".""Notifications""
-                SET ""ImageUrls"" = jsonb_build_object('large', ""PreviewUrl"")
-                WHERE ""PreviewUrl"" IS NOT NULL;
-            ");
+                SET ""ImageUrls"" = ""ImageUrls_Temp"";
 
-            migrationBuilder.DropColumn(
-                name: "PreviewUrl",
-                schema: "notifications",
-                table: "Notifications");
+                ALTER TABLE ""notifications"".""Notifications"" 
+                DROP COLUMN ""ImageUrls_Temp"";
+            ");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
