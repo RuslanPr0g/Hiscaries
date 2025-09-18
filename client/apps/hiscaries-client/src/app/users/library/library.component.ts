@@ -8,6 +8,7 @@ import { LibraryGeneralViewComponent } from './library-general-view/library-gene
 import { LibraryGeneralEditComponent } from './library-general-edit/library-general-edit.component';
 import { QueryableModel } from '@shared/models/queryable.model';
 import { QueriedModel } from '@shared/models/queried.model';
+import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
 
 @Component({
   selector: 'app-library',
@@ -33,7 +34,7 @@ export class LibraryComponent {
 
   @Input() isSubscribeLoading = false;
 
-  @Output() libraryEdited = new EventEmitter<LibraryModel>();
+  @Output() libraryEdited = new EventEmitter<ModifyLibraryModel>();
 
   @Output() subscribed = new EventEmitter<void>();
   @Output() unSubscribed = new EventEmitter<void>();
@@ -48,7 +49,7 @@ export class LibraryComponent {
     this.isEditMode = false;
   }
 
-  saveEdit(model: LibraryModel): void {
+  saveEdit(model: ModifyLibraryModel): void {
     this.libraryEdited?.emit(model);
     this.isEditMode = false;
   }

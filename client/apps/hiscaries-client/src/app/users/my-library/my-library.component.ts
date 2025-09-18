@@ -11,6 +11,7 @@ import { LibraryModel } from '@users/models/domain/library.model';
 import { CommonModule } from '@angular/common';
 import { emptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { StoryModel } from '@stories/models/domain/story-model';
+import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
 
 @Component({
   selector: 'app-my-library',
@@ -109,7 +110,7 @@ export class MyLibraryComponent implements AfterViewInit {
       });
   }
 
-  editLibrary(model: LibraryModel) {
+  editLibrary(model: ModifyLibraryModel) {
     const shouldUpdateAvatar = !model.AvatarUrl || model.AvatarUrl.startsWith('data');
     this.userService
       .editLibrary({

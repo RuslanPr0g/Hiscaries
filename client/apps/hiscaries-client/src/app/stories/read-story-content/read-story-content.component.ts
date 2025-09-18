@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StoryModelWithContents } from '@stories/models/domain/story-model';
+import { ReadStoryContentModel, StoryModelWithContents } from '@stories/models/domain/story-model';
 import { CommonModule } from '@angular/common';
 import { take } from 'rxjs';
 import { convertToBase64 } from '@shared/helpers/image.helper';
@@ -22,7 +22,7 @@ export class ReadStoryContentComponent implements OnInit {
   storyId: string | null = null;
 
   globalError: string | null = null;
-  story: StoryModelWithContents | null = null;
+  story: ReadStoryContentModel | null = null;
   storyNotFound = false;
 
   maximized = false;
@@ -54,9 +54,11 @@ export class ReadStoryContentComponent implements OnInit {
             return;
           }
 
+          const imageUrl = story.ImagePreviewUrl?.Large ?? story.ImagePreviewUrl?.Medium ?? story.ImagePreviewUrl?.Small;
+
           this.story = {
             ...story,
-            ImagePreviewUrl: convertToBase64(story.ImagePreviewUrl),
+            ImagePreviewUrl: imageUrl ? convertToBase64(imageUrl) : undefined,
           };
 
           if (story.LastPageRead) {
@@ -95,10 +97,6 @@ export class ReadStoryContentComponent implements OnInit {
 
   get currentIndex(): number {
     return this.iterator.currentIndex;
-  }
-
-  get base64Image(): string | undefined {
-    return this.story?.ImagePreviewUrl;
   }
 
   get contents(): string[] {

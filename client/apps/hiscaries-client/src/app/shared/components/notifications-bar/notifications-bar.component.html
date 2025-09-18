@@ -16,7 +16,7 @@
         <p class="notification-message">{{ notification.Message }}</p>
         <img
           *ngIf="notification.ImageUrls"
-          [src]="notification.ImageUrls"
+          [src]="notification.ImageUrls | fallbackImage"
           alt="{{ notification.Message }}"
           class="notification-image"
           onerror="this.style.display='none'"

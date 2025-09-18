@@ -7,11 +7,12 @@ import { takeUntil } from 'rxjs';
 import { UserNotificationTypes } from '../../constants/notification-type.const';
 import { NavigationConst } from '../../constants/navigation.const';
 import { Router } from '@angular/router';
+import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 
 @Component({
   selector: 'app-notifications-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FallbackImagePipe],
   templateUrl: './notifications-bar.component.html',
   styleUrls: ['./notifications-bar.component.scss'],
   providers: [DestroyService],

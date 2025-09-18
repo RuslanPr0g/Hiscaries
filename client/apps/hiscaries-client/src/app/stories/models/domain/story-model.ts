@@ -28,3 +28,10 @@ export interface StoryPageModel {
   Page: number;
   Content: string;
 }
+
+export interface ReadStoryContentModel {
+  Title: string;
+  ImagePreviewUrl?: string;
+  Contents: StoryPageModel[];
+  LastPageRead: number;
+}

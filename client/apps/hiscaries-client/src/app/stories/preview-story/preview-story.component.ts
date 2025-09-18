@@ -55,7 +55,7 @@ export class PreviewStoryComponent implements OnInit {
   }
 
   get backgroundImageUrl(): string | undefined {
-    return this.story?.ImagePreviewUrl;
+    return this.story?.ImagePreviewUrl?.Large ?? this.story?.ImagePreviewUrl?.Medium ?? this.story?.ImagePreviewUrl?.Small;
   }
 
   get isEditable(): boolean {
