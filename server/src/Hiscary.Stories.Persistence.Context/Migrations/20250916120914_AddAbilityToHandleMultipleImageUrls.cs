@@ -8,12 +8,6 @@ namespace Hiscary.Stories.Persistence.Context.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"
-                UPDATE ""stories"".""Stories""
-                SET ""ImagePreviewUrl"" = jsonb_build_object('large', ""ImagePreviewUrl"")
-                WHERE ""ImagePreviewUrl"" IS NOT NULL;
-            ");
-
             migrationBuilder.AlterColumn<string>(
                 name: "ImagePreviewUrl",
                 schema: "stories",
@@ -23,6 +17,12 @@ namespace Hiscary.Stories.Persistence.Context.Migrations
                 oldClrType: typeof(string),
                 oldType: "text",
                 oldNullable: true);
+
+            migrationBuilder.Sql(@"
+                UPDATE ""stories"".""Stories""
+                SET ""ImagePreviewUrl"" = jsonb_build_object('large', ""ImagePreviewUrl"")
+                WHERE ""ImagePreviewUrl"" IS NOT NULL;
+            ");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
