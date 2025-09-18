@@ -15,8 +15,8 @@
       <div class="notification-content">
         <p class="notification-message">{{ notification.Message }}</p>
         <img
-          *ngIf="notification.PreviewUrl"
-          [src]="notification.PreviewUrl"
+          *ngIf="notification.ImageUrls"
+          [src]="notification.ImageUrls"
           alt="{{ notification.Message }}"
           class="notification-image"
           onerror="this.style.display='none'"

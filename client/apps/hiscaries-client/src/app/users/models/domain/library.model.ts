@@ -1,10 +1,11 @@
-import { UserModel } from './user.model';
+import { ImageUrlSizes } from '@shared/models/image-url-sizes.model';
+import { UserModel } from '@users/models/domain/user.model';
 
 export interface LibraryModel {
   PlatformUser: UserModel;
   Id: string;
   Bio: string;
-  AvatarUrl: string;
+  AvatarImageUrls: ImageUrlSizes;
   LinksToSocialMedia: string[];
 
   IsLibraryOwner: boolean;
