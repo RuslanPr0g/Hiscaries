@@ -29,235 +29,235 @@ $background-gradient-end: #645044;
 *,
 ::after,
 ::before {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    background-image: linear-gradient(to top, $background-gradient-start, $background-gradient-end);
-    background-size: 100% 100%;
-    color: #fff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    letter-spacing: 0.05em;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
+  background-image: linear-gradient(to top, $background-gradient-start, $background-gradient-end);
+  background-size: 100% 100%;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
 body.story-background-overlay::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.9) 0%,
-        rgba(0, 0, 0, 0.6) 30%,
-        rgba(0, 0, 0, 0.4) 50%,
-        rgba(0, 0, 0, 0.6) 70%,
-        rgba(0, 0, 0, 0.9) 100%
-    );
-    pointer-events: none;
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.6) 30%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.6) 70%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  pointer-events: none;
 }
 
 .center {
-    width: 100%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .link {
-    background: none !important;
-    border: none;
-    padding: 0 !important;
-    font-family: arial, sans-serif;
-    color: #c9a27d;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 1rem;
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  font-family: arial, sans-serif;
+  color: #c9a27d;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
 .text-main {
-    color: #c9a27d;
+  color: #c9a27d;
 }
 
 .main-title {
-    align-self: flex-start;
-    margin-top: 6px !important;
+  align-self: flex-start;
+  margin-top: 6px !important;
 }
 
 .fs-3rem {
-    font-size: 3rem;
+  font-size: 3rem;
 }
 
 .fs-2rem {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .fs-1rem {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .error-message {
-    color: red;
+  color: red;
 }
 
 .overlay {
-    position: absolute !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1 !important;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1 !important;
 }
 
 .background-image-configuration {
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-size: cover;
-    transition: all 0.5s ease;
-    transition: background-image 0.5s ease;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  transition: all 0.5s ease;
+  transition: background-image 0.5s ease;
 }
 
 .error,
 .error-message {
-    margin-top: 1rem;
-    color: #ff6b6b;
-    background-color: rgba(255, 0, 0, 0.05);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    text-align: center;
+  margin-top: 1rem;
+  color: #ff6b6b;
+  background-color: rgba(255, 0, 0, 0.05);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-align: center;
 }
 
 .w-full {
-    width: 100%;
+  width: 100%;
 }
 
 .container {
-    position: relative;
-    z-index: 1;
+  position: relative;
+  z-index: 1;
 
-    min-height: 100vh;
-    padding: 2rem 1rem;
-    margin: 0 auto;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  margin: 0 auto;
 
-    width: 100%;
-    max-width: 1280px;
-    box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+  box-sizing: border-box;
 }
 
 .background-decor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -5;
+  transition: all 2s;
+
+  .shape {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    z-index: -5;
-    transition: all 2s;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.3;
+    mix-blend-mode: lighten;
 
-    .shape {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        opacity: 0.3;
-        mix-blend-mode: lighten;
-
-        &.shape-1 {
-            width: 300px;
-            height: 300px;
-            background: $accent-color;
-            top: -100px;
-            left: -100px;
-        }
-
-        &.shape-2 {
-            width: 400px;
-            height: 400px;
-            background: $secondary-color;
-            bottom: -150px;
-            right: -150px;
-        }
-
-        &.shape-3 {
-            width: 200px;
-            height: 200px;
-            background: $primary-color;
-            top: 50%;
-            left: 60%;
-            transform: translate(-50%, -50%);
-        }
+    &.shape-1 {
+      width: 300px;
+      height: 300px;
+      background: $accent-color;
+      top: -100px;
+      left: -100px;
     }
+
+    &.shape-2 {
+      width: 400px;
+      height: 400px;
+      background: $secondary-color;
+      bottom: -150px;
+      right: -150px;
+    }
+
+    &.shape-3 {
+      width: 200px;
+      height: 200px;
+      background: $primary-color;
+      top: 50%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }
 
 // *** PRIME NG OVERRIDE ***
 
 .p-card {
-    background: none;
-    border: none;
-    box-shadow: none;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
 .w-full {
-    .p-button,
-    .p-password,
-    .p-password-input {
-        width: 100%;
-    }
+  .p-button,
+  .p-password,
+  .p-password-input {
+    width: 100%;
+  }
 }
 
 .p-password {
+  width: 100%;
+
+  .p-password-input {
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: none;
+    background: $input-bg;
+    color: $text-color;
+    font-size: 1rem;
     width: 100%;
 
-    .p-password-input {
-        padding: 0.75rem 1rem;
-        border-radius: 12px;
-        border: none;
-        background: $input-bg;
-        color: $text-color;
-        font-size: 1rem;
-        width: 100%;
-
-        &::placeholder {
-            color: $placeholder-color;
-        }
-
-        &:focus {
-            outline: 2px solid $primary-color;
-            background: $input-focus-bg;
-        }
+    &::placeholder {
+      color: $placeholder-color;
     }
+
+    &:focus {
+      outline: 2px solid $primary-color;
+      background: $input-focus-bg;
+    }
+  }
 }
 
 .p-link {
-    background: $accent-color;
+  background: $accent-color;
 }
 
 .p-highlight {
-    background: $secondary-color !important;
+  background: $secondary-color !important;
 }
 
 .p-button {
-    background: $secondary-color;
-    backdrop-filter: blur(6px);
-    border: 1px solid lighten($glass-border, 20%);
-    color: $text-color;
-    font-weight: 600;
-    border-radius: 12px;
-    padding: 0.75rem 1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+  background: $secondary-color;
+  backdrop-filter: blur(6px);
+  border: 1px solid lighten($glass-border, 20%);
+  color: $text-color;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 
-    &:hover {
-        border-color: $accent-color;
-        box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
-    }
+  &:hover {
+    border-color: $accent-color;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+  }
 
-    &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 .p-inputtext,
@@ -267,108 +267,108 @@ body.story-background-overlay::before {
 .p-spinner,
 .p-message,
 .p-button {
-    border: 1px solid $glass-border;
-    color: $text-color;
-    border-radius: 10px;
+  border: 1px solid $glass-border;
+  color: $text-color;
+  border-radius: 10px;
+  background-color: $input-focus-bg;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+
+  &:hover,
+  &:focus {
     background-color: $input-focus-bg;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
+    border-color: $accent-color;
+  }
 
-    &:hover,
-    &:focus {
-        background-color: $input-focus-bg;
-        border-color: $accent-color;
-    }
-
-    &::placeholder {
-        color: $placeholder-color;
-    }
+  &::placeholder {
+    color: $placeholder-color;
+  }
 }
 
 .p-button {
-    background-color: $primary-color;
-    border: none;
-    color: #1e1e1e;
-    font-weight: 600;
+  background-color: $primary-color;
+  border: none;
+  color: #1e1e1e;
+  font-weight: 600;
 
-    &:hover {
-        background-color: $accent-color;
-        color: #000;
-    }
+  &:hover {
+    background-color: $accent-color;
+    color: #000;
+  }
 }
 
 .p-progress-spinner-circle {
-    stroke: $primary-color;
+  stroke: $primary-color;
 }
 
 .p-message-error {
-    background: rgba(255, 0, 0, 0.1);
-    border: 1px solid red;
-    color: $text-color;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid red;
+  color: $text-color;
 }
 
 .p-divider {
-    border-top-color: $glass-border;
+  border-top-color: $glass-border;
 }
 
 .p-tabview {
+  background: transparent;
+  border: none;
+
+  .p-tabview-nav {
+    background: $glass-bg;
+    border-radius: 16px;
+    padding: 0.5rem;
+    border: 1px solid $glass-border;
+    backdrop-filter: blur(10px);
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+
+    .p-tabview-nav-link {
+      color: $text-color;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      background: transparent;
+      border: none;
+
+      &:hover {
+        background-color: $input-focus-bg;
+        color: $hover-color;
+        border: none;
+      }
+    }
+
+    .p-highlight {
+      background-color: $primary-color;
+      color: #1e1e1e !important;
+      font-weight: bold;
+      box-shadow: 0 0 0 2px $accent-color;
+    }
+  }
+
+  .p-tabview-panels {
     background: transparent;
+    padding: 2rem 0 0 0;
     border: none;
 
-    .p-tabview-nav {
-        background: $glass-bg;
-        border-radius: 16px;
-        padding: 0.5rem;
-        border: 1px solid $glass-border;
-        backdrop-filter: blur(10px);
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-
-        .p-tabview-nav-link {
-            color: $text-color;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            background: transparent;
-            border: none;
-
-            &:hover {
-                background-color: $input-focus-bg;
-                color: $hover-color;
-                border: none;
-            }
-        }
-
-        .p-highlight {
-            background-color: $primary-color;
-            color: #1e1e1e !important;
-            font-weight: bold;
-            box-shadow: 0 0 0 2px $accent-color;
-        }
+    .p-tabview-panel {
+      animation: fadeIn 0.3s ease-in-out;
+      color: $text-color;
+      background: transparent;
     }
-
-    .p-tabview-panels {
-        background: transparent;
-        padding: 2rem 0 0 0;
-        border: none;
-
-        .p-tabview-panel {
-            animation: fadeIn 0.3s ease-in-out;
-            color: $text-color;
-            background: transparent;
-        }
-    }
+  }
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(5px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

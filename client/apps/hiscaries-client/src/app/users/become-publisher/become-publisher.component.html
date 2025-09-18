@@ -1,31 +1,30 @@
 <ng-container *ngIf="!agreed; else agree">
-    <div class="publisher-confirmation-container">
-        <div class="card">
-            <h1>📖 Become a Publisher ✨</h1>
-            <p>
-                Are you sure you want to become a publisher of stories? By doing so, you agree to adhere to our
-                publishing guidelines:
-            </p>
-            <ul>
-                <li>No use of offensive or inappropriate language.</li>
-                <li>No plagiarism; all stories must be original.</li>
-                <li>Respect all users and maintain a positive environment.</li>
-            </ul>
-            <p>Violation of these rules may result in restrictions or suspension of your account.</p>
-            <button (click)="confirmPublisher()">I Agree</button>
-        </div>
+  <div class="publisher-confirmation-container">
+    <div class="card">
+      <h1>📖 Become a Publisher ✨</h1>
+      <p>
+        Are you sure you want to become a publisher of stories? By doing so, you agree to adhere to
+        our publishing guidelines:
+      </p>
+      <ul>
+        <li>No use of offensive or inappropriate language.</li>
+        <li>No plagiarism; all stories must be original.</li>
+        <li>Respect all users and maintain a positive environment.</li>
+      </ul>
+      <p>Violation of these rules may result in restrictions or suspension of your account.</p>
+      <button (click)="confirmPublisher()">I Agree</button>
     </div>
+  </div>
 </ng-container>
 <ng-template #agree>
-    <div class="publisher-confirmation-container">
-        <div class="card">
-            <h1>In a second...</h1>
-            <p>You will be redirected to the login page. Please log in again for the changes to take effect!</p>
-            <p-progressSpinner
-                styleClass="w-4rem h-4rem"
-                strokeWidth="8"
-                animationDuration=".5s"
-            />
-        </div>
+  <div class="publisher-confirmation-container">
+    <div class="card">
+      <h1>In a second...</h1>
+      <p>
+        You will be redirected to the login page. Please log in again for the changes to take
+        effect!
+      </p>
+      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" animationDuration=".5s" />
     </div>
+  </div>
 </ng-template>

@@ -9,55 +9,60 @@ import { NavigationConst } from '../../constants/navigation.const';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-notifications-bar',
-    standalone: true,
-    imports: [CommonModule],
-    templateUrl: './notifications-bar.component.html',
-    styleUrls: ['./notifications-bar.component.scss'],
-    providers: [DestroyService],
+  selector: 'app-notifications-bar',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './notifications-bar.component.html',
+  styleUrls: ['./notifications-bar.component.scss'],
+  providers: [DestroyService],
 })
 export class NotificationsBarComponent implements OnInit {
-    notifications: NotificationModel[] = [];
+  notifications: NotificationModel[] = [];
 
-    constructor(
-        private router: Router,
-        private notificationStateService: NotificationStateService,
-        private destroyService: DestroyService
-    ) {}
+  constructor(
+    private router: Router,
+    private notificationStateService: NotificationStateService,
+    private destroyService: DestroyService,
+  ) {}
 
-    ngOnInit(): void {
-        this.notificationStateService.notifications$
-            .pipe(takeUntil(this.destroyService.subject$))
-            .subscribe((notifications) => {
-                this.notifications = notifications;
-            });
+  ngOnInit(): void {
+    this.notificationStateService.notifications$
+      .pipe(takeUntil(this.destroyService.subject$))
+      .subscribe((notifications) => {
+        this.notifications = notifications;
+      });
+  }
+
+  markAllAsRead(): void {
+    const unReadNotifications = this.notifications.filter((x) => !x.IsRead);
+    this.notificationStateService.markNotificationsAsRead(unReadNotifications);
+  }
+
+  clickNotification(notification: NotificationModel): void {
+    const action = this.getActionByNotificationType(notification);
+
+    if (action && notification.RelatedObjectId) {
+      action(notification.RelatedObjectId);
+    }
+  }
+
+  private getActionByNotificationType(
+    notification: NotificationModel,
+  ): (relatedObjectId: string) => void {
+    if (
+      notification.Type === UserNotificationTypes.StoryPublished &&
+      notification.RelatedObjectId
+    ) {
+      return (storyId: string) => {
+        this.router.navigate([NavigationConst.PreviewStory(storyId)]);
+      };
     }
 
-    markAllAsRead(): void {
-        const unReadNotifications = this.notifications.filter((x) => !x.IsRead);
-        this.notificationStateService.markNotificationsAsRead(unReadNotifications);
-    }
-
-    clickNotification(notification: NotificationModel): void {
-        const action = this.getActionByNotificationType(notification);
-
-        if (action && notification.RelatedObjectId) {
-            action(notification.RelatedObjectId);
-        }
-    }
-
-    private getActionByNotificationType(notification: NotificationModel): (relatedObjectId: string) => void {
-        if (notification.Type === UserNotificationTypes.StoryPublished && notification.RelatedObjectId) {
-            return (storyId: string) => {
-                this.router.navigate([NavigationConst.PreviewStory(storyId)]);
-            };
-        }
-
-        return (relatedObjectId: string) => {
-            console.log(
-                `${notification.Type} notification doesn't have any action to be performed.
-                 ${relatedObjectId} is the related object id.`
-            );
-        };
-    }
+    return (relatedObjectId: string) => {
+      console.log(
+        `${notification.Type} notification doesn't have any action to be performed.
+                 ${relatedObjectId} is the related object id.`,
+      );
+    };
+  }
 }

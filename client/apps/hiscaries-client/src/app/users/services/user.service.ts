@@ -10,51 +10,56 @@ import { UserReadingStoryMetadataResponse } from '@users/models/response/user-re
 import { LibraryModel } from '@users/models/domain/library.model';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class UserService {
-    private apiUrl = `${environment.apiUrl}/users`;
+  private apiUrl = `${environment.apiUrl}/users`;
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    getUserReadingStoryMetadata(request: UserReadingStoryRequest): Observable<UserReadingStoryMetadataResponse[]> {
-        return this.http.post<UserReadingStoryMetadataResponse[]>(this.apiUrl + '/story-metadata', request);
+  getUserReadingStoryMetadata(
+    request: UserReadingStoryRequest,
+  ): Observable<UserReadingStoryMetadataResponse[]> {
+    return this.http.post<UserReadingStoryMetadataResponse[]>(
+      this.apiUrl + '/story-metadata',
+      request,
+    );
+  }
+
+  becomePublisher(): Observable<void> {
+    return this.http.post<void>(this.apiUrl + '/become-publisher', {});
+  }
+
+  getLibrary(libraryId?: string): Observable<LibraryModel> {
+    if (libraryId) {
+      const params = new HttpParams().set('libraryId', libraryId);
+      return this.http.get<LibraryModel>(this.apiUrl + '/libraries', { params: params });
     }
 
-    becomePublisher(): Observable<void> {
-        return this.http.post<void>(this.apiUrl + '/become-publisher', {});
-    }
+    return this.http.get<LibraryModel>(this.apiUrl + '/libraries');
+  }
 
-    getLibrary(libraryId?: string): Observable<LibraryModel> {
-        if (libraryId) {
-            const params = new HttpParams().set('libraryId', libraryId);
-            return this.http.get<LibraryModel>(this.apiUrl + '/libraries', { params: params });
-        }
+  editLibrary(request: EditLibraryRequest): Observable<void> {
+    return this.http.put<void>(this.apiUrl + '/libraries', request);
+  }
 
-        return this.http.get<LibraryModel>(this.apiUrl + '/libraries');
-    }
+  subscribeToLibrary(request: LibrarySubscriptionRequest): Observable<void> {
+    return this.http.post<void>(this.apiUrl + '/libraries/subscriptions/subscribe', request);
+  }
 
-    editLibrary(request: EditLibraryRequest): Observable<void> {
-        return this.http.put<void>(this.apiUrl + '/libraries', request);
-    }
+  unsubscribeFromLibrary(request: LibrarySubscriptionRequest): Observable<void> {
+    return this.http.post<void>(this.apiUrl + '/libraries/subscriptions/unsubscribe', request);
+  }
 
-    subscribeToLibrary(request: LibrarySubscriptionRequest): Observable<void> {
-        return this.http.post<void>(this.apiUrl + '/libraries/subscriptions/subscribe', request);
-    }
+  read(request: ReadStoryRequest): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/read`, request);
+  }
 
-    unsubscribeFromLibrary(request: LibrarySubscriptionRequest): Observable<void> {
-        return this.http.post<void>(this.apiUrl + '/libraries/subscriptions/unsubscribe', request);
-    }
+  resumeReading(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/resume-reading`);
+  }
 
-    read(request: ReadStoryRequest): Observable<void> {
-        return this.http.post<void>(`${this.apiUrl}/read`, request);
-    }
-
-    resumeReading(): Observable<string[]> {
-        return this.http.get<string[]>(`${this.apiUrl}/resume-reading`);
-    }
-
-    readingHistory(): Observable<string[]> {
-        return this.http.get<string[]>(`${this.apiUrl}/reading-history`);
-    }
+  readingHistory(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/reading-history`);
+  }
 }

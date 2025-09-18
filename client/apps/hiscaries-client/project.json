@@ -1,95 +1,88 @@
 {
-    "name": "hiscaries-client",
-    "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "projectType": "application",
-    "generators": {
-        "@schematics/angular:component": {
-            "style": "scss"
-        }
-    },
-    "sourceRoot": "apps/hiscaries-client/src",
-    "prefix": "app",
-    "targets": {
-        "build": {
-            "executor": "@angular-devkit/build-angular:application",
-            "options": {
-                "outputPath": "dist/apps/hiscaries-client",
-                "index": "apps/hiscaries-client/src/index.html",
-                "browser": "apps/hiscaries-client/src/main.ts",
-                "polyfills": [
-                    "zone.js"
-                ],
-                "tsConfig": "apps/hiscaries-client/tsconfig.app.json",
-                "inlineStyleLanguage": "scss",
-                "assets": [
-                    {
-                        "glob": "**/*",
-                        "input": "apps/hiscaries-client/public"
-                    }
-                ],
-                "styles": [
-                    "primeicons/primeicons.css",
-                    "primeng/resources/themes/lara-dark-purple/theme.css",
-                    "primeng/resources/primeng.min.css",
-                    "apps/hiscaries-client/src/styles.scss"
-                ],
-                "scripts": []
-            },
-            "configurations": {
-                "production": {
-                    "budgets": [
-                        {
-                            "type": "initial",
-                            "maximumWarning": "1.5MB",
-                            "maximumError": "2MB"
-                        },
-                        {
-                            "type": "anyComponentStyle",
-                            "maximumWarning": "2kB",
-                            "maximumError": "4kB"
-                        }
-                    ],
-                    "outputHashing": "all",
-                    "optimization": true,
-                    "aot": true
-                },
-                "development": {
-                    "optimization": false,
-                    "extractLicenses": false,
-                    "sourceMap": true
-                }
-            },
-            "defaultConfiguration": "production",
-            "outputs": [
-                "{options.outputPath}"
-            ]
-        },
-        "serve": {
-            "executor": "@angular-devkit/build-angular:dev-server",
-            "configurations": {
-                "production": {
-                    "buildTarget": "hiscaries-client:build:production"
-                },
-                "development": {
-                    "buildTarget": "hiscaries-client:build:development"
-                }
-            },
-            "defaultConfiguration": "development",
-            "options": {
-                "proxyConfig": "proxy.conf.json"
-            }
-        },
-        "extract-i18n": {
-            "executor": "@angular-devkit/build-angular:extract-i18n"
-        },
-        "lint": {
-            "executor": "@nx/eslint:lint",
-            "options": {
-                "lintFilePatterns": [
-                    "apps/hiscaries-client/**/*.ts",
-                    "apps/hiscaries-client/**/*.html"
-                ]
-            }
-        }
+  "name": "hiscaries-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
     }
+  },
+  "sourceRoot": "apps/hiscaries-client/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "options": {
+        "outputPath": "dist/apps/hiscaries-client",
+        "index": "apps/hiscaries-client/src/index.html",
+        "browser": "apps/hiscaries-client/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/hiscaries-client/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/hiscaries-client/public"
+          }
+        ],
+        "styles": [
+          "primeicons/primeicons.css",
+          "primeng/resources/themes/lara-dark-purple/theme.css",
+          "primeng/resources/primeng.min.css",
+          "apps/hiscaries-client/src/styles.scss"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "1.5MB",
+              "maximumError": "2MB"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kB",
+              "maximumError": "4kB"
+            }
+          ],
+          "outputHashing": "all",
+          "optimization": true,
+          "aot": true
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": ["{options.outputPath}"]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "hiscaries-client:build:production"
+        },
+        "development": {
+          "buildTarget": "hiscaries-client:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "proxyConfig": "proxy.conf.json"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/hiscaries-client/**/*.ts", "apps/hiscaries-client/**/*.html"]
+      }
+    }
+  }
 }

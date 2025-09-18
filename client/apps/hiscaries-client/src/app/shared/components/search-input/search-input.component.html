@@ -1,23 +1,12 @@
 <form
-    class="search-bar highlight-container"
-    (submit)="search(searchValue.value); $event.preventDefault()"
+  class="search-bar highlight-container"
+  (submit)="search(searchValue.value); $event.preventDefault()"
 >
-    <div
-        class="orbit-wrapper"
-        *ngIf="isHighlighted"
-    >
-        <div class="highlight"></div>
-    </div>
-    <input
-        class="content"
-        name="search"
-        required
-        #searchValue
-    />
-    <button
-        class="search-btn"
-        (click)="search(searchValue.value); $event.preventDefault()"
-    >
-        <span>Search</span>
-    </button>
+  <div class="orbit-wrapper" *ngIf="isHighlighted">
+    <div class="highlight"></div>
+  </div>
+  <input class="content" name="search" required #searchValue />
+  <button class="search-btn" (click)="search(searchValue.value); $event.preventDefault()">
+    <span>Search</span>
+  </button>
 </form>

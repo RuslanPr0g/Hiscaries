@@ -5,16 +5,16 @@ import { CalendarModule } from 'primeng/calendar';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-    selector: 'app-form-date-input',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, CalendarModule, MessageModule],
-    templateUrl: './form-date-input.component.html',
-    styleUrls: ['./form-date-input.component.scss'],
+  selector: 'app-form-date-input',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, CalendarModule, MessageModule],
+  templateUrl: './form-date-input.component.html',
+  styleUrls: ['./form-date-input.component.scss'],
 })
 export class FormDateInputComponent {
-    @Input() formGroup!: FormGroup;
-    @Input() controlName!: string;
-    @Input() label!: string;
-    @Input() errorMessage!: string;
-    @Input() centered = false;
+  @Input() formGroup!: FormGroup;
+  @Input() controlName!: string;
+  @Input() label!: string;
+  @Input() errorMessage!: string;
+  @Input() centered = false;
 }

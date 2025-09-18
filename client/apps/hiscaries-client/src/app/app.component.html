@@ -1,38 +1,25 @@
 <app-loading-overlay *ngIf="loading"></app-loading-overlay>
 <main [ngClass]="{ container: authService.isAuthenticated() }">
-    <div
-        class="left-panel"
-        *ngIf="authService.isAuthenticated()"
-    >
-        <div class="navigation">
-            <div
-                *ngIf="sidebarVisible"
-                class="sidebar"
-            >
-                <app-header (commandExecuted)="sidebarVisible = false"></app-header>
-            </div>
+  <div class="left-panel" *ngIf="authService.isAuthenticated()">
+    <div class="navigation">
+      <div *ngIf="sidebarVisible" class="sidebar">
+        <app-header (commandExecuted)="sidebarVisible = false"></app-header>
+      </div>
 
-            <div class="notification-wrapper">
-                <p-button
-                    class="logo"
-                    icon="pi pi-user"
-                    [rounded]="true"
-                    [text]="true"
-                    severity="info"
-                    (click)="sidebarVisible = !sidebarVisible"
-                >
-                </p-button>
-                <span
-                    class="notification-wrapper__circle"
-                    *ngIf="unreadCount > 0"
-                ></span>
-            </div>
-        </div>
+      <div class="notification-wrapper">
+        <p-button
+          class="logo"
+          icon="pi pi-user"
+          [rounded]="true"
+          [text]="true"
+          severity="info"
+          (click)="sidebarVisible = !sidebarVisible"
+        ></p-button>
+        <span class="notification-wrapper__circle" *ngIf="unreadCount > 0"></span>
+      </div>
     </div>
-    <div
-        class="right-panel"
-        [ngClass]="{ 'mt-16': authService.isAuthenticated() }"
-    >
-        <router-outlet></router-outlet>
-    </div>
+  </div>
+  <div class="right-panel" [ngClass]="{ 'mt-16': authService.isAuthenticated() }">
+    <router-outlet></router-outlet>
+  </div>
 </main>

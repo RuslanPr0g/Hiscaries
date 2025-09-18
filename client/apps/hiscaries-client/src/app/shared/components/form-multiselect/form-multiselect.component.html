@@ -1,19 +1,19 @@
 <div
-    [formGroup]="formGroup"
-    class="custom-form-field"
-    [ngClass]="{ 'custom-form-field-centered': centered }"
+  [formGroup]="formGroup"
+  class="custom-form-field"
+  [ngClass]="{ 'custom-form-field-centered': centered }"
 >
-    <p-multiSelect
-        [options]="items"
-        [formControlName]="controlName"
-        [placeholder]="placeholder"
-        optionLabel="Name"
-        filterBy="Name"
-        [filter]="true"
-    ></p-multiSelect>
-    <p-message
-        severity="error"
-        [text]="errorMessage"
-        *ngIf="formGroup.get(controlName)?.hasError('required') && formGroup.get(controlName)?.touched"
-    ></p-message>
+  <p-multiSelect
+    [options]="items"
+    [formControlName]="controlName"
+    [placeholder]="placeholder"
+    optionLabel="Name"
+    filterBy="Name"
+    [filter]="true"
+  ></p-multiSelect>
+  <p-message
+    severity="error"
+    [text]="errorMessage"
+    *ngIf="formGroup.get(controlName)?.hasError('required') && formGroup.get(controlName)?.touched"
+  ></p-message>
 </div>

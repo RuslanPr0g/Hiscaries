@@ -8,101 +8,101 @@ import { LoginUserRequest } from '@users/models/requests/login-user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class AuthService {
-    private apiUrl = `${environment.apiUrl}/accounts`;
-    private access_token_local_storage_key: string = environment.localStorageKeys.ACCESS_TOKEN_KEY;
-    private refresh_token_local_storage_key: string = environment.localStorageKeys.REFRESH_TOKEN_KEY;
+  private apiUrl = `${environment.apiUrl}/accounts`;
+  private access_token_local_storage_key: string = environment.localStorageKeys.ACCESS_TOKEN_KEY;
+  private refresh_token_local_storage_key: string = environment.localStorageKeys.REFRESH_TOKEN_KEY;
 
-    private loginSubject = new Subject<void>();
-    private logoutSubject = new Subject<void>();
+  private loginSubject = new Subject<void>();
+  private logoutSubject = new Subject<void>();
 
-    loginEvent$ = this.loginSubject.asObservable();
-    logoutEvent$ = this.logoutSubject.asObservable();
+  loginEvent$ = this.loginSubject.asObservable();
+  logoutEvent$ = this.logoutSubject.asObservable();
 
-    constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
-    register(request: RegisterUserRequest): Observable<UserWithTokenResponse> {
-        return this.http.post<UserWithTokenResponse>(this.apiUrl + '/register', request).pipe(
-            tap((tokenData: UserWithTokenResponse) => {
-                localStorage.setItem(this.access_token_local_storage_key, tokenData.Token);
-                localStorage.setItem(this.refresh_token_local_storage_key, tokenData.RefreshToken);
-                this.loginSubject.next();
-            })
-        );
+  register(request: RegisterUserRequest): Observable<UserWithTokenResponse> {
+    return this.http.post<UserWithTokenResponse>(this.apiUrl + '/register', request).pipe(
+      tap((tokenData: UserWithTokenResponse) => {
+        localStorage.setItem(this.access_token_local_storage_key, tokenData.Token);
+        localStorage.setItem(this.refresh_token_local_storage_key, tokenData.RefreshToken);
+        this.loginSubject.next();
+      }),
+    );
+  }
+
+  login(request: LoginUserRequest): Observable<UserWithTokenResponse> {
+    return this.http.post<UserWithTokenResponse>(this.apiUrl + '/login', request).pipe(
+      tap((tokenData: UserWithTokenResponse) => {
+        localStorage.setItem(this.access_token_local_storage_key, tokenData.Token);
+        localStorage.setItem(this.refresh_token_local_storage_key, tokenData.RefreshToken);
+        this.loginSubject.next();
+      }),
+    );
+  }
+
+  logOut(): void {
+    localStorage.removeItem(this.access_token_local_storage_key);
+    localStorage.removeItem(this.refresh_token_local_storage_key);
+    this.logoutSubject.next();
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem(this.access_token_local_storage_key);
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+    const authenticated = token != null && !this.jwtHelper.isTokenExpired(token);
+    if (!authenticated) {
+      this.logOut();
+      return false;
     }
 
-    login(request: LoginUserRequest): Observable<UserWithTokenResponse> {
-        return this.http.post<UserWithTokenResponse>(this.apiUrl + '/login', request).pipe(
-            tap((tokenData: UserWithTokenResponse) => {
-                localStorage.setItem(this.access_token_local_storage_key, tokenData.Token);
-                localStorage.setItem(this.refresh_token_local_storage_key, tokenData.RefreshToken);
-                this.loginSubject.next();
-            })
-        );
+    return true;
+  }
+
+  isTokenOwner(userId?: string): boolean {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+
+    if (!token) {
+      return false;
     }
 
-    logOut(): void {
-        localStorage.removeItem(this.access_token_local_storage_key);
-        localStorage.removeItem(this.refresh_token_local_storage_key);
-        this.logoutSubject.next();
+    const decodedToken = this.jwtHelper.decodeToken(token);
+
+    const id = decodedToken?.id;
+
+    return id === userId;
+  }
+
+  isTokenOwnerByUsername(username?: string): boolean {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+
+    if (!token) {
+      return false;
     }
 
-    getToken(): string | null {
-        return localStorage.getItem(this.access_token_local_storage_key);
+    const decodedToken = this.jwtHelper.decodeToken(token);
+
+    const usernameFromToken = decodedToken?.username;
+
+    return username === usernameFromToken;
+  }
+
+  isPublisher(): boolean {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+
+    if (!token) {
+      return false;
     }
 
-    isAuthenticated(): boolean {
-        const token = localStorage.getItem(this.access_token_local_storage_key);
-        const authenticated = token != null && !this.jwtHelper.isTokenExpired(token);
-        if (!authenticated) {
-            this.logOut();
-            return false;
-        }
+    const decodedToken = this.jwtHelper.decodeToken(token);
 
-        return true;
-    }
+    const role = decodedToken?.role;
 
-    isTokenOwner(userId?: string): boolean {
-        const token = localStorage.getItem(this.access_token_local_storage_key);
-
-        if (!token) {
-            return false;
-        }
-
-        const decodedToken = this.jwtHelper.decodeToken(token);
-
-        const id = decodedToken?.id;
-
-        return id === userId;
-    }
-
-    isTokenOwnerByUsername(username?: string): boolean {
-        const token = localStorage.getItem(this.access_token_local_storage_key);
-
-        if (!token) {
-            return false;
-        }
-
-        const decodedToken = this.jwtHelper.decodeToken(token);
-
-        const usernameFromToken = decodedToken?.username;
-
-        return username === usernameFromToken;
-    }
-
-    isPublisher(): boolean {
-        const token = localStorage.getItem(this.access_token_local_storage_key);
-
-        if (!token) {
-            return false;
-        }
-
-        const decodedToken = this.jwtHelper.decodeToken(token);
-
-        const role = decodedToken?.role;
-
-        return role === 'publisher';
-    }
+    return role === 'publisher';
+  }
 }

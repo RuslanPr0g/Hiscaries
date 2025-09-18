@@ -1,39 +1,39 @@
 {
-    "compileOnSave": false,
-    "compilerOptions": {
-        "strictPropertyInitialization": false,
-        "outDir": "./dist/out-tsc",
-        "baseUrl": ".",
-        "strict": true,
-        "noImplicitOverride": true,
-        "noPropertyAccessFromIndexSignature": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "sourceMap": true,
-        "declaration": false,
-        "experimentalDecorators": true,
-        "moduleResolution": "bundler",
-        "importHelpers": true,
-        "target": "ES2022",
-        "module": "ES2022",
-        "lib": ["ES2022", "dom"],
-        "paths": {
-            "@admin/*": ["apps/hiscaries-client/src/app/admin/*"],
-            "@environments/*": ["apps/hiscaries-client/src/environments/*"],
-            "@shared/*": ["apps/hiscaries-client/src/app/shared/*"],
-            "@stories/*": ["apps/hiscaries-client/src/app/stories/*"],
-            "@user-to-story/*": ["apps/hiscaries-client/src/app/user-to-story/*"],
-            "@users/*": ["apps/hiscaries-client/src/app/users/*"]
-        },
-        "rootDir": "."
+  "compileOnSave": false,
+  "compilerOptions": {
+    "strictPropertyInitialization": false,
+    "outDir": "./dist/out-tsc",
+    "baseUrl": ".",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "dom"],
+    "paths": {
+      "@admin/*": ["apps/hiscaries-client/src/app/admin/*"],
+      "@environments/*": ["apps/hiscaries-client/src/environments/*"],
+      "@shared/*": ["apps/hiscaries-client/src/app/shared/*"],
+      "@stories/*": ["apps/hiscaries-client/src/app/stories/*"],
+      "@user-to-story/*": ["apps/hiscaries-client/src/app/user-to-story/*"],
+      "@users/*": ["apps/hiscaries-client/src/app/users/*"]
     },
-    "angularCompilerOptions": {
-        "enableI18nLegacyMessageIdFormat": false,
-        "strictInjectionParameters": true,
-        "strictInputAccessModifiers": true,
-        "strictTemplates": true
-    },
-    "exclude": ["node_modules", "tmp"]
+    "rootDir": "."
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "exclude": ["node_modules", "tmp"]
 }

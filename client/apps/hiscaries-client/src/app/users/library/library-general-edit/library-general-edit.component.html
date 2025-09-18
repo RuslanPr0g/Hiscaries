@@ -1,78 +1,51 @@
 <ng-container *ngIf="library">
-    <form
-        [formGroup]="modifyForm"
-        (ngSubmit)="onSubmit()"
-    >
-        <div class="library">
-            <div
-                class="profile-card background-image-configuration"
-                [ngStyle]="{ 'background-image': backgroundImageUrl ? 'url(' + backgroundImageUrl + ')' : 'none' }"
-            >
-                <div
-                    class="overlay"
-                    *ngIf="backgroundImageUrl"
-                ></div>
-                <div class="profile-details">
-                    <div class="field-wrapper">
-                        <app-form-textarea
-                            [formGroup]="modifyForm"
-                            controlName="Bio"
-                            label="Bio"
-                            errorMessage="Bio is required"
-                            [rows]="4"
-                        ></app-form-textarea>
-                    </div>
+  <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()">
+    <div class="library">
+      <div
+        class="profile-card background-image-configuration"
+        [ngStyle]="{
+          'background-image': backgroundImageUrl ? 'url(' + backgroundImageUrl + ')' : 'none'
+        }"
+      >
+        <div class="overlay" *ngIf="backgroundImageUrl"></div>
+        <div class="profile-details">
+          <div class="field-wrapper">
+            <app-form-textarea
+              [formGroup]="modifyForm"
+              controlName="Bio"
+              label="Bio"
+              errorMessage="Bio is required"
+              [rows]="4"
+            ></app-form-textarea>
+          </div>
 
-                    <div class="field-wrapper">
-                        <h3>Links to your social media</h3>
-                        <p-chips formControlName="LinksToSocialMedia">
-                            <ng-template
-                                let-item
-                                pTemplate="item"
-                            >
-                                <span class="item">
-                                    {{ item }}
-                                </span>
-                                <i
-                                    class="pi"
-                                    [ngClass]="getSocialNetworkIcon(item)"
-                                    style="font-size: 2rem"
-                                ></i>
-                            </ng-template>
-                        </p-chips>
-                    </div>
+          <div class="field-wrapper">
+            <h3>Links to your social media</h3>
+            <p-chips formControlName="LinksToSocialMedia">
+              <ng-template let-item pTemplate="item">
+                <span class="item">
+                  {{ item }}
+                </span>
+                <i class="pi" [ngClass]="getSocialNetworkIcon(item)" style="font-size: 2rem"></i>
+              </ng-template>
+            </p-chips>
+          </div>
 
-                    <div class="field-wrapper">
-                        <h3>Profile image</h3>
-                        <app-upload-file-control [control]="imageControl"></app-upload-file-control>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="library-edit"
-                *ngIf="isAbleToEdit"
-            >
-                <button
-                    class="link"
-                    (click)="cancelEdit()"
-                    type="button"
-                >
-                    <i
-                        class="pi pi-times"
-                        style="font-size: 2rem"
-                    ></i>
-                </button>
-
-                <button
-                    class="link"
-                    type="submit"
-                >
-                    <i
-                        class="pi pi-check"
-                        style="font-size: 2rem"
-                    ></i>
-                </button>
-            </div>
+          <div class="field-wrapper">
+            <h3>Profile image</h3>
+            <app-upload-file-control [control]="imageControl"></app-upload-file-control>
+          </div>
         </div>
-    </form>
+      </div>
+      <div class="library-edit" *ngIf="isAbleToEdit">
+        <button class="link" (click)="cancelEdit()" type="button">
+          <i class="pi pi-times" style="font-size: 2rem"></i>
+        </button>
+
+        <button class="link" type="submit">
+          <i class="pi pi-check" style="font-size: 2rem"></i>
+        </button>
+      </div>
+    </div>
+  </form>
 </ng-container>

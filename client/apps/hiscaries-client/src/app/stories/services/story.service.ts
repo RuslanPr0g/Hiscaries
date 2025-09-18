@@ -15,42 +15,44 @@ import { BaseIdModel } from '@shared/models/base-id.model';
 import { QueryableModel } from '@shared/models/queryable.model';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class StoryService {
-    private apiUrl = `${environment.apiUrl}/stories`;
+  private apiUrl = `${environment.apiUrl}/stories`;
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    genreList(): Observable<GenreModel[]> {
-        return this.http.get<GenreModel[]>(`${this.apiUrl}/genres`);
-    }
+  genreList(): Observable<GenreModel[]> {
+    return this.http.get<GenreModel[]>(`${this.apiUrl}/genres`);
+  }
 
-    recommendations(request: QueryableModel): Observable<QueriedModel<StoryModel>> {
-        return this.http.post<QueriedModel<StoryModel>>(`${this.apiUrl}/recommendations`, request);
-    }
+  recommendations(request: QueryableModel): Observable<QueriedModel<StoryModel>> {
+    return this.http.post<QueriedModel<StoryModel>>(`${this.apiUrl}/recommendations`, request);
+  }
 
-    getStoriesByLibrary(request: SearchStoryByLibraryRequest): Observable<QueriedModel<StoryModel>> {
-        return this.http.post<QueriedModel<StoryModel>>(`${this.apiUrl}/libraries/search`, request);
-    }
+  getStoriesByLibrary(request: SearchStoryByLibraryRequest): Observable<QueriedModel<StoryModel>> {
+    return this.http.post<QueriedModel<StoryModel>>(`${this.apiUrl}/libraries/search`, request);
+  }
 
-    searchStory(request: SearchStoryRequest): Observable<QueriedModel<StoryModel>> {
-        return this.http.post<QueriedModel<StoryModel>>(`${this.apiUrl}/search`, request);
-    }
+  searchStory(request: SearchStoryRequest): Observable<QueriedModel<StoryModel>> {
+    return this.http.post<QueriedModel<StoryModel>>(`${this.apiUrl}/search`, request);
+  }
 
-    getStoryByIdWithContents(request: SearchStoryWithContentsRequest): Observable<StoryModelWithContents> {
-        return this.http.post<StoryModelWithContents>(`${this.apiUrl}/by-id-with-contents`, request);
-    }
+  getStoryByIdWithContents(
+    request: SearchStoryWithContentsRequest,
+  ): Observable<StoryModelWithContents> {
+    return this.http.post<StoryModelWithContents>(`${this.apiUrl}/by-id-with-contents`, request);
+  }
 
-    getStoriesByIds(request: SearchStoryByIdsRequest): Observable<QueriedModel<StoryModel>> {
-        return this.http.post<QueriedModel<StoryModel>>(`${this.apiUrl}/by-ids`, request);
-    }
+  getStoriesByIds(request: SearchStoryByIdsRequest): Observable<QueriedModel<StoryModel>> {
+    return this.http.post<QueriedModel<StoryModel>>(`${this.apiUrl}/by-ids`, request);
+  }
 
-    publish(request: PublishStoryRequest): Observable<BaseIdModel> {
-        return this.http.post<BaseIdModel>(`${this.apiUrl}`, request);
-    }
+  publish(request: PublishStoryRequest): Observable<BaseIdModel> {
+    return this.http.post<BaseIdModel>(`${this.apiUrl}`, request);
+  }
 
-    modify(request: ModifyStoryRequest): Observable<void> {
-        return this.http.patch<void>(`${this.apiUrl}`, request);
-    }
+  modify(request: ModifyStoryRequest): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}`, request);
+  }
 }

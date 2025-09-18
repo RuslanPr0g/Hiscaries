@@ -1,9 +1,9 @@
 export interface QueriedModel<T> {
-    Items: T[];
-    TotalItemsCount: number;
+  Items: T[];
+  TotalItemsCount: number;
 }
 
 export const emptyQueriedResult: QueriedModel<any> = {
-    Items: [],
-    TotalItemsCount: 0,
+  Items: [],
+  TotalItemsCount: 0,
 };

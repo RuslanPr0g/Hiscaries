@@ -1,9 +1,9 @@
 export interface UserReadingStoryRequest {
-    Items: UserReadingStoryRequestItem[];
+  Items: UserReadingStoryRequestItem[];
 }
 
 interface UserReadingStoryRequestItem {
-    StoryId: string;
-    LibraryId: string;
-    TotalPages: number;
+  StoryId: string;
+  LibraryId: string;
+  TotalPages: number;
 }

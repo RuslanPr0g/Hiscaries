@@ -1,19 +1,16 @@
 <ng-container *ngIf="libraryInfo; else emptyLibraryInfo">
-    <app-library
-        [library]="libraryInfo"
-        [stories]="stories()"
-        [isLoading]="isLoading()"
-        [isAbleToSubscribe]="!!libraryInfo"
-        [isSubscribed]="isSubscribed"
-        [isSubscribeLoading]="isSubscribeLoading"
-        (subscribed)="subscribeAction()"
-        (unSubscribed)="unSubscribeAction()"
-    ></app-library>
+  <app-library
+    [library]="libraryInfo"
+    [stories]="stories()"
+    [isLoading]="isLoading()"
+    [isAbleToSubscribe]="!!libraryInfo"
+    [isSubscribed]="isSubscribed"
+    [isSubscribeLoading]="isSubscribeLoading"
+    (subscribed)="subscribeAction()"
+    (unSubscribed)="unSubscribeAction()"
+  ></app-library>
 </ng-container>
 
-<ng-template #emptyLibraryInfo> This library doesn't exist </ng-template>
+<ng-template #emptyLibraryInfo>This library doesn't exist</ng-template>
 
-<div
-    #loadMoreAnchor
-    class="load-more-anchor"
-></div>
+<div #loadMoreAnchor class="load-more-anchor"></div>

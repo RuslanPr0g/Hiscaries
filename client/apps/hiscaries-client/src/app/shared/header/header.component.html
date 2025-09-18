@@ -1,44 +1,28 @@
-<div
-    class="modal-overlay"
-    (click)="closeModal()"
->
-    <div
-        class="modal-window"
-        (click)="$event.stopPropagation()"
-    >
-        <button
-            class="modal-close-btn"
-            (click)="closeModal()"
-            aria-label="Close modal"
-        >
-            ×
-        </button>
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-window" (click)="$event.stopPropagation()">
+    <button class="modal-close-btn" (click)="closeModal()" aria-label="Close modal">×</button>
 
-        <div class="search">
-            <app-search-bar></app-search-bar>
-        </div>
-
-        <div class="header__options-grid">
-            <ng-container *ngFor="let item of items">
-                <div class="header__option">
-                    <button
-                        (click)="callItemCommand(item)"
-                        [ngClass]="{ warning: item.Label === 'Sign out' }"
-                    >
-                        {{ item.Label }}
-                    </button>
-                </div>
-            </ng-container>
-        </div>
-
-        <button
-            *ngIf="!isUserPublisher"
-            (click)="navigateToBecomePublisherPage()"
-            class="link"
-        >
-            I want to be a publisher!
-        </button>
-
-        <app-notifications-bar></app-notifications-bar>
+    <div class="search">
+      <app-search-bar></app-search-bar>
     </div>
+
+    <div class="header__options-grid">
+      <ng-container *ngFor="let item of items">
+        <div class="header__option">
+          <button
+            (click)="callItemCommand(item)"
+            [ngClass]="{ warning: item.Label === 'Sign out' }"
+          >
+            {{ item.Label }}
+          </button>
+        </div>
+      </ng-container>
+    </div>
+
+    <button *ngIf="!isUserPublisher" (click)="navigateToBecomePublisherPage()" class="link">
+      I want to be a publisher!
+    </button>
+
+    <app-notifications-bar></app-notifications-bar>
+  </div>
 </div>

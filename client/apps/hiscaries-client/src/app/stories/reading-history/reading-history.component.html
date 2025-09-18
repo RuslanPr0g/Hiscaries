@@ -1,14 +1,11 @@
 <ng-container *ngIf="stories() as s; else noStories">
-    <app-search-story-results
-        [stories]="s"
-        [isLoading]="isLoading()"
-        class="w-full"
-    ></app-search-story-results>
+  <app-search-story-results
+    [stories]="s"
+    [isLoading]="isLoading()"
+    class="w-full"
+  ></app-search-story-results>
 </ng-container>
 
-<ng-template #noStories> 📚💨 No pages turned yet — your adventure awaits! </ng-template>
+<ng-template #noStories>📚💨 No pages turned yet — your adventure awaits!</ng-template>
 
-<div
-    #loadMoreAnchor
-    class="load-more-anchor"
-></div>
+<div #loadMoreAnchor class="load-more-anchor"></div>

@@ -1,3 +1,3 @@
 export interface ReadNotificationsRequest {
-    NotificationIds: string[];
+  NotificationIds: string[];
 }

@@ -1,11 +1,17 @@
 <ng-container *ngIf="stories().Items.length > 0; else noStories">
-    <h1 class="fs-1rem main-title">Stories for you to read</h1>
+  <h1 class="fs-1rem main-title">Stories for you to read</h1>
 
-    <app-search-story-results [stories]="stories()" [isLoading]="isLoading()" class="w-full"></app-search-story-results>
+  <app-search-story-results
+    [stories]="stories()"
+    [isLoading]="isLoading()"
+    class="w-full"
+  ></app-search-story-results>
 </ng-container>
 
 <ng-template #noStories>
-    <ng-container *ngIf="!isLoading()">📚💨 No stories exist on the platform, be the first legend!</ng-container>
+  <ng-container *ngIf="!isLoading()">
+    📚💨 No stories exist on the platform, be the first legend!
+  </ng-container>
 </ng-template>
 
 <div #loadMoreAnchor class="load-more-anchor"></div>

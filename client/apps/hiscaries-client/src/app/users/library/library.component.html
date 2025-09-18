@@ -1,42 +1,36 @@
 <ng-container *ngIf="!isEditMode; else editMode">
-    <app-library-general-view
-        [library]="library"
-        [isAbleToEdit]="isAbleToEdit"
-        [isAbleToSubscribe]="isAbleToSubscribe"
-        [isSubscribed]="isSubscribed"
-        [isSubscribeLoading]="isSubscribeLoading"
-        (editStarted)="startEdit()"
-        (subscribed)="subscribeAction()"
-        (unSubscribed)="unSubscribeAction()"
-    ></app-library-general-view>
+  <app-library-general-view
+    [library]="library"
+    [isAbleToEdit]="isAbleToEdit"
+    [isAbleToSubscribe]="isAbleToSubscribe"
+    [isSubscribed]="isSubscribed"
+    [isSubscribeLoading]="isSubscribeLoading"
+    (editStarted)="startEdit()"
+    (subscribed)="subscribeAction()"
+    (unSubscribed)="unSubscribeAction()"
+  ></app-library-general-view>
 </ng-container>
 <ng-template #editMode>
-    <app-library-general-edit
-        [library]="library"
-        [isAbleToEdit]="isAbleToEdit"
-        (editCancelled)="cancelEdit()"
-        (editSaved)="saveEdit($event)"
-    >
-    </app-library-general-edit>
+  <app-library-general-edit
+    [library]="library"
+    [isAbleToEdit]="isAbleToEdit"
+    (editCancelled)="cancelEdit()"
+    (editSaved)="saveEdit($event)"
+  ></app-library-general-edit>
 </ng-template>
 
 <ng-container *ngIf="stories">
-    <ng-container *ngIf="stories.Items.length > 0; else noStories">
-        <app-search-story-results
-            [stories]="stories"
-            [isLoading]="isLoading"
-            class="w-full"
-        >
-        </app-search-story-results>
-    </ng-container>
-    <ng-template #noStories> <div class="center">Nothing posted so far!</div> </ng-template>
+  <ng-container *ngIf="stories.Items.length > 0; else noStories">
+    <app-search-story-results
+      [stories]="stories"
+      [isLoading]="isLoading"
+      class="w-full"
+    ></app-search-story-results>
+  </ng-container>
+  <ng-template #noStories><div class="center">Nothing posted so far!</div></ng-template>
 </ng-container>
 <ng-container *ngIf="isLoading">
-    <div class="center">
-        <p-progressSpinner
-            styleClass="w-4rem h-4rem"
-            strokeWidth="8"
-            animationDuration=".5s"
-        />
-    </div>
+  <div class="center">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" animationDuration=".5s" />
+  </div>
 </ng-container>

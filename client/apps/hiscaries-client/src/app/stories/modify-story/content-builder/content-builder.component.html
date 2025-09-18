@@ -1,44 +1,37 @@
-<div
-    [formGroup]="formGroup"
-    class="content-editor-container"
->
-    <ng-container [formArrayName]="formArrayName">
-        <app-text-editor
-            [control]="currentPageControl"
-            [label]="currentPageLabel"
-            [errorMessage]="'Content is required'"
-        ></app-text-editor>
-    </ng-container>
+<div [formGroup]="formGroup" class="content-editor-container">
+  <ng-container [formArrayName]="formArrayName">
+    <app-text-editor
+      [control]="currentPageControl"
+      [label]="currentPageLabel"
+      [errorMessage]="'Content is required'"
+    ></app-text-editor>
+  </ng-container>
 
-    <div class="controls-glassy">
-        <app-form-button
-            severity="danger"
-            label="Remove Page"
-            (clicked)="removeContent()"
-        ></app-form-button>
+  <div class="controls-glassy">
+    <app-form-button
+      severity="danger"
+      label="Remove Page"
+      (clicked)="removeContent()"
+    ></app-form-button>
 
-        <div class="pagination">
-            <p-button
-                icon="pi pi-angle-left"
-                [rounded]="true"
-                [text]="true"
-                severity="secondary"
-                (onClick)="movePrev()"
-            ></p-button>
-            <span class="message">{{ currentPageLabel }}</span>
-            <p-button
-                icon="pi pi-angle-right"
-                [rounded]="true"
-                [text]="true"
-                severity="secondary"
-                (onClick)="moveNext()"
-            ></p-button>
-        </div>
-
-        <app-form-button
-            severity="success"
-            label="Add Page"
-            (clicked)="addContent()"
-        ></app-form-button>
+    <div class="pagination">
+      <p-button
+        icon="pi pi-angle-left"
+        [rounded]="true"
+        [text]="true"
+        severity="secondary"
+        (onClick)="movePrev()"
+      ></p-button>
+      <span class="message">{{ currentPageLabel }}</span>
+      <p-button
+        icon="pi pi-angle-right"
+        [rounded]="true"
+        [text]="true"
+        severity="secondary"
+        (onClick)="moveNext()"
+      ></p-button>
     </div>
+
+    <app-form-button severity="success" label="Add Page" (clicked)="addContent()"></app-form-button>
+  </div>
 </div>

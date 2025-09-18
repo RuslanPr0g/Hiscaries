@@ -8,92 +8,92 @@ import { NotificationsBarComponent } from '../components/notifications-bar/notif
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 
 export interface MenuItem {
-    Label: string;
-    Command: () => void;
+  Label: string;
+  Command: () => void;
 }
 
 @Component({
-    selector: 'app-header',
-    standalone: true,
-    imports: [CommonModule, ButtonModule, NotificationsBarComponent, SearchBarComponent],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.scss',
+  selector: 'app-header',
+  standalone: true,
+  imports: [CommonModule, ButtonModule, NotificationsBarComponent, SearchBarComponent],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-    items: MenuItem[];
+  items: MenuItem[];
 
-    @Output() commandExecuted = new EventEmitter<void>();
+  @Output() commandExecuted = new EventEmitter<void>();
 
-    constructor(public userService: AuthService, private router: Router) {
-        this.items = [
-            {
-                Label: 'Home',
-                Command: () => this.home(),
-            },
-        ];
+  constructor(public userService: AuthService, private router: Router) {
+    this.items = [
+      {
+        Label: 'Home',
+        Command: () => this.home(),
+      },
+    ];
 
-        if (this.isUserPublisher) {
-            this.items = [
-                ...this.items,
-                {
-                    Label: 'My Library',
-                    Command: () => this.navigateToMyLibrary(),
-                },
-                {
-                    Label: 'Publish story',
-                    Command: () => this.navigateToPublishStory(),
-                },
-            ];
-        }
-
-        this.items = [
-            ...this.items,
-            {
-                Label: 'Reading history',
-                Command: () => this.navigateToReadingHistory(),
-            },
-            {
-                Label: 'Sign out',
-                Command: () => this.logOut(),
-            },
-        ];
+    if (this.isUserPublisher) {
+      this.items = [
+        ...this.items,
+        {
+          Label: 'My Library',
+          Command: () => this.navigateToMyLibrary(),
+        },
+        {
+          Label: 'Publish story',
+          Command: () => this.navigateToPublishStory(),
+        },
+      ];
     }
 
-    closeModal() {
-        this.commandExecuted.emit();
-    }
+    this.items = [
+      ...this.items,
+      {
+        Label: 'Reading history',
+        Command: () => this.navigateToReadingHistory(),
+      },
+      {
+        Label: 'Sign out',
+        Command: () => this.logOut(),
+      },
+    ];
+  }
 
-    get isUserPublisher(): boolean {
-        return this.userService.isPublisher();
-    }
+  closeModal() {
+    this.commandExecuted.emit();
+  }
 
-    callItemCommand(item: MenuItem): void {
-        item?.Command();
-        this.commandExecuted?.emit();
-    }
+  get isUserPublisher(): boolean {
+    return this.userService.isPublisher();
+  }
 
-    home(): void {
-        this.router.navigate([NavigationConst.Home]);
-    }
+  callItemCommand(item: MenuItem): void {
+    item?.Command();
+    this.commandExecuted?.emit();
+  }
 
-    logOut(): void {
-        this.userService.logOut();
-        this.router.navigate([NavigationConst.Login]);
-    }
+  home(): void {
+    this.router.navigate([NavigationConst.Home]);
+  }
 
-    navigateToPublishStory(): void {
-        this.router.navigate([NavigationConst.PublishStory]);
-    }
+  logOut(): void {
+    this.userService.logOut();
+    this.router.navigate([NavigationConst.Login]);
+  }
 
-    navigateToMyLibrary(): void {
-        this.router.navigate([NavigationConst.MyLibrary]);
-    }
+  navigateToPublishStory(): void {
+    this.router.navigate([NavigationConst.PublishStory]);
+  }
 
-    navigateToReadingHistory(): void {
-        this.router.navigate([NavigationConst.ReadingHistory]);
-    }
+  navigateToMyLibrary(): void {
+    this.router.navigate([NavigationConst.MyLibrary]);
+  }
 
-    navigateToBecomePublisherPage(): void {
-        this.router.navigate([NavigationConst.BecomePublisher]);
-    }
+  navigateToReadingHistory(): void {
+    this.router.navigate([NavigationConst.ReadingHistory]);
+  }
+
+  navigateToBecomePublisherPage(): void {
+    this.router.navigate([NavigationConst.BecomePublisher]);
+  }
 }

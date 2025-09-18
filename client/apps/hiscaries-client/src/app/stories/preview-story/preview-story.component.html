@@ -1,47 +1,38 @@
-<div
-    class="preview-story-page"
-    *ngIf="story && !storyNotFound"
->
-    <div class="content-wrapper">
-        <div class="left-content">
-            <div class="story-header">
-                <h1>{{ story.Title }}</h1>
-                <span class="story-author"
-                    >By
-                    <button
-                        (click)="navigateToLibrary()"
-                        class="link"
-                    >
-                        {{ story.LibraryName }}
-                    </button></span
-                >
-                &nbsp;•&nbsp;
-                <span class="story-date">{{ story.DatePublished | date : 'longDate' }}</span>
-                &nbsp;•&nbsp;
-                <span class="story-date">{{ story.AgeLimit }}+</span>
-            </div>
+<div class="preview-story-page" *ngIf="story && !storyNotFound">
+  <div class="content-wrapper">
+    <div class="left-content">
+      <div class="story-header">
+        <h1>{{ story.Title }}</h1>
+        <span class="story-author">
+          By
+          <button (click)="navigateToLibrary()" class="link">
+            {{ story.LibraryName }}
+          </button>
+        </span>
+        &nbsp;•&nbsp;
+        <span class="story-date">{{ story.DatePublished | date : 'longDate' }}</span>
+        &nbsp;•&nbsp;
+        <span class="story-date">{{ story.AgeLimit }}+</span>
+      </div>
 
-            <div class="story-details">
-                <p class="story-description">{{ story.Description }}</p>
-            </div>
+      <div class="story-details">
+        <p class="story-description">{{ story.Description }}</p>
+      </div>
 
-            <div class="story-actions">
-                <app-form-button
-                    label="See library"
-                    severity="warning"
-                    (clicked)="navigateToLibrary()"
-                ></app-form-button>
-                <app-form-button
-                    label="Read"
-                    (clicked)="readStory()"
-                ></app-form-button>
-                <app-form-button
-                    *ngIf="isEditable"
-                    label="Modify"
-                    severity="warning"
-                    (clicked)="modifyStory()"
-                ></app-form-button>
-            </div>
-        </div>
+      <div class="story-actions">
+        <app-form-button
+          label="See library"
+          severity="warning"
+          (clicked)="navigateToLibrary()"
+        ></app-form-button>
+        <app-form-button label="Read" (clicked)="readStory()"></app-form-button>
+        <app-form-button
+          *ngIf="isEditable"
+          label="Modify"
+          severity="warning"
+          (clicked)="modifyStory()"
+        ></app-form-button>
+      </div>
     </div>
+  </div>
 </div>

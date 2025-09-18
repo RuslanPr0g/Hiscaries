@@ -1,4 +1,4 @@
 export interface ReadStoryRequest {
-    StoryId: string;
-    PageRead: number;
+  StoryId: string;
+  PageRead: number;
 }

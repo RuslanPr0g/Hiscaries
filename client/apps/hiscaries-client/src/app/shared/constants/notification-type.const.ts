@@ -1,3 +1,3 @@
 export class UserNotificationTypes {
-    public static readonly StoryPublished = 'StoryPublished';
+  public static readonly StoryPublished = 'StoryPublished';
 }
