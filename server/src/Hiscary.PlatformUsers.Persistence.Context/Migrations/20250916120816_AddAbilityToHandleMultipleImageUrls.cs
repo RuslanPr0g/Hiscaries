@@ -8,6 +8,23 @@ namespace Hiscary.PlatformUsers.Persistence.Context.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql(@"
+                ALTER TABLE ""platformusers"".""Libraries"" 
+                ADD COLUMN ""AvatarImageUrls_Temp"" jsonb DEFAULT '{}'::jsonb;
+
+                UPDATE ""platformusers"".""Libraries""
+                SET ""AvatarImageUrls_Temp"" = jsonb_build_object('large', ""AvatarUrl"")
+                WHERE ""AvatarUrl"" IS NOT NULL;
+
+                UPDATE ""platformusers"".""Libraries""
+                SET ""AvatarUrl"" = NULL;
+            ");
+
+            migrationBuilder.DropColumn(
+                name: "AvatarUrl",
+                schema: "platformusers",
+                table: "Libraries");
+
             migrationBuilder.AddColumn<string>(
                 name: "AvatarImageUrls",
                 schema: "platformusers",
@@ -18,15 +35,13 @@ namespace Hiscary.PlatformUsers.Persistence.Context.Migrations
 
             migrationBuilder.Sql(@"
                 UPDATE ""platformusers"".""Libraries""
-                SET ""AvatarImageUrls"" = jsonb_build_object('large', ""AvatarUrl"")
-                WHERE ""AvatarUrl"" IS NOT NULL;
-            ");
+                SET ""AvatarImageUrls"" = ""AvatarImageUrls_Temp"";
 
-            migrationBuilder.DropColumn(
-                name: "AvatarUrl",
-                schema: "platformusers",
-                table: "Libraries");
+                ALTER TABLE ""platformusers"".""Libraries"" 
+                DROP COLUMN ""AvatarImageUrls_Temp"";
+            ");
         }
+
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
