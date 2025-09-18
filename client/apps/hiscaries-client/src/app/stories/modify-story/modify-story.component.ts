@@ -198,12 +198,14 @@ export class ModifyStoryComponent implements OnInit {
   }
 
   private populateFormWithValue(): void {
+    const imageUrl = this.story?.ImagePreviewUrl?.Large ?? this.story?.ImagePreviewUrl?.Medium ?? this.story?.ImagePreviewUrl?.Small;
+
     if (this.story) {
       this.modifyForm.patchValue({
         Title: this.story.Title,
         Description: this.story.Description,
         AuthorName: this.story.AuthorName,
-        Image: this.story.ImagePreviewUrl,
+        Image: imageUrl,
         Genres: this.story.Genres,
         AgeLimit: this.story.AgeLimit,
         DateWritten: new Date(this.story.DateWritten),

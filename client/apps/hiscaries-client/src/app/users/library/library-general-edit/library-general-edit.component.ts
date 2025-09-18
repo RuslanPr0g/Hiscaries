@@ -7,6 +7,7 @@ import { ModifyLibraryFormModel } from '@users/models/form/modify-library.model'
 import { FormTextareaComponent } from '@shared/components/form-textarea/form-textarea.component';
 import { UploadFileControlComponent } from '@shared/components/upload-file-control/upload-file-control.component';
 import { ChipsModule } from 'primeng/chips';
+import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
 
 @Component({
   selector: 'app-library-general-edit',
@@ -28,15 +29,16 @@ export class LibraryGeneralEditComponent implements OnInit {
   @Input() isAbleToEdit = false;
 
   @Output() editCancelled = new EventEmitter<void>();
-  @Output() editSaved = new EventEmitter<LibraryModel>();
+  @Output() editSaved = new EventEmitter<ModifyLibraryModel>();
 
   constructor(private iconService: SocialMediaIconMapperService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     if (this.library) {
+      const imageUrl = this.library.AvatarImageUrls?.Large ?? this.library.AvatarImageUrls?.Medium ?? this.library.AvatarImageUrls?.Small ?? null;
       this.modifyForm = this.fb.group<ModifyLibraryFormModel>({
         Bio: this.fb.control<string | null>(this.library.Bio),
-        AvatarUrl: this.fb.control<string | null>(this.library.AvatarUrl),
+        AvatarUrl: this.fb.control<string | null>(imageUrl),
         LinksToSocialMedia: this.fb.control<string[] | null>(this.library.LinksToSocialMedia),
       });
     }
@@ -58,7 +60,7 @@ export class LibraryGeneralEditComponent implements OnInit {
     this.editCancelled?.emit();
   }
 
-  saveEdit(model: LibraryModel): void {
+  saveEdit(model: ModifyLibraryModel): void {
     this.editSaved?.emit(model);
   }
 
