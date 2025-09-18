@@ -17,7 +17,7 @@ namespace Hiscary.Notifications.Persistence.Context.Migrations
                 defaultValue: "{}");
 
             migrationBuilder.Sql(@"
-                UPDATE ""Notifications""
+                UPDATE ""notifications"".""Notifications""
                 SET ""ImageUrls"" = jsonb_build_object('large', ""PreviewUrl"")
                 WHERE ""PreviewUrl"" IS NOT NULL;
             ");
