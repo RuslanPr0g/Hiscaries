@@ -1,4 +1,5 @@
-import { GenreModel } from './genre.model';
+import { ImageUrlSizes } from '@shared/models/image-url-sizes.model';
+import { GenreModel } from '@stories/models/domain/genre.model';
 
 export interface StoryModel {
   Id: string;
@@ -6,7 +7,7 @@ export interface StoryModel {
   Description: string;
   AuthorName?: string;
   AgeLimit: number;
-  ImagePreviewUrl: string;
+  ImagePreviewUrl: ImageUrlSizes;
   DatePublished: Date;
   DateWritten: Date;
   IsEditable: boolean;

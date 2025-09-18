@@ -8,8 +8,8 @@
     >
       <div class="overlay" *ngIf="backgroundImageUrl"></div>
       <div class="avatar-container" [ngClass]="{ 'min-width-150': isAbleToSubscribe }">
-        <div class="avatar" *ngIf="library.AvatarUrl">
-          <img [src]="library.AvatarUrl" alt="User Avatar" />
+        <div class="avatar" *ngIf="library.AvatarImageUrls">
+          <img [src]="library.AvatarImageUrls" alt="User Avatar" />
         </div>
         <div class="library-edit" *ngIf="isAbleToEdit">
           <button class="link" (click)="startEdit()">

@@ -1,3 +1,5 @@
+import { ImageUrlSizes } from "@shared/models/image-url-sizes.model";
+
 export interface NotificationModel {
   Id: string;
   UserId: string;
@@ -5,5 +7,5 @@ export interface NotificationModel {
   IsRead: boolean;
   Type: string;
   RelatedObjectId?: string;
-  PreviewUrl?: string;
+  ImageUrls?: ImageUrlSizes;
 }
