@@ -15,20 +15,20 @@ namespace Hiscary.Stories.Persistence.Context.Migrations
                 UPDATE ""stories"".""Stories""
                 SET ""ImagePreviewUrl_Temp"" = jsonb_build_object('large', ""ImagePreviewUrl"")
                 WHERE ""ImagePreviewUrl"" IS NOT NULL;
-
-                UPDATE ""stories"".""Stories""
-                SET ""ImagePreviewUrl"" = NULL;
             ");
 
-            migrationBuilder.AlterColumn<string>(
+            migrationBuilder.DropColumn(
+                name: "ImagePreviewUrl",
+                schema: "stories",
+                table: "Stories");
+
+            migrationBuilder.AddColumn<string>(
                 name: "ImagePreviewUrl",
                 schema: "stories",
                 table: "Stories",
                 type: "jsonb",
                 nullable: true,
-                oldClrType: typeof(string),
-                oldType: "text",
-                oldNullable: true);
+                defaultValue: "{}");
 
             migrationBuilder.Sql(@"
                 UPDATE ""stories"".""Stories""
