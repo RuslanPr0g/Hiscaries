@@ -7,40 +7,45 @@ import { SkeletonOrStoryContentComponent } from '@stories/load-story-or-content/
 import { QueriedModel } from '@shared/models/queried.model';
 
 @Component({
-    selector: 'app-search-story-results',
-    standalone: true,
-    imports: [CommonModule, SearchStoryItemComponent, CarouselModule, SkeletonOrStoryContentComponent],
-    templateUrl: './search-story-results.component.html',
-    styleUrls: ['./search-story-results.component.scss'],
+  selector: 'app-search-story-results',
+  standalone: true,
+  imports: [
+    CommonModule,
+    SearchStoryItemComponent,
+    CarouselModule,
+    SkeletonOrStoryContentComponent,
+  ],
+  templateUrl: './search-story-results.component.html',
+  styleUrls: ['./search-story-results.component.scss'],
 })
 export class SearchStoryResultsComponent implements OnInit {
-    @Input() stories: QueriedModel<StoryModel>;
-    @Input() isLoading: boolean | null = true;
-    @Input() isCarousel = false;
+  @Input() stories: QueriedModel<StoryModel>;
+  @Input() isLoading: boolean | null = true;
+  @Input() isCarousel = false;
 
-    responsiveOptions: CarouselResponsiveOptions[] | undefined;
+  responsiveOptions: CarouselResponsiveOptions[] | undefined;
 
-    ngOnInit(): void {
-        this.initializeResponsiveOptions();
-    }
+  ngOnInit(): void {
+    this.initializeResponsiveOptions();
+  }
 
-    private initializeResponsiveOptions(): void {
-        this.responsiveOptions = [
-            {
-                breakpoint: '1950px',
-                numVisible: 3,
-                numScroll: 2,
-            },
-            {
-                breakpoint: '1150px',
-                numVisible: 2,
-                numScroll: 1,
-            },
-            {
-                breakpoint: '767px',
-                numVisible: 1,
-                numScroll: 1,
-            },
-        ];
-    }
+  private initializeResponsiveOptions(): void {
+    this.responsiveOptions = [
+      {
+        breakpoint: '1950px',
+        numVisible: 3,
+        numScroll: 2,
+      },
+      {
+        breakpoint: '1150px',
+        numVisible: 2,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '767px',
+        numVisible: 1,
+        numScroll: 1,
+      },
+    ];
+  }
 }

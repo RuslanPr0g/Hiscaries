@@ -1,138 +1,118 @@
 <ng-container *ngIf="!storyNotFound; else emptyStory">
-    <div
-        class="modify-story-container"
-        *ngIf="story"
-        [ngStyle]="{ 'background-image': base64Image ? 'url(' + base64Image + ')' : 'none' }"
-    >
-        <div
-            class="overlay"
-            *ngIf="base64Image"
-        ></div>
+  <div
+    class="modify-story-container"
+    *ngIf="story"
+    [ngStyle]="{ 'background-image': base64Image ? 'url(' + base64Image + ')' : 'none' }"
+  >
+    <div class="overlay" *ngIf="base64Image"></div>
 
-        <h2>Modify Story</h2>
+    <h2>Modify Story</h2>
 
-        <form
-            [formGroup]="modifyForm"
-            (ngSubmit)="onSubmit()"
-        >
-            <p-tabView [activeIndex]="1">
-                <p-tabPanel header="General Information">
-                    <div class="form-controls">
-                        <div class="form-controls__row">
-                            <app-form-input
-                                [formGroup]="modifyForm"
-                                controlName="Title"
-                                label="Title"
-                                errorMessage="Title is required"
-                            ></app-form-input>
+    <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()">
+      <p-tabView [activeIndex]="1">
+        <p-tabPanel header="General Information">
+          <div class="form-controls">
+            <div class="form-controls__row">
+              <app-form-input
+                [formGroup]="modifyForm"
+                controlName="Title"
+                label="Title"
+                errorMessage="Title is required"
+              ></app-form-input>
 
-                            <app-form-input
-                                [formGroup]="modifyForm"
-                                controlName="AuthorName"
-                                label="Author Name"
-                                errorMessage="Author Name is required"
-                            ></app-form-input>
-                        </div>
-
-                        <app-form-textarea
-                            [formGroup]="modifyForm"
-                            controlName="Description"
-                            label="Description"
-                            errorMessage="Description is required"
-                            [rows]="4"
-                        ></app-form-textarea>
-
-                        <div class="form-controls__row">
-                            <app-number-limit-control
-                                [formGroup]="modifyForm"
-                                controlName="AgeLimit"
-                                label="Age Limit"
-                                errorMessage="Age Limit is required and must be between 0 and 18"
-                                [min]="0"
-                                [max]="18"
-                                [step]="1"
-                                [centered]="true"
-                            ></app-number-limit-control>
-
-                            <app-form-date-input
-                                [formGroup]="modifyForm"
-                                controlName="DateWritten"
-                                label="Date Written"
-                                errorMessage="Date Written is required"
-                                [centered]="true"
-                            ></app-form-date-input>
-                        </div>
-
-                        <div class="form-controls__row">
-                            <ng-container *ngIf="genres?.length">
-                                <app-form-multiselect
-                                    [formGroup]="modifyForm"
-                                    [items]="genres"
-                                    controlName="Genres"
-                                ></app-form-multiselect>
-                            </ng-container>
-
-                            <app-upload-file-control [control]="imageControl"></app-upload-file-control>
-                        </div>
-                    </div>
-                </p-tabPanel>
-
-                <p-tabPanel header="Contents">
-                    <app-content-builder
-                        [formGroup]="modifyForm"
-                        formArrayName="Contents"
-                        [contents]="contents"
-                    ></app-content-builder>
-                </p-tabPanel>
-            </p-tabView>
-
-            <div class="error-block">
-                <p-divider layout="horizontal" />
-
-                <p-message
-                    *ngIf="globalError"
-                    severity="error"
-                    [text]="globalError"
-                    class="error-message"
-                ></p-message>
-
-                <p-divider
-                    layout="horizontal"
-                    *ngIf="globalError"
-                />
-
-                <ng-container *ngIf="submitted; else submit">
-                    <p-progressSpinner
-                        styleClass="w-4rem h-4rem"
-                        strokeWidth="8"
-                        animationDuration=".5s"
-                    />
-                </ng-container>
-
-                <ng-template #submit>
-                    <app-form-button
-                        label="Apply changes"
-                        (clicked)="onSubmit()"
-                    ></app-form-button>
-                </ng-template>
+              <app-form-input
+                [formGroup]="modifyForm"
+                controlName="AuthorName"
+                label="Author Name"
+                errorMessage="Author Name is required"
+              ></app-form-input>
             </div>
-        </form>
-    </div>
 
-    <ng-container *ngIf="!story">
-        <div class="loading">
-            <p-progressSpinner
-                styleClass="w-4rem h-4rem"
-                strokeWidth="8"
-                animationDuration=".5s"
-            />
-        </div>
-    </ng-container>
+            <app-form-textarea
+              [formGroup]="modifyForm"
+              controlName="Description"
+              label="Description"
+              errorMessage="Description is required"
+              [rows]="4"
+            ></app-form-textarea>
+
+            <div class="form-controls__row">
+              <app-number-limit-control
+                [formGroup]="modifyForm"
+                controlName="AgeLimit"
+                label="Age Limit"
+                errorMessage="Age Limit is required and must be between 0 and 18"
+                [min]="0"
+                [max]="18"
+                [step]="1"
+                [centered]="true"
+              ></app-number-limit-control>
+
+              <app-form-date-input
+                [formGroup]="modifyForm"
+                controlName="DateWritten"
+                label="Date Written"
+                errorMessage="Date Written is required"
+                [centered]="true"
+              ></app-form-date-input>
+            </div>
+
+            <div class="form-controls__row">
+              <ng-container *ngIf="genres?.length">
+                <app-form-multiselect
+                  [formGroup]="modifyForm"
+                  [items]="genres"
+                  controlName="Genres"
+                ></app-form-multiselect>
+              </ng-container>
+
+              <app-upload-file-control [control]="imageControl"></app-upload-file-control>
+            </div>
+          </div>
+        </p-tabPanel>
+
+        <p-tabPanel header="Contents">
+          <app-content-builder
+            [formGroup]="modifyForm"
+            formArrayName="Contents"
+            [contents]="contents"
+          ></app-content-builder>
+        </p-tabPanel>
+      </p-tabView>
+
+      <div class="error-block">
+        <p-divider layout="horizontal" />
+
+        <p-message
+          *ngIf="globalError"
+          severity="error"
+          [text]="globalError"
+          class="error-message"
+        ></p-message>
+
+        <p-divider layout="horizontal" *ngIf="globalError" />
+
+        <ng-container *ngIf="submitted; else submit">
+          <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" animationDuration=".5s" />
+        </ng-container>
+
+        <ng-template #submit>
+          <app-form-button label="Apply changes" (clicked)="onSubmit()"></app-form-button>
+        </ng-template>
+      </div>
+    </form>
+  </div>
+
+  <ng-container *ngIf="!story">
+    <div class="loading">
+      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" animationDuration=".5s" />
+    </div>
+  </ng-container>
 </ng-container>
 
 <ng-template #emptyStory>
-    <div class="error-message">
-        <h2>Story not found</h2>
-        <p>Sorry, we couldn't find the story you're looking for.</p>
-    </div>
+  <div class="error-message">
+    <h2>Story not found</h2>
+    <p>Sorry, we couldn't find the story you're looking for.</p>
+  </div>
 </ng-template>

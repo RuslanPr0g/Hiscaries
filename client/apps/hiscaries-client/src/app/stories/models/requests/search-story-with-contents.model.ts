@@ -1,3 +1,3 @@
 export interface SearchStoryWithContentsRequest {
-    Id: string;
+  Id: string;
 }

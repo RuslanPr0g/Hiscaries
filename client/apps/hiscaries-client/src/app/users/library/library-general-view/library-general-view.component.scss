@@ -7,106 +7,106 @@ $glass-border: rgba(255, 255, 255, 0.1);
 $shadow: 0 8px 32px 0 rgba(34, 34, 26, 0.37);
 
 .library {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .profile-card {
-    width: 100%;
-    max-width: 900px;
-    background: $glass-bg;
-    border: 1px solid $glass-border;
-    border-radius: 20px;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-    color: $text-color;
-    box-shadow: $shadow;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    backdrop-filter: blur(12px);
+  width: 100%;
+  max-width: 900px;
+  background: $glass-bg;
+  border: 1px solid $glass-border;
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  color: $text-color;
+  box-shadow: $shadow;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  backdrop-filter: blur(12px);
 }
 
 .background-image-configuration {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5));
-    border-radius: 20px;
-    z-index: 1;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5));
+  border-radius: 20px;
+  z-index: 1;
 }
 
 .avatar-container {
-    z-index: 2;
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    flex-direction: column;
+  z-index: 2;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-direction: column;
 
-    .avatar img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid $accent-color;
-        box-shadow: $shadow;
-    }
+  .avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid $accent-color;
+    box-shadow: $shadow;
+  }
 }
 
 .profile-details {
-    z-index: 2;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .username-wrapper {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 1rem;
 
-    .username-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-
-        h2 {
-            margin: 0;
-        }
-
-        p {
-            color: $accent-color;
-        }
+    h2 {
+      margin: 0;
     }
 
-    .bio {
-        font-style: italic;
-        color: lighten($text-color, 20%);
+    p {
+      color: $accent-color;
     }
+  }
 
-    .social-links {
-        display: flex;
-        gap: 1rem;
+  .bio {
+    font-style: italic;
+    color: lighten($text-color, 20%);
+  }
 
-        a {
-            color: $accent-color;
+  .social-links {
+    display: flex;
+    gap: 1rem;
 
-            &:hover {
-                color: $primary-color;
-            }
-        }
+    a {
+      color: $accent-color;
+
+      &:hover {
+        color: $primary-color;
+      }
     }
+  }
 }
 
 .library-edit,
 .library-subscription {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .library-edit {
-    margin-left: calc(60px - 12px);
+  margin-left: calc(60px - 12px);
 }

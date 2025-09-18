@@ -15,65 +15,65 @@ $background-gradient-start: #3a2e2a;
 $background-gradient-end: #645044;
 
 .custom-form-field {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 0.5rem;
 
-    label {
-        font-size: 0.9rem;
-        font-weight: 600;
+  label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 0.25rem;
+  }
+
+  ::ng-deep {
+    .p-calendar {
+      width: 100%;
+
+      .p-inputtext {
+        width: 100%;
+        background: $input-bg;
+        border: 1px solid $glass-border;
+        border-radius: 10px;
         color: $text-color;
-        margin-bottom: 0.25rem;
-    }
+        padding: 0.75rem;
+        transition: background 0.3s ease;
 
-    ::ng-deep {
-        .p-calendar {
-            width: 100%;
-
-            .p-inputtext {
-                width: 100%;
-                background: $input-bg;
-                border: 1px solid $glass-border;
-                border-radius: 10px;
-                color: $text-color;
-                padding: 0.75rem;
-                transition: background 0.3s ease;
-
-                &::placeholder {
-                    color: $placeholder-color;
-                }
-
-                &:hover,
-                &:focus {
-                    background: $input-focus-bg;
-                    border-color: $accent-color;
-                }
-            }
-
-            .p-datepicker-trigger {
-                background: transparent;
-                border: none;
-                color: $text-color;
-
-                &:hover {
-                    color: $hover-color;
-                }
-            }
+        &::placeholder {
+          color: $placeholder-color;
         }
 
-        .p-message {
-            margin-top: 0.25rem;
+        &:hover,
+        &:focus {
+          background: $input-focus-bg;
+          border-color: $accent-color;
         }
+      }
+
+      .p-datepicker-trigger {
+        background: transparent;
+        border: none;
+        color: $text-color;
+
+        &:hover {
+          color: $hover-color;
+        }
+      }
     }
+
+    .p-message {
+      margin-top: 0.25rem;
+    }
+  }
 }
 
 .custom-form-field-centered {
-    align-items: center;
-    text-align: center;
+  align-items: center;
+  text-align: center;
 
-    label {
-        text-align: center;
-    }
+  label {
+    text-align: center;
+  }
 }

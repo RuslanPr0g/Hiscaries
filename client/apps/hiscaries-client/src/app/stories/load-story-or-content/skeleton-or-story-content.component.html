@@ -1,29 +1,25 @@
 <ng-container *ngIf="dataLoaded; else loading">
-    <ng-content />
+  <ng-content />
 </ng-container>
 <ng-template #loading>
-    <ng-container *ngIf="!errorMessage">
-        <ng-container *ngFor="let _ of [1, 2, 3]">
-            <div
-                class="border-round border-1 surface-border p-4 surface-card"
-                [style]="{ 'margin-bottom': '24px' }"
-            >
-                <div class="flex mb-3">
-                    <div>
-                        <p-skeleton
-                            width="300px"
-                            height="150px"
-                            [style]="{ 'margin-bottom': '8px' }"
-                        />
-                    </div>
-                </div>
-            </div>
-        </ng-container>
+  <ng-container *ngIf="!errorMessage">
+    <ng-container *ngFor="let _ of [1, 2, 3]">
+      <div
+        class="border-round border-1 surface-border p-4 surface-card"
+        [style]="{ 'margin-bottom': '24px' }"
+      >
+        <div class="flex mb-3">
+          <div>
+            <p-skeleton width="300px" height="150px" [style]="{ 'margin-bottom': '8px' }" />
+          </div>
+        </div>
+      </div>
     </ng-container>
+  </ng-container>
 </ng-template>
 <ng-container *ngIf="errorMessage">
-    <div class="error-message">
-        <h2>{{ errorMessage.Title }}</h2>
-        <p>{{ errorMessage.Description }}</p>
-    </div>
+  <div class="error-message">
+    <h2>{{ errorMessage.Title }}</h2>
+    <p>{{ errorMessage.Description }}</p>
+  </div>
 </ng-container>

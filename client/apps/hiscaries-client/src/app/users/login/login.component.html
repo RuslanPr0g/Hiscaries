@@ -1,80 +1,68 @@
 <div class="login-container">
-    <div class="background-decor">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-    </div>
+  <div class="background-decor">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
 
-    <h2>Welcome</h2>
+  <h2>Welcome</h2>
 
-    <p-card class="glass-card">
-        <form
-            [formGroup]="isLoginState ? formLogin : formRegister"
-            (ngSubmit)="onSubmit()"
-            autocomplete="off"
-            *ngIf="!isLoading"
-        >
-            <div class="form-field">
-                <input
-                    pInputText
-                    formControlName="username"
-                    placeholder="Username"
-                    class="w-full"
-                />
-            </div>
-
-            <ng-container *ngIf="!isLoginState">
-                <div class="form-field">
-                    <input
-                        pInputText
-                        formControlName="email"
-                        placeholder="Email"
-                        type="email"
-                        class="w-full"
-                    />
-                </div>
-            </ng-container>
-
-            <div class="form-field">
-                <p-password
-                    formControlName="password"
-                    placeholder="Password"
-                    [toggleMask]="true"
-                    class="w-full"
-                    [feedback]="false"
-                ></p-password>
-            </div>
-
-            <p-button
-                type="submit"
-                [label]="isLoginState ? 'Sign In' : 'Register'"
-                [disabled]="(isLoginState ? formLogin : formRegister).invalid"
-                class="w-full fancy-btn"
-            ></p-button>
-        </form>
-
-        <p
-            class="toggle-text"
-            (click)="toggleState()"
-            *ngIf="!isLoading"
-        >
-            {{ !isLoginState ? 'Have an account?' : 'Need an account?' }}
-        </p>
-
-        <div class="w-full center">
-            <p-progressSpinner
-                styleClass="w-4rem h-4rem"
-                strokeWidth="2"
-                animationDuration="0.5s"
-                *ngIf="isLoading"
-            />
-        </div>
-    </p-card>
-
-    <div
-        *ngIf="errorMessage"
-        class="error-message"
+  <p-card class="glass-card">
+    <form
+      [formGroup]="isLoginState ? formLogin : formRegister"
+      (ngSubmit)="onSubmit()"
+      autocomplete="off"
+      *ngIf="!isLoading"
     >
-        {{ errorMessage }}
+      <div class="form-field">
+        <input pInputText formControlName="username" placeholder="Username" class="w-full" />
+      </div>
+
+      <ng-container *ngIf="!isLoginState">
+        <div class="form-field">
+          <input
+            pInputText
+            formControlName="email"
+            placeholder="Email"
+            type="email"
+            class="w-full"
+          />
+        </div>
+      </ng-container>
+
+      <div class="form-field">
+        <p-password
+          formControlName="password"
+          placeholder="Password"
+          [toggleMask]="true"
+          class="w-full"
+          [feedback]="false"
+        ></p-password>
+      </div>
+
+      <p-button
+        type="submit"
+        [label]="isLoginState ? 'Sign In' : 'Register'"
+        [disabled]="(isLoginState ? formLogin : formRegister).invalid"
+        class="w-full fancy-btn"
+      ></p-button>
+    </form>
+
+    <p class="toggle-text" (click)="toggleState()" *ngIf="!isLoading">
+      {{ !isLoginState ? 'Have an account?' : 'Need an account?' }}
+    </p>
+
+    <div class="w-full center">
+      <p-progressSpinner
+        styleClass="w-4rem h-4rem"
+        strokeWidth="2"
+        animationDuration="0.5s"
+        *ngIf="isLoading"
+      />
     </div>
+  </p-card>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
 </div>

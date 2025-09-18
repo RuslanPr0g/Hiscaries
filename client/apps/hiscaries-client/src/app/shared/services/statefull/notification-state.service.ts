@@ -3,43 +3,43 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { NotificationModel } from '../../models/notification.model';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class NotificationStateService {
-    private unreadNotificationsCount = new BehaviorSubject<number>(0);
-    private notifications = new BehaviorSubject<NotificationModel[]>([]);
-    private readNotifications = new Subject<NotificationModel[]>();
+  private unreadNotificationsCount = new BehaviorSubject<number>(0);
+  private notifications = new BehaviorSubject<NotificationModel[]>([]);
+  private readNotifications = new Subject<NotificationModel[]>();
 
-    unreadCount$ = this.unreadNotificationsCount.asObservable();
-    notifications$ = this.notifications.asObservable();
-    notificationMarkedAsRead$ = this.readNotifications.asObservable();
+  unreadCount$ = this.unreadNotificationsCount.asObservable();
+  notifications$ = this.notifications.asObservable();
+  notificationMarkedAsRead$ = this.readNotifications.asObservable();
 
-    addNotification(notification: NotificationModel): void {
-        const currentNotifications = this.notifications.value;
+  addNotification(notification: NotificationModel): void {
+    const currentNotifications = this.notifications.value;
 
-        if (currentNotifications.some((x) => x.Id === notification.Id)) {
-            return;
-        }
-
-        this.notifications.next([notification, ...currentNotifications]);
-
-        const currentUnreadCount = this.unreadNotificationsCount.value;
-        this.unreadNotificationsCount.next(currentUnreadCount + 1);
+    if (currentNotifications.some((x) => x.Id === notification.Id)) {
+      return;
     }
 
-    setNotifications(notifications: NotificationModel[]): void {
-        this.notifications.next(notifications);
+    this.notifications.next([notification, ...currentNotifications]);
 
-        const currentUnreadCount = notifications.filter((x) => !x.IsRead).length;
-        this.unreadNotificationsCount.next(currentUnreadCount);
-    }
+    const currentUnreadCount = this.unreadNotificationsCount.value;
+    this.unreadNotificationsCount.next(currentUnreadCount + 1);
+  }
 
-    markAllAsRead(): void {
-        this.unreadNotificationsCount.next(0);
-        this.readNotifications.next(this.notifications.value.filter((x) => !x.IsRead));
-    }
+  setNotifications(notifications: NotificationModel[]): void {
+    this.notifications.next(notifications);
 
-    markNotificationsAsRead(notificationsToRead: NotificationModel[]): void {
-        this.readNotifications.next(notificationsToRead);
-    }
+    const currentUnreadCount = notifications.filter((x) => !x.IsRead).length;
+    this.unreadNotificationsCount.next(currentUnreadCount);
+  }
+
+  markAllAsRead(): void {
+    this.unreadNotificationsCount.next(0);
+    this.readNotifications.next(this.notifications.value.filter((x) => !x.IsRead));
+  }
+
+  markNotificationsAsRead(notificationsToRead: NotificationModel[]): void {
+    this.readNotifications.next(notificationsToRead);
+  }
 }

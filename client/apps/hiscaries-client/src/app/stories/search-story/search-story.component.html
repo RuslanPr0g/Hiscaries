@@ -1,14 +1,12 @@
 <h1 class="fs-1rem main-title">Search result</h1>
 <app-search-story-results
-    [stories]="stories()"
-    [isLoading]="isLoading()"
-    class="w-full"
->
-</app-search-story-results>
+  [stories]="stories()"
+  [isLoading]="isLoading()"
+  class="w-full"
+></app-search-story-results>
 
-<ng-container *ngIf="stories().Items.length === 0 && !isLoading()"> 📚 No stories found 💨 </ng-container>
+<ng-container *ngIf="stories().Items.length === 0 && !isLoading()">
+  📚 No stories found 💨
+</ng-container>
 
-<div
-    #loadMoreAnchor
-    class="load-more-anchor"
-></div>
+<div #loadMoreAnchor class="load-more-anchor"></div>

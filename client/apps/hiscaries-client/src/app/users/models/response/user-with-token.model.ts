@@ -1,4 +1,4 @@
 export interface UserWithTokenResponse {
-    Token: string;
-    RefreshToken: string;
+  Token: string;
+  RefreshToken: string;
 }

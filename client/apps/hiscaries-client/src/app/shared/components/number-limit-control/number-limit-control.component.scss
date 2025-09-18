@@ -15,64 +15,64 @@ $background-gradient-start: #3a2e2a;
 $background-gradient-end: #645044;
 
 .custom-form-field {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 0.5rem;
 
-    label {
-        font-size: 0.9rem;
-        font-weight: 600;
+  label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 0.25rem;
+  }
+
+  ::ng-deep {
+    .p-inputnumber {
+      width: 100%;
+      background: $input-bg;
+      border-radius: 10px;
+      border: 1px solid $glass-border;
+      color: $text-color;
+      transition: background 0.3s ease;
+
+      &:hover,
+      &:focus-within {
+        background: $input-focus-bg;
+        border-color: $accent-color;
+      }
+
+      input {
+        background: transparent;
         color: $text-color;
-        margin-bottom: 0.25rem;
+        border: none;
+        padding: 0.75rem;
+      }
+
+      .p-inputnumber-button {
+        background: $input-bg;
+        border: none;
+        color: $text-color;
+
+        &:hover {
+          background: $input-focus-bg;
+          color: $hover-color;
+        }
+      }
     }
 
-    ::ng-deep {
-        .p-inputnumber {
-            width: 100%;
-            background: $input-bg;
-            border-radius: 10px;
-            border: 1px solid $glass-border;
-            color: $text-color;
-            transition: background 0.3s ease;
-
-            &:hover,
-            &:focus-within {
-                background: $input-focus-bg;
-                border-color: $accent-color;
-            }
-
-            input {
-                background: transparent;
-                color: $text-color;
-                border: none;
-                padding: 0.75rem;
-            }
-
-            .p-inputnumber-button {
-                background: $input-bg;
-                border: none;
-                color: $text-color;
-
-                &:hover {
-                    background: $input-focus-bg;
-                    color: $hover-color;
-                }
-            }
-        }
-
-        .p-message {
-            margin-top: 0.25rem;
-        }
+    .p-message {
+      margin-top: 0.25rem;
     }
+  }
 }
 
 .custom-form-field-centered {
-    align-items: center;
-    text-align: center;
+  align-items: center;
+  text-align: center;
 
-    label {
-        text-align: center;
-    }
+  label {
+    text-align: center;
+  }
 }

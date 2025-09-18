@@ -1,32 +1,30 @@
 <div
-    class="story-card"
-    (click)="previewStory(story); $event.stopPropagation()"
-    (keydown)="previewStory(story); $event.stopPropagation()"
-    tabindex="0"
+  class="story-card"
+  (click)="previewStory(story); $event.stopPropagation()"
+  (keydown)="previewStory(story); $event.stopPropagation()"
+  tabindex="0"
 >
-    <div class="story-thumbnail">
-        <img
-            [src]="story.ImagePreviewUrl"
-            loading="lazy"
-            alt="{{ story.Title }}"
-            class="story-image"
-        />
-        <div class="story-gradient-overlay"></div>
-        <div class="story-details-overlay">
-            <h3 class="story-title">{{ story.Title | slice : 0 : 40 }}{{ story.Title.length > 40 ? '...' : '' }}</h3>
-            <div class="story-info__item-age">
-                <i class="fas fa-calendar-alt"></i> {{ story.AuthorName | slice : 0 : 30 }}
-            </div>
-        </div>
-        <app-progress-bar [percentage]="story.PercentageRead"></app-progress-bar>
+  <div class="story-thumbnail">
+    <img [src]="story.ImagePreviewUrl" loading="lazy" alt="{{ story.Title }}" class="story-image" />
+    <div class="story-gradient-overlay"></div>
+    <div class="story-details-overlay">
+      <h3 class="story-title">
+        {{ story.Title | slice : 0 : 40 }}{{ story.Title.length > 40 ? '...' : '' }}
+      </h3>
+      <div class="story-info__item-age">
+        <i class="fas fa-calendar-alt"></i>
+        {{ story.AuthorName | slice : 0 : 30 }}
+      </div>
     </div>
+    <app-progress-bar [percentage]="story.PercentageRead"></app-progress-bar>
+  </div>
 
-    <div class="story-hover-details">
-        <h4 class="story-author">
-            <span>{{ story.AgeLimit }}+</span>
-        </h4>
-        <p class="full-description">
-            {{ story.Description | slice : 0 : 70 }}{{ story.Description.length > 70 ? '...' : '' }}
-        </p>
-    </div>
+  <div class="story-hover-details">
+    <h4 class="story-author">
+      <span>{{ story.AgeLimit }}+</span>
+    </h4>
+    <p class="full-description">
+      {{ story.Description | slice : 0 : 70 }}{{ story.Description.length > 70 ? '...' : '' }}
+    </p>
+  </div>
 </div>

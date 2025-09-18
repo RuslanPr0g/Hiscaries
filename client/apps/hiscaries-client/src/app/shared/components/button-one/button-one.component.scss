@@ -1,64 +1,64 @@
 .button-1 {
-    align-items: center;
-    background-image: linear-gradient(144deg, #5b42f3, #c9a27d 50%, #5b42f3);
-    border: 0;
-    border-radius: 8px;
-    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-    color: #ffffff;
-    display: flex;
-    font-family: Phantomsans, sans-serif;
-    font-size: 20px;
-    justify-content: center;
-    line-height: 1em;
-    max-width: 100%;
-    min-width: 140px;
-    padding: 3px;
-    text-decoration: none;
-    user-select: none;
-    touch-action: manipulation;
-    white-space: nowrap;
-    cursor: pointer;
+  align-items: center;
+  background-image: linear-gradient(144deg, #5b42f3, #c9a27d 50%, #5b42f3);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  color: #ffffff;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 3px;
+  text-decoration: none;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
 
-    &:active,
+  &:active,
+  &:hover {
+    outline: 0;
+  }
+
+  span {
+    background-color: rgb(5, 6, 45);
+    padding: 16px 24px;
+    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+    transition: background 300ms ease;
+
     &:hover {
-        outline: 0;
+      background: none;
     }
+  }
 
-    span {
-        background-color: rgb(5, 6, 45);
-        padding: 16px 24px;
-        border-radius: 6px;
-        width: 100%;
-        height: 100%;
-        transition: background 300ms ease;
-
-        &:hover {
-            background: none;
-        }
-    }
-
-    @media (min-width: 768px) {
-        font-size: 24px;
-        min-width: 196px;
-    }
+  @media (min-width: 768px) {
+    font-size: 24px;
+    min-width: 196px;
+  }
 }
 
 .button-1--disabled {
-    background-image: linear-gradient(144deg, #5b42f3, #c9a27d 20%, #5b42f3);
-    cursor: not-allowed;
+  background-image: linear-gradient(144deg, #5b42f3, #c9a27d 20%, #5b42f3);
+  cursor: not-allowed;
+  opacity: 0.6;
+
+  &:hover {
+    background-image: linear-gradient(
+      144deg,
+      rgba(175, 64, 255, 0.5),
+      rgba(91, 66, 243, 0.5) 50%,
+      rgba(0, 221, 235, 0.5)
+    );
+  }
+
+  span {
+    background-color: rgb(5, 6, 45);
     opacity: 0.6;
-
-    &:hover {
-        background-image: linear-gradient(
-            144deg,
-            rgba(175, 64, 255, 0.5),
-            rgba(91, 66, 243, 0.5) 50%,
-            rgba(0, 221, 235, 0.5)
-        );
-    }
-
-    span {
-        background-color: rgb(5, 6, 45);
-        opacity: 0.6;
-    }
+  }
 }

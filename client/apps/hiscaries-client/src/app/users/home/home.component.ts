@@ -4,10 +4,10 @@ import { SearchStoryRecommendationsComponent } from '@stories/search-story-recom
 import { SearchStoryResumeReadingComponent } from '@stories/search-story-resume-reading/search-story-resume-reading.component';
 
 @Component({
-    selector: 'app-home',
-    standalone: true,
-    imports: [CommonModule, SearchStoryRecommendationsComponent, SearchStoryResumeReadingComponent],
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
+  selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule, SearchStoryRecommendationsComponent, SearchStoryResumeReadingComponent],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {}

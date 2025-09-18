@@ -1,27 +1,27 @@
 <div
-    [formGroup]="formGroup"
-    class="custom-form-field"
-    [ngClass]="{ 'custom-form-field-centered': centered }"
+  [formGroup]="formGroup"
+  class="custom-form-field"
+  [ngClass]="{ 'custom-form-field-centered': centered }"
 >
-    <label [for]="controlName">{{ label }}</label>
+  <label [for]="controlName">{{ label }}</label>
 
-    <p-inputNumber
-        [formControlName]="controlName"
-        [showButtons]="true"
-        buttonLayout="horizontal"
-        spinnerMode="horizontal"
-        [min]="min"
-        [max]="max"
-        [step]="step"
-        decrementButtonClass="p-button-secondary"
-        incrementButtonClass="p-button-secondary"
-        incrementButtonIcon="pi pi-plus"
-        decrementButtonIcon="pi pi-minus"
-    ></p-inputNumber>
+  <p-inputNumber
+    [formControlName]="controlName"
+    [showButtons]="true"
+    buttonLayout="horizontal"
+    spinnerMode="horizontal"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    decrementButtonClass="p-button-secondary"
+    incrementButtonClass="p-button-secondary"
+    incrementButtonIcon="pi pi-plus"
+    decrementButtonIcon="pi pi-minus"
+  ></p-inputNumber>
 
-    <p-message
-        severity="error"
-        [text]="errorMessage"
-        *ngIf="formGroup.get(controlName)?.invalid && formGroup.get(controlName)?.touched"
-    ></p-message>
+  <p-message
+    severity="error"
+    [text]="errorMessage"
+    *ngIf="formGroup.get(controlName)?.invalid && formGroup.get(controlName)?.touched"
+  ></p-message>
 </div>

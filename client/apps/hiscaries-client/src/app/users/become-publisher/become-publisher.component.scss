@@ -3,71 +3,71 @@ $text-color: #fefefe;
 $button-hover-color: darken($primary-color, 10%);
 
 .publisher-confirmation-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 70vh;
-    padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 1rem;
 
-    .card {
-        background: #3e3e3e;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        max-width: 600px;
-        padding: 2rem;
-        text-align: center;
+  .card {
+    background: #3e3e3e;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    padding: 2rem;
+    text-align: center;
 
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: $primary-color;
-        }
-
-        p {
-            color: $text-color;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 1rem 0;
-
-            li {
-                color: $text-color;
-                margin: 0.5rem 0;
-                position: relative;
-                padding-left: 1.5rem;
-
-                &::before {
-                    content: '✓';
-                    color: $primary-color;
-                    position: absolute;
-                    left: 0;
-                    font-size: 1.2rem;
-                }
-            }
-        }
-
-        button {
-            background-color: $primary-color;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-size: 1rem;
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-
-            &:hover {
-                background-color: $button-hover-color;
-            }
-
-            &:focus {
-                outline: none;
-                box-shadow: 0 0 0 3px rgba($primary-color, 0.5);
-            }
-        }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: $primary-color;
     }
+
+    p {
+      color: $text-color;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 1rem 0;
+
+      li {
+        color: $text-color;
+        margin: 0.5rem 0;
+        position: relative;
+        padding-left: 1.5rem;
+
+        &::before {
+          content: '✓';
+          color: $primary-color;
+          position: absolute;
+          left: 0;
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    button {
+      background-color: $primary-color;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 1rem;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: $button-hover-color;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.5);
+      }
+    }
+  }
 }

@@ -1,80 +1,79 @@
 {
-    "name": "hiscaries-client",
-    "version": "1.0.0",
-    "scripts": {
-        "ng": "ng",
-        "start": "nx serve hiscaries-client --proxy-config proxy.conf.json",
-        "watch": "nx build hiscaries-client --watch --configuration development",
-        "test": "nx test",
-        "reset": "nx reset",
-        "lintall": "npx eslint . --ignore-pattern \".angular/*\"",
-        "lint": "nx lint hiscaries-client",
-        "test:ci": "nx test --watch=false",
-        "build": "nx build hiscaries-client",
-        "show-config": "cd apps/hiscaries-client & tsc --showConfig",
-        "update": "nx migrate latest"
-    },
-    "private": true,
-    "dependencies": {
-        "@angular/animations": "^18.1.0",
-        "@angular/cdk": "^18.2.8",
-        "@angular/common": "^18.1.0",
-        "@angular/compiler": "^18.1.0",
-        "@angular/core": "^18.1.0",
-        "@angular/forms": "^18.1.0",
-        "@angular/platform-browser": "^18.1.0",
-        "@angular/platform-browser-dynamic": "^18.1.0",
-        "@angular/router": "^18.1.0",
-        "@auth0/angular-jwt": "^5.2.0",
-        "@microsoft/signalr": "^8.0.7",
-        "@ngrx/store": "^18.0.2",
-        "prettier": "^3.3.3",
-        "primeicons": "^7.0.0",
-        "primeng": "^17.18.11",
-        "quill": "^2.0.2",
-        "rxjs": "~7.8.0",
-        "tslib": "^2.3.0",
-        "zone.js": "~0.14.3"
-    },
-    "devDependencies": {
-        "@angular-devkit/build-angular": "^18.1.2",
-        "@angular-devkit/core": "^18.1.2",
-        "@angular-devkit/schematics": "^18.1.2",
-        "@angular/cli": "^18.1.2",
-        "@angular/compiler-cli": "^18.1.0",
-        "@eslint/js": "^9.13.0",
-        "@nx/angular": "21.5.1",
-        "@nx/jest": "21.5.1",
-        "@nx/js": "21.5.1",
-        "@nx/workspace": "21.5.1",
-        "@schematics/angular": "^18.1.2",
-        "@swc-node/register": "~1.9.1",
-        "@swc/core": "~1.5.7",
-        "@swc/helpers": "~0.5.11",
-        "@types/node": "20.19.9",
-        "angular-eslint": "19.0.0",
-        "autoprefixer": "^10.4.0",
-        "eslint": "^9.15.0",
-        "globals": "^15.11.0",
-        "lint-staged": "^15.2.10",
-        "nx": "21.5.1",
-        "postcss": "^8.4.5",
-        "prettier": "^2.6.2",
-        "tailwindcss": "^3.0.2",
-        "ts-node": "10.9.1",
-        "typescript": "~5.5.2",
-        "typescript-eslint": "8.16.0"
-    },
-    "lint-staged": {
-        "*.{ts,js}": [
-            "eslint --fix --ignore-pattern \".angular/*\"",
-            "prettier --write"
-        ],
-        "*.scss": [
-            "prettier --write"
-        ],
-        "*.html": [
-            "prettier --write"
-        ]
-    }
+  "name": "hiscaries-client",
+  "version": "1.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "nx serve hiscaries-client --proxy-config proxy.conf.json",
+    "watch": "nx build hiscaries-client --watch --configuration development",
+    "test": "nx test",
+    "reset": "nx reset",
+    "lintall": "npx eslint . --ignore-pattern \".angular/*\"",
+    "lint": "nx lint hiscaries-client",
+    "test:ci": "nx test --watch=false",
+    "build": "nx build hiscaries-client",
+    "show-config": "cd apps/hiscaries-client & tsc --showConfig",
+    "update": "nx migrate latest"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^18.1.0",
+    "@angular/cdk": "^18.2.8",
+    "@angular/common": "^18.1.0",
+    "@angular/compiler": "^18.1.0",
+    "@angular/core": "^18.1.0",
+    "@angular/forms": "^18.1.0",
+    "@angular/platform-browser": "^18.1.0",
+    "@angular/platform-browser-dynamic": "^18.1.0",
+    "@angular/router": "^18.1.0",
+    "@auth0/angular-jwt": "^5.2.0",
+    "@microsoft/signalr": "^8.0.7",
+    "@ngrx/store": "^18.0.2",
+    "primeicons": "^7.0.0",
+    "primeng": "^17.18.11",
+    "quill": "^2.0.2",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.3"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^18.1.2",
+    "@angular-devkit/core": "^18.1.2",
+    "@angular-devkit/schematics": "^18.1.2",
+    "@angular/cli": "^18.1.2",
+    "@angular/compiler-cli": "^18.1.0",
+    "@eslint/js": "^9.13.0",
+    "@nx/angular": "21.5.1",
+    "@nx/jest": "21.5.1",
+    "@nx/js": "21.5.1",
+    "@nx/workspace": "21.5.1",
+    "@schematics/angular": "^18.1.2",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "@types/node": "20.19.9",
+    "angular-eslint": "19.0.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^9.15.0",
+    "globals": "^15.11.0",
+    "lint-staged": "^15.2.10",
+    "nx": "21.5.1",
+    "postcss": "^8.4.5",
+    "prettier": "^2.8.8",
+    "tailwindcss": "^3.0.2",
+    "ts-node": "10.9.1",
+    "typescript": "~5.5.2",
+    "typescript-eslint": "8.16.0"
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix --ignore-pattern \".angular/*\"",
+      "prettier --write"
+    ],
+    "*.scss": [
+      "prettier --write"
+    ],
+    "*.html": [
+      "prettier --write"
+    ]
+  }
 }

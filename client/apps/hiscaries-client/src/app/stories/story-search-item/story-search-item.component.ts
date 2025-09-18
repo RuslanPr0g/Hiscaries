@@ -6,18 +6,18 @@ import { NavigationConst } from '@shared/constants/navigation.const';
 import { ProgressBarComponent } from '@shared/components/progress-bar/progress-bar.component';
 
 @Component({
-    selector: 'app-story-search-item',
-    standalone: true,
-    imports: [CommonModule, ProgressBarComponent],
-    templateUrl: './story-search-item.component.html',
-    styleUrl: './story-search-item.component.scss',
+  selector: 'app-story-search-item',
+  standalone: true,
+  imports: [CommonModule, ProgressBarComponent],
+  templateUrl: './story-search-item.component.html',
+  styleUrl: './story-search-item.component.scss',
 })
 export class SearchStoryItemComponent {
-    @Input() story: StoryModel;
+  @Input() story: StoryModel;
 
-    constructor(private router: Router) {}
+  constructor(private router: Router) {}
 
-    previewStory(story: StoryModel): void {
-        this.router.navigate([NavigationConst.PreviewStory(story.Id)]);
-    }
+  previewStory(story: StoryModel): void {
+    this.router.navigate([NavigationConst.PreviewStory(story.Id)]);
+  }
 }

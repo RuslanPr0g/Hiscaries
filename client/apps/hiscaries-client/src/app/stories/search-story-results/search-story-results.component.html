@@ -1,14 +1,11 @@
 <app-skeleton-or-story-content [dataLoaded]="true">
-    <div class="story-grid glassy-grid">
-        <div
-            *ngFor="let story of stories.Items"
-            class="grid-item"
-        >
-            <app-story-search-item [story]="story"></app-story-search-item>
-        </div>
+  <div class="story-grid glassy-grid">
+    <div *ngFor="let story of stories.Items" class="grid-item">
+      <app-story-search-item [story]="story"></app-story-search-item>
     </div>
+  </div>
 </app-skeleton-or-story-content>
 
-<app-skeleton-or-story-content [dataLoaded]="!isLoading"> </app-skeleton-or-story-content>
+<app-skeleton-or-story-content [dataLoaded]="!isLoading"></app-skeleton-or-story-content>
 
-<ng-template #noStories> 😕 No stories found matching your search. </ng-template>
+<ng-template #noStories>😕 No stories found matching your search.</ng-template>

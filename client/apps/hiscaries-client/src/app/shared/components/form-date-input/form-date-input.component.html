@@ -1,20 +1,20 @@
 <div
-    [formGroup]="formGroup"
-    class="custom-form-field"
-    [ngClass]="{ 'custom-form-field-centered': centered }"
+  [formGroup]="formGroup"
+  class="custom-form-field"
+  [ngClass]="{ 'custom-form-field-centered': centered }"
 >
-    <label [for]="controlName">{{ label }}</label>
+  <label [for]="controlName">{{ label }}</label>
 
-    <p-calendar
-        [formControlName]="controlName"
-        [showIcon]="true"
-        dateFormat="yy-mm-dd"
-        [iconDisplay]="'input'"
-    ></p-calendar>
+  <p-calendar
+    [formControlName]="controlName"
+    [showIcon]="true"
+    dateFormat="yy-mm-dd"
+    [iconDisplay]="'input'"
+  ></p-calendar>
 
-    <p-message
-        severity="error"
-        [text]="errorMessage"
-        *ngIf="formGroup.get(controlName)?.invalid && formGroup.get(controlName)?.touched"
-    ></p-message>
+  <p-message
+    severity="error"
+    [text]="errorMessage"
+    *ngIf="formGroup.get(controlName)?.invalid && formGroup.get(controlName)?.touched"
+  ></p-message>
 </div>

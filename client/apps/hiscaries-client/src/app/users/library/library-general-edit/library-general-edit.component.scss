@@ -6,81 +6,81 @@ $glass-border: rgba(255, 255, 255, 0.1);
 $shadow: 0 8px 32px 0 rgba(34, 34, 26, 0.37);
 
 .library {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
 }
 
 .profile-card {
-    width: 100%;
-    background: $glass-bg;
-    border: 1px solid $glass-border;
-    border-radius: 20px;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-    color: $text-color;
-    box-shadow: $shadow;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    backdrop-filter: blur(12px);
+  width: 100%;
+  background: $glass-bg;
+  border: 1px solid $glass-border;
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  color: $text-color;
+  box-shadow: $shadow;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  backdrop-filter: blur(12px);
 }
 
 .background-image-configuration {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8));
-    border-radius: 20px;
-    z-index: 1;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8));
+  border-radius: 20px;
+  z-index: 1;
 }
 
 .profile-details {
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .field-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 775px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 775px;
 }
 
 h3 {
-    color: $accent-color;
+  color: $accent-color;
 }
 
 .item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
 }
 
 .library-edit {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
 
-    button {
-        font-size: 2rem;
-        color: $accent-color;
+  button {
+    font-size: 2rem;
+    color: $accent-color;
 
-        &:hover {
-            color: $primary-color;
-        }
+    &:hover {
+      color: $primary-color;
     }
+  }
 }

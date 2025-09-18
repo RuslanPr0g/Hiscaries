@@ -9,60 +9,66 @@ import { UploadFileControlComponent } from '@shared/components/upload-file-contr
 import { ChipsModule } from 'primeng/chips';
 
 @Component({
-    selector: 'app-library-general-edit',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, ChipsModule, FormTextareaComponent, UploadFileControlComponent],
-    templateUrl: './library-general-edit.component.html',
-    styleUrl: './library-general-edit.component.scss',
+  selector: 'app-library-general-edit',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ChipsModule,
+    FormTextareaComponent,
+    UploadFileControlComponent,
+  ],
+  templateUrl: './library-general-edit.component.html',
+  styleUrl: './library-general-edit.component.scss',
 })
 export class LibraryGeneralEditComponent implements OnInit {
-    modifyForm: FormGroup<ModifyLibraryFormModel>;
+  modifyForm: FormGroup<ModifyLibraryFormModel>;
 
-    @Input() library: LibraryModel;
-    @Input() isAbleToEdit = false;
+  @Input() library: LibraryModel;
+  @Input() isAbleToEdit = false;
 
-    @Output() editCancelled = new EventEmitter<void>();
-    @Output() editSaved = new EventEmitter<LibraryModel>();
+  @Output() editCancelled = new EventEmitter<void>();
+  @Output() editSaved = new EventEmitter<LibraryModel>();
 
-    constructor(private iconService: SocialMediaIconMapperService, private fb: FormBuilder) {}
+  constructor(private iconService: SocialMediaIconMapperService, private fb: FormBuilder) {}
 
-    ngOnInit(): void {
-        if (this.library) {
-            this.modifyForm = this.fb.group<ModifyLibraryFormModel>({
-                Bio: this.fb.control<string | null>(this.library.Bio),
-                AvatarUrl: this.fb.control<string | null>(this.library.AvatarUrl),
-                LinksToSocialMedia: this.fb.control<string[] | null>(this.library.LinksToSocialMedia),
-            });
-        }
+  ngOnInit(): void {
+    if (this.library) {
+      this.modifyForm = this.fb.group<ModifyLibraryFormModel>({
+        Bio: this.fb.control<string | null>(this.library.Bio),
+        AvatarUrl: this.fb.control<string | null>(this.library.AvatarUrl),
+        LinksToSocialMedia: this.fb.control<string[] | null>(this.library.LinksToSocialMedia),
+      });
     }
+  }
 
-    get backgroundImageUrl(): string | null | undefined {
-        return this.imageControl?.value;
-    }
+  get backgroundImageUrl(): string | null | undefined {
+    return this.imageControl?.value;
+  }
 
-    get imageControl(): AbstractControl<string | null, string | null> | null {
-        return this.modifyForm.get('AvatarUrl');
-    }
+  get imageControl(): AbstractControl<string | null, string | null> | null {
+    return this.modifyForm.get('AvatarUrl');
+  }
 
-    getSocialNetworkIcon(link: string): string {
-        return this.iconService.mapFromUrl(link);
-    }
+  getSocialNetworkIcon(link: string): string {
+    return this.iconService.mapFromUrl(link);
+  }
 
-    cancelEdit(): void {
-        this.editCancelled?.emit();
-    }
+  cancelEdit(): void {
+    this.editCancelled?.emit();
+  }
 
-    saveEdit(model: LibraryModel): void {
-        this.editSaved?.emit(model);
-    }
+  saveEdit(model: LibraryModel): void {
+    this.editSaved?.emit(model);
+  }
 
-    onSubmit(): void {
-        const formValue = this.modifyForm.value;
-        this.saveEdit({
-            ...this.library,
-            // TODO: figure out what to do in these kinda situations
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ...(formValue as any),
-        });
-    }
+  onSubmit(): void {
+    const formValue = this.modifyForm.value;
+    this.saveEdit({
+      ...this.library,
+      // TODO: figure out what to do in these kinda situations
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ...(formValue as any),
+    });
+  }
 }

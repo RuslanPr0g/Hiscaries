@@ -1,3 +1,3 @@
 export interface BaseIdModel {
-    Id: string;
+  Id: string;
 }

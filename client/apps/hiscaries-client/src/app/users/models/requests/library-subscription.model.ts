@@ -1,3 +1,3 @@
 export interface LibrarySubscriptionRequest {
-    LibraryId: string;
+  LibraryId: string;
 }

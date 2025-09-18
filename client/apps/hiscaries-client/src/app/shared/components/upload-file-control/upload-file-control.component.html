@@ -1,28 +1,25 @@
-<div
-    class="custom-form-field"
-    [ngClass]="{ 'custom-form-field-centered': centered }"
->
-    <p-fileUpload
-        #fileUpload
-        mode="basic"
-        chooseLabel="Select preview image"
-        chooseIcon="pi pi-upload"
-        name="demo[]"
-        accept="image/*"
-        [maxFileSize]="maxFileSize"
-        [auto]="true"
-        (onSelect)="onSelect($event)"
-    />
-    <p-button
-        (click)="clearSelection()"
-        icon="pi pi-times"
-        [text]="true"
-        severity="danger"
-        *ngIf="hasImageSelected"
-    />
+<div class="custom-form-field" [ngClass]="{ 'custom-form-field-centered': centered }">
+  <p-fileUpload
+    #fileUpload
+    mode="basic"
+    chooseLabel="Select preview image"
+    chooseIcon="pi pi-upload"
+    name="demo[]"
+    accept="image/*"
+    [maxFileSize]="maxFileSize"
+    [auto]="true"
+    (onSelect)="onSelect($event)"
+  />
+  <p-button
+    (click)="clearSelection()"
+    icon="pi pi-times"
+    [text]="true"
+    severity="danger"
+    *ngIf="hasImageSelected"
+  />
 </div>
 <p-message
-    severity="error"
-    [text]="requiredErrorMessage"
-    *ngIf="control?.hasError('required') && control?.touched"
+  severity="error"
+  [text]="requiredErrorMessage"
+  *ngIf="control?.hasError('required') && control?.touched"
 ></p-message>
