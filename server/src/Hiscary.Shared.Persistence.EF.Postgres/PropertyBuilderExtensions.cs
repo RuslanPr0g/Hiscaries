@@ -13,7 +13,7 @@ public static class PropertyBuilderExtensions
     {
         return builder.HasConversion(
             v => JsonSerializer.Serialize(v, _serializerOptions),
-            v => JsonSerializer.Deserialize<ImageContainer>(v, _serializerOptions) ?? ImageContainer.Empty
+            v => new ImageContainer(JsonSerializer.Deserialize<Dictionary<string, string>>(v, _serializerOptions)) ?? ImageContainer.Empty
         );
     }
 }
