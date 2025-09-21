@@ -1,5 +1,17 @@
-<div class="modal-overlay" (click)="closeModal()">
-  <div class="modal-window" (click)="$event.stopPropagation()">
+<div
+  class="modal-overlay"
+  (click)="closeModal()"
+  (keydown.enter)="closeModal()"
+  (keydown.space)="closeModal()"
+  tabindex="0"
+>
+  <div
+    class="modal-window"
+    (click)="$event.stopPropagation()"
+    (keydown.enter)="$event.stopPropagation()"
+    (keydown.space)="$event.stopPropagation()"
+    tabindex="0"
+  >
     <button class="modal-close-btn" (click)="closeModal()" aria-label="Close modal">×</button>
 
     <div class="search">

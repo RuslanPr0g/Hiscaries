@@ -11,7 +11,7 @@ import { NotificationLifecycleManagerService } from './users/services/notificati
 import { StoryPublishedHandler } from './users/notification-handlers/story-published-notification.handler';
 import { NotificationStateService } from '@shared/services/statefull/notification-state.service';
 import { Location } from '@angular/common';
-import { filter, takeUntil } from 'rxjs';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -40,9 +40,8 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     private notificationManagerService: NotificationLifecycleManagerService,
     private notificationStateService: NotificationStateService,
-    private location: Location, // TODO: make it work
-  ) // @Inject(NOTIFICATION_HANDLERS) private notificationHandlers: NotificationHandler[]
-  {}
+    private location: Location, // TODO: make it work // @Inject(NOTIFICATION_HANDLERS) private notificationHandlers: NotificationHandler[]
+  ) {}
 
   ngOnInit() {
     setTimeout(() => {

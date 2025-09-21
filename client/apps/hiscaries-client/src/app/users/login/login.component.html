@@ -52,6 +52,7 @@
       </ng-container>
       <ng-template #loaded>
         <p-button
+          tabindex="0"
           type="submit"
           [label]="isLoginState ? 'Sign In' : 'Register'"
           class="w-full fancy-btn"
@@ -59,7 +60,14 @@
       </ng-template>
     </form>
 
-    <p class="toggle-text mt-4" (click)="toggleState()" *ngIf="isLoadedFully">
+    <p
+      class="toggle-text mt-4"
+      (click)="toggleState()"
+      (keydown.enter)="toggleState()"
+      (keydown.space)="toggleState()"
+      tabindex="1"
+      *ngIf="isLoadedFully"
+    >
       {{ !isLoginState ? 'Have an account?' : 'Need an account?' }}
     </p>
 

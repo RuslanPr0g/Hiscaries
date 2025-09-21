@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { AuthService } from '@users/services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -57,6 +57,11 @@ export class HeaderComponent {
         Command: () => this.logOut(),
       },
     ];
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapePress(): void {
+    this.closeModal();
   }
 
   closeModal() {

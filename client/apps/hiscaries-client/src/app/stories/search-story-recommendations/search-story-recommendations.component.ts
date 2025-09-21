@@ -5,7 +5,7 @@ import { SearchStoryResultsComponent } from '@stories/search-story-results/searc
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { StoryModel } from '@stories/models/domain/story-model';
-import { emptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 
 @Component({
   selector: 'app-search-story-recommendations',
@@ -19,7 +19,7 @@ export class SearchStoryRecommendationsComponent implements AfterViewInit {
   private storyService = inject(StoryWithMetadataService);
   pagination = inject(PaginationService);
 
-  stories = signal<QueriedModel<StoryModel>>(emptyQueriedResult);
+  stories = signal<QueriedModel<StoryModel>>(generateEmptyQueriedResult());
   isLoading = signal(false);
 
   @ViewChild('loadMoreAnchor', { static: true }) loadMoreAnchor!: ElementRef<HTMLDivElement>;
@@ -49,14 +49,14 @@ export class SearchStoryRecommendationsComponent implements AfterViewInit {
     }
   }
 
-  private loadStories(reset: boolean = false) {
+  private loadStories(reset = false) {
     if (this.pagination.snapshot.StartIndex > 300) {
       return;
     }
 
     if (reset) {
       this.pagination.reset();
-      this.stories.set(emptyQueriedResult);
+      this.stories.set(generateEmptyQueriedResult());
     }
 
     this.isLoading.set(true);
@@ -69,7 +69,7 @@ export class SearchStoryRecommendationsComponent implements AfterViewInit {
         }),
       )
       .subscribe((data) => {
-        const current = reset ? emptyQueriedResult : this.stories();
+        const current = reset ? generateEmptyQueriedResult<StoryModel>() : this.stories();
         this.stories.set({
           Items: [...current.Items, ...data.Items],
           TotalItemsCount: data.TotalItemsCount,

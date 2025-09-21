@@ -1,4 +1,4 @@
-name: Angular Build
+name: Angular CI
 
 on:
   push:
@@ -8,11 +8,12 @@ on:
 
 jobs:
   angular:
-    name: Angular Build
+    name: Angular Lint, Test & Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [20.x]
+
     steps:
       - name: Checkout the source code
         uses: actions/checkout@v3
@@ -27,15 +28,15 @@ jobs:
       - name: Clean install dependencies
         working-directory: client
         run: npm install
-# TODO: enable tests
-# - name: Run tests
-#   working-directory: client
-#   run: npm run test:ci -- --browsers=ChromeHeadless
-#   env:
-#     DISPLAY: :99
-#     CHROME_BIN: /usr/bin/chromium-browser
-#     CHROME_HEADLESS_NO_SANDBOX: true
 
-# - name: Build the project
-#   working-directory: client
-#   run: npm run build
+      - name: Run lint
+        working-directory: client
+        run: npm run lintall
+
+      - name: Run unit tests
+        working-directory: client
+        run: npm run test:ci
+
+      - name: Build the project
+        working-directory: client
+        run: npm run build

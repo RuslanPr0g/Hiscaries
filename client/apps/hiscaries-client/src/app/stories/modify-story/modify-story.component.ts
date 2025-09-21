@@ -169,7 +169,7 @@ export class ModifyStoryComponent implements OnInit {
 
     const formModel = this.modifyForm.value;
 
-    var isValidPreview = isValidImageBase64Selected(formModel.Image as any);
+    const isValidPreview = isValidImageBase64Selected(formModel.Image as string);
 
     const request: ModifyStoryRequest = {
       ...formModel,

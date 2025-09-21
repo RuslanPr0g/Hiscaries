@@ -9,7 +9,7 @@ import { PaginationService } from '@shared/services/statefull/pagination.service
 import { NavigationConst } from '@shared/constants/navigation.const';
 import { LibraryModel } from '@users/models/domain/library.model';
 import { CommonModule } from '@angular/common';
-import { emptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
 
@@ -29,7 +29,7 @@ export class MyLibraryComponent implements AfterViewInit {
   pagination = inject(PaginationService);
 
   libraryInfo: LibraryModel | null = null;
-  stories = signal<QueriedModel<StoryModel>>(emptyQueriedResult);
+  stories = signal<QueriedModel<StoryModel>>(generateEmptyQueriedResult());
   isLoading = signal(false);
 
   @ViewChild('loadMoreAnchor', { static: true }) loadMoreAnchor!: ElementRef<HTMLDivElement>;
@@ -83,11 +83,11 @@ export class MyLibraryComponent implements AfterViewInit {
     return null;
   }
 
-  private loadStories(reset: boolean = false) {
+  private loadStories(reset = false) {
     if (!this.libraryInfo) return;
     if (reset) {
       this.pagination.reset();
-      this.stories.set(emptyQueriedResult);
+      this.stories.set(generateEmptyQueriedResult());
     }
 
     this.isLoading.set(true);
@@ -99,7 +99,7 @@ export class MyLibraryComponent implements AfterViewInit {
       .pipe(take(1))
       .subscribe({
         next: (data) => {
-          const current = reset ? emptyQueriedResult : this.stories();
+          const current = reset ? generateEmptyQueriedResult<StoryModel>() : this.stories();
           this.stories.set({
             Items: [...current.Items, ...data.Items],
             TotalItemsCount: data.TotalItemsCount,

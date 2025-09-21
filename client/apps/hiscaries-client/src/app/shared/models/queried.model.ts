@@ -3,7 +3,7 @@ export interface QueriedModel<T> {
   TotalItemsCount: number;
 }
 
-export const emptyQueriedResult: QueriedModel<any> = {
+export const generateEmptyQueriedResult = <T>(): QueriedModel<T> => ({
   Items: [],
   TotalItemsCount: 0,
-};
+});

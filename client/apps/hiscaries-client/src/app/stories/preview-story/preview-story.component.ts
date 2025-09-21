@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { take } from 'rxjs';
@@ -15,7 +15,7 @@ import { defaultQueryableModel } from '@shared/models/queryable.model';
   templateUrl: './preview-story.component.html',
   styleUrl: './preview-story.component.scss',
 })
-export class PreviewStoryComponent implements OnInit {
+export class PreviewStoryComponent implements OnInit, OnDestroy {
   private storyId: string | null = null;
 
   story: StoryModel | null = null;

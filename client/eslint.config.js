@@ -1,3 +1,4 @@
+const nx = require('@nx/eslint-plugin');
 // @ts-check
 const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');

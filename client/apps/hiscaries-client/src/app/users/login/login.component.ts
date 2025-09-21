@@ -37,8 +37,8 @@ export class LoginComponent implements OnInit {
   formRegister: FormGroup;
   isLoginState = true;
   errorMessage: string | null = null;
-  isLoading: boolean = true;
-  isLoadedFully: boolean = false;
+  isLoading = true;
+  isLoadedFully = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.formLogin = this.fb.group({

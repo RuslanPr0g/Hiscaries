@@ -15,7 +15,7 @@ import { StoryModel } from '@stories/models/domain/story-model';
 import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
 import { TemplateMessageModel } from '@stories/models/template-message.model';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
-import { emptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class SearchStoryComponent implements OnInit, AfterViewInit {
   @ViewChild('loadMoreAnchor', { static: true }) loadMoreAnchor!: ElementRef<HTMLDivElement>;
   private observer!: IntersectionObserver;
 
-  stories = signal<QueriedModel<StoryModel>>(emptyQueriedResult);
+  stories = signal<QueriedModel<StoryModel>>(generateEmptyQueriedResult());
   errorMessage = signal<TemplateMessageModel | null>(null);
   isLoading = signal(false);
 
@@ -64,14 +64,14 @@ export class SearchStoryComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private loadStories(term: string, reset: boolean = false) {
+  private loadStories(term: string, reset = false) {
     if (this.pagination.snapshot.StartIndex > 300) {
       return;
     }
 
     if (reset) {
       this.pagination.reset();
-      this.stories.set(emptyQueriedResult);
+      this.stories.set(generateEmptyQueriedResult());
     }
 
     this.isLoading.set(true);
@@ -80,7 +80,7 @@ export class SearchStoryComponent implements OnInit, AfterViewInit {
       .searchStory({ SearchTerm: term, QueryableModel: this.pagination.snapshot })
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe((data) => {
-        const current = reset ? emptyQueriedResult : this.stories();
+        const current = reset ? generateEmptyQueriedResult<StoryModel>() : this.stories();
         this.stories.set({
           Items: [...current.Items, ...data.Items],
           TotalItemsCount: data.TotalItemsCount,

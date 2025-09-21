@@ -4,7 +4,7 @@ import { StoryModel } from '@stories/models/domain/story-model';
 import { UserService } from '@users/services/user.service';
 import { StoryWithMetadataService } from './story-with-metadata.service';
 import { QueryableModel } from '@shared/models/queryable.model';
-import { emptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +33,7 @@ export class UserStoryService {
     queryableModel: QueryableModel,
   ): Observable<QueriedModel<StoryModel>> {
     if (!idsSource) {
-      return of(emptyQueriedResult);
+      return of(generateEmptyQueriedResult<StoryModel>());
     }
 
     try {
@@ -44,7 +44,7 @@ export class UserStoryService {
             ids.length === 0 ||
             ids.some((id) => typeof id !== 'string' || !id.trim())
           ) {
-            return of(emptyQueriedResult);
+            return of(generateEmptyQueriedResult<StoryModel>());
           }
 
           try {
@@ -53,15 +53,15 @@ export class UserStoryService {
                 Ids: ids,
                 QueryableModel: queryableModel,
               })
-              .pipe(catchError(() => of(emptyQueriedResult)));
+              .pipe(catchError(() => of(generateEmptyQueriedResult<StoryModel>())));
           } catch {
-            return of(emptyQueriedResult);
+            return of(generateEmptyQueriedResult<StoryModel>());
           }
         }),
-        catchError(() => of(emptyQueriedResult)),
+        catchError(() => of(generateEmptyQueriedResult<StoryModel>())),
       );
     } catch {
-      return of(emptyQueriedResult);
+      return of(generateEmptyQueriedResult<StoryModel>());
     }
   }
 }

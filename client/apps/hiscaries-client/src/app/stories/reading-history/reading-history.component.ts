@@ -5,7 +5,7 @@ import { SearchStoryResultsComponent } from '@stories/search-story-results/searc
 import { UserStoryService } from '@user-to-story/services/multiple-services-merged/user-story.service';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { StoryModel } from '@stories/models/domain/story-model';
-import { emptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 
 @Component({
   selector: 'app-reading-history',
@@ -19,7 +19,7 @@ export class ReadingHistoryComponent implements AfterViewInit {
   private userStoryService = inject(UserStoryService);
   pagination = inject(PaginationService);
 
-  stories = signal<QueriedModel<StoryModel>>(emptyQueriedResult);
+  stories = signal<QueriedModel<StoryModel>>(generateEmptyQueriedResult());
   isLoading = signal(false);
 
   @ViewChild('loadMoreAnchor', { static: true }) loadMoreAnchor!: ElementRef<HTMLDivElement>;
@@ -46,10 +46,10 @@ export class ReadingHistoryComponent implements AfterViewInit {
     }
   }
 
-  private loadStories(reset: boolean = false) {
+  private loadStories(reset = false) {
     if (reset) {
       this.pagination.reset();
-      this.stories.set(emptyQueriedResult);
+      this.stories.set(generateEmptyQueriedResult());
     }
 
     this.isLoading.set(true);
@@ -57,7 +57,7 @@ export class ReadingHistoryComponent implements AfterViewInit {
       .readingHistory(this.pagination.snapshot)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe((data) => {
-        const current = reset ? emptyQueriedResult : this.stories();
+        const current = reset ? generateEmptyQueriedResult<StoryModel>() : this.stories();
         this.stories.set({
           Items: [...current.Items, ...data.Items],
           TotalItemsCount: data.TotalItemsCount,

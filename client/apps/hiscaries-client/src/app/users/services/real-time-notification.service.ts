@@ -8,6 +8,7 @@ import { take } from 'rxjs';
 import { NotificationModel } from '@shared/models/notification.model';
 import { UserNotificationTypes } from '@shared/constants/notification-type.const';
 import { NotificationService } from './notification.service';
+import { BaseIdModel } from '@shared/models/base-id.model';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +51,7 @@ export class UserRealTimeNotificationService {
     this.notificationStateService.notificationMarkedAsRead$.subscribe((notifications) => {
       this.notificationService
         .readNotifications({
-          NotificationIds: notifications.map((x: any) => x.Id),
+          NotificationIds: notifications.map((x: BaseIdModel) => x.Id),
         })
         .pipe(take(1))
         .subscribe(() => {
