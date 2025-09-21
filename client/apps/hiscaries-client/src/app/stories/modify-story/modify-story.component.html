@@ -97,7 +97,11 @@
         </ng-container>
 
         <ng-template #submit>
-          <app-form-button label="Apply changes" (clicked)="onSubmit()"></app-form-button>
+          <app-button-two
+            label="Apply changes"
+            [iconType]="'pi-save'"
+            (clicked)="onSubmit()"
+          ></app-button-two>
         </ng-template>
       </div>
     </form>

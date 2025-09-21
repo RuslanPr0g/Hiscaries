@@ -2,13 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LibraryModel } from '@users/models/domain/library.model';
 import { SocialMediaIconMapperService } from '@shared/services/social-media-icon-mapper.service';
-import { FormButtonComponent } from '@shared/components/form-button/form-button.component';
+import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 
 @Component({
   selector: 'app-library-general-view',
   standalone: true,
-  imports: [CommonModule, FormButtonComponent, FallbackImagePipe],
+  imports: [CommonModule, ButtonTwoComponent, FallbackImagePipe],
   templateUrl: './library-general-view.component.html',
   styleUrl: './library-general-view.component.scss',
 })
@@ -37,7 +37,11 @@ export class LibraryGeneralViewComponent {
   }
 
   get backgroundImageUrl(): string | undefined {
-    return this.library?.AvatarImageUrls?.Large ?? this.library?.AvatarImageUrls?.Medium ?? this.library?.AvatarImageUrls?.Small;
+    return (
+      this.library?.AvatarImageUrls?.Large ??
+      this.library?.AvatarImageUrls?.Medium ??
+      this.library?.AvatarImageUrls?.Small
+    );
   }
 
   subscribeAction(): void {

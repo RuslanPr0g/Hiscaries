@@ -1,9 +1,9 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { take } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { FormButtonComponent } from '@shared/components/form-button/form-button.component';
+import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { NavigationConst } from '@shared/constants/navigation.const';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
@@ -12,7 +12,7 @@ import { defaultQueryableModel } from '@shared/models/queryable.model';
 @Component({
   selector: 'app-preview-story',
   standalone: true,
-  imports: [CommonModule, FormButtonComponent, ProgressSpinnerModule],
+  imports: [CommonModule, ButtonTwoComponent, ProgressSpinnerModule],
   templateUrl: './preview-story.component.html',
   styleUrl: './preview-story.component.scss',
 })
@@ -23,7 +23,6 @@ export class PreviewStoryComponent implements OnInit {
   storyNotFound = false;
 
   constructor(
-    private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
     private storyService: StoryWithMetadataService,
@@ -55,7 +54,11 @@ export class PreviewStoryComponent implements OnInit {
   }
 
   get backgroundImageUrl(): string | undefined {
-    return this.story?.ImagePreviewUrl?.Large ?? this.story?.ImagePreviewUrl?.Medium ?? this.story?.ImagePreviewUrl?.Small;
+    return (
+      this.story?.ImagePreviewUrl?.Large ??
+      this.story?.ImagePreviewUrl?.Medium ??
+      this.story?.ImagePreviewUrl?.Small
+    );
   }
 
   get isEditable(): boolean {

@@ -18,20 +18,20 @@
         </div>
         <div class="library-subscription" *ngIf="isAbleToSubscribe">
           <ng-container *ngIf="isSubscribed; else subscribe">
-            <app-form-button
+            <app-button-two
               label="Unsubscribe"
               [severity]="'secondary'"
               [disabled]="isSubscribeLoading"
               (clicked)="unSubscribeAction()"
-            ></app-form-button>
+            ></app-button-two>
           </ng-container>
           <ng-template #subscribe>
-            <app-form-button
+            <app-button-two
               label="Subscribe"
               [severity]="'primary'"
               [disabled]="isSubscribeLoading"
               (clicked)="subscribeAction()"
-            ></app-form-button>
+            ></app-button-two>
           </ng-template>
         </div>
       </div>

@@ -20,18 +20,20 @@
       </div>
 
       <div class="story-actions">
-        <app-form-button
+        <app-button-two
           label="See library"
+          iconType="pi-book"
           severity="warning"
           (clicked)="navigateToLibrary()"
-        ></app-form-button>
-        <app-form-button label="Read" (clicked)="readStory()"></app-form-button>
-        <app-form-button
+        ></app-button-two>
+        <app-button-two label="Read" iconType="pi-eye" (clicked)="readStory()"></app-button-two>
+        <app-button-two
           *ngIf="isEditable"
           label="Modify"
+          iconType="pi-pencil"
           severity="warning"
           (clicked)="modifyStory()"
-        ></app-form-button>
+        ></app-button-two>
       </div>
     </div>
   </div>

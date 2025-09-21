@@ -9,7 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormInputComponent } from '@shared/components/form-input/form-input.component';
 import { FormTextareaComponent } from '@shared/components/form-textarea/form-textarea.component';
-import { FormButtonComponent } from '@shared/components/form-button/form-button.component';
+import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { NumberLimitControlComponent } from '@shared/components/number-limit-control/number-limit-control.component';
 import { FormDateInputComponent } from '@shared/components/form-date-input/form-date-input.component';
 import { DividerModule } from 'primeng/divider';
@@ -37,7 +37,7 @@ import { LibraryModel } from '@users/models/domain/library.model';
     ReactiveFormsModule,
     FormInputComponent,
     FormTextareaComponent,
-    FormButtonComponent,
+    ButtonTwoComponent,
     FormDateInputComponent,
     NumberLimitControlComponent,
     DividerModule,

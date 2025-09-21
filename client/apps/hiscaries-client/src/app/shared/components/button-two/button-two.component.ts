@@ -1,15 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { PrimeNgIcon } from '@shared/types/primeng-icon.type';
 
 @Component({
-  selector: 'app-form-button',
+  selector: 'app-button-two',
   standalone: true,
   imports: [CommonModule, ButtonModule],
-  templateUrl: './form-button.component.html',
-  styleUrls: ['./form-button.component.scss'],
+  templateUrl: './button-two.component.html',
+  styleUrls: ['./button-two.component.scss'],
 })
-export class FormButtonComponent {
+export class ButtonTwoComponent {
   @Input() label!: string;
   @Input() severity:
     | 'success'
@@ -23,6 +24,7 @@ export class FormButtonComponent {
     | null
     | undefined = null;
   @Input() disabled = false;
+  @Input() iconType?: PrimeNgIcon;
   @Output() clicked = new EventEmitter<void>();
 
   handleClick() {

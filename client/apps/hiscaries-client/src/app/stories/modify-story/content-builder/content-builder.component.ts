@@ -11,7 +11,7 @@ import {
 import { MessageModule } from 'primeng/message';
 import { EditorModule } from 'primeng/editor';
 import { TextEditorComponent } from '@shared/components/text-editor/text-editor.component';
-import { FormButtonComponent } from '@shared/components/form-button/form-button.component';
+import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { ButtonModule } from 'primeng/button';
 import { IteratorService } from '@shared/services/statefull/iterator.service';
 
@@ -26,7 +26,7 @@ import { IteratorService } from '@shared/services/statefull/iterator.service';
     MessageModule,
     FormsModule,
     TextEditorComponent,
-    FormButtonComponent,
+    ButtonTwoComponent,
   ],
   providers: [IteratorService],
   templateUrl: './content-builder.component.html',

@@ -1,0 +1,17 @@
+<ng-container *ngIf="iconType; else onlyTextButton">
+  <p-button
+    [icon]="'pi ' + iconType"
+    [label]="label"
+    [disabled]="disabled"
+    (onClick)="handleClick()"
+    [severity]="severity"
+  ></p-button>
+</ng-container>
+<ng-template #onlyTextButton>
+  <p-button
+    [label]="label"
+    [disabled]="disabled"
+    (onClick)="handleClick()"
+    [severity]="severity"
+  ></p-button>
+</ng-template>
