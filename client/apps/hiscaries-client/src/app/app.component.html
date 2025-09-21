@@ -9,6 +9,22 @@
       <div class="notification-wrapper">
         <p-button
           class="logo"
+          icon="pi pi-arrow-left"
+          [rounded]="true"
+          [text]="true"
+          severity="info"
+          (click)="goBack()"
+        ></p-button>
+        <p-button
+          class="logo ml-2"
+          icon="pi pi-home"
+          [rounded]="true"
+          [text]="true"
+          severity="info"
+          (click)="home()"
+        ></p-button>
+        <p-button
+          class="logo ml-2"
           icon="pi pi-user"
           [rounded]="true"
           [text]="true"

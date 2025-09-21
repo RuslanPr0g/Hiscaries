@@ -276,7 +276,6 @@ body.story-background-overlay::before {
 
   &:hover,
   &:focus {
-    background-color: $input-focus-bg;
     border-color: $accent-color;
   }
 
@@ -360,6 +359,32 @@ body.story-background-overlay::before {
     }
   }
 }
+
+// ** glassy look
+.p-button {
+  background-color: $input-focus-bg;
+  border: 1px solid $glass-border;
+  color: $text-color;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+
+  &:hover {
+    background-color: $accent-color;
+    color: #000;
+  }
+}
+
+.p-button-secondary {
+  background-color: $input-bg !important;
+  color: $text-color !important;
+  border: 1px solid $glass-border !important;
+
+  &:hover {
+    background-color: $accent-color !important;
+    color: #000 !important;
+  }
+}
+// ** glassy look
 
 @keyframes fadeIn {
   from {

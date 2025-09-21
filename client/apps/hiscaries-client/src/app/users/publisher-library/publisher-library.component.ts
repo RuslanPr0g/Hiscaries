@@ -70,7 +70,8 @@ export class PublisherLibraryComponent implements AfterViewInit {
 
   private processLibrary(library: LibraryModel) {
     if (!library) return this.router.navigate([NavigationConst.Home]);
-    if (library.IsLibraryOwner) return this.router.navigate([NavigationConst.MyLibrary]);
+    if (library.IsLibraryOwner)
+      return this.router.navigate([NavigationConst.MyLibrary], { replaceUrl: true });
     this.libraryInfo = library;
     this.pagination.reset();
     this.loadStories(true);
