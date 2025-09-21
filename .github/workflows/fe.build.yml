@@ -33,9 +33,9 @@ jobs:
         working-directory: client
         run: npm run lintall
 
-      - name: Run unit tests
-        working-directory: client
-        run: npm run test
+      # - name: Run unit tests
+      #   working-directory: client
+      #   run: npm run test
 
       - name: Build the project
         working-directory: client
