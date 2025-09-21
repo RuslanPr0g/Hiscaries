@@ -29,8 +29,8 @@
   </ng-container>
   <ng-template #noStories><div class="center">Nothing posted so far!</div></ng-template>
 </ng-container>
-<ng-container *ngIf="isLoading">
+<ng-container *ngIf="!isLoading">
   <div class="center">
-    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" animationDuration=".5s" />
+    <app-loading-spinner *ngIf="!isLoading"></app-loading-spinner>
   </div>
 </ng-container>

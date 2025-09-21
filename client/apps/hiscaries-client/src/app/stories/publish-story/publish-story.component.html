@@ -73,7 +73,7 @@
 
       <div class="center">
         <ng-container *ngIf="submitted; else submit">
-          <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" animationDuration=".5s" />
+          <app-loading-spinner></app-loading-spinner>
         </ng-container>
         <ng-template #submit>
           <app-button-two label="Publish Story" (clicked)="onSubmit()"></app-button-two>

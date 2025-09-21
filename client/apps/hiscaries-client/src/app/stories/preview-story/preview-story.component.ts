@@ -5,14 +5,13 @@ import { take } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { NavigationConst } from '@shared/constants/navigation.const';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { defaultQueryableModel } from '@shared/models/queryable.model';
 
 @Component({
   selector: 'app-preview-story',
   standalone: true,
-  imports: [CommonModule, ButtonTwoComponent, ProgressSpinnerModule],
+  imports: [CommonModule, ButtonTwoComponent],
   templateUrl: './preview-story.component.html',
   styleUrl: './preview-story.component.scss',
 })

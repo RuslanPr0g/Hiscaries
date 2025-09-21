@@ -44,15 +44,20 @@ $background-gradient-end: #645044;
   }
 
   .glass-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    max-width: 400px;
-    padding: 2rem;
+    max-width: 360px;
+    padding: 2rem 0 2rem 0;
     background: $glass-bg;
     border-radius: 20px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid $glass-border;
     box-shadow: $shadow;
+
+    min-height: 404px;
   }
 
   form {

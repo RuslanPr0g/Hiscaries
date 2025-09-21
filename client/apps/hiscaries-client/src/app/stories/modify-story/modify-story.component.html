@@ -93,7 +93,7 @@
         <p-divider layout="horizontal" *ngIf="globalError" />
 
         <ng-container *ngIf="submitted; else submit">
-          <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" animationDuration=".5s" />
+          <app-loading-spinner></app-loading-spinner>
         </ng-container>
 
         <ng-template #submit>
@@ -109,7 +109,7 @@
 
   <ng-container *ngIf="!story">
     <div class="loading">
-      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" animationDuration=".5s" />
+      <app-loading-spinner></app-loading-spinner>
     </div>
   </ng-container>
 </ng-container>

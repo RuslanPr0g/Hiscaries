@@ -21,13 +21,13 @@ import { PublishFormModel } from '@stories/models/form/publish-story-form.model'
 import { PublishStoryRequest } from '@stories/models/requests/publish-story.model';
 import { MessageModule } from 'primeng/message';
 import { Router } from '@angular/router';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BaseIdModel } from '@shared/models/base-id.model';
 import { NavigationConst } from '@shared/constants/navigation.const';
 import { AuthService } from '@users/services/auth.service';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { UserService } from '@users/services/user.service';
 import { LibraryModel } from '@users/models/domain/library.model';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-publish-story',
@@ -44,7 +44,7 @@ import { LibraryModel } from '@users/models/domain/library.model';
     UploadFileControlComponent,
     FormMultiselectComponent,
     MessageModule,
-    ProgressSpinnerModule,
+    LoadingSpinnerComponent,
   ],
   templateUrl: './publish-story.component.html',
   styleUrls: ['./publish-story.component.scss'],

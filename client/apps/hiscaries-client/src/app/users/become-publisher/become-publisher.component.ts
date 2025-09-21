@@ -4,12 +4,12 @@ import { AuthService } from '@users/services/auth.service';
 import { Router } from '@angular/router';
 import { NavigationConst } from '@shared/constants/navigation.const';
 import { UserService } from '@users/services/user.service';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-become-publisher',
   standalone: true,
-  imports: [CommonModule, ProgressSpinnerModule],
+  imports: [CommonModule, LoadingSpinnerComponent],
   templateUrl: './become-publisher.component.html',
   styleUrl: './become-publisher.component.scss',
 })

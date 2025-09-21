@@ -1,19 +1,19 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ReadStoryContentModel, StoryModelWithContents } from '@stories/models/domain/story-model';
+import { ReadStoryContentModel } from '@stories/models/domain/story-model';
 import { CommonModule } from '@angular/common';
 import { take } from 'rxjs';
 import { convertToBase64 } from '@shared/helpers/image.helper';
 import { IteratorService } from '@shared/services/statefull/iterator.service';
 import { ButtonModule } from 'primeng/button';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { UserService } from '@users/services/user.service';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-read-story-content',
   standalone: true,
-  imports: [CommonModule, ButtonModule, ProgressSpinnerModule],
+  imports: [CommonModule, ButtonModule, LoadingSpinnerComponent],
   providers: [IteratorService],
   templateUrl: './read-story-content.component.html',
   styleUrl: './read-story-content.component.scss',
@@ -54,7 +54,10 @@ export class ReadStoryContentComponent implements OnInit {
             return;
           }
 
-          const imageUrl = story.ImagePreviewUrl?.Large ?? story.ImagePreviewUrl?.Medium ?? story.ImagePreviewUrl?.Small;
+          const imageUrl =
+            story.ImagePreviewUrl?.Large ??
+            story.ImagePreviewUrl?.Medium ??
+            story.ImagePreviewUrl?.Small;
 
           this.story = {
             ...story,

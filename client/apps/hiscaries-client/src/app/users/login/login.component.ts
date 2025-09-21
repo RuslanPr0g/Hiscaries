@@ -13,7 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   standalone: true,
@@ -29,7 +29,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     PasswordModule,
     CheckboxModule,
     ButtonModule,
-    ProgressSpinnerModule,
+    LoadingSpinnerComponent,
   ],
 })
 export class LoginComponent implements OnInit {
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
   isLoginState = true;
   errorMessage: string | null = null;
   isLoading: boolean = true;
+  isLoadedFully: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.formLogin = this.fb.group({
@@ -57,10 +58,21 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl(NavigationConst.Home);
     }
 
-    setTimeout(() => (this.isLoading = false), 1000);
+    setTimeout(() => {
+      this.isLoading = false;
+      this.isLoadedFully = true;
+    }, 1000);
   }
 
   onSubmit(): void {
+    if (this.isLoading) {
+      console.warn('loading');
+
+      return;
+    }
+
+    this.isLoading = true;
+
     const form = this.isLoginState ? this.formLogin : this.formRegister;
 
     if (form.invalid) {
@@ -77,6 +89,7 @@ export class LoginComponent implements OnInit {
       error: (err) => {
         this.errorMessage =
           err.error.Message || (this.isLoginState ? 'Login failed' : 'Registration failed');
+        this.isLoading = false;
       },
     });
   }

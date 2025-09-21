@@ -6,7 +6,7 @@
 </ng-container>
 <ng-template #storyFound>
   <div class="loading" *ngIf="!story">
-    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" animationDuration=".5s" />
+    <app-loading-spinner></app-loading-spinner>
   </div>
 
   <h2 *ngIf="story">

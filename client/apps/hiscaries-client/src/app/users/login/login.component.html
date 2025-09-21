@@ -9,10 +9,11 @@
 
   <p-card class="glass-card">
     <form
+      class="mainform"
       [formGroup]="isLoginState ? formLogin : formRegister"
       (ngSubmit)="onSubmit()"
       autocomplete="off"
-      *ngIf="!isLoading"
+      *ngIf="isLoadedFully"
     >
       <div class="form-field">
         <input pInputText formControlName="username" placeholder="Username" class="w-full" />
@@ -40,25 +41,30 @@
         ></p-password>
       </div>
 
-      <p-button
-        type="submit"
-        [label]="isLoginState ? 'Sign In' : 'Register'"
-        [disabled]="(isLoginState ? formLogin : formRegister).invalid"
-        class="w-full fancy-btn"
-      ></p-button>
+      <ng-container *ngIf="isLoading; else loaded">
+        <p-button
+          type="submit"
+          icon="pi pi-spin pi-spinner"
+          [label]="isLoginState ? 'Sign In' : 'Register'"
+          [disabled]="true"
+          class="w-full fancy-btn"
+        ></p-button>
+      </ng-container>
+      <ng-template #loaded>
+        <p-button
+          type="submit"
+          [label]="isLoginState ? 'Sign In' : 'Register'"
+          class="w-full fancy-btn"
+        ></p-button>
+      </ng-template>
     </form>
 
-    <p class="toggle-text" (click)="toggleState()" *ngIf="!isLoading">
+    <p class="toggle-text mt-4" (click)="toggleState()" *ngIf="isLoadedFully">
       {{ !isLoginState ? 'Have an account?' : 'Need an account?' }}
     </p>
 
     <div class="w-full center">
-      <p-progressSpinner
-        styleClass="w-4rem h-4rem"
-        strokeWidth="2"
-        animationDuration="0.5s"
-        *ngIf="isLoading"
-      />
+      <app-loading-spinner *ngIf="isLoading && !isLoadedFully"></app-loading-spinner>
     </div>
   </p-card>
 

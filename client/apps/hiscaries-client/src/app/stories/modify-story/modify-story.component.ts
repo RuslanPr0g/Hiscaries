@@ -20,7 +20,6 @@ import { UploadFileControlComponent } from '@shared/components/upload-file-contr
 import { FormMultiselectComponent } from '@shared/components/form-multiselect/form-multiselect.component';
 import { MessageModule } from 'primeng/message';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ModifyStoryFormModel } from '@stories/models/form/modify-story-form.model';
 import { ModifyStoryRequest } from '@stories/models/requests/modify-story.model';
 import { StoryModelWithContents } from '@stories/models/domain/story-model';
@@ -29,6 +28,7 @@ import { AuthService } from '@users/services/auth.service';
 import { ContentBuilderComponent } from './content-builder/content-builder.component';
 import { TabViewModule } from 'primeng/tabview';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-modify-story',
@@ -45,9 +45,9 @@ import { StoryWithMetadataService } from '@user-to-story/services/multiple-servi
     UploadFileControlComponent,
     FormMultiselectComponent,
     MessageModule,
-    ProgressSpinnerModule,
     ContentBuilderComponent,
     TabViewModule,
+    LoadingSpinnerComponent,
   ],
   templateUrl: './modify-story.component.html',
   styleUrls: ['./modify-story.component.scss'],
