@@ -13,7 +13,7 @@ import { EditorModule } from 'primeng/editor';
 import { TextEditorComponent } from '@shared/components/text-editor/text-editor.component';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { ButtonModule } from 'primeng/button';
-import { IteratorService } from '@shared/services/statefull/iterator.service';
+import { IteratorService } from '@shared/services/statefull/iterator/iterator.service';
 
 @Component({
   selector: 'app-content-builder',

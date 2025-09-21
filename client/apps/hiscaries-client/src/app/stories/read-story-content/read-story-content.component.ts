@@ -4,7 +4,7 @@ import { ReadStoryContentModel } from '@stories/models/domain/story-model';
 import { CommonModule } from '@angular/common';
 import { take } from 'rxjs';
 import { convertToBase64 } from '@shared/helpers/image.helper';
-import { IteratorService } from '@shared/services/statefull/iterator.service';
+import { IteratorService } from '@shared/services/statefull/iterator/iterator.service';
 import { ButtonModule } from 'primeng/button';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { UserService } from '@users/services/user.service';

@@ -35,7 +35,7 @@ jobs:
 
       - name: Run unit tests
         working-directory: client
-        run: npm run test:ci
+        run: npm run test
 
       - name: Build the project
         working-directory: client
