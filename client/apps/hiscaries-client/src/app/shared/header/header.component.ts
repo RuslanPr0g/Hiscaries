@@ -6,16 +6,25 @@ import { ButtonModule } from 'primeng/button';
 import { NavigationConst } from '../constants/navigation.const';
 import { NotificationsBarComponent } from '../components/notifications-bar/notifications-bar.component';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
+import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
+import { PrimeNgIcon } from '@shared/types/primeng-icon.type';
 
 export interface MenuItem {
   Label: string;
   Command: () => void;
+  Icon: PrimeNgIcon;
 }
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, ButtonModule, NotificationsBarComponent, SearchBarComponent],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    NotificationsBarComponent,
+    SearchBarComponent,
+    ButtonTwoComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -25,12 +34,7 @@ export class HeaderComponent {
   @Output() commandExecuted = new EventEmitter<void>();
 
   constructor(public userService: AuthService, private router: Router) {
-    this.items = [
-      {
-        Label: 'Home',
-        Command: () => this.home(),
-      },
-    ];
+    this.items = [];
 
     if (this.isUserPublisher) {
       this.items = [
@@ -38,10 +42,12 @@ export class HeaderComponent {
         {
           Label: 'My Library',
           Command: () => this.navigateToMyLibrary(),
+          Icon: 'pi-book',
         },
         {
           Label: 'Publish story',
           Command: () => this.navigateToPublishStory(),
+          Icon: 'pi-upload',
         },
       ];
     }
@@ -49,12 +55,14 @@ export class HeaderComponent {
     this.items = [
       ...this.items,
       {
-        Label: 'Reading history',
+        Label: 'History',
         Command: () => this.navigateToReadingHistory(),
+        Icon: 'pi-history',
       },
       {
         Label: 'Sign out',
         Command: () => this.logOut(),
+        Icon: 'pi-sign-out',
       },
     ];
   }

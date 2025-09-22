@@ -4,6 +4,7 @@
     [label]="label"
     [disabled]="disabled"
     (onClick)="handleClick()"
+    [ngClass]="{ 'w-full': isFullWidth }"
     [severity]="severity"
   ></p-button>
 </ng-container>
@@ -12,6 +13,7 @@
     [label]="label"
     [disabled]="disabled"
     (onClick)="handleClick()"
+    [ngClass]="{ 'w-full': isFullWidth }"
     [severity]="severity"
   ></p-button>
 </ng-template>

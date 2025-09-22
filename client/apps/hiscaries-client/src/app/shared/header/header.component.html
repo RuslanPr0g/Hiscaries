@@ -21,12 +21,15 @@
     <div class="header__options-grid">
       <ng-container *ngFor="let item of items">
         <div class="header__option">
-          <button
-            (click)="callItemCommand(item)"
+          <app-button-two
+            [label]="item.Label"
+            [iconType]="item.Icon"
             [ngClass]="{ warning: item.Label === 'Sign out' }"
+            [isFullWidth]="true"
+            (clicked)="callItemCommand(item)"
           >
             {{ item.Label }}
-          </button>
+          </app-button-two>
         </div>
       </ng-container>
     </div>

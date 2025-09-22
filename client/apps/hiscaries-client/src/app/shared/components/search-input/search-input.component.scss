@@ -45,6 +45,10 @@ $shadow: 0 8px 32px 0 rgba(34, 34, 26, 0.37);
   }
 }
 
+.content {
+  min-width: 100px;
+}
+
 .search-btn {
   background: linear-gradient(135deg, $primary-color, $secondary-color);
   border: none;

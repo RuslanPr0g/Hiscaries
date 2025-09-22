@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { PrimeNgIcon } from '@shared/types/primeng-icon.type';
@@ -25,7 +25,12 @@ export class ButtonTwoComponent {
     | undefined = null;
   @Input() disabled = false;
   @Input() iconType?: PrimeNgIcon;
+  @Input() isFullWidth = false;
   @Output() clicked = new EventEmitter<void>();
+
+  @HostBinding('style.width') get hostWidth() {
+    return this.isFullWidth ? '100%' : 'auto';
+  }
 
   handleClick() {
     this.clicked.emit();
