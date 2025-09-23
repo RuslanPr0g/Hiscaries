@@ -1,6 +1,6 @@
-<ng-container *ngIf="stories() as s; else noStories">
+<ng-container *ngIf="stories().Items.length > 0; else noStories">
   <app-search-story-results
-    [stories]="s"
+    [stories]="stories()"
     [isLoading]="isLoading()"
     class="w-full"
   ></app-search-story-results>
