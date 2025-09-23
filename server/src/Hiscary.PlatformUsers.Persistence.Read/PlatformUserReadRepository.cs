@@ -1,9 +1,9 @@
-﻿using StackNucleus.DDD.Domain.Extensions;
-using Hiscary.PlatformUsers.Domain.DataAccess;
+﻿using Hiscary.PlatformUsers.Domain.DataAccess;
 using Hiscary.PlatformUsers.Domain.ProcessModels;
 using Hiscary.PlatformUsers.Domain.ReadModels;
 using Hiscary.PlatformUsers.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using StackNucleus.DDD.Domain.Extensions;
 using StackNucleus.DDD.Persistence.EF.Postgres;
 
 namespace Hiscary.PlatformUsers.Persistence.Read;
@@ -47,14 +47,14 @@ public class PlatformUserReadRepository(PlatformUsersContext context) :
             .Select(_ => _.StoryId)
             .ToListAsync();
 
-    public async Task<IEnumerable<Guid>> GetReadingHistoryStoryIds(Guid userAccountId) =>
+    public async Task<IEnumerable<LastReadAtDateToId>> GetReadingHistoryStoryIds(Guid userAccountId) =>
         await Context.PlatformUsers
             .AsNoTracking()
             .Where(_ => _.UserAccountId == userAccountId)
             .Include(_ => _.ReadHistory)
             .SelectMany(_ => _.ReadHistory)
             .OrderBy(_ => _.EditedAt)
-            .Select(_ => _.StoryId)
+            .Select(_ => LastReadAtDateToId.Create(_.StoryId, _.EditedAt))
             .ToListAsync();
 
     public async Task<LibraryReadModel?> GetLibraryInformation(

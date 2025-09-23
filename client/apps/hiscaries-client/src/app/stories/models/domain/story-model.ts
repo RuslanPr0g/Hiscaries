@@ -35,3 +35,7 @@ export interface ReadStoryContentModel {
   Contents: StoryPageModel[];
   LastPageRead: number;
 }
+
+export interface ReadHistoryStory extends StoryModel {
+  LastReadAt: Date;
+}

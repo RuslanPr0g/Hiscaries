@@ -25,7 +25,7 @@ public sealed class PlatformUserReadService(IPlatformUserReadRepository reposito
         return await _repository.GetResumeReadingStoryIds(userAccountId);
     }
 
-    public async Task<IEnumerable<Guid>> GetReadingHistoryStoryIds(Guid userAccountId)
+    public async Task<IEnumerable<LastReadAtDateToId>> GetReadingHistoryStoryIds(Guid userAccountId)
     {
         return await _repository.GetReadingHistoryStoryIds(userAccountId);
     }

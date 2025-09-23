@@ -8,6 +8,7 @@ import { ReadStoryRequest } from '@users/models/requests/read-story.model';
 import { UserReadingStoryRequest } from '@users/models/requests/user-reading-story.model';
 import { UserReadingStoryMetadataResponse } from '@users/models/response/user-reading-story-metadata.model';
 import { LibraryModel } from '@users/models/domain/library.model';
+import { LastReadAtDateToId } from '@shared/models/last-read-date-id.model';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,7 @@ export class UserService {
     return this.http.get<string[]>(`${this.apiUrl}/resume-reading`);
   }
 
-  readingHistory(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/reading-history`);
+  readingHistory(): Observable<LastReadAtDateToId[]> {
+    return this.http.get<LastReadAtDateToId[]>(`${this.apiUrl}/reading-history`);
   }
 }

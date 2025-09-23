@@ -1,9 +1,15 @@
 <ng-container *ngIf="stories().Items.length > 0; else noStories">
-  <app-search-story-results
-    [stories]="stories()"
-    [isLoading]="isLoading()"
-    class="w-full"
-  ></app-search-story-results>
+  <ng-container *ngFor="let label of storyKeys">
+    <h3 class="date-label">{{ label }}</h3>
+    <app-search-story-results
+      [stories]="{
+        Items: groupedStories()[label],
+        TotalItemsCount: groupedStories()[label].length
+      }"
+      [isLoading]="isLoading()"
+      class="w-full"
+    ></app-search-story-results>
+  </ng-container>
 </ng-container>
 
 <ng-template #noStories>📚💨 No pages turned yet — your adventure awaits!</ng-template>

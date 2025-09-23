@@ -12,5 +12,5 @@ public interface IPlatformUserReadService
         Guid requesterUserAccountId,
         UserReadingStoryProcessModel[] stories);
     Task<IEnumerable<Guid>> GetResumeReadingStoryIds(Guid userAccountId);
-    Task<IEnumerable<Guid>> GetReadingHistoryStoryIds(Guid userAccountId);
+    Task<IEnumerable<LastReadAtDateToId>> GetReadingHistoryStoryIds(Guid userAccountId);
 }
