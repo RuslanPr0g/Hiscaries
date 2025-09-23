@@ -86,7 +86,7 @@ public class StoryReadRepository(StoriesContext context) :
             .AsNoTracking()
             .AsSplitQuery()
             .Where(x => x.LibraryId == libraryId)
-            .OrderBy(_ => _.EditedAt);
+            .OrderByDescending(_ => _.EditedAt);
 
         return await GetStoryReadModelsPaginatedBy(query, queryableModel);
     }
