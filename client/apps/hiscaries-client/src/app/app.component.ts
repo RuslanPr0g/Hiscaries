@@ -12,9 +12,10 @@ import { NotificationLifecycleManagerService } from './users/services/notificati
 import { StoryPublishedHandler } from './users/notification-handlers/story-published-notification.handler';
 import { NotificationStateService } from '@shared/services/statefull/notification-state.service';
 import { Location } from '@angular/common';
-import { filter } from 'rxjs';
+import { filter, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { NotificationsBarComponent } from '@shared/components/notifications-bar/notifications-bar.component';
+import { DestroyService } from '@shared/services/destroy.service';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,7 @@ import { NotificationsBarComponent } from '@shared/components/notifications-bar/
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService, DestroyService],
 })
 export class AppComponent implements OnInit {
   title = 'hiscaries';
@@ -43,7 +44,13 @@ export class AppComponent implements OnInit {
 
   notificationsVisible: boolean = false;
 
+  newNotificationsAvailable: boolean = false;
+
   messageService = inject(MessageService);
+
+  destroyService = inject(DestroyService);
+
+  notificationService = inject(NotificationStateService);
 
   constructor(
     private router: Router,
@@ -78,7 +85,14 @@ export class AppComponent implements OnInit {
 
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.sidebarVisible = false;
+      this.onNotificationClose();
     });
+
+    this.notificationStateService.notifications$
+      .pipe(takeUntil(this.destroyService.subject$))
+      .subscribe((notifications) => {
+        this.showNewMessagesAvailable(notifications.some((n) => !n.IsRead));
+      });
   }
 
   goBack(): void {
@@ -91,6 +105,10 @@ export class AppComponent implements OnInit {
 
   home(): void {
     this.router.navigate([NavigationConst.Home]);
+  }
+
+  showNewMessagesAvailable(newNotificationsAvailable: boolean) {
+    this.newNotificationsAvailable = newNotificationsAvailable;
   }
 
   showNotifications() {
@@ -106,7 +124,8 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onClose() {
+  onNotificationClose() {
     this.notificationsVisible = false;
+    this.messageService.clear();
   }
 }

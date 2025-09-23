@@ -26,6 +26,24 @@ main {
   max-width: 90vw;
 }
 
+.logo-mark {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 10px;
+    height: 10px;
+    background-color: #f28b82;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 4px rgba(242, 139, 130, 0.7);
+    cursor: pointer;
+  }
+}
+
 @media (max-width: 900px) {
   .left-panel {
     justify-content: space-between;

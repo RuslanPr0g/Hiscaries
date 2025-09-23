@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationStateService } from '../../services/statefull/notification-state.service';
 import { NotificationModel } from '../../models/notification.model';
@@ -19,6 +19,8 @@ import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 })
 export class NotificationsBarComponent implements OnInit {
   notifications: NotificationModel[] = [];
+
+  @Output() notificationClicked = new EventEmitter();
 
   constructor(
     private router: Router,
@@ -45,6 +47,8 @@ export class NotificationsBarComponent implements OnInit {
     if (action && notification.RelatedObjectId) {
       action(notification.RelatedObjectId);
     }
+
+    this.notificationClicked.emit();
   }
 
   private getActionByNotificationType(
