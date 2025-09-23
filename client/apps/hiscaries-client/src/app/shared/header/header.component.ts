@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { NavigationConst } from '../constants/navigation.const';
-import { NotificationsBarComponent } from '../components/notifications-bar/notifications-bar.component';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { PrimeNgIcon } from '@shared/types/primeng-icon.type';
@@ -18,13 +17,7 @@ export interface MenuItem {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    CommonModule,
-    ButtonModule,
-    NotificationsBarComponent,
-    SearchBarComponent,
-    ButtonTwoComponent,
-  ],
+  imports: [CommonModule, ButtonModule, SearchBarComponent, ButtonTwoComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

@@ -1,15 +1,14 @@
 <div class="notifications-bar" *ngIf="notifications.length > 0">
   <div class="notifications-bar__header">
     <h2>Notifications</h2>
-    <button class="link" (click)="markAllAsRead()">Mark all as read</button>
+    <button class="mark-read" (click)="markAllAsRead()">Mark all as read</button>
   </div>
   <ul class="notifications-list">
     <li
       *ngFor="let notification of notifications"
       [class.unread]="!notification.IsRead"
-      [class.pointer]="notification.RelatedObjectId"
+      [class.clickable]="notification.RelatedObjectId"
       (click)="clickNotification(notification)"
-      (keydown)="clickNotification(notification)"
       tabindex="0"
     >
       <div class="notification-content">

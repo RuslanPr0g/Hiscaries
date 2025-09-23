@@ -10,31 +10,46 @@
         <p-button
           class="logo"
           icon="pi pi-arrow-left"
+          severity="info"
           [rounded]="true"
           [text]="true"
-          severity="info"
           (click)="goBack()"
         ></p-button>
         <p-button
           class="logo ml-2"
           icon="pi pi-home"
+          severity="info"
           [rounded]="true"
           [text]="true"
-          severity="info"
           (click)="home()"
         ></p-button>
         <p-button
           class="logo ml-2"
           icon="pi pi-user"
+          severity="info"
           [rounded]="true"
           [text]="true"
-          severity="info"
           (click)="sidebarVisible = !sidebarVisible"
         ></p-button>
+        <p-button
+          class="logo ml-2"
+          severity="info"
+          icon="pi pi-bell"
+          [rounded]="true"
+          [text]="true"
+          (click)="showNotifications()"
+        />
         <span class="notification-wrapper__circle" *ngIf="unreadCount > 0"></span>
       </div>
     </div>
   </div>
+  <p-toast position="top-left" key="notifications" (onClose)="onClose()" [baseZIndex]="5000">
+    <ng-template pTemplate="message" let-message let-closeFn="closeFn">
+      <section>
+        <app-notifications-bar></app-notifications-bar>
+      </section>
+    </ng-template>
+  </p-toast>
   <div class="right-panel" [ngClass]="{ 'mt-16': authService.isAuthenticated() }">
     <router-outlet></router-outlet>
   </div>

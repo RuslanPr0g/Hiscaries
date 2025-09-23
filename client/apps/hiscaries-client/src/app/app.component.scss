@@ -18,6 +18,14 @@ main {
   margin-top: 16px;
 }
 
+::ng-deep .custom-toast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  max-width: 90vw;
+}
+
 @media (max-width: 900px) {
   .left-panel {
     justify-content: space-between;

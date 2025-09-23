@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '@shared/header/header.component';
 import { LoadingOverlayComponent } from '@shared/components/loading-overlay/loading-overlay.component';
 import { CommonModule } from '@angular/common';
 import { SidebarModule } from 'primeng/sidebar';
+import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { NavigationConst } from '@shared/constants/navigation.const';
 import { AuthService } from './users/services/auth.service';
@@ -12,6 +13,8 @@ import { StoryPublishedHandler } from './users/notification-handlers/story-publi
 import { NotificationStateService } from '@shared/services/statefull/notification-state.service';
 import { Location } from '@angular/common';
 import { filter } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { NotificationsBarComponent } from '@shared/components/notifications-bar/notifications-bar.component';
 
 @Component({
   selector: 'app-root',
@@ -23,9 +26,12 @@ import { filter } from 'rxjs';
     SidebarModule,
     HeaderComponent,
     LoadingOverlayComponent,
+    ToastModule,
+    NotificationsBarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  providers: [MessageService],
 })
 export class AppComponent implements OnInit {
   title = 'hiscaries';
@@ -34,6 +40,10 @@ export class AppComponent implements OnInit {
   sidebarVisible = false;
 
   unreadCount = 0;
+
+  notificationsVisible: boolean = false;
+
+  messageService = inject(MessageService);
 
   constructor(
     private router: Router,
@@ -81,5 +91,22 @@ export class AppComponent implements OnInit {
 
   home(): void {
     this.router.navigate([NavigationConst.Home]);
+  }
+
+  showNotifications() {
+    if (!this.notificationsVisible) {
+      this.messageService.add({
+        key: 'notifications',
+        sticky: true,
+        severity: 'custom',
+        summary: 'Notifications',
+        styleClass: 'custom-toast backdrop-blur-lg rounded-2xl',
+      });
+      this.notificationsVisible = true;
+    }
+  }
+
+  onClose() {
+    this.notificationsVisible = false;
   }
 }

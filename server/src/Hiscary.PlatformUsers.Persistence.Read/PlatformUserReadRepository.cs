@@ -53,7 +53,7 @@ public class PlatformUserReadRepository(PlatformUsersContext context) :
             .Where(_ => _.UserAccountId == userAccountId)
             .Include(_ => _.ReadHistory)
             .SelectMany(_ => _.ReadHistory)
-            .OrderByDescending(_ => _.EditedAt)
+            .OrderBy(_ => _.EditedAt)
             .Select(_ => _.StoryId)
             .ToListAsync();
 
