@@ -80,4 +80,6 @@ builder.AddProject<Projects.Hiscary_LocalApiGateway>("hc-localapigateway")
     .WithReference(stories)
     .WithReference(media);
 
+builder.AddProject<Projects.Hiscary_Recommendations_Api_Rest>("hiscary-recommendations-api-rest");
+
 builder.Build().Run();

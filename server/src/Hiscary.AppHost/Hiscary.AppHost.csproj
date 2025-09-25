@@ -21,6 +21,7 @@
 		<ProjectReference Include="..\Hiscary.Media.Api.Rest\Hiscary.Media.Api.Rest.csproj" />
 		<ProjectReference Include="..\Hiscary.Notifications.Api.Rest\Hiscary.Notifications.Api.Rest.csproj" />
 		<ProjectReference Include="..\Hiscary.PlatformUsers.Api.Rest\Hiscary.PlatformUsers.Api.Rest.csproj" />
+		<ProjectReference Include="..\Hiscary.Recommendations.Api.Rest\Hiscary.Recommendations.Api.Rest.csproj" />
 		<ProjectReference Include="..\Hiscary.Stories.Api.Rest\Hiscary.Stories.Api.Rest.csproj" />
 		<ProjectReference Include="..\Hiscary.UserAccounts.Api.Rest\Hiscary.UserAccounts.Api.Rest.csproj" />
 	</ItemGroup>
