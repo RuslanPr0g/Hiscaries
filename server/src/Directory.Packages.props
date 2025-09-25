@@ -8,8 +8,8 @@
     <PackageVersion Include="Aspire.Hosting.Azure.Storage" Version="8.2.2" />
     <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="8.2.2" />
     <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="8.2.2" />
-    <PackageVersion Include="Aspire.Hosting.Elasticsearch" Version="9.4.1" />
-    <PackageVersion Include="Aspire.Hosting.Redis" Version="9.4.2" />
+    <PackageVersion Include="Aspire.Hosting.Elasticsearch" Version="8.2.2-preview.1.24521.5" />
+    <PackageVersion Include="Aspire.Hosting.Redis" Version="8.2.2" />
     <PackageVersion Include="Aspire.RabbitMQ.Client" Version="8.2.2" />
     <PackageVersion Include="Aspire.Azure.Storage.Blobs" Version="8.2.2" />
   </ItemGroup>

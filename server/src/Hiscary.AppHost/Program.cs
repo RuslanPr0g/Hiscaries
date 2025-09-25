@@ -31,6 +31,16 @@ var azBlobs = builder.AddAzureStorage("azstorage")
     )
     .AddBlobs("azblobs");
 
+// TODO: it won't start because enrollment token cannot be generaged for some reason
+//var elasticsearch = builder
+//    .AddElasticsearch("elasticsearch")
+//    .WithEnvironment("xpack.security.enabled", "false");
+//var kibana = builder
+//    .AddContainer("kibana", "kibana", "9.1.4")
+//    .WithReference(elasticsearch)
+//    .WithEnvironment("xpack.security.enabled", "false")
+//    .WithEndpoint(5601, 5601);
+
 var useraccounts = builder.AddProject<Projects.Hiscary_UserAccounts_Api_Rest>("hc-useraccounts-api-rest")
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7010, targetPort: 7010, isProxied: false)
