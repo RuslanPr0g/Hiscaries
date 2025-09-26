@@ -68,7 +68,7 @@ var media = builder.AddProject<Projects.Hiscary_Media_Api_Rest>("hc-media-api-re
     .WithEnvironment("ServiceUrls__MediaServiceUrl", "https://localhost:5001/api/v1/media")
     .WithReference(rabbitmq)
     .WithReference(azBlobs);
-var recommendation = builder.AddProject<Projects.Hiscary_Recommendations_Api_Rest>("hiscary-recommendations-api-rest")
+var recommendations = builder.AddProject<Projects.Hiscary_Recommendations_Api_Rest>("hiscary-recommendations-api-rest")
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7015, targetPort: 7015, isProxied: false)
     .WithReference(rabbitmq)
@@ -82,6 +82,7 @@ builder.AddProject<Projects.Hiscary_LocalApiGateway>("hc-localapigateway")
     .WithReference(notifications)
     .WithReference(platformusers)
     .WithReference(stories)
-    .WithReference(media);
+    .WithReference(media)
+    .WithReference(recommendations);
 
 builder.Build().Run();
