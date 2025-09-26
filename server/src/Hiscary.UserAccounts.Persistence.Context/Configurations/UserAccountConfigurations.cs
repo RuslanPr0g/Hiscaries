@@ -17,5 +17,9 @@ public class UserAccountConfigurations : IEntityTypeConfiguration<UserAccount>
             .HasOne(u => u.RefreshToken)
             .WithOne()
             .HasForeignKey<UserAccount>(u => u.RefreshTokenId);
+
+        builder
+            .HasIndex(u => u.Username)
+            .IsUnique();
     }
 }
