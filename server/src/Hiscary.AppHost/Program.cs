@@ -34,6 +34,8 @@ var azBlobs = builder.AddAzureStorage("azstorage")
 var elasticsearch = builder
     .AddElasticsearch("elasticsearch")
     .WithEnvironment("xpack.security.enabled", "false");
+var redis = builder
+    .AddRedis("rediscache");
 
 var useraccounts = builder.AddProject<Projects.Hiscary_UserAccounts_Api_Rest>("hc-useraccounts-api-rest")
     .WithJwtAndSaltSettings(builder.Configuration)
@@ -57,6 +59,7 @@ var stories = builder.AddProject<Projects.Hiscary_Stories_Api_Rest>("hc-stories-
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7013, targetPort: 7013, isProxied: false)
     .WithReference(postgres)
+    .WithReference(elasticsearch)
     .WithReference(rabbitmq)
     .WithReference(azBlobs);
 var media = builder.AddProject<Projects.Hiscary_Media_Api_Rest>("hc-media-api-rest")
@@ -64,6 +67,13 @@ var media = builder.AddProject<Projects.Hiscary_Media_Api_Rest>("hc-media-api-re
     .WithHttpsEndpoint(name: "rest", port: 7014, targetPort: 7014, isProxied: false)
     .WithEnvironment("ServiceUrls__MediaServiceUrl", "https://localhost:5001/api/v1/media")
     .WithReference(rabbitmq)
+    .WithReference(azBlobs);
+var recommendation = builder.AddProject<Projects.Hiscary_Recommendations_Api_Rest>("hiscary-recommendations-api-rest")
+    .WithJwtAndSaltSettings(builder.Configuration)
+    .WithHttpsEndpoint(name: "rest", port: 7015, targetPort: 7015, isProxied: false)
+    .WithReference(rabbitmq)
+    .WithReference(elasticsearch)
+    .WithReference(redis)
     .WithReference(azBlobs);
 
 builder.AddProject<Projects.Hiscary_LocalApiGateway>("hc-localapigateway")
@@ -73,7 +83,5 @@ builder.AddProject<Projects.Hiscary_LocalApiGateway>("hc-localapigateway")
     .WithReference(platformusers)
     .WithReference(stories)
     .WithReference(media);
-
-builder.AddProject<Projects.Hiscary_Recommendations_Api_Rest>("hiscary-recommendations-api-rest");
 
 builder.Build().Run();
