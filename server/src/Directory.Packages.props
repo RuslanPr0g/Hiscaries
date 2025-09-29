@@ -13,6 +13,10 @@
     <PackageVersion Include="Aspire.RabbitMQ.Client" Version="8.2.2" />
     <PackageVersion Include="Aspire.Azure.Storage.Blobs" Version="8.2.2" />
   </ItemGroup>
+  <!-- Elastic Search -->
+  <ItemGroup>
+    <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="8.19.7" />
+  </ItemGroup>
   <!-- Azure Packages -->
   <ItemGroup>
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
