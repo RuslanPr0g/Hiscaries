@@ -20,7 +20,7 @@ export class ReadingHistoryComponent implements AfterViewInit {
   pagination = inject(PaginationService);
 
   stories = signal<QueriedModel<ReadHistoryStory>>(generateEmptyQueriedResult());
-  groupedStories = signal<{ [key: string]: ReadHistoryStory[] }>({});
+  groupedStories = signal<Record<string, ReadHistoryStory[]>>({});
   isLoading = signal(false);
 
   @ViewChild('loadMoreAnchor', { static: true }) loadMoreAnchor!: ElementRef<HTMLDivElement>;
@@ -73,8 +73,8 @@ export class ReadingHistoryComponent implements AfterViewInit {
       });
   }
 
-  private groupByDate(stories: ReadHistoryStory[]): { [key: string]: ReadHistoryStory[] } {
-    const groups: { [key: string]: ReadHistoryStory[] } = {};
+  private groupByDate(stories: ReadHistoryStory[]): Record<string, ReadHistoryStory[]> {
+    const groups: Record<string, ReadHistoryStory[]> = {};
     const now = new Date();
 
     const dayLabels = (date: Date) => {

@@ -42,9 +42,9 @@ export class AppComponent implements OnInit {
 
   unreadCount = 0;
 
-  notificationsVisible: boolean = false;
+  notificationsVisible = false;
 
-  newNotificationsAvailable: boolean = false;
+  newNotificationsAvailable = false;
 
   messageService = inject(MessageService);
 

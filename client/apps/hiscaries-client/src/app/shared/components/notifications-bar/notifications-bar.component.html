@@ -9,6 +9,7 @@
       [class.unread]="!notification.IsRead"
       [class.clickable]="notification.RelatedObjectId"
       (click)="clickNotification(notification)"
+      (keydown)="clickNotification(notification)"
       tabindex="0"
     >
       <div class="notification-content">
