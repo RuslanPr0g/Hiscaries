@@ -1,6 +1,6 @@
 ﻿using Elastic.Clients.Elasticsearch;
-using Hiscary.Recommendations.Domain.Persistence.Read;
 using Hiscary.Recommendations.Domain.Entities;
+using Hiscary.Recommendations.Domain.Persistence.Read;
 using Hiscary.Recommendations.Persistence.Shared;
 
 namespace Hiscary.Recommendations.Persistence.Read;

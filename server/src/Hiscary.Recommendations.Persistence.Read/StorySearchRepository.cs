@@ -73,7 +73,6 @@ public class StorySearchRepository : IStorySearchRepository
         );
     }
 
-
     private static async Task PopulateMockStories(
         ElasticsearchClient client,
         CancellationToken cancellationToken)

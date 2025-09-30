@@ -2,7 +2,10 @@
 
 public sealed class UserPreferences
 {
-    public Guid UserAccountId { get; set; }
+    /// <summary>
+    /// This is a user account id
+    /// </summary>
+    public Guid Id { get; set; }
 
     public HashSet<string> FavoriteGenres { get; set; }
 
