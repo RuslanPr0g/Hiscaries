@@ -21,7 +21,7 @@ public static class RecommendationsEndpoints
     private static async Task<IResult> GetRecommendations(
         [FromBody] RecommendationsRequest request,
         [FromServices] IStorySearchService service,
-        IAuthorizedEndpointHandler endpointHandler,
+        [FromServices] IAuthorizedEndpointHandler endpointHandler,
         CancellationToken cancellationToken) =>
         await endpointHandler.WithUser(user =>
             service.RecommendationsForUser(

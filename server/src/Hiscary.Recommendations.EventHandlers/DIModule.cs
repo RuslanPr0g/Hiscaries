@@ -18,6 +18,7 @@ public static class DIModule
         builder.Services.AddScoped<IEventHandler<StoryPublishedIntegrationEvent>, StoryPublishedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<StoryUpdatedIntegrationEvent>, StoryUpdatedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<StoryUniqueReadCountIncreasedIntegrationEvent>, StoryUniqueReadCountIncreasedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<StoryInformationRefreshChunkProcessedIntegrationEvent>, StoryInformationRefreshChunkProcessedIntegrationEventHandler>();
 
         var asm = Assembly.GetExecutingAssembly();
         var rabbitMqConnectionString = configuration.GetConnectionString("rabbitmq");
