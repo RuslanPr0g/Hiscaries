@@ -16,6 +16,7 @@ public class StorySimpleReadModel : IReadModel
     public DateTime DateWritten { get; set; }
     public Guid LibraryId { get; set; }
     public int TotalPages { get; set; }
+    public long UniqueReads { get; set; }
 
     public static StorySimpleReadModel FromDomainModel(Story story)
     {
@@ -30,7 +31,8 @@ public class StorySimpleReadModel : IReadModel
             DateWritten = story.DateWritten,
             LibraryId = story.LibraryId,
             ImagePreviewUrl = ImageUrlsDto.FromDomainModel(story.ImagePreviewUrl),
-            TotalPages = story.TotalPages
+            TotalPages = story.TotalPages,
+            UniqueReads = story.UniqueReads
         };
     }
 }

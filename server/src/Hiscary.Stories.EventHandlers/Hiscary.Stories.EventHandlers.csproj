@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Hiscary.Media.IntegrationEvents\Hiscary.Media.IntegrationEvents.csproj" />
     <ProjectReference Include="..\Hiscary.Notifications.IntegrationEvents\Hiscary.Notifications.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\Hiscary.PlatformUsers.IntegrationEvents\Hiscary.PlatformUsers.IntegrationEvents.csproj" />
     <ProjectReference Include="..\Hiscary.Stories.Domain\Hiscary.Stories.Domain.csproj" />
   </ItemGroup>
 </Project>

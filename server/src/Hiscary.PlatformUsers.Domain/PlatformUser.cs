@@ -93,6 +93,7 @@ public sealed class PlatformUser : AggregateRoot<PlatformUserId>
         else
         {
             ReadHistory.Add(new ReadingHistory(Id, storyId, page));
+            PublishNewStoryRead(storyId);
         }
     }
 
@@ -173,6 +174,11 @@ public sealed class PlatformUser : AggregateRoot<PlatformUserId>
     private void PublishUnsubscribedFromLibrary(LibraryId libraryId)
     {
         PublishEvent(new UserUnsubscribedFromLibraryDomainEvent(UserAccountId, libraryId));
+    }
+
+    private void PublishNewStoryRead(Guid storyId)
+    {
+        PublishEvent(new UserFirstReadStoryDomainEvent(UserAccountId, storyId));
     }
 
     private PlatformUser()

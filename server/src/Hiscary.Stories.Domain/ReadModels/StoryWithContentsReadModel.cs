@@ -27,7 +27,8 @@ public sealed class StoryWithContentsReadModel : StorySimpleReadModel
             Genres = story.Genres?.Select(GenreReadModel.FromDomainModel) ?? [],
             Contents = story.Contents?.Select(StoryPageReadModel.FromDomainModel) ?? [],
             ImagePreviewUrl = ImageUrlsDto.FromDomainModel(story.ImagePreviewUrl),
-            TotalPages = story.TotalPages
+            TotalPages = story.TotalPages,
+            UniqueReads = story.UniqueReads
         };
     }
 }

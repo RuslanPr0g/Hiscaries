@@ -1,4 +1,5 @@
 ﻿using Hiscary.Media.IntegrationEvents.Outgoing;
+using Hiscary.PlatformUsers.IntegrationEvents.Outgoing;
 using Hiscary.Stories.EventHandlers.IntegrationEvents;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ public static class DIModule
         IConfiguration configuration)
     {
         builder.Services.AddScoped<IEventHandler<ImageUploadedIntegrationEvent>, ImageUploadedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<StoryFirstReadIntegrationEvent>, StoryFirstReadIntegrationEventHandler>();
 
         var asm = Assembly.GetExecutingAssembly();
         var rabbitMqConnectionString = configuration.GetConnectionString("rabbitmq");

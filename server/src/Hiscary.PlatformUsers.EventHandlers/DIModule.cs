@@ -1,4 +1,6 @@
 ﻿using Hiscary.Media.IntegrationEvents.Outgoing;
+using Hiscary.PlatformUsers.DomainEvents;
+using Hiscary.PlatformUsers.EventHandlers.DomainEvents;
 using Hiscary.PlatformUsers.EventHandlers.IntegrationEvents;
 using Hiscary.Stories.IntegrationEvents.Outgoing;
 using Hiscary.UserAccounts.IntegrationEvents.Outgoing;
@@ -20,6 +22,7 @@ public static class DIModule
         builder.Services.AddScoped<IEventHandler<StoryPublishedIntegrationEvent>, StoryPublishedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<UserAccountCreatedIntegrationEvent>, UserAccountCreatedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<ImageUploadedIntegrationEvent>, ImageUploadedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<UserFirstReadStoryDomainEvent>, UserFirstReadStoryDomainEventHandler>();
 
         var asm = Assembly.GetExecutingAssembly();
         var rabbitMqConnectionString = configuration.GetConnectionString("rabbitmq");
