@@ -15,5 +15,6 @@
     <ProjectReference Include="..\Hiscary.Notifications.IntegrationEvents\Hiscary.Notifications.IntegrationEvents.csproj" />
     <ProjectReference Include="..\Hiscary.PlatformUsers.IntegrationEvents\Hiscary.PlatformUsers.IntegrationEvents.csproj" />
     <ProjectReference Include="..\Hiscary.Stories.Domain\Hiscary.Stories.Domain.csproj" />
+    <ProjectReference Include="..\Hiscary.Stories.IntegrationEvents\Hiscary.Stories.IntegrationEvents.csproj" />
   </ItemGroup>
 </Project>

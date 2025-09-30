@@ -3,7 +3,7 @@ using StackNucleus.DDD.Domain.Images;
 
 namespace Hiscary.Stories.IntegrationEvents.Outgoing;
 
-public sealed class StoryPublishedIntegrationEvent(
+public sealed class StoryUpdatedIntegrationEvent(
     Guid LibraryId,
     Guid StoryId,
     string Title,

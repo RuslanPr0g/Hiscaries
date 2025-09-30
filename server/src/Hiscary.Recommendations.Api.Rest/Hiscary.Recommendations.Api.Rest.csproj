@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -12,9 +12,16 @@
 	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" />
 	  <PackageReference Include="StackNucleus.DDD.Api.Rest" />
+	  <PackageReference Include="Aspire.Elastic.Clients.Elasticsearch" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Hiscary.Recommendations.Application.Read\Hiscary.Recommendations.Application.Read.csproj" />
+    <ProjectReference Include="..\Hiscary.Recommendations.Application.Write\Hiscary.Recommendations.Application.Write.csproj" />
+    <ProjectReference Include="..\Hiscary.Recommendations.Domain\Hiscary.Recommendations.Domain.csproj" />
+    <ProjectReference Include="..\Hiscary.Recommendations.EventHandlers\Hiscary.Recommendations.EventHandlers.csproj" />
+    <ProjectReference Include="..\Hiscary.Recommendations.Persistence.Read\Hiscary.Recommendations.Persistence.Read.csproj" />
+    <ProjectReference Include="..\Hiscary.Recommendations.Persistence.Write\Hiscary.Recommendations.Persistence.Write.csproj" />
     <ProjectReference Include="..\Hiscary.ServiceDefaults\Hiscary.ServiceDefaults.csproj" />
   </ItemGroup>
 

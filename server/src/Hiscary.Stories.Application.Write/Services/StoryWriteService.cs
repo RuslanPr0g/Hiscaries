@@ -173,7 +173,14 @@ public sealed class StoryWriteService(
             dateWritten);
 
         await _publisher.Publish(
-            new StoryPublishedIntegrationEvent(libraryId, storyId, title, []));
+            new StoryPublishedIntegrationEvent(libraryId,
+                                               storyId,
+                                               title,
+                                               [],
+                                               description,
+                                               existingGenres.Select(x => x.Name).ToArray(),
+                                               DateTime.UtcNow,
+                                               0));
 
         var imageIsEmpty = imagePreview is null || imagePreview.Length <= 0;
 
@@ -235,6 +242,16 @@ public sealed class StoryWriteService(
             existingGenres.ToList(),
             ageLimit,
             DateTime.SpecifyKind(dateWritten, DateTimeKind.Utc));
+
+        await _publisher.Publish(
+            new StoryUpdatedIntegrationEvent(story.LibraryId,
+                                             storyId,
+                                             title,
+                                             story.ImagePreviewUrl?.ToImageUrlToSize() ?? [],
+                                             description,
+                                             existingGenres.Select(x => x.Name).ToArray(),
+                                             DateTime.UtcNow,
+                                             story.UniqueReads));
 
         var imageIsEmpty = imagePreview is null || imagePreview.Length <= 0;
 

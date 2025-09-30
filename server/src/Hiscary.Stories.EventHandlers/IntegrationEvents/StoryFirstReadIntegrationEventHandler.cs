@@ -1,16 +1,20 @@
 ﻿using Hiscary.PlatformUsers.IntegrationEvents.Outgoing;
 using Hiscary.Stories.Domain.DataAccess;
+using Hiscary.Stories.IntegrationEvents.Outgoing;
 using Microsoft.Extensions.Logging;
 using StackNucleus.DDD.Domain.EventHandlers;
+using StackNucleus.DDD.Domain.EventPublishers;
 using Wolverine;
 
 namespace Hiscary.Stories.EventHandlers.IntegrationEvents;
 
 public sealed class StoryFirstReadIntegrationEventHandler(
+    IEventPublisher publisher,
     IStoryWriteRepository repository,
     ILogger<StoryFirstReadIntegrationEventHandler> logger)
         : IEventHandler<StoryFirstReadIntegrationEvent>
 {
+    private readonly IEventPublisher _publisher = publisher;
     private readonly IStoryWriteRepository _repository = repository;
 
     public async Task Handle(
@@ -26,6 +30,9 @@ public sealed class StoryFirstReadIntegrationEventHandler(
         }
 
         story.ReadStoryUniquely();
+
+        await _publisher.Publish(
+            new StoryUniqueReadCountIncreasedIntegrationEvent(storyId, integrationEvent.UserAccountId, story.UniqueReads));
 
         await _repository.SaveChanges();
 

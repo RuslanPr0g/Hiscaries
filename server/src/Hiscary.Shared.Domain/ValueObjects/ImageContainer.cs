@@ -32,6 +32,15 @@ public sealed class ImageContainer : IEquatable<ImageContainer>
         return new ImageContainer(dict);
     }
 
+    public ImageUrlToSize[] ToImageUrlToSize()
+    {
+        return Urls.Select(x => new ImageUrlToSize
+        {
+            Size = Enum.Parse<ImageSize>(x.Key, true),
+            Url = x.Value
+        }).ToArray();
+    }
+
     public Dictionary<string, string> Urls { get; private set; } = new();
 
     public string? GetUrl(string size)

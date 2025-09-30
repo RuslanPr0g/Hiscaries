@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aspire.Elastic.Clients.Elasticsearch" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Hiscary.Recommendations.Domain\Hiscary.Recommendations.Domain.csproj" />
+	  <ProjectReference Include="..\Hiscary.Recommendations.Persistence.Shared\Hiscary.Recommendations.Persistence.Shared.csproj" />
+	</ItemGroup>
+
+</Project>
