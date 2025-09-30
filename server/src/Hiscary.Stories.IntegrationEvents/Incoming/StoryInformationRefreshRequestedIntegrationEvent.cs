@@ -4,10 +4,10 @@ namespace Hiscary.Stories.IntegrationEvents.Incoming;
 
 public sealed class StoryInformationRefreshRequestedIntegrationEvent(
     Guid RequesterId,
-    long Index,
-    long ChunkSize) : BaseIntegrationEvent
+    int Index,
+    int ChunkSize) : BaseIntegrationEvent
 {
     public Guid RequesterId { get; } = RequesterId;
-    public long Index { get; } = Index;
-    public long ChunkSize { get; } = ChunkSize;
+    public int Index { get; } = Index;
+    public int ChunkSize { get; } = ChunkSize;
 }

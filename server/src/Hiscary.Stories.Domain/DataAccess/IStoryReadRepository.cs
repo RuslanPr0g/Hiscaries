@@ -1,6 +1,6 @@
-﻿using StackNucleus.DDD.Domain.ClientModels;
-using Hiscary.Stories.Domain.ReadModels;
+﻿using Hiscary.Stories.Domain.ReadModels;
 using Hiscary.Stories.Domain.Stories;
+using StackNucleus.DDD.Domain.ClientModels;
 using StackNucleus.DDD.Domain.Repositories;
 
 namespace Hiscary.Stories.Domain.DataAccess;
@@ -10,6 +10,8 @@ public interface IStoryReadRepository : IBaseReadRepository<StorySimpleReadModel
     Task<IEnumerable<GenreReadModel>> GetAllGenres();
 
     Task<StoryWithContentsReadModel?> GetStory(StoryId storyId);
+
+    Task<ClientQueriedModel<StorySimpleReadModel>> GetAllStories(ClientQueryableModel query);
 
     Task<ClientQueriedModel<StorySimpleReadModel>> GetStoryReadingSuggestions(
         StoryClientQueryableModelWithSortableRules queryableModel);

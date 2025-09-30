@@ -22,6 +22,11 @@ public class StoryReadRepository(StoriesContext context) :
             .Select(genre => GenreReadModel.FromDomainModel(genre))
             .ToListAsync();
 
+    public async Task<ClientQueriedModel<StorySimpleReadModel>> GetAllStories(ClientQueryableModel query)
+    {
+        return await GetStoryReadModelsPaginatedBy(Context.Stories.AsNoTracking(), query);
+    }
+
     public async Task<ClientQueriedModel<StorySimpleReadModel>> GetStoriesBy(
         string searchTerm,
         string genre,
@@ -93,7 +98,7 @@ public class StoryReadRepository(StoriesContext context) :
 
     private static async Task<ClientQueriedModel<StorySimpleReadModel>> GetStoryReadModelsPaginatedBy(
         IQueryable<Story> query,
-        StoryClientQueryableModelWithSortableRules queryableModel)
+        ClientQueryableModel queryableModel)
     {
         var stories = await query.ApplyPagination(queryableModel).ToListAsync();
         var storyReadModels = stories.SelectSkipNulls(StoryDomainToSimpleReadDto);

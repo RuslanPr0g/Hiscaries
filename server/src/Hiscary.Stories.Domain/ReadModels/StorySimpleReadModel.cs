@@ -10,6 +10,7 @@ public class StorySimpleReadModel : IReadModel
     public string Title { get; set; }
     public string Description { get; set; }
     public string AuthorName { get; set; }
+    public string[] GenreNames { get; set; }
     public int AgeLimit { get; set; }
     public ImageUrlsDto? ImagePreviewUrl { get; set; }
     public DateTime DatePublished { get; set; }
@@ -32,7 +33,8 @@ public class StorySimpleReadModel : IReadModel
             LibraryId = story.LibraryId,
             ImagePreviewUrl = ImageUrlsDto.FromDomainModel(story.ImagePreviewUrl),
             TotalPages = story.TotalPages,
-            UniqueReads = story.UniqueReads
+            UniqueReads = story.UniqueReads,
+            GenreNames = story.Genres?.Select(_ => _.Name).ToArray() ?? []
         };
     }
 }
