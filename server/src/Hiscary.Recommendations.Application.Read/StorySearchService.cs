@@ -1,5 +1,6 @@
 ﻿using Hiscary.Recommendations.Domain.Entities;
 using Hiscary.Recommendations.Domain.Persistence.Read;
+using Hiscary.Recommendations.Domain.Queries;
 using Hiscary.Recommendations.Domain.Services.Read;
 using StackNucleus.DDD.Domain.ClientModels;
 
@@ -14,5 +15,6 @@ internal sealed class StorySearchService : IStorySearchService
         _repository = repository;
     }
 
-    public Task<ClientQueriedModel<Story>> RecommendationsForUser(Guid userId, CancellationToken ct = default) => _repository.RecommendationsForUser(userId, ct);
+    public Task<ClientQueriedModel<Story>> RecommendationsForUser(StoryRecommendationsQuery query, CancellationToken ct = default) =>
+        _repository.RecommendationsForUser(query, ct);
 }

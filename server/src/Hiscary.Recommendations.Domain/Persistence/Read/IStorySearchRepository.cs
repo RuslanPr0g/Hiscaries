@@ -8,5 +8,5 @@ public interface IStorySearchRepository
 {
     Task<Story?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<ClientQueriedModel<Story>> SearchAsync(SearchStoryQuery query, CancellationToken ct = default);
-    Task<ClientQueriedModel<Story>> RecommendationsForUser(Guid userId, CancellationToken ct = default);
+    Task<ClientQueriedModel<Story>> RecommendationsForUser(StoryRecommendationsQuery query, CancellationToken ct = default);
 }

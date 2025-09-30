@@ -1,4 +1,5 @@
-﻿using Hiscary.Recommendations.Domain.Services.Read;
+﻿using Hiscary.Recommendations.Api.Rest.Requests;
+using Hiscary.Recommendations.Domain.Services.Read;
 using Microsoft.AspNetCore.Mvc;
 using StackNucleus.DDD.Api.Rest;
 
@@ -12,15 +13,18 @@ public static class RecommendationsEndpoints
             .RequireAuthorization()
             .WithTags("Recommendations");
 
-        group.MapGet("/", GetRecommendations)
+        group.MapPost("/", GetRecommendations)
             .Produces<IResult>(StatusCodes.Status200OK, contentType: "application/json")
             .Produces(StatusCodes.Status401Unauthorized);
     }
 
     private static async Task<IResult> GetRecommendations(
+        [FromBody] RecommendationsRequest request,
         [FromServices] IStorySearchService service,
         IAuthorizedEndpointHandler endpointHandler,
         CancellationToken cancellationToken) =>
         await endpointHandler.WithUser(user =>
-            service.RecommendationsForUser(user.Id, cancellationToken));
+            service.RecommendationsForUser(
+                request.QueryableModel with { UserAccountId = user.Id },
+                cancellationToken));
 }

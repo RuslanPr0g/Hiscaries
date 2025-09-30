@@ -64,7 +64,7 @@
   </ItemGroup>
   <!-- StackNucleus DDD -->
   <ItemGroup>
-    <PackageVersion Include="StackNucleus.DDD.Domain" Version="3.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Domain" Version="3.1.0" />
     <PackageVersion Include="StackNucleus.DDD.Application" Version="3.0.0" />
     <PackageVersion Include="StackNucleus.DDD.Events.WolverineFx" Version="3.0.0" />
     <PackageVersion Include="StackNucleus.DDD.Outbox" Version="3.0.0" />

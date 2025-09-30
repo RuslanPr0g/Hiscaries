@@ -13,11 +13,16 @@ public class StorySearchRepository : IStorySearchRepository
 {
     private readonly ElasticsearchClient _client;
     private readonly ElasticsearchConfiguration _settings;
+    private readonly IUserPreferencesReadRepository _userPreferencesReadRepository;
 
-    public StorySearchRepository(ElasticsearchClient client, ElasticsearchConfiguration settings)
+    public StorySearchRepository(
+        ElasticsearchClient client,
+        ElasticsearchConfiguration settings,
+        IUserPreferencesReadRepository userPreferencesReadRepository)
     {
         _client = client;
         _settings = settings;
+        _userPreferencesReadRepository = userPreferencesReadRepository;
     }
 
     public async Task<Story?> GetByIdAsync(Guid id, CancellationToken ct = default)
@@ -69,65 +74,75 @@ public class StorySearchRepository : IStorySearchRepository
 
         return ClientQueriedModel<Story>.Create(
             response.Documents.ToList(),
-            (int)response.Total
+            response.Total
         );
     }
 
-    private static async Task PopulateMockStories(
-        ElasticsearchClient client,
-        CancellationToken cancellationToken)
+    public async Task<ClientQueriedModel<Story>> RecommendationsForUser(StoryRecommendationsQuery query, CancellationToken ct = default)
     {
-        var createIndexResponse = await client.Indices.CreateAsync("stories", cancellationToken);
+        var userPreferences = await _userPreferencesReadRepository.GetByIdAsync(query.UserAccountId, ct);
 
-        var story = new Story
+        SearchResponse<Story> response;
+
+        if (userPreferences is not null &&
+            (userPreferences.FavoriteGenres?.Count > 0 || userPreferences.FavoriteTags?.Count > 0))
         {
-            Id = Guid.NewGuid(),
-            Title = "The Lost Chronicles",
-            Description = "An epic tale of adventure, mystery, and forgotten kingdoms.",
-            Genres = new HashSet<string> { "Fantasy", "Adventure", "Mystery" },
-            LibraryId = Guid.NewGuid(),
-            PublishedDate = new DateTime(2023, 5, 14)
-        };
+            response = await _client.SearchAsync<Story>(s => s
+                .Index(_settings.StoryIndex)
+                .From(query.StartIndex)
+                .Size(query.ItemsCount)
+                .Query(q => q
+                    .Bool(b => b
+                        .Should(sh =>
+                        {
+                            if (userPreferences.FavoriteGenres?.Count > 0)
+                            {
+                                sh.Terms(t => t
+                                    .Field(f => f.Genres)
+                                    .Term(new TermsQueryField(
+                                        userPreferences!.FavoriteGenres.Select(FieldValue.String).ToArray()
+                                    )));
+                            }
 
-        var indexStoryResponse = await client.IndexAsync(story, x => x.Index("stories"));
+                            if (userPreferences.FavoriteTags?.Count > 0)
+                            {
+                                sh.Terms(t => t
+                                    .Field(x => x.Title)
+                                    .Term(new TermsQueryField(
+                                        userPreferences.FavoriteTags.Select(FieldValue.String).ToArray()
+                                    )));
 
-        var searchForCreatedStoryNotFound = await client.SearchAsync<Story>(s => s
-            .Indices("stories")
-            .From(0)
-            .Size(10)
-            .Query(q => q
-                .Term(t => t
-                    .Field(x => x.Title)
-                    .Value("cringe")
+                                sh.Terms(t => t
+                                    .Field(x => x.Description)
+                                    .Term(new TermsQueryField(
+                                        userPreferences.FavoriteTags.Select(FieldValue.String).ToArray()
+                                    )));
+                            }
+                        })
+                        .MinimumShouldMatch(1)
+                    )
                 )
-            )
-        );
-
-        if (searchForCreatedStoryNotFound.IsValidResponse)
+                .Sort(srt => srt
+                    .Field(f => f.UniqueReads, new FieldSort { Order = SortOrder.Desc })
+                )
+            , ct);
+        }
+        else
         {
-            var doc = searchForCreatedStoryNotFound.Documents.FirstOrDefault();
+            response = await _client.SearchAsync<Story>(s => s
+                .Index(_settings.StoryIndex)
+                .From(query.StartIndex)
+                .Size(query.ItemsCount)
+                .Query(q => q.MatchAll(new MatchAllQuery()))
+                .Sort(srt => srt
+                    .Field(f => f.UniqueReads, new FieldSort { Order = SortOrder.Desc })
+                )
+            , ct);
         }
 
-        var searchForCreatedStoryFound = await client.SearchAsync<Story>(s => s
-            .Indices("stories")
-            .From(0)
-            .Size(10)
-            .Query(q => q
-                .Term(t => t
-                    .Field(x => x.Title)
-                    .Value("lost")
-                )
-            )
+        return ClientQueriedModel<Story>.Create(
+            response.Documents.ToList(),
+            response.Total
         );
-
-        if (searchForCreatedStoryFound.IsValidResponse)
-        {
-            var doc = searchForCreatedStoryFound.Documents.FirstOrDefault();
-        }
-    }
-
-    public Task<ClientQueriedModel<Story>> RecommendationsForUser(Guid userId, CancellationToken ct = default)
-    {
-        throw new NotImplementedException();
     }
 }
