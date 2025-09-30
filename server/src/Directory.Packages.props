@@ -15,7 +15,7 @@
   </ItemGroup>
   <!-- Elastic Search -->
   <ItemGroup>
-    <PackageVersion Include="Elastic.Clients.Elasticsearch" Version="8.19.7" />
+    <PackageVersion Include="Aspire.Elastic.Clients.Elasticsearch" Version="8.2.2-preview.1.24521.5" />
   </ItemGroup>
   <!-- Azure Packages -->
   <ItemGroup>

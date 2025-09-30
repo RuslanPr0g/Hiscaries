@@ -58,9 +58,21 @@ public sealed class Story : AggregateRoot<StoryId>
     public int AgeLimit { get; private set; }
     public DateTime DateWritten { get; private set; }
 
+    public long UniqueReads { get; private set; }
+
     public ImageContainer? ImagePreviewUrl { get; private set; }
 
     public int TotalPages => Contents.Count;
+
+    public void ReadStoryUniquely()
+    {
+        if (UniqueReads == long.MaxValue)
+        {
+            throw new InvalidOperationException("Value reached its maximum.");
+        }
+
+        UniqueReads++;
+    }
 
     public void UpdatePreviewUrl(
         ImageContainer? previewUrl)
