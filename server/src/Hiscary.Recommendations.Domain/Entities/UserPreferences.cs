@@ -1,13 +1,23 @@
 ﻿namespace Hiscary.Recommendations.Domain.Entities;
 
-public sealed class UserPreferences
+public sealed record UserPreferences
 {
     /// <summary>
     /// This is a user account id
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
-    public HashSet<string> FavoriteGenres { get; set; }
+    public HashSet<string> FavoriteGenres { get; private set; }
 
-    public HashSet<string> FavoriteTags { get; set; }
+    public HashSet<string> FavoriteTags { get; private set; }
+
+    public void LikeNewGenres(HashSet<string> genres)
+    {
+        FavoriteGenres.UnionWith(genres);
+    }
+
+    public void LikeNewTags(HashSet<string> tags)
+    {
+        FavoriteTags.UnionWith(tags);
+    }
 }

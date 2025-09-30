@@ -1,18 +1,18 @@
 ﻿namespace Hiscary.Recommendations.Domain.Entities;
 
-public sealed class Story
+public sealed record Story
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
-    public string Title { get; set; }
+    public string Title { get; init; }
 
-    public string Description { get; set; }
+    public string Description { get; init; }
 
-    public HashSet<string> Genres { get; set; }
+    public HashSet<string> Genres { get; init; }
 
-    public Guid LibraryId { get; set; }
+    public Guid LibraryId { get; init; }
 
-    public DateTime PublishedDate { get; set; }
+    public DateTime PublishedDate { get; init; }
 
-    public long UniqueReads { get; set; }
+    public long UniqueReads { get; init; }
 }

@@ -1,9 +1,7 @@
-﻿using Hiscary.Recommendations.Domain.Entities;
-
-namespace Hiscary.Recommendations.Domain.Services.Write;
+﻿namespace Hiscary.Recommendations.Domain.Services.Write;
 
 public interface IUserPreferencesIndexService
 {
-    Task AddOrUpdateAsync(UserPreferences entity, CancellationToken ct = default);
+    Task AddOrUpdateAsync(Guid userAccountId, Guid storyId, CancellationToken ct = default);
     Task DeleteAsync(Guid id, CancellationToken ct = default);
 }

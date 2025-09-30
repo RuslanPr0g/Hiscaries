@@ -9,10 +9,12 @@ namespace Hiscary.Recommendations.EventHandlers.IntegrationEvents;
 
 public sealed class StoryUniqueReadCountIncreasedIntegrationEventHandler(
     IStorySearchIndexService storyService,
+    IUserPreferencesIndexService userPreferencesIndexService,
     ILogger<StoryUniqueReadCountIncreasedIntegrationEventHandler> logger)
         : IEventHandler<StoryUniqueReadCountIncreasedIntegrationEvent>
 {
     private readonly IStorySearchIndexService _storyService = storyService;
+    private readonly IUserPreferencesIndexService _userPreferencesIndexService = userPreferencesIndexService;
 
     public async Task Handle(
         StoryUniqueReadCountIncreasedIntegrationEvent integrationEvent, IMessageContext context)
@@ -22,6 +24,8 @@ public sealed class StoryUniqueReadCountIncreasedIntegrationEventHandler(
             Id = integrationEvent.StoryId,
             UniqueReads = integrationEvent.UniqueReads,
         });
+
+        await _userPreferencesIndexService.AddOrUpdateAsync(integrationEvent.UserAccountId, integrationEvent.StoryId);
 
         logger.LogInformation("{Handler} handled.", nameof(StoryUniqueReadCountIncreasedIntegrationEventHandler));
     }

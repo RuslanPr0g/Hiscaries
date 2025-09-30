@@ -8,6 +8,11 @@ internal sealed class StorySearchIndexService : IStorySearchIndexService
 {
     private readonly IStorySearchIndexRepository _repository;
 
+    public StorySearchIndexService(IStorySearchIndexRepository repository)
+    {
+        _repository = repository;
+    }
+
     public async Task AddOrUpdateAsync(Story entity, CancellationToken ct = default)
     {
         await _repository.IndexAsync(entity, ct);
