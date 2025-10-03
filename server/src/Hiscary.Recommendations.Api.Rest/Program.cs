@@ -1,6 +1,7 @@
 using Hiscary.Recommendations.Api.Rest.Endpoints;
 using Hiscary.Recommendations.Application.Read;
 using Hiscary.Recommendations.Application.Write;
+using Hiscary.Recommendations.EventHandlers;
 using Hiscary.Recommendations.Persistence.Read;
 using Hiscary.Recommendations.Persistence.Write;
 using Hiscary.ServiceDefaults;
@@ -11,8 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
+builder.Services.AddSharedRestApi(builder.Configuration);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.AddEventHandlers(builder.Configuration);
 
 builder.Services.AddSerilog();
 builder.Services.AddLogging();
@@ -23,8 +27,6 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddSharedRestApi(builder.Configuration);
 
 builder.Services.AddRecommendationsPersistenceWriteLayer();
 builder.Services.AddRecommendationsPersistenceReadLayer();

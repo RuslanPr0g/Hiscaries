@@ -140,6 +140,11 @@ public class StorySearchRepository : IStorySearchRepository
             , ct);
         }
 
+        if (!response.IsValidResponse || !response.IsSuccess())
+        {
+            return ClientQueriedModel<Story>.Empty;
+        }
+
         return ClientQueriedModel<Story>.Create(
             response.Documents.ToList(),
             response.Total
