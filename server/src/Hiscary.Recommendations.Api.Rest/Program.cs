@@ -4,7 +4,10 @@ using Hiscary.Recommendations.Application.Write;
 using Hiscary.Recommendations.Persistence.Read;
 using Hiscary.Recommendations.Persistence.Write;
 using Hiscary.ServiceDefaults;
+using Hiscary.Shared.Application.Extensions;
+using Hiscary.Shared.Domain.Options;
 using Serilog;
+using StackNucleus.DDD.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +25,10 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddBoundSettingsWithSectionAsEntityName<JwtSettings>(builder.Configuration, out var jwtSettings);
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddJwtBearerSupport(jwtSettings);
 
 builder.Services.AddRecommendationsPersistenceWriteLayer();
 builder.Services.AddRecommendationsPersistenceReadLayer();
