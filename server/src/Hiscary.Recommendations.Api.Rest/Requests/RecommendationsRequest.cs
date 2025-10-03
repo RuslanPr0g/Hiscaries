@@ -4,5 +4,6 @@ namespace Hiscary.Recommendations.Api.Rest.Requests;
 
 public class RecommendationsRequest
 {
-    public StoryRecommendationsQuery QueryableModel { get; set; }
+    public required int StartIndex { get; set; }
+    public required int ItemsCount { get; set; }
 }

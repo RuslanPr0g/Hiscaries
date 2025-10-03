@@ -1,4 +1,5 @@
 ﻿using Hiscary.Recommendations.Api.Rest.Requests;
+using Hiscary.Recommendations.Domain.Queries;
 using Hiscary.Recommendations.Domain.Services.Read;
 using Microsoft.AspNetCore.Mvc;
 using StackNucleus.DDD.Api.Rest;
@@ -25,6 +26,13 @@ public static class RecommendationsEndpoints
         CancellationToken cancellationToken) =>
         await endpointHandler.WithUser(user =>
             service.RecommendationsForUser(
-                request.QueryableModel with { UserAccountId = user.Id },
+                new StoryRecommendationsQuery()
+                {
+                    StartIndex = request.StartIndex,
+                    ItemsCount = request.ItemsCount,
+                    UserAccountId = user.Id,
+                    SortAsc = false,
+                    SortProperty = "DateWritten"
+                },
                 cancellationToken));
 }
