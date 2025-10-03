@@ -14,7 +14,18 @@ internal sealed class IndexStoriesJob(
 
     public async Task Execute(IJobExecutionContext context)
     {
+        var isUserDataAvailable = await _availabilityRepository.IsUserDataAvailable(context.CancellationToken);
         var isStoryDataAvailable = await _availabilityRepository.IsStoryDataAvailable(context.CancellationToken);
+
+        if (!isUserDataAvailable)
+        {
+            await _availabilityRepository.CreateUserIndex(context.CancellationToken);
+        }
+
+        if (!isStoryDataAvailable)
+        {
+            await _availabilityRepository.CreateStoryIndex(context.CancellationToken);
+        }
 
         if (!isStoryDataAvailable)
         {

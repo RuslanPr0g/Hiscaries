@@ -33,7 +33,12 @@ var azBlobs = builder.AddAzureStorage("azstorage")
 
 var elasticsearch = builder
     .AddElasticsearch("elasticsearch")
-    .WithDataVolume("elasticsearchdata")
+    // TODO: data is not saved for some reason
+    //.WithDataVolume("elasticsearchdata")
+    .WithBindMount(
+        source: "../elasticsearch-data",
+        target: "/data",
+        isReadOnly: false)
     .WithEnvironment("xpack.security.enabled", "false");
 var redis = builder
     .AddRedis("rediscache");

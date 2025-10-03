@@ -1,4 +1,5 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using Hiscary.Recommendations.Domain.Entities;
 using Hiscary.Recommendations.Domain.Persistence.Read;
@@ -15,6 +16,16 @@ internal sealed class SystemDataAvailabilityRepository : ISystemDataAvailability
     {
         _client = client;
         _settings = settings;
+    }
+
+    public async Task CreateUserIndex(CancellationToken ct = default)
+    {
+        await _client.Indices.CreateAsync(new CreateIndexRequest(_settings.UserPreferencesIndex), ct);
+    }
+
+    public async Task CreateStoryIndex(CancellationToken ct = default)
+    {
+        await _client.Indices.CreateAsync(new CreateIndexRequest(_settings.StoryIndex), ct);
     }
 
     public async Task<bool> IsUserDataAvailable(CancellationToken ct = default)

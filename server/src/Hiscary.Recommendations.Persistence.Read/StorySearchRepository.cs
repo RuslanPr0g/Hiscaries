@@ -1,4 +1,5 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using Hiscary.Recommendations.Domain.Entities;
 using Hiscary.Recommendations.Domain.Persistence.Read;
@@ -129,6 +130,8 @@ public class StorySearchRepository : IStorySearchRepository
         }
         else
         {
+            var mappings = await _client.Indices.GetMappingAsync(ct);
+
             response = await _client.SearchAsync<Story>(s => s
                 .Index(_settings.StoryIndex)
                 .From(query.StartIndex)
