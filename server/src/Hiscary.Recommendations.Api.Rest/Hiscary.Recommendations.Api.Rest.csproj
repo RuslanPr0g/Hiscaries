@@ -13,7 +13,6 @@
 	  <PackageReference Include="Swashbuckle.AspNetCore" />
 	  <PackageReference Include="StackNucleus.DDD.Api.Rest" />
 	  <PackageReference Include="Aspire.Elastic.Clients.Elasticsearch" />
-	  <PackageReference Include="StackNucleus.DDD.Application" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +23,7 @@
     <ProjectReference Include="..\Hiscary.Recommendations.Persistence.Read\Hiscary.Recommendations.Persistence.Read.csproj" />
     <ProjectReference Include="..\Hiscary.Recommendations.Persistence.Write\Hiscary.Recommendations.Persistence.Write.csproj" />
     <ProjectReference Include="..\Hiscary.ServiceDefaults\Hiscary.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\Hiscary.Shared.Application\Hiscary.Shared.Application.csproj" />
+    <ProjectReference Include="..\Hiscary.Shared.Api.Rest\Hiscary.Shared.Api.Rest.csproj" />
     <ProjectReference Include="..\Hiscary.Shared.Domain\Hiscary.Shared.Domain.csproj" />
   </ItemGroup>
 
