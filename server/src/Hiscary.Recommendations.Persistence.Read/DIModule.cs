@@ -12,6 +12,7 @@ public static class DIModule
         services.AddSingleton<ElasticsearchConfiguration>();
         services.AddScoped<IStorySearchRepository, StorySearchRepository>();
         services.AddScoped<IUserPreferencesReadRepository, UserPreferencesReadRepository>();
+        services.AddScoped<ISystemDataAvailabilityRepository, SystemDataAvailabilityRepository>();
         return services;
     }
 }

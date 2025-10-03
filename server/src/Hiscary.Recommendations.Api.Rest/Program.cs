@@ -2,6 +2,7 @@ using Hiscary.Recommendations.Api.Rest.Endpoints;
 using Hiscary.Recommendations.Application.Read;
 using Hiscary.Recommendations.Application.Write;
 using Hiscary.Recommendations.EventHandlers;
+using Hiscary.Recommendations.Jobs;
 using Hiscary.Recommendations.Persistence.Read;
 using Hiscary.Recommendations.Persistence.Write;
 using Hiscary.ServiceDefaults;
@@ -17,6 +18,7 @@ builder.Services.AddSharedRestApi(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.AddEventHandlers(builder.Configuration);
+builder.Services.AddJobs();
 
 builder.Services.AddSerilog();
 builder.Services.AddLogging();

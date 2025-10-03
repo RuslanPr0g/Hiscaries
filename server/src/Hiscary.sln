@@ -150,6 +150,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hiscary.Recommendations.Per
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hiscary.Recommendations.Persistence.Read", "Hiscary.Recommendations.Persistence.Read\Hiscary.Recommendations.Persistence.Read.csproj", "{3F128FA5-7D96-44AC-844B-37E32CA5D983}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hiscary.Recommendations.Jobs", "Hiscary.Recommendations.Jobs\Hiscary.Recommendations.Jobs.csproj", "{705DB21A-299D-4E92-BA20-0DF35128482B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -904,6 +906,18 @@ Global
 		{3F128FA5-7D96-44AC-844B-37E32CA5D983}.Release|x64.Build.0 = Release|Any CPU
 		{3F128FA5-7D96-44AC-844B-37E32CA5D983}.Release|x86.ActiveCfg = Release|Any CPU
 		{3F128FA5-7D96-44AC-844B-37E32CA5D983}.Release|x86.Build.0 = Release|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Debug|x64.Build.0 = Debug|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Debug|x86.Build.0 = Debug|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Release|x64.ActiveCfg = Release|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Release|x64.Build.0 = Release|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Release|x86.ActiveCfg = Release|Any CPU
+		{705DB21A-299D-4E92-BA20-0DF35128482B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -979,6 +993,7 @@ Global
 		{7F78912D-923E-457F-894F-55DB4B123315} = {240EAFB9-8BC1-419A-A885-E522A48FA434}
 		{7063B2B4-6097-4EAE-95A1-5FD8B2E6E0C2} = {240EAFB9-8BC1-419A-A885-E522A48FA434}
 		{3F128FA5-7D96-44AC-844B-37E32CA5D983} = {240EAFB9-8BC1-419A-A885-E522A48FA434}
+		{705DB21A-299D-4E92-BA20-0DF35128482B} = {240EAFB9-8BC1-419A-A885-E522A48FA434}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16994D4B-7F71-40F8-90BD-7BF9D9A9EAE9}
