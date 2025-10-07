@@ -34,6 +34,8 @@ internal sealed class IndexStoriesJob(
             // TODO: the requester id should be used in the StoryInformationRefreshChunkProcessedIntegrationEventHandler
             // to check that it's indeed the recommendation service calling it
             // for this we need to store the guid of the service in a configuration file
+            // TODO: the data should be present in the docker not to populate it on startup.
+            // TODO: search doesnt work as it says no data found even though there is data in the index.
             await _publisher.Publish(new StoryInformationRefreshRequestedIntegrationEvent(
                 Guid.NewGuid(),
                 0,
