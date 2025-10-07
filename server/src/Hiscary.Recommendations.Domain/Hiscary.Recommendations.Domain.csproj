@@ -8,6 +8,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="StackNucleus.DDD.Domain" />
+		
+		<!-- Should not be here ideally -->
+		<PackageReference Include="Aspire.Elastic.Clients.Elasticsearch" />
 	</ItemGroup>
 
 </Project>

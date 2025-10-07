@@ -1,4 +1,5 @@
-﻿using Hiscary.Recommendations.Domain.Entities;
+﻿using Elastic.Clients.Elasticsearch;
+using Hiscary.Recommendations.Domain.Entities;
 using Hiscary.Recommendations.Domain.Persistence.Write;
 using Hiscary.Recommendations.Domain.Services.Write;
 
@@ -13,18 +14,18 @@ internal sealed class StorySearchIndexService : IStorySearchIndexService
         _repository = repository;
     }
 
-    public async Task AddOrUpdateAsync(Story entity, CancellationToken ct = default)
+    public async Task<IndexResponse> AddOrUpdateAsync(Story entity, CancellationToken ct = default)
     {
-        await _repository.IndexAsync(entity, ct);
+        return await _repository.IndexAsync(entity, ct);
     }
 
-    public async Task AddOrUpdateAsync(Story[] entities, CancellationToken ct = default)
+    public async Task<IndexResponse> AddOrUpdateAsync(Story[] entities, CancellationToken ct = default)
     {
-        await _repository.IndexAsync(entities, ct);
+        return await _repository.IndexAsync(entities, ct);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task<DeleteResponse> DeleteAsync(Guid id, CancellationToken ct = default)
     {
-        await _repository.DeleteAsync(id, ct);
+        return await _repository.DeleteAsync(id, ct);
     }
 }

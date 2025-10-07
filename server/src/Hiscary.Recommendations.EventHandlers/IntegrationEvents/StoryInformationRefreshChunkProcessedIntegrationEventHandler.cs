@@ -27,7 +27,7 @@ public sealed class StoryInformationRefreshChunkProcessedIntegrationEventHandler
         }
 
         // TODO: check the requester id to be sure that our service was the one calling this process
-        await _service.AddOrUpdateAsync(integrationEvent.Stories.Select(story =>
+        var response = await _service.AddOrUpdateAsync(integrationEvent.Stories.Select(story =>
             new Story
             {
                 Id = story.Id,

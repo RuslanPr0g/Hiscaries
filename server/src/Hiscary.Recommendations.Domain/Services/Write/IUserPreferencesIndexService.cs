@@ -1,7 +1,9 @@
-﻿namespace Hiscary.Recommendations.Domain.Services.Write;
+﻿using Elastic.Clients.Elasticsearch;
+
+namespace Hiscary.Recommendations.Domain.Services.Write;
 
 public interface IUserPreferencesIndexService
 {
-    Task AddOrUpdateAsync(Guid userAccountId, Guid storyId, CancellationToken ct = default);
-    Task DeleteAsync(Guid id, CancellationToken ct = default);
+    Task<IndexResponse?> AddOrUpdateAsync(Guid userAccountId, Guid storyId, CancellationToken ct = default);
+    Task<DeleteResponse> DeleteAsync(Guid id, CancellationToken ct = default);
 }

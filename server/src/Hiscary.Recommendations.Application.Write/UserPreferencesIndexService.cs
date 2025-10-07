@@ -1,4 +1,5 @@
-﻿using Hiscary.Recommendations.Domain.Entities;
+﻿using Elastic.Clients.Elasticsearch;
+using Hiscary.Recommendations.Domain.Entities;
 using Hiscary.Recommendations.Domain.Persistence.Read;
 using Hiscary.Recommendations.Domain.Persistence.Write;
 using Hiscary.Recommendations.Domain.Services.Write;
@@ -21,7 +22,7 @@ internal sealed class UserPreferencesIndexService : IUserPreferencesIndexService
         _storySearchRepository = storySearchRepository;
     }
 
-    public async Task AddOrUpdateAsync(Guid userAccountId, Guid storyId, CancellationToken ct = default)
+    public async Task<IndexResponse?> AddOrUpdateAsync(Guid userAccountId, Guid storyId, CancellationToken ct = default)
     {
         var user = await _userPreferencesReadRepository.GetByIdAsync(userAccountId, ct);
 
@@ -37,7 +38,7 @@ internal sealed class UserPreferencesIndexService : IUserPreferencesIndexService
 
         if (story is null)
         {
-            return;
+            return null;
         }
 
         var genres = story.Genres.ToHashSet();
@@ -46,11 +47,11 @@ internal sealed class UserPreferencesIndexService : IUserPreferencesIndexService
         user.LikeNewGenres(genres);
         user.LikeNewTags(tags);
 
-        await _userPreferencesIndexRepository.IndexAsync(user, ct);
+        return await _userPreferencesIndexRepository.IndexAsync(user, ct);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task<DeleteResponse> DeleteAsync(Guid id, CancellationToken ct = default)
     {
-        await _userPreferencesIndexRepository.DeleteAsync(id, ct);
+        return await _userPreferencesIndexRepository.DeleteAsync(id, ct);
     }
 }

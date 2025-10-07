@@ -16,13 +16,13 @@ public class UserPreferencesIndexRepository : IUserPreferencesIndexRepository
         _settings = settings;
     }
 
-    public async Task IndexAsync(UserPreferences entity, CancellationToken ct = default)
+    public async Task<IndexResponse> IndexAsync(UserPreferences entity, CancellationToken ct = default)
     {
-        await _client.IndexAsync(entity, i => i.Index(_settings.UserPreferencesIndex), ct);
+        return await _client.IndexAsync(entity, i => i.Index(_settings.UserPreferencesIndex), ct);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task<DeleteResponse> DeleteAsync(Guid id, CancellationToken ct = default)
     {
-        await _client.DeleteAsync<Story>(id, d => d.Index(_settings.UserPreferencesIndex), ct);
+        return await _client.DeleteAsync<Story>(id, d => d.Index(_settings.UserPreferencesIndex), ct);
     }
 }

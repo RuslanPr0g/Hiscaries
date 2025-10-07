@@ -16,18 +16,18 @@ public class StorySearchIndexRepository : IStorySearchIndexRepository
         _settings = settings;
     }
 
-    public async Task IndexAsync(Story entity, CancellationToken ct = default)
+    public async Task<IndexResponse> IndexAsync(Story entity, CancellationToken ct = default)
     {
-        await _client.IndexAsync(entity, i => i.Index(_settings.StoryIndex), ct);
+        return await _client.IndexAsync(entity, i => i.Index(_settings.StoryIndex), ct);
     }
 
-    public async Task IndexAsync(Story[] entities, CancellationToken ct = default)
+    public async Task<IndexResponse> IndexAsync(Story[] entities, CancellationToken ct = default)
     {
-        await _client.IndexAsync(entities, i => i.Index(_settings.StoryIndex), ct);
+        return await _client.IndexAsync(entities, i => i.Index(_settings.StoryIndex), ct);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task<DeleteResponse> DeleteAsync(Guid id, CancellationToken ct = default)
     {
-        await _client.DeleteAsync<Story>(id, d => d.Index(_settings.StoryIndex), ct);
+        return await _client.DeleteAsync<Story>(id, d => d.Index(_settings.StoryIndex), ct);
     }
 }
