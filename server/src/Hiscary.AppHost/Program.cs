@@ -37,7 +37,7 @@ var elasticsearch = builder
     //.WithDataVolume("elasticsearchdata")
     .WithBindMount(
         source: "../elasticsearch-data",
-        target: "/data",
+        target: "/usr/share/elasticsearch/data",
         isReadOnly: false)
     .WithEnvironment("xpack.security.enabled", "false");
 var redis = builder
