@@ -1,4 +1,5 @@
-﻿using Hiscary.Recommendations.Domain.Entities;
+﻿using Elastic.Clients.Elasticsearch;
+using Hiscary.Recommendations.Domain.Entities;
 using Hiscary.Recommendations.Domain.Services.Write;
 using Hiscary.Stories.IntegrationEvents.Incoming;
 using Hiscary.Stories.IntegrationEvents.Outgoing;
@@ -38,6 +39,12 @@ public sealed class StoryInformationRefreshChunkProcessedIntegrationEventHandler
                 PublishedDate = story.PublishedDate,
                 UniqueReads = story.UniqueReads,
             }).ToArray());
+
+        if (!response.IsValidResponse || !response.IsSuccess())
+        {
+            logger.LogError("Failed to index stories chunk. Error: {Error}", response.ApiCallDetails.DebugInformation);
+            return;
+        }
 
         await _publisher.Publish(new StoryInformationRefreshRequestedIntegrationEvent(
             integrationEvent.RequesterId,

@@ -21,9 +21,9 @@ public class StorySearchIndexRepository : IStorySearchIndexRepository
         return await _client.IndexAsync(entity, i => i.Index(_settings.StoryIndex), ct);
     }
 
-    public async Task<IndexResponse> IndexAsync(Story[] entities, CancellationToken ct = default)
+    public async Task<BulkResponse> IndexAsync(Story[] entities, CancellationToken ct = default)
     {
-        return await _client.IndexAsync(entities, i => i.Index(_settings.StoryIndex), ct);
+        return await _client.IndexManyAsync(entities, _settings.StoryIndex, ct);
     }
 
     public async Task<DeleteResponse> DeleteAsync(Guid id, CancellationToken ct = default)

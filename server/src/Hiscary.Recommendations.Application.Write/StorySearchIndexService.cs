@@ -19,7 +19,7 @@ internal sealed class StorySearchIndexService : IStorySearchIndexService
         return await _repository.IndexAsync(entity, ct);
     }
 
-    public async Task<IndexResponse> AddOrUpdateAsync(Story[] entities, CancellationToken ct = default)
+    public async Task<BulkResponse> AddOrUpdateAsync(Story[] entities, CancellationToken ct = default)
     {
         return await _repository.IndexAsync(entities, ct);
     }
