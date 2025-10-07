@@ -1,4 +1,4 @@
-﻿using Hiscary.Recommendations.Domain.Entities;
+﻿using Hiscary.Recommendations.Domain.Persistence.Read;
 using Hiscary.Recommendations.Domain.Services.Write;
 using Hiscary.Stories.IntegrationEvents.Outgoing;
 using Microsoft.Extensions.Logging;
@@ -9,19 +9,27 @@ namespace Hiscary.Recommendations.EventHandlers.IntegrationEvents;
 
 public sealed class StoryUniqueReadCountIncreasedIntegrationEventHandler(
     IStorySearchIndexService storyService,
+    IStorySearchRepository storySearchRepository,
     IUserPreferencesIndexService userPreferencesIndexService,
     ILogger<StoryUniqueReadCountIncreasedIntegrationEventHandler> logger)
         : IEventHandler<StoryUniqueReadCountIncreasedIntegrationEvent>
 {
     private readonly IStorySearchIndexService _storyService = storyService;
+    private readonly IStorySearchRepository _storySearchRepository = storySearchRepository;
     private readonly IUserPreferencesIndexService _userPreferencesIndexService = userPreferencesIndexService;
 
     public async Task Handle(
         StoryUniqueReadCountIncreasedIntegrationEvent integrationEvent, IMessageContext context)
     {
-        await _storyService.AddOrUpdateAsync(new Story
+        var story = await _storySearchRepository.GetByIdAsync(integrationEvent.StoryId);
+
+        if (story is null)
         {
-            Id = integrationEvent.StoryId,
+            return;
+        }
+
+        await _storyService.AddOrUpdateAsync(story with
+        {
             UniqueReads = integrationEvent.UniqueReads,
         });
 
