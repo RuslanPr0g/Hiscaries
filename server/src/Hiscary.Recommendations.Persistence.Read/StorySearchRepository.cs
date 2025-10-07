@@ -130,8 +130,6 @@ public class StorySearchRepository : IStorySearchRepository
         }
         else
         {
-            var mappings = await _client.Indices.GetMappingAsync(ct);
-
             response = await _client.SearchAsync<Story>(s => s
                 .Index(_settings.StoryIndex)
                 .From(query.StartIndex)
