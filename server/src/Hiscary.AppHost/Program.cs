@@ -33,8 +33,6 @@ var azBlobs = builder.AddAzureStorage("azstorage")
 
 var elasticsearch = builder
     .AddElasticsearch("elasticsearch")
-    // TODO: data is not saved for some reason
-    //.WithDataVolume("elasticsearchdata")
     .WithBindMount(
         source: "../elasticsearch-data",
         target: "/usr/share/elasticsearch/data",

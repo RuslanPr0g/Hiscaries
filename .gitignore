@@ -67,6 +67,7 @@ wwwroot/
 StyleCopReport.xml
 
 azurite-data/
+elasticsearch-data/
 
 # Files built by Visual Studio
 *_i.c

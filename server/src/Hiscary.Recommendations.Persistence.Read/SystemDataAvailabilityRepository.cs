@@ -4,6 +4,9 @@ using Elastic.Clients.Elasticsearch.QueryDsl;
 using Hiscary.Recommendations.Domain.Entities;
 using Hiscary.Recommendations.Domain.Persistence.Read;
 using Hiscary.Recommendations.Persistence.Shared;
+using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.Retry;
 
 namespace Hiscary.Recommendations.Persistence.Read;
 
@@ -11,11 +14,27 @@ internal sealed class SystemDataAvailabilityRepository : ISystemDataAvailability
 {
     private readonly ElasticsearchClient _client;
     private readonly ElasticsearchConfiguration _settings;
+    private readonly AsyncRetryPolicy<bool> _retryPolicy;
+    private readonly ILogger<SystemDataAvailabilityRepository> _logger;
 
-    public SystemDataAvailabilityRepository(ElasticsearchClient client, ElasticsearchConfiguration settings)
+    public SystemDataAvailabilityRepository(
+        ElasticsearchClient client,
+        ElasticsearchConfiguration settings,
+        ILogger<SystemDataAvailabilityRepository> logger)
     {
         _client = client;
         _settings = settings;
+        _logger = logger;
+
+        _retryPolicy = Policy
+            .HandleResult<bool>(r => r == false)
+            .WaitAndRetryAsync(
+                retryCount: 5,
+                sleepDurationProvider: _ => TimeSpan.FromSeconds(2),
+                onRetry: (outcome, timespan, retryCount, _) =>
+                {
+                    _logger.LogWarning("Retry {RetryCount} after {Delay}s due to unavailable data.", retryCount, timespan.TotalSeconds);
+                });
     }
 
     public async Task CreateUserIndex(CancellationToken ct = default)
@@ -30,25 +49,39 @@ internal sealed class SystemDataAvailabilityRepository : ISystemDataAvailability
 
     public async Task<bool> IsUserDataAvailable(CancellationToken ct = default)
     {
-        var response = await _client.SearchAsync<UserPreferences>(s => s
+        return await _retryPolicy.ExecuteAsync(async () =>
+        {
+            var response = await _client.SearchAsync<UserPreferences>(s => s
                 .Index(_settings.UserPreferencesIndex)
                 .From(0)
                 .Size(1)
-                .Query(q => q.MatchAll(new MatchAllQuery()))
-            , ct);
+                .Query(q => q.MatchAll(new MatchAllQuery())), ct);
 
-        return response.IsValidResponse && response.IsSuccess();
+            if (!response.IsValidResponse || !response.IsSuccess())
+            {
+                return false;
+            }
+
+            return response.Total > 0;
+        });
     }
 
     public async Task<bool> IsStoryDataAvailable(CancellationToken ct = default)
     {
-        var response = await _client.SearchAsync<Story>(s => s
+        return await _retryPolicy.ExecuteAsync(async () =>
+        {
+            var response = await _client.SearchAsync<Story>(s => s
                 .Index(_settings.StoryIndex)
                 .From(0)
                 .Size(1)
-                .Query(q => q.MatchAll(new MatchAllQuery()))
-            , ct);
+                .Query(q => q.MatchAll(new MatchAllQuery())), ct);
 
-        return response.IsValidResponse && response.IsSuccess();
+            if (!response.IsValidResponse || !response.IsSuccess())
+            {
+                return false;
+            }
+
+            return response.Total > 0;
+        });
     }
 }
