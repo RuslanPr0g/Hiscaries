@@ -39,7 +39,10 @@ internal sealed class UserPreferencesIndexService : IUserPreferencesIndexService
         }
 
         var genres = story.Genres;
-        var tags = story.Title.Split(' ').Union(story.Description.Split(' '));
+        var tags = story.Title.Split(' ').Union(story.Description.Split(' '))
+            .Where(w => w.Length > 3)
+            .Select(w => new string(w.Where(c => char.IsLetter(c)).ToArray()))
+            .Where(w => !string.IsNullOrWhiteSpace(w.Trim()));
 
         user = user.LikeNew(genres, tags);
 
