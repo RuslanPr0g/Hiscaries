@@ -12,7 +12,6 @@ import { SearchStoryByIdsRequest } from '@stories/models/requests/story-by-ids.m
 import { SearchStoryByLibraryRequest } from '@stories/models/requests/search-story-by-library.model';
 import { QueriedModel } from '@shared/models/queried.model';
 import { BaseIdModel } from '@shared/models/base-id.model';
-import { QueryableModel } from '@shared/models/queryable.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,10 +23,6 @@ export class StoryService {
 
   genreList(): Observable<GenreModel[]> {
     return this.http.get<GenreModel[]>(`${this.apiUrl}/genres`);
-  }
-
-  recommendations(request: QueryableModel): Observable<QueriedModel<StoryModel>> {
-    return this.http.post<QueriedModel<StoryModel>>(`${this.apiUrl}/recommendations`, request);
   }
 
   getStoriesByLibrary(request: SearchStoryByLibraryRequest): Observable<QueriedModel<StoryModel>> {

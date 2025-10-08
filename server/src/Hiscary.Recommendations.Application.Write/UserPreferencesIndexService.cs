@@ -28,10 +28,7 @@ internal sealed class UserPreferencesIndexService : IUserPreferencesIndexService
 
         if (user is null)
         {
-            user = new UserPreferences
-            {
-                Id = userAccountId
-            };
+            user = UserPreferences.Create(userAccountId);
         }
 
         var story = await _storySearchRepository.GetByIdAsync(storyId, ct);
@@ -41,11 +38,10 @@ internal sealed class UserPreferencesIndexService : IUserPreferencesIndexService
             return null;
         }
 
-        var genres = story.Genres.ToHashSet();
-        var tags = story.Title.Split(' ').Union(story.Description.Split(' ')).ToHashSet();
+        var genres = story.Genres;
+        var tags = story.Title.Split(' ').Union(story.Description.Split(' '));
 
-        user.LikeNewGenres(genres);
-        user.LikeNewTags(tags);
+        user = user.LikeNew(genres, tags);
 
         return await _userPreferencesIndexRepository.IndexAsync(user, ct);
     }

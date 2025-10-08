@@ -69,6 +69,14 @@ export class SearchStoryRecommendationsComponent implements AfterViewInit {
         }),
       )
       .subscribe((data) => {
+        if (!data?.Items || data.Items.length === 0) {
+          this.observer.unobserve(this.loadMoreAnchor.nativeElement);
+          return;
+        }
+
+        console.warn(Array.from(new Set(data.Items.flatMap((_) => _.GenreNames))));
+        console.warn(data.Items.filter((x) => x.GenreNames.includes('Horror')));
+
         const current = reset ? generateEmptyQueriedResult<StoryModel>() : this.stories();
         this.stories.set({
           Items: [...current.Items, ...data.Items],

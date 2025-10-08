@@ -7,17 +7,48 @@ public sealed record UserPreferences
     /// </summary>
     public Guid Id { get; init; }
 
-    public HashSet<string> FavoriteGenres { get; private set; }
+    public string[] FavoriteGenres { get; init; }
 
-    public HashSet<string> FavoriteTags { get; private set; }
+    public string[] FavoriteTags { get; init; }
 
-    public void LikeNewGenres(HashSet<string> genres)
+    public static UserPreferences Create(Guid id)
     {
-        FavoriteGenres.UnionWith(genres);
+        return new UserPreferences
+        {
+            Id = id,
+            FavoriteGenres = [],
+            FavoriteTags = [],
+        };
     }
 
-    public void LikeNewTags(HashSet<string> tags)
+    public UserPreferences LikeNew(IEnumerable<string> genres, IEnumerable<string> tags)
     {
-        FavoriteTags.UnionWith(tags);
+        return LikeNewGenres(genres).LikeNewTags(tags);
+    }
+
+    public UserPreferences LikeNewGenres(IEnumerable<string> genres)
+    {
+        var newFavoriteGenres = FavoriteGenres.ToHashSet();
+        newFavoriteGenres.UnionWith(genres);
+        
+        return new UserPreferences
+        {
+            Id = Id,
+            FavoriteGenres = newFavoriteGenres.ToArray(),
+            FavoriteTags = FavoriteTags
+        };
+    }
+
+    public UserPreferences LikeNewTags(IEnumerable<string> tags)
+    {
+        var newFavoriteTags = FavoriteTags.ToHashSet();
+        newFavoriteTags.UnionWith(tags);
+               
+        return new UserPreferences
+        {
+            Id = Id,
+            FavoriteGenres = FavoriteGenres,
+            FavoriteTags = newFavoriteTags.ToArray()
+        };
     }
 }

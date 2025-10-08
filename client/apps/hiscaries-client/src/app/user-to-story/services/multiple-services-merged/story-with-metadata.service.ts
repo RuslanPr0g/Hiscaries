@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, switchMap, map, catchError, of } from 'rxjs';
+import { Observable, switchMap, map, catchError, of, take } from 'rxjs';
 import { BaseIdModel } from '@shared/models/base-id.model';
 import { GenreModel } from '@stories/models/domain/genre.model';
 import { StoryModel, StoryModelWithContents } from '@stories/models/domain/story-model';
@@ -10,22 +10,28 @@ import { SearchStoryRequest } from '@stories/models/requests/search-story.model'
 import { StoryService } from '@stories/services/story.service';
 import { UserService } from '@users/services/user.service';
 import { SearchStoryByIdsRequest } from '@stories/models/requests/story-by-ids.model';
-import { QueriedModel } from '@shared/models/queried.model';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { SearchStoryByLibraryRequest } from '@stories/models/requests/search-story-by-library.model';
-import { QueryableModel } from '@shared/models/queryable.model';
+import { defaultQueryableModel, QueryableModel } from '@shared/models/queryable.model';
+import { StoryRecommendationService } from '@stories/services/story-recommendation.service';
+import { StoryRecommendationModel } from '@stories/models/domain/story-recommendation.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoryWithMetadataService {
-  constructor(private storyService: StoryService, private userService: UserService) {}
+  constructor(
+    private storyService: StoryService,
+    private userService: UserService,
+    private recommendationService: StoryRecommendationService,
+  ) {}
 
   genreList(): Observable<GenreModel[]> {
     return this.storyService.genreList();
   }
 
   recommendations(request: QueryableModel): Observable<QueriedModel<StoryModel>> {
-    return this.enrichStories(this.storyService.recommendations(request));
+    return this.enrichRecommendationStories(this.recommendationService.recommendations(request));
   }
 
   getStoriesByLibrary(request: SearchStoryByLibraryRequest): Observable<QueriedModel<StoryModel>> {
@@ -52,6 +58,27 @@ export class StoryWithMetadataService {
 
   modify(request: ModifyStoryRequest): Observable<void> {
     return this.storyService.modify(request);
+  }
+
+  private enrichRecommendationStories(
+    source$: Observable<QueriedModel<StoryRecommendationModel>>,
+  ): Observable<QueriedModel<StoryModel>> {
+    return source$.pipe(
+      take(1),
+      switchMap((input) => {
+        if (!input || input.Items?.length <= 0) {
+          return of(generateEmptyQueriedResult<StoryModel>());
+        }
+
+        return this.getStoriesByIds({
+          Ids: input.Items.map((recommendation) => recommendation.Id),
+          QueryableModel: {
+            ...defaultQueryableModel,
+            ItemsCount: input.Items.length,
+          },
+        });
+      }),
+    );
   }
 
   private enrichStories(

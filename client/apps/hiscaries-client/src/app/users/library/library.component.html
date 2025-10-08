@@ -29,8 +29,8 @@
   </ng-container>
   <ng-template #noStories><div class="center">Nothing posted so far!</div></ng-template>
 </ng-container>
-<ng-container *ngIf="!isLoading">
+<ng-container *ngIf="isLoading">
   <div class="center">
-    <app-loading-spinner *ngIf="!isLoading"></app-loading-spinner>
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
   </div>
 </ng-container>

@@ -67,8 +67,7 @@ public class StoryReadRepository(StoriesContext context) :
     {
         var query = Context.Stories
             .AsNoTracking()
-            .Where(story => storyIds.Contains(story.Id))
-            .OrderByProperty(queryableModel.SortProperty, queryableModel.SortAsc);
+            .Where(story => storyIds.Contains(story.Id));
 
         return await GetStoryReadModelsPaginatedBy(query, queryableModel);
     }

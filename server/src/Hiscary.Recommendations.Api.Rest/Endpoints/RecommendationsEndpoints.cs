@@ -14,7 +14,7 @@ public static class RecommendationsEndpoints
             .RequireAuthorization()
             .WithTags("Recommendations");
 
-        group.MapPost("/", GetRecommendations)
+        group.MapPost("/stories", GetRecommendations)
             .Produces<IResult>(StatusCodes.Status200OK, contentType: "application/json")
             .Produces(StatusCodes.Status401Unauthorized);
     }

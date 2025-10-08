@@ -1,5 +1,4 @@
 ﻿using Elastic.Clients.Elasticsearch;
-using Elastic.Clients.Elasticsearch.IndexManagement;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using Hiscary.Recommendations.Domain.Entities;
 using Hiscary.Recommendations.Domain.Persistence.Read;
@@ -75,7 +74,8 @@ public class StorySearchRepository : IStorySearchRepository
 
         return ClientQueriedModel<Story>.Create(
             response.Documents.ToList(),
-            response.Total
+            response.Total,
+            response.Documents.Count
         );
     }
 
@@ -86,7 +86,7 @@ public class StorySearchRepository : IStorySearchRepository
         SearchResponse<Story> response;
 
         if (userPreferences is not null &&
-            (userPreferences.FavoriteGenres?.Count > 0 || userPreferences.FavoriteTags?.Count > 0))
+            (userPreferences.FavoriteGenres?.Length > 0 || userPreferences.FavoriteTags?.Length > 0))
         {
             response = await _client.SearchAsync<Story>(s => s
                 .Index(_settings.StoryIndex)
@@ -96,7 +96,7 @@ public class StorySearchRepository : IStorySearchRepository
                     .Bool(b => b
                         .Should(sh =>
                         {
-                            if (userPreferences.FavoriteGenres?.Count > 0)
+                            if (userPreferences.FavoriteGenres?.Length > 0)
                             {
                                 sh.Terms(t => t
                                     .Field(f => f.Genres)
@@ -105,7 +105,7 @@ public class StorySearchRepository : IStorySearchRepository
                                     )));
                             }
 
-                            if (userPreferences.FavoriteTags?.Count > 0)
+                            if (userPreferences.FavoriteTags?.Length > 0)
                             {
                                 sh.Terms(t => t
                                     .Field(x => x.Title)
@@ -148,7 +148,8 @@ public class StorySearchRepository : IStorySearchRepository
 
         return ClientQueriedModel<Story>.Create(
             response.Documents.ToList(),
-            response.Total
+            response.Total,
+            response.Documents.Count
         );
     }
 }

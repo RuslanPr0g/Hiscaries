@@ -8,6 +8,7 @@ export interface StoryModel {
   AuthorName?: string;
   AgeLimit: number;
   ImagePreviewUrl: ImageUrlSizes;
+  GenreNames: string[];
   DatePublished: Date;
   DateWritten: Date;
   IsEditable: boolean;

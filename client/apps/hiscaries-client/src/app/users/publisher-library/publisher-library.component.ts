@@ -90,6 +90,11 @@ export class PublisherLibraryComponent implements AfterViewInit {
       .pipe(take(1))
       .subscribe({
         next: (data) => {
+          if (!data?.Items || data.Items.length === 0) {
+            this.observer.unobserve(this.loadMoreAnchor.nativeElement);
+            return;
+          }
+
           const current = reset ? generateEmptyQueriedResult<StoryModel>() : this.stories();
           this.stories.set({
             Items: [...current.Items, ...data.Items],
