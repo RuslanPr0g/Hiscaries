@@ -98,26 +98,30 @@ public class StorySearchRepository : IStorySearchRepository
                         {
                             if (userPreferences.FavoriteGenres?.Length > 0)
                             {
-                                sh.Terms(t => t
-                                    .Field(f => f.Genres)
-                                    .Term(new TermsQueryField(
-                                        userPreferences!.FavoriteGenres.Select(FieldValue.String).ToArray()
-                                    )));
+                                sh.Terms(new TermsQuery
+                                {
+                                    Field = new Field("genres.keyword"),
+                                    Term = new TermsQueryField(
+                                        userPreferences.FavoriteGenres
+                                            .Select(FieldValue.String)
+                                            .ToArray()
+                                    )
+                                });
                             }
-
+                        })
+                        .Should(sh =>
+                        {
                             if (userPreferences.FavoriteTags?.Length > 0)
                             {
-                                sh.Terms(t => t
-                                    .Field(x => x.Title)
-                                    .Term(new TermsQueryField(
-                                        userPreferences.FavoriteTags.Select(FieldValue.String).ToArray()
-                                    )));
+                                sh.Match(m => m
+                                    .Field(new Field("title"))
+                                    .Query(string.Join(" ", userPreferences.FavoriteTags))
+                                );
 
-                                sh.Terms(t => t
-                                    .Field(x => x.Description)
-                                    .Term(new TermsQueryField(
-                                        userPreferences.FavoriteTags.Select(FieldValue.String).ToArray()
-                                    )));
+                                sh.Match(m => m
+                                    .Field(new Field("description"))
+                                    .Query(string.Join(" ", userPreferences.FavoriteTags))
+                                );
                             }
                         })
                         .MinimumShouldMatch(1)

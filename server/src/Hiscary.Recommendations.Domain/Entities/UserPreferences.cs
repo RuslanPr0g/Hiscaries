@@ -2,13 +2,8 @@
 
 public sealed record UserPreferences
 {
-    /// <summary>
-    /// This is a user account id
-    /// </summary>
     public Guid Id { get; init; }
-
     public string[] FavoriteGenres { get; init; }
-
     public string[] FavoriteTags { get; init; }
 
     public static UserPreferences Create(Guid id)
@@ -28,27 +23,27 @@ public sealed record UserPreferences
 
     public UserPreferences LikeNewGenres(IEnumerable<string> genres)
     {
-        var newFavoriteGenres = FavoriteGenres.ToHashSet();
-        newFavoriteGenres.UnionWith(genres);
-        
+        var recent = genres.Distinct().ToArray();
+        var newFavoriteGenres = FavoriteGenres.Except(recent).Concat(recent).TakeLast(7).ToArray();
+
         return new UserPreferences
         {
             Id = Id,
-            FavoriteGenres = newFavoriteGenres.ToArray(),
+            FavoriteGenres = newFavoriteGenres,
             FavoriteTags = FavoriteTags
         };
     }
 
     public UserPreferences LikeNewTags(IEnumerable<string> tags)
     {
-        var newFavoriteTags = FavoriteTags.ToHashSet();
-        newFavoriteTags.UnionWith(tags);
-               
+        var recent = tags.Distinct().ToArray();
+        var newFavoriteTags = FavoriteTags.Except(recent).Concat(recent).TakeLast(15).ToArray();
+
         return new UserPreferences
         {
             Id = Id,
             FavoriteGenres = FavoriteGenres,
-            FavoriteTags = newFavoriteTags.ToArray()
+            FavoriteTags = newFavoriteTags
         };
     }
 }

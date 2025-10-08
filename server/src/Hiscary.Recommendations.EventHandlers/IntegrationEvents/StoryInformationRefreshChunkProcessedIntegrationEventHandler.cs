@@ -34,7 +34,7 @@ public sealed class StoryInformationRefreshChunkProcessedIntegrationEventHandler
                 Id = story.Id,
                 Title = story.Title,
                 Description = story.Description,
-                Genres = story.Genres.ToHashSet(),
+                Genres = story.Genres.ToHashSet().ToArray(),
                 LibraryId = story.LibraryId,
                 PublishedDate = story.PublishedDate,
                 UniqueReads = story.UniqueReads,

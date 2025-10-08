@@ -22,7 +22,7 @@ public sealed class StoryPublishedIntegrationEventHandler(
             Id = integrationEvent.StoryId,
             Title = integrationEvent.Title,
             Description = integrationEvent.Description,
-            Genres = integrationEvent.Genres.ToHashSet(),
+            Genres = integrationEvent.Genres.ToHashSet().ToArray(),
             LibraryId = integrationEvent.LibraryId,
             PublishedDate = integrationEvent.PublishedDate,
             UniqueReads = integrationEvent.UniqueReads,
