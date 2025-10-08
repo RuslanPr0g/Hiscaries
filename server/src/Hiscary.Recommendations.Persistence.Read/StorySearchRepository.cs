@@ -105,20 +105,20 @@ public class StorySearchRepository : IStorySearchRepository
                                     )));
                             }
 
-                            //if (userPreferences.FavoriteTags?.Length > 0)
-                            //{
-                            //    sh.Terms(t => t
-                            //        .Field(x => x.Title)
-                            //        .Term(new TermsQueryField(
-                            //            userPreferences.FavoriteTags.Select(FieldValue.String).ToArray()
-                            //        )));
+                            if (userPreferences.FavoriteTags?.Length > 0)
+                            {
+                                sh.Terms(t => t
+                                    .Field(x => x.Title)
+                                    .Term(new TermsQueryField(
+                                        userPreferences.FavoriteTags.Select(FieldValue.String).ToArray()
+                                    )));
 
-                            //    sh.Terms(t => t
-                            //        .Field(x => x.Description)
-                            //        .Term(new TermsQueryField(
-                            //            userPreferences.FavoriteTags.Select(FieldValue.String).ToArray()
-                            //        )));
-                            //}
+                                sh.Terms(t => t
+                                    .Field(x => x.Description)
+                                    .Term(new TermsQueryField(
+                                        userPreferences.FavoriteTags.Select(FieldValue.String).ToArray()
+                                    )));
+                            }
                         })
                         .MinimumShouldMatch(1)
                     )
