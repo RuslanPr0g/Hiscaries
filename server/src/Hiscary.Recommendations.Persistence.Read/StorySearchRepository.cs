@@ -96,6 +96,22 @@ public class StorySearchRepository : IStorySearchRepository
                     .Bool(b => b
                         .Should(sh =>
                         {
+                            var tags = userPreferences.FavoriteTags?.Where(w => w.Length > 5)?.TakeLast(2)?.ToArray() ?? [];
+                            if (tags.Length > 0)
+                            {
+                                sh.Match(m => m
+                                    .Field(new Field("title"))
+                                    .Query(string.Join(" ", tags))
+                                );
+
+                                sh.Match(m => m
+                                    .Field(new Field("description"))
+                                    .Query(string.Join(" ", tags))
+                                );
+                            }
+                        })
+                        .Should(sh =>
+                        {
                             if (userPreferences.FavoriteGenres?.Length > 0)
                             {
                                 sh.Terms(new TermsQuery
@@ -107,21 +123,6 @@ public class StorySearchRepository : IStorySearchRepository
                                             .ToArray()
                                     )
                                 });
-                            }
-                        })
-                        .Should(sh =>
-                        {
-                            if (userPreferences.FavoriteTags?.Length > 0)
-                            {
-                                sh.Match(m => m
-                                    .Field(new Field("title"))
-                                    .Query(string.Join(" ", userPreferences.FavoriteTags))
-                                );
-
-                                sh.Match(m => m
-                                    .Field(new Field("description"))
-                                    .Query(string.Join(" ", userPreferences.FavoriteTags))
-                                );
                             }
                         })
                         .MinimumShouldMatch(1)
