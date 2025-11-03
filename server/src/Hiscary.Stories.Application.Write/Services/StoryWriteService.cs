@@ -148,6 +148,11 @@ public sealed class StoryWriteService(
         //    return OperationResult<EntityIdResponse>.CreateClientSideError(UserFriendlyMessages.NoRights);
         //}
 
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return OperationResult<EntityIdResponse>.CreateValidationsError(UserFriendlyMessages.TitleEmpty);
+        }
+
         if (libraryId == Guid.Empty)
         {
             _logger.LogWarning("Publishing new story is not possible as the library doesn't exist.",

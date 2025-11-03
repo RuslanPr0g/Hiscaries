@@ -2,6 +2,7 @@
 public static class UserFriendlyMessages
 {
     public static string UsernameEmpty = "The username field cannot be empty. Please provide a valid username.";
+    public static string TitleEmpty = "The tile field cannot be empty. Please provide a valid title.";
     public static string ReviewMessageCannotBeEmpty = "Your review cannot be blank. Please write a message before submitting.";
     public static string UserIsNotFound = "We couldn't find a user with the provided details. Please check your information and try again.";
     public static string PasswordMismatch = UserIsNotFound;
