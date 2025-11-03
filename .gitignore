@@ -69,6 +69,9 @@ StyleCopReport.xml
 azurite-data/
 elasticsearch-data/
 
+# Temp scripts
+.scripts/
+
 # Files built by Visual Studio
 *_i.c
 *_p.c

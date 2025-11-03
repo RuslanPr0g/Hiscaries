@@ -7,10 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="StackNucleus.DDD.Scripts">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>contentFiles</IncludeAssets>
-		</PackageReference>
+		<PackageReference Include="StackNucleus.DDD.Scripts" />
 	</ItemGroup>
 
 </Project>
