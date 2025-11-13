@@ -4,14 +4,13 @@
   </PropertyGroup>
   <!-- Aspire Packages -->
   <ItemGroup>
-    <PackageVersion Include="Aspire.Hosting.AppHost" Version="8.2.2" />
-    <PackageVersion Include="Aspire.Hosting.Azure.Storage" Version="8.2.2" />
-    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="8.2.2" />
-    <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="8.2.2" />
-    <PackageVersion Include="Aspire.Hosting.Elasticsearch" Version="8.2.2-preview.1.24521.5" />
-    <PackageVersion Include="Aspire.Hosting.Redis" Version="8.2.2" />
-    <PackageVersion Include="Aspire.RabbitMQ.Client" Version="8.2.2" />
-    <PackageVersion Include="Aspire.Azure.Storage.Blobs" Version="8.2.2" />
+    <PackageVersion Include="Aspire.Hosting.Azure.Storage" Version="13.0.0" />
+    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="13.0.0" />
+    <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="13.0.0" />
+    <PackageVersion Include="Aspire.Hosting.Elasticsearch" Version="9.5.0" />
+    <PackageVersion Include="Aspire.Hosting.Redis" Version="13.0.0" />
+    <PackageVersion Include="Aspire.RabbitMQ.Client" Version="13.0.0" />
+    <PackageVersion Include="Aspire.Azure.Storage.Blobs" Version="13.0.0" />
   </ItemGroup>
   <!-- Polly -->
   <ItemGroup>
@@ -19,30 +18,30 @@
   </ItemGroup>
   <!-- Elastic Search -->
   <ItemGroup>
-    <PackageVersion Include="Aspire.Elastic.Clients.Elasticsearch" Version="8.2.2-preview.1.24521.5" />
+    <PackageVersion Include="Aspire.Elastic.Clients.Elasticsearch" Version="9.5.0" />
   </ItemGroup>
   <!-- Azure Packages -->
   <ItemGroup>
-    <PackageVersion Include="Azure.Storage.Blobs" Version="12.24.0" />
-    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+    <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0-preview.4" />
   </ItemGroup>
   <!-- Microsoft ASP.NET Core & Extensions -->
   <ItemGroup>
-    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
-    <PackageVersion Include="Microsoft.AspNetCore.Authorization" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="8.0.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authorization" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
     <PackageVersion Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.AspNetCore.SignalR.Client.Core" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.4.0" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
-    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="8.2.2" />
+    <PackageVersion Include="Microsoft.AspNetCore.SignalR.Client" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.SignalR.Client.Core" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.0.0" />
   </ItemGroup>
   <!-- Microsoft Identity & Security -->
   <ItemGroup>
@@ -53,44 +52,44 @@
   <!-- Entity Framework & Database -->
   <ItemGroup>
     <PackageVersion Include="EntityFramework" Version="6.5.1" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.20" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.20" />
-    <PackageVersion Include="Npgsql" Version="8.0.7" />
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.0-rc.2.25502.107" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0-rc.2.25502.107" />
+    <PackageVersion Include="Npgsql" Version="10.0.0-rc.1" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0-rc.2" />
   </ItemGroup>
   <!-- OpenTelemetry & Monitoring -->
   <ItemGroup>
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.9.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.14.0" />
   </ItemGroup>
   <!-- StackNucleus DDD -->
   <ItemGroup>
-    <PackageVersion Include="StackNucleus.DDD.Domain" Version="3.4.0" />
-    <PackageVersion Include="StackNucleus.DDD.Application" Version="3.4.0" />
-    <PackageVersion Include="StackNucleus.DDD.Events.WolverineFx" Version="3.4.0" />
-    <PackageVersion Include="StackNucleus.DDD.Outbox" Version="3.4.0" />
-    <PackageVersion Include="StackNucleus.DDD.Persistence" Version="3.4.0" />
-    <PackageVersion Include="StackNucleus.DDD.Persistence.EF.Postgres" Version="3.4.0" />
-    <PackageVersion Include="StackNucleus.DDD.Jobs.Quartz" Version="3.4.0" />
-    <PackageVersion Include="StackNucleus.DDD.Images" Version="3.4.0" />
-    <PackageVersion Include="StackNucleus.DDD.Scripts" Version="3.4.0" />
-    <PackageVersion Include="StackNucleus.DDD.Api.Rest" Version="3.4.0" />
+    <PackageVersion Include="StackNucleus.DDD.Domain" Version="4.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Application" Version="4.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Events.WolverineFx" Version="4.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Outbox" Version="4.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Persistence" Version="4.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Persistence.EF.Postgres" Version="4.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Jobs.Quartz" Version="4.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Images" Version="4.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Scripts" Version="4.0.0" />
+    <PackageVersion Include="StackNucleus.DDD.Api.Rest" Version="4.0.0" />
   </ItemGroup>
   <!-- WolverineFx -->
   <ItemGroup>
-    <PackageVersion Include="WolverineFx" Version="4.10.1" />
-    <PackageVersion Include="WolverineFx.RabbitMQ" Version="4.10.1" />
+    <PackageVersion Include="WolverineFx" Version="5.2.0" />
+    <PackageVersion Include="WolverineFx.RabbitMQ" Version="5.2.0" />
   </ItemGroup>
   <!-- Other Libraries -->
   <ItemGroup>
     <PackageVersion Include="BCrypt.Net-Next" Version="4.0.3" />
-    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.15.0" />
     <PackageVersion Include="SixLabors.ImageSharp" Version="3.1.11" />
-    <PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.4" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.0.1" />
     <PackageVersion Include="Yarp.ReverseProxy" Version="2.3.0" />
   </ItemGroup>
 </Project>

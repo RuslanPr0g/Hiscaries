@@ -52,7 +52,7 @@ internal sealed class SystemDataAvailabilityRepository : ISystemDataAvailability
         return await _retryPolicy.ExecuteAsync(async () =>
         {
             var response = await _client.SearchAsync<UserPreferences>(s => s
-                .Index(_settings.UserPreferencesIndex)
+                .Indices(_settings.UserPreferencesIndex)
                 .From(0)
                 .Size(1)
                 .Query(q => q.MatchAll(new MatchAllQuery())), ct);
@@ -71,7 +71,7 @@ internal sealed class SystemDataAvailabilityRepository : ISystemDataAvailability
         return await _retryPolicy.ExecuteAsync(async () =>
         {
             var response = await _client.SearchAsync<Story>(s => s
-                .Index(_settings.StoryIndex)
+                .Indices(_settings.StoryIndex)
                 .From(0)
                 .Size(1)
                 .Query(q => q.MatchAll(new MatchAllQuery())), ct);

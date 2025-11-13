@@ -20,7 +20,7 @@ builder.AddEventHandlers(builder.Configuration);
 builder.Services.AddSerilog();
 builder.Services.AddLogging();
 
-builder.AddAzureBlobClient("azblobs", config => config.DisableHealthChecks = true);
+builder.AddAzureBlobServiceClient("azblobs", config => config.DisableHealthChecks = true);
 
 builder.Services.AddBoundSettingsWithSectionAsEntityName<ServiceUrls>(builder.Configuration, out var serviceUrls);
 builder.Services.AddSingleton(serviceUrls);

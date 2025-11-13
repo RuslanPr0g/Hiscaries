@@ -57,10 +57,7 @@ public class StorySearchRepository : IStorySearchRepository
                 }.Where(q => q != null).ToList(),
                 Filter = new List<Query>
                 {
-                    new TermQuery(Infer.Field<Story>(f => f.LibraryId))
-                    {
-                        Value = FieldValue.String(query.LibraryId.ToString())
-                    },
+                    new TermQuery(Infer.Field<Story>(f => f.LibraryId), FieldValue.String(query.LibraryId.ToString())),
                     new DateRangeQuery(Infer.Field<Story>(f => f.PublishedDate))
                     {
                         Gte = query.PublishedDate.Date,
@@ -89,7 +86,7 @@ public class StorySearchRepository : IStorySearchRepository
             (userPreferences.FavoriteGenres?.Length > 0 || userPreferences.FavoriteTags?.Length > 0))
         {
             response = await _client.SearchAsync<Story>(s => s
-                .Index(_settings.StoryIndex)
+                .Indices(_settings.StoryIndex)
                 .From(query.StartIndex)
                 .Size(query.ItemsCount)
                 .Query(q => q
@@ -117,7 +114,7 @@ public class StorySearchRepository : IStorySearchRepository
                                 sh.Terms(new TermsQuery
                                 {
                                     Field = new Field("genres.keyword"),
-                                    Term = new TermsQueryField(
+                                    Terms = new TermsQueryField(
                                         userPreferences.FavoriteGenres
                                             .Select(FieldValue.String)
                                             .ToArray()
@@ -129,19 +126,19 @@ public class StorySearchRepository : IStorySearchRepository
                     )
                 )
                 .Sort(srt => srt
-                    .Field(f => f.UniqueReads, new FieldSort { Order = SortOrder.Desc })
+                    .Field(new FieldSort (new Field("uniqueReads")) { Order = SortOrder.Desc })
                 )
             , ct);
         }
         else
         {
             response = await _client.SearchAsync<Story>(s => s
-                .Index(_settings.StoryIndex)
+                .Indices(_settings.StoryIndex)
                 .From(query.StartIndex)
                 .Size(query.ItemsCount)
                 .Query(q => q.MatchAll(new MatchAllQuery()))
                 .Sort(srt => srt
-                    .Field(f => f.UniqueReads, new FieldSort { Order = SortOrder.Desc })
+                    .Field(new FieldSort (new Field("uniqueReads")) { Order = SortOrder.Desc })
                 )
             , ct);
         }
