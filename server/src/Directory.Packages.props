@@ -9,6 +9,7 @@
     <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="13.0.0" />
     <PackageVersion Include="Aspire.Hosting.Elasticsearch" Version="9.5.0" />
     <PackageVersion Include="Aspire.Hosting.Redis" Version="13.0.0" />
+    <PackageVersion Include="Aspire.Hosting.Yarp" Version="13.0.0" />
     <PackageVersion Include="Aspire.RabbitMQ.Client" Version="13.0.0" />
     <PackageVersion Include="Aspire.Azure.Storage.Blobs" Version="13.0.0" />
   </ItemGroup>
