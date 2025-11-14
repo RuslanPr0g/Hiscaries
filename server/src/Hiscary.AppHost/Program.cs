@@ -98,19 +98,23 @@ var recommendations = builder.AddProject<Projects.Hiscary_Recommendations_Api_Re
     .WithReference(redis)
     .WithReference(azBlobs);
 
-builder.AddProject<Projects.Hiscary_LocalApiGateway>("hc-localapigateway")
-    .WithHttpsEndpoint(name: "apigateway", port: 5001, targetPort: 5001, isProxied: false)
-    .WaitFor(useraccounts)
-    .WaitFor(notifications)
-    .WaitFor(platformusers)
-    .WaitFor(stories)
-    .WaitFor(media)
-    .WaitFor(recommendations)
-    .WithReference(useraccounts)
-    .WithReference(notifications)
-    .WithReference(platformusers)
-    .WithReference(stories)
-    .WithReference(media)
-    .WithReference(recommendations);
+var gateway = builder.AddYarp("apigateway")
+                     .WithHostPort(5001)
+                     .WaitFor(useraccounts)
+                     .WaitFor(notifications)
+                     .WaitFor(platformusers)
+                     .WaitFor(stories)
+                     .WaitFor(media)
+                     .WaitFor(recommendations)
+                     .WithConfiguration(yarp =>
+                     {
+                         yarp.AddRoute("/api/v1/accounts/{**catch-all}", useraccounts);
+                         yarp.AddRoute("/api/v1/notifications/{**catch-all}", notifications);
+                         yarp.AddRoute("/hubs/usernotifications/{**catch-all}", notifications);
+                         yarp.AddRoute("/api/v1/users/{**catch-all}", platformusers);
+                         yarp.AddRoute("/api/v1/stories/{**catch-all}", stories);
+                         yarp.AddRoute("/api/v1/media/{**catch-all}", media);
+                         yarp.AddRoute("/api/v1/recommendations/{**catch-all}", recommendations);
+                     });
 
 builder.Build().Run();

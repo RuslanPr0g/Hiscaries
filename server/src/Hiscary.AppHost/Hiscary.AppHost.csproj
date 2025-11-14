@@ -12,10 +12,10 @@
 		<PackageReference Include="Aspire.Hosting.RabbitMQ" />
 		<PackageReference Include="Aspire.Hosting.Elasticsearch" />
 		<PackageReference Include="Aspire.Hosting.Redis" />
+		<PackageReference Include="Aspire.Hosting.Yarp" />
 		<PackageReference Include="Aspire.RabbitMQ.Client" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Hiscary.LocalApiGateway\Hiscary.LocalApiGateway.csproj" />
 		<ProjectReference Include="..\Hiscary.Media.Api.Rest\Hiscary.Media.Api.Rest.csproj" />
 		<ProjectReference Include="..\Hiscary.Notifications.Api.Rest\Hiscary.Notifications.Api.Rest.csproj" />
 		<ProjectReference Include="..\Hiscary.PlatformUsers.Api.Rest\Hiscary.PlatformUsers.Api.Rest.csproj" />
