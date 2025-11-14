@@ -1,3 +1,54 @@
 <p-editor [(ngModel)]="text" [style]="{ height: '720px' }">
-  <ng-template pTemplate="header"></ng-template>
+  <ng-template pTemplate="header">
+    <!-- Font styles -->
+    <span class="ql-formats">
+      <select class="ql-size"></select>
+    </span>
+
+    <!-- Headings and alignment -->
+    <span class="ql-formats">
+      <select class="ql-header">
+        <option selected></option>
+        <option value="1"></option>
+        <option value="2"></option>
+        <option value="3"></option>
+      </select>
+      <select class="ql-align"></select>
+    </span>
+
+    <!-- Text formatting -->
+    <span class="ql-formats">
+      <button class="ql-bold"></button>
+      <button class="ql-italic"></button>
+      <button class="ql-underline"></button>
+      <button class="ql-strike"></button>
+      <button class="ql-script" value="sub"></button>
+      <button class="ql-script" value="super"></button>
+    </span>
+
+    <!-- Block formatting -->
+    <span class="ql-formats">
+      <button class="ql-blockquote"></button>
+      <button class="ql-code-block"></button>
+    </span>
+
+    <!-- Lists and indentation -->
+    <span class="ql-formats">
+      <button class="ql-list" value="ordered"></button>
+      <button class="ql-list" value="bullet"></button>
+      <button class="ql-indent" value="-1"></button>
+      <button class="ql-indent" value="+1"></button>
+    </span>
+
+    <!-- Color and background -->
+    <span class="ql-formats">
+      <select class="ql-color"></select>
+      <select class="ql-background"></select>
+    </span>
+
+    <!-- Clean formatting -->
+    <span class="ql-formats">
+      <button class="ql-clean"></button>
+    </span>
+  </ng-template>
 </p-editor>
