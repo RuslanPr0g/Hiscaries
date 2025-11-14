@@ -2,7 +2,7 @@
 set -e
 
 git checkout master -f
-git fetch origin
+git fetch origin --prune
 git pull origin master
 
 for b in $(git branch --format="%(refname:short)"); do
