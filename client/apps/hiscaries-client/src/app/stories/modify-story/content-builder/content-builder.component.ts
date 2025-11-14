@@ -33,9 +33,19 @@ import { IteratorService } from '@shared/services/statefull/iterator/iterator.se
   styleUrls: ['./content-builder.component.scss'],
 })
 export class ContentBuilderComponent implements OnInit {
+  private _contents: FormArray;
+
   @Input() formGroup: FormGroup;
   @Input() formArrayName: string;
-  @Input() contents: FormArray;
+  @Input() set contents(value: FormArray) {
+    this._contents = value;
+    this.setUpperBoundary();
+    this.iterator.moveToFirst();
+  }
+
+  get contents(): FormArray {
+    return this._contents;
+  }
 
   constructor(private fb: FormBuilder, private iterator: IteratorService) {}
 
@@ -45,10 +55,6 @@ export class ContentBuilderComponent implements OnInit {
     }
 
     this.setUpperBoundary();
-
-    this.formGroup.valueChanges.subscribe(() => {
-      this.setUpperBoundary();
-    });
   }
 
   get currentIndex(): number {
@@ -89,5 +95,9 @@ export class ContentBuilderComponent implements OnInit {
 
   private setUpperBoundary(): void {
     this.iterator.upperBoundary = this.contents.length - 1;
+
+    if (this.iterator.currentIndex > this.contents.length - 1) {
+      this.iterator.moveToFirst();
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { AbstractControl, FormArray } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl } from '@angular/forms';
 import { GenreModel } from '@stories/models/domain/genre.model';
 
 export interface ModifyStoryFormModel {
@@ -9,6 +9,6 @@ export interface ModifyStoryFormModel {
   Genres: AbstractControl<GenreModel[] | null>;
   AgeLimit: AbstractControl<number | null>;
   DateWritten: AbstractControl<Date | null>;
-  Contents: FormArray;
+  Contents: FormArray<FormControl<string | null>>;
   PdfFile: AbstractControl<string | null>;
 }

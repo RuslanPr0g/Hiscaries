@@ -3,6 +3,7 @@ import {
   AbstractControl,
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -86,7 +87,7 @@ export class ModifyStoryComponent implements OnInit {
         Validators.max(18),
       ]),
       DateWritten: this.fb.control<Date | null>(null, Validators.required),
-      Contents: this.fb.array<string[]>([], Validators.required),
+      Contents: this.fb.array<FormControl<string | null>>([], Validators.required),
       PdfFile: this.fb.control<string | null>(null),
     });
 
@@ -127,12 +128,12 @@ export class ModifyStoryComponent implements OnInit {
         .pipe(take(1))
         .subscribe({
           next: (documentContent: DocumentContent) => {
-            const contentsArray = this.modifyForm.get('Contents') as FormArray;
-            contentsArray.clear();
-            documentContent.Pages.forEach((p) => {
-              contentsArray.push(this.fb.control(p.Text));
-            });
+            const newContents = this.fb.array(
+              documentContent.Pages.map((page) => this.fb.control(page.Text, Validators.required)),
+            );
+            this.modifyForm.setControl('Contents', newContents);
             this.submitted = false;
+            this.pdfControl?.reset();
           },
           error: (err) => {
             console.error('PDF parsing failed', err);
@@ -220,7 +221,7 @@ export class ModifyStoryComponent implements OnInit {
       GenreIds: formModel.Genres?.map((g) => g.Id),
       ImagePreview: isValidPreview ? formModel.Image : null,
       StoryId: this.storyId,
-      Contents: formModel.Contents?.filter((c: string) => !!c) ?? [],
+      Contents: formModel.Contents?.filter((c: any) => !!(c as string)) ?? ([] as any),
       ShouldUpdatePreview: isValidPreview,
     };
 
