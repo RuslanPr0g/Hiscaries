@@ -12,6 +12,7 @@
     <PackageReference Include="StackNucleus.DDD.Api.Rest" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hiscary.Media.DocumentTools.PdfPig\Hiscary.Media.DocumentTools.PdfPig.csproj" />
     <ProjectReference Include="..\Hiscary.Shared.Api.Rest\Hiscary.Shared.Api.Rest.csproj" />
     <ProjectReference Include="..\Hiscary.Media.EventHandlers\Hiscary.Media.EventHandlers.csproj" />
     <ProjectReference Include="..\Hiscary.Media.FileStorage\Hiscary.Media.FileStorage.csproj" />

@@ -62,7 +62,10 @@
           ></app-form-multiselect>
         </ng-container>
 
-        <app-upload-file-control [control]="imageControl"></app-upload-file-control>
+        <app-upload-file-control
+          [control]="imageControl"
+          fileType="image"
+        ></app-upload-file-control>
       </div>
 
       <p-divider layout="horizontal" />

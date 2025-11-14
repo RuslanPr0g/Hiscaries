@@ -10,4 +10,5 @@ export interface ModifyStoryFormModel {
   AgeLimit: AbstractControl<number | null>;
   DateWritten: AbstractControl<Date | null>;
   Contents: FormArray;
+  PdfFile: AbstractControl<string | null>;
 }

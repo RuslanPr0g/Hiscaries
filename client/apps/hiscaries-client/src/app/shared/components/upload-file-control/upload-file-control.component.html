@@ -2,10 +2,10 @@
   <p-fileUpload
     #fileUpload
     mode="basic"
-    chooseLabel="Select preview image"
+    chooseLabel="Select file"
     chooseIcon="pi pi-upload"
-    name="demo[]"
-    accept="image/*"
+    name="file"
+    [accept]="accept"
     [maxFileSize]="maxFileSize"
     [auto]="true"
     (onSelect)="onSelect($event)"
@@ -15,7 +15,7 @@
     icon="pi pi-times"
     [text]="true"
     severity="danger"
-    *ngIf="hasImageSelected"
+    *ngIf="hasFileSelected"
   />
 </div>
 <p-message

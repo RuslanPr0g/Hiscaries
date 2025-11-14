@@ -92,5 +92,6 @@
     <PackageVersion Include="SixLabors.ImageSharp" Version="3.1.11" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.0.1" />
     <PackageVersion Include="Yarp.ReverseProxy" Version="2.3.0" />
+    <PackageVersion Include="PdfPig" Version="0.1.12" />
   </ItemGroup>
 </Project>

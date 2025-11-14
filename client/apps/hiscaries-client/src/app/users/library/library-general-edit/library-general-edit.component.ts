@@ -35,7 +35,11 @@ export class LibraryGeneralEditComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.library) {
-      const imageUrl = this.library.AvatarImageUrls?.Large ?? this.library.AvatarImageUrls?.Medium ?? this.library.AvatarImageUrls?.Small ?? null;
+      const imageUrl =
+        this.library.AvatarImageUrls?.Large ??
+        this.library.AvatarImageUrls?.Medium ??
+        this.library.AvatarImageUrls?.Small ??
+        null;
       this.modifyForm = this.fb.group<ModifyLibraryFormModel>({
         Bio: this.fb.control<string | null>(this.library.Bio),
         AvatarUrl: this.fb.control<string | null>(imageUrl),

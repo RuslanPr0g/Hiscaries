@@ -83,6 +83,7 @@ export class ModifyStoryComponent implements OnInit {
       ]),
       DateWritten: this.fb.control<Date | null>(null, Validators.required),
       Contents: this.fb.array<string[]>([], Validators.required),
+      PdfFile: this.fb.control<string | null>(null, Validators.required),
     });
 
     this.storyId = this.route.snapshot.paramMap.get('id');
