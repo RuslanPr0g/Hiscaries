@@ -2,13 +2,14 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReadStoryContentModel } from '@stories/models/domain/story-model';
 import { CommonModule } from '@angular/common';
-import { take } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, switchMap, take } from 'rxjs';
 import { convertToBase64 } from '@shared/helpers/image.helper';
 import { IteratorService } from '@shared/services/statefull/iterator/iterator.service';
 import { ButtonModule } from 'primeng/button';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { UserService } from '@users/services/user.service';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { ReadStoryRequest } from '@users/models/requests/read-story.model';
 
 @Component({
   selector: 'app-read-story-content',
@@ -20,6 +21,8 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
 })
 export class ReadStoryContentComponent implements OnInit {
   storyId: string | null = null;
+
+  private pageRead$ = new Subject<ReadStoryRequest>();
 
   globalError: string | null = null;
   story: ReadStoryContentModel | null = null;
@@ -34,6 +37,14 @@ export class ReadStoryContentComponent implements OnInit {
     private iterator: IteratorService,
   ) {
     this.storyId = this.route.snapshot.paramMap.get('id');
+
+    this.pageRead$
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged((a, b) => a.StoryId === b.StoryId && a.PageRead === b.PageRead),
+        switchMap((payload) => this.userService.read(payload)),
+      )
+      .subscribe();
   }
 
   ngOnInit() {
@@ -118,12 +129,10 @@ export class ReadStoryContentComponent implements OnInit {
     const result = this.iterator.moveNext();
 
     if (result && this.storyId && this.iterator.currentIndex > (this.story?.LastPageRead ?? 0)) {
-      this.userService
-        .read({
-          StoryId: this.storyId,
-          PageRead: this.currentIndex,
-        })
-        .subscribe();
+      this.pageRead$.next({
+        StoryId: this.storyId,
+        PageRead: this.currentIndex,
+      });
     }
 
     return result;
