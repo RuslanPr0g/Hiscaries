@@ -1,7 +1,6 @@
 Set-Location ../src
 
-dotnet workload update
-dotnet workload restore
+dotnet new install Aspire.ProjectTemplates
 
 dotnet tool install --global dotnet-ef
 
