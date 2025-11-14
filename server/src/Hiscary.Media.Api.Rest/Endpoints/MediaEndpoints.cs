@@ -15,9 +15,12 @@ public static class MediaEndpoints
             .Produces<IResult>(StatusCodes.Status200OK, contentType: "application/octet-stream")
             .Produces(StatusCodes.Status401Unauthorized);
 
-        group.MapPost("/document/as-contents", GetDocumentAsContents)
+        group.MapPost("/documents/as-contents", GetDocumentAsContents)
+            // TODO: for now only pdf
+            .Accepts<Stream>("application/pdf")
             .Produces<IResult>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status401Unauthorized);
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status422UnprocessableEntity);
     }
 
     private static async Task<IResult> GetImage(
@@ -41,32 +44,26 @@ public static class MediaEndpoints
     }
 
     public static async Task<IResult> GetDocumentAsContents(
-        [FromServices] HttpRequest request,
-        [FromServices] IDocumentTool documentTool)
+        HttpRequest request,
+        [FromServices] IDocumentTool documentTool,
+        [FromQuery] int? start,
+        [FromQuery] int? end)
     {
-        // TODO: for now, we support PDF only, for the future we would require a strategy or smth for the document tool.
-        if (!request.Form.Files.Any())
-            return Results.BadRequest("No file uploaded.");
-
-        var file = request.Form.Files[0];
-
-        if (file.Length == 0)
+        // TODO: for now only pdf
+        if (!request.ContentType?.StartsWith("application/pdf") ?? true)
         {
-            return Results.BadRequest("No file uploaded.");
+            return Results.BadRequest("Please upload a valid PDF file in the request body.");
         }
 
-        if (!file.Name.EndsWith(".pdf"))
-        {
-            return Results.UnprocessableEntity("The document format cannot be processed. We support PDF only.");
-        }
+        await using var stream = new MemoryStream();
+        await request.Body.CopyToAsync(stream);
+        stream.Position = 0;
 
-        using var stream = file.OpenReadStream();
-
-        var documentContent = documentTool.FileStreamToContent(stream);
+        var documentContent = documentTool.FileStreamToContent(stream, start, end);
 
         if (documentContent.Pages.Count == 0)
         {
-            return Results.UnprocessableEntity("The document format cannot be processed. We support PDF only.");
+            return Results.UnprocessableEntity("The PDF has no pages or cannot be processed.");
         }
 
         return Results.Json(documentContent, statusCode: 200);

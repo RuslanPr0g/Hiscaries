@@ -45,6 +45,10 @@ export class ContentBuilderComponent implements OnInit {
     }
 
     this.setUpperBoundary();
+
+    this.formGroup.valueChanges.subscribe(() => {
+      this.setUpperBoundary();
+    });
   }
 
   get currentIndex(): number {

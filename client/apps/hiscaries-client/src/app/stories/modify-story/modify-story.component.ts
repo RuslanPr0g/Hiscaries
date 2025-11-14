@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -29,6 +29,8 @@ import { ContentBuilderComponent } from './content-builder/content-builder.compo
 import { TabViewModule } from 'primeng/tabview';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { DocumentContent } from '@media/models/document-content.model';
+import { MediaService } from '@media/services/media.service';
 
 @Component({
   selector: 'app-modify-story',
@@ -63,6 +65,8 @@ export class ModifyStoryComponent implements OnInit {
   story: StoryModelWithContents | null = null;
   storyNotFound = false;
 
+  mediaService = inject(MediaService);
+
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -83,7 +87,7 @@ export class ModifyStoryComponent implements OnInit {
       ]),
       DateWritten: this.fb.control<Date | null>(null, Validators.required),
       Contents: this.fb.array<string[]>([], Validators.required),
-      PdfFile: this.fb.control<string | null>(null, Validators.required),
+      PdfFile: this.fb.control<string | null>(null),
     });
 
     this.storyId = this.route.snapshot.paramMap.get('id');
@@ -101,6 +105,41 @@ export class ModifyStoryComponent implements OnInit {
       .subscribe((genres: GenreModel[]) => {
         this.genres = genres;
       });
+
+    this.pdfControl?.valueChanges.subscribe((pdfBase64) => {
+      if (!pdfBase64) return;
+
+      // TODO: for now only pdf
+      const isBase64Pdf = pdfBase64.startsWith('data:application/pdf;base64,');
+      if (!isBase64Pdf) {
+        console.warn('Selected file is not a PDF.');
+        return;
+      }
+
+      this.submitted = true;
+
+      const byteString = pdfBase64.split(',')[1];
+      const blob = this.base64ToBlob(byteString, 'application/pdf');
+      const file = new File([blob], 'uploaded.pdf', { type: 'application/pdf' });
+
+      this.mediaService
+        .uploadPdf(file)
+        .pipe(take(1))
+        .subscribe({
+          next: (documentContent: DocumentContent) => {
+            const contentsArray = this.modifyForm.get('Contents') as FormArray;
+            contentsArray.clear();
+            documentContent.Pages.forEach((p) => {
+              contentsArray.push(this.fb.control(p.Text));
+            });
+            this.submitted = false;
+          },
+          error: (err) => {
+            console.error('PDF parsing failed', err);
+            this.submitted = false;
+          },
+        });
+    });
 
     this.storyService
       .getStoryByIdWithContents({
@@ -132,6 +171,10 @@ export class ModifyStoryComponent implements OnInit {
 
   get imageControl(): AbstractControl<string | null, string | null> | null {
     return this.modifyForm.get('Image');
+  }
+
+  get pdfControl(): AbstractControl<string | null, string | null> | null {
+    return this.modifyForm.get('PdfFile');
   }
 
   get base64Image(): string | null | undefined {
@@ -220,5 +263,15 @@ export class ModifyStoryComponent implements OnInit {
         contentsArray.push(this.fb.control(x.Content));
       });
     }
+  }
+
+  private base64ToBlob(base64: string, contentType: string): Blob {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: contentType });
   }
 }

@@ -4,5 +4,5 @@ namespace Hiscary.Media.DocumentTools;
 
 public interface IDocumentTool
 {
-    DocumentContent FileStreamToContent(Stream stream);
+    DocumentContent FileStreamToContent(Stream stream, int? start, int? end);
 }

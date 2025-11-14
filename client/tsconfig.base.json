@@ -22,6 +22,7 @@
       "@admin/*": ["./apps/hiscaries-client/src/app/admin/*"],
       "@environments/*": ["./apps/hiscaries-client/src/environments/*"],
       "@shared/*": ["./apps/hiscaries-client/src/app/shared/*"],
+      "@media/*": ["./apps/hiscaries-client/src/app/media/*"],
       "@stories/*": ["./apps/hiscaries-client/src/app/stories/*"],
       "@user-to-story/*": ["./apps/hiscaries-client/src/app/user-to-story/*"],
       "@users/*": ["./apps/hiscaries-client/src/app/users/*"]

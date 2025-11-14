@@ -12,10 +12,16 @@ export class MediaService {
 
   constructor(private http: HttpClient) {}
 
-  uploadPdf(file: File): Observable<DocumentContent> {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
+  uploadPdf(file: File, start?: number, end?: number): Observable<DocumentContent> {
+    let url = `${this.apiUrl}/documents/as-contents`;
+    const params = new URLSearchParams();
+    if (start != null) params.append('start', start.toString());
+    if (end != null) params.append('end', end.toString());
+    if (params.toString()) url += `?${params.toString()}`;
 
-    return this.http.post<DocumentContent>(`${this.apiUrl}/document/as-contents`, formData);
+    return this.http.post<DocumentContent>(url, file, {
+      // TODO: for now only pdf
+      headers: { 'Content-Type': 'application/pdf' },
+    });
   }
 }

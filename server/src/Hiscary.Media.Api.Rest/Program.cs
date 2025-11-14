@@ -6,6 +6,7 @@ using Hiscary.Media.Images;
 using Hiscary.ServiceDefaults;
 using Hiscary.Shared.Api.Rest;
 using Hiscary.Shared.Domain.Options;
+using Microsoft.AspNetCore.Http.Features;
 using Serilog;
 using StackNucleus.DDD.Application.Extensions;
 
@@ -39,6 +40,13 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.PropertyNamingPolicy = null;
     options.SerializerOptions.DictionaryKeyPolicy = null;
+});
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.ValueLengthLimit = int.MaxValue;
+    options.MultipartBodyLengthLimit = long.MaxValue;
+    options.MultipartHeadersLengthLimit = int.MaxValue;
 });
 
 builder.Services.AddCors(options =>

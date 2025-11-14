@@ -75,17 +75,31 @@
         </p-tabPanel>
 
         <p-tabPanel header="Contents">
-          <!-- <h2>Load a story from PDF:</h2>
-          <app-upload-file-control
-            [control]="modifyForm.get('PdfFile')"
-            fileType="pdf"
-          ></app-upload-file-control> -->
           <app-content-builder
             [formGroup]="modifyForm"
             formArrayName="Contents"
             [contents]="contents"
           ></app-content-builder>
         </p-tabPanel>
+        <div
+          class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
+        >
+          <p class="text-center mb-3 font-medium">
+            Load a story from PDF
+            <small
+              class="p-4 mb-4 text-sm text-fg-success-strong rounded-base bg-success-soft text-center"
+              role="alert"
+            >
+              all pages will be overwritten
+            </small>
+          </p>
+
+          <app-upload-file-control
+            [control]="modifyForm.get('PdfFile')"
+            fileType="pdf"
+            class="w-full max-w-sm"
+          ></app-upload-file-control>
+        </div>
       </p-tabView>
 
       <div class="error-block">
