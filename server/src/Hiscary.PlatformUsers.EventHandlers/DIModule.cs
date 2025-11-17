@@ -19,10 +19,13 @@ public static class DIModule
         this IHostApplicationBuilder builder,
         IConfiguration configuration)
     {
+        builder.Services.AddScoped<IEventHandler<UserFirstReadStoryDomainEvent>, UserFirstReadStoryDomainEventHandler>();
+        builder.Services.AddScoped<IEventHandler<UserReadStoryChangedContentsDomainEvent>, UserReadStoryChangedContentsDomainEventHandler>();
+
         builder.Services.AddScoped<IEventHandler<StoryPublishedIntegrationEvent>, StoryPublishedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<StoryContentsChangedIntegrationEvent>, StoryContentsChangedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<UserAccountCreatedIntegrationEvent>, UserAccountCreatedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<ImageUploadedIntegrationEvent>, ImageUploadedIntegrationEventHandler>();
-        builder.Services.AddScoped<IEventHandler<UserFirstReadStoryDomainEvent>, UserFirstReadStoryDomainEventHandler>();
 
         var asm = Assembly.GetExecutingAssembly();
         var rabbitMqConnectionString = configuration.GetConnectionString("rabbitmq");

@@ -47,6 +47,28 @@ public sealed class PlatformUser : AggregateRoot<PlatformUserId>
         return Libraries.ElementAt(0);
     }
 
+    public void SubscribeUserToMyLibrary()
+    {
+        var lib = GetCurrentLibrary();
+        lib?.SubscribeUser();
+    }
+
+    public void UnsubscribeUserFromMyLibrary()
+    {
+        var lib = GetCurrentLibrary();
+        lib?.UnsubscribeUser();
+    }
+
+    public void UpdateHistoryAfterStoryContentsChanges(Guid storyId, int numberOfPages)
+    {
+        var readStoryHistory = ReadHistory.FirstOrDefault(h => h.StoryId == storyId);
+
+        if (readStoryHistory is not null)
+        {
+            readStoryHistory.UpdateLastPageReadAfterStoryContentsChanges(numberOfPages);
+        }
+    }
+
     public void SubscribeToLibrary(LibraryId libraryId)
     {
         if (Libraries.Any(x => x.Id == libraryId))

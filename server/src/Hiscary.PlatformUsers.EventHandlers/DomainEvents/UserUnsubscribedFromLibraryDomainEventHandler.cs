@@ -23,14 +23,7 @@ public sealed class UserUnsubscribedFromLibraryDomainEventHandler(
             return;
         }
 
-        var library = user.GetCurrentLibrary();
-
-        if (library is null)
-        {
-            return;
-        }
-
-        library.UnsubscribeUser();
+        user.UnsubscribeUserFromMyLibrary();
 
         await _repository.SaveChanges();
 

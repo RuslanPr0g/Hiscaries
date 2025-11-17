@@ -23,14 +23,7 @@ public sealed class UserSubscribedToLibraryDomainEventHandler(
             return;
         }
 
-        var library = user.GetCurrentLibrary();
-
-        if (library is null)
-        {
-            return;
-        }
-
-        library.SubscribeUser();
+        user.SubscribeUserToMyLibrary();
 
         await _repository.SaveChanges();
 

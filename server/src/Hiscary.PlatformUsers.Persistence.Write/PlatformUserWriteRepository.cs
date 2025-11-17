@@ -36,4 +36,11 @@ public class PlatformUserWriteRepository(PlatformUsersContext context) :
         .Include(x => x.Reviews)
         .Include(x => x.Subscriptions)
         .FirstOrDefaultAsync(x => x.UserAccountId == userAccountId);
+
+    public async Task<List<Guid>> GetStoryReaderUserIdsByStoryId(Guid storyId) =>
+        await Context.PlatformUsers
+        .Include(x => x.ReadHistory)
+        .Where(x => x.ReadHistory.Any(y => y.StoryId == storyId))
+        .Select(x => x.UserAccountId)
+        .ToListAsync();
 }

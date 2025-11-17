@@ -1,4 +1,6 @@
 ﻿using Hiscary.Media.IntegrationEvents.Outgoing;
+using Hiscary.PlatformUsers.DomainEvents;
+using Hiscary.PlatformUsers.EventHandlers.DomainEvents;
 using Hiscary.PlatformUsers.IntegrationEvents.Outgoing;
 using Hiscary.Stories.EventHandlers.IntegrationEvents;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +18,8 @@ public static class DIModule
         this IHostApplicationBuilder builder,
         IConfiguration configuration)
     {
+        builder.Services.AddScoped<IEventHandler<StoryContentsChangedDomainEvent>, StoryContentsChangedDomainEventHandler>();
+
         builder.Services.AddScoped<IEventHandler<ImageUploadedIntegrationEvent>, ImageUploadedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<StoryFirstReadIntegrationEvent>, StoryFirstReadIntegrationEventHandler>();
 

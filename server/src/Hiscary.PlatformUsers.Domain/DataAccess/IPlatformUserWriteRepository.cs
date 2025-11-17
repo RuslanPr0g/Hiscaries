@@ -7,4 +7,5 @@ public interface IPlatformUserWriteRepository : IBaseWriteRepository<PlatformUse
     Task<PlatformUser?> GetLibraryOwnerByLibraryId(LibraryId libraryId);
     Task<PlatformUser?> GetByUserAccountId(Guid userAccountId);
     Task<List<Guid>> GetLibrarySubscribersUserAccountIds(LibraryId libraryId);
+    Task<List<Guid>> GetStoryReaderUserIdsByStoryId(Guid storyId);
 }

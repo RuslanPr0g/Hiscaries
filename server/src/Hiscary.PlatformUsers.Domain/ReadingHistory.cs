@@ -28,6 +28,14 @@ public sealed class ReadingHistory : Entity
         }
     }
 
+    internal void UpdateLastPageReadAfterStoryContentsChanges(int numberOfPages)
+    {
+        if (numberOfPages < LastPageRead)
+        {
+            LastPageRead = numberOfPages;
+        }
+    }
+
     private ReadingHistory()
     {
     }

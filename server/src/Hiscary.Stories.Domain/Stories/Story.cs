@@ -1,4 +1,5 @@
-﻿using Hiscary.Shared.Domain.ValueObjects;
+﻿using Hiscary.PlatformUsers.DomainEvents;
+using Hiscary.Shared.Domain.ValueObjects;
 using Hiscary.Stories.Domain.Genres;
 using StackNucleus.DDD.Domain;
 
@@ -192,6 +193,8 @@ public sealed class Story : AggregateRoot<StoryId>
         {
             Contents.RemoveRange(currentIndex, Contents.Count - currentIndex);
         }
+
+        PublishContentsChanged();
     }
 
     public Guid? ClearAllAudio()
@@ -216,6 +219,11 @@ public sealed class Story : AggregateRoot<StoryId>
         {
             Audios.Add(StoryAudio.Create(storyAudioId, name));
         }
+    }
+
+    private void PublishContentsChanged()
+    {
+        PublishEvent(new StoryContentsChangedDomainEvent(Id, Contents.Count));
     }
 
     private Story()
