@@ -27,6 +27,10 @@ export class ReadStoryContentComponent implements OnInit {
 
   private pageRead$ = new Subject<ReadStoryRequest>();
 
+  private touchStartX = 0;
+  private touchEndX = 0;
+  private minSwipeDistance = 110;
+
   globalError: string | null = null;
   story: ReadStoryContentModel | null = null;
   storyNotFound = false;
@@ -123,6 +127,15 @@ export class ReadStoryContentComponent implements OnInit {
     return this.contents.at(this.currentIndex) ?? 'Page is empty';
   }
 
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
   moveNext(): boolean {
     const moved = this.iterator.moveNext();
 
@@ -167,6 +180,18 @@ export class ReadStoryContentComponent implements OnInit {
 
   minimize(): void {
     this.maximized = false;
+  }
+
+  private handleSwipe() {
+    const distance = this.touchEndX - this.touchStartX;
+
+    if (Math.abs(distance) > this.minSwipeDistance) {
+      if (distance < 0) {
+        this.moveNext();
+      } else {
+        this.movePrev();
+      }
+    }
   }
 
   private scrollToTop() {

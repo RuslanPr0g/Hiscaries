@@ -36,7 +36,12 @@
       />
     </div>
 
-    <div class="read-story-container__content-wrapper" #contentWrapper>
+    <div
+      class="read-story-container__content-wrapper"
+      (touchstart)="onTouchStart($event)"
+      (touchend)="onTouchEnd($event)"
+      #contentWrapper
+    >
       <div [innerHTML]="currentPageContent" class="read-story-container__content"></div>
     </div>
 
