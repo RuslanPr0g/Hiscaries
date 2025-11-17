@@ -121,10 +121,6 @@ export class ReadStoryContentComponent implements OnInit {
     return this.contents.at(this.currentIndex) ?? 'Page is empty';
   }
 
-  get currentPageLabel(): string {
-    return `Page: ${this.currentIndex + 1} / ${this.contents.length}`;
-  }
-
   moveNext(): boolean {
     const moved = this.iterator.moveNext();
 
