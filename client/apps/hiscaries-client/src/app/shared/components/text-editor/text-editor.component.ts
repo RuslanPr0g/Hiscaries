@@ -13,7 +13,6 @@ import { EditorModule } from 'primeng/editor';
 })
 export class TextEditorComponent {
   @Input() control!: AbstractControl<string>;
-  @Input() label!: string;
   @Input() errorMessage!: string;
 
   set text(value: string) {

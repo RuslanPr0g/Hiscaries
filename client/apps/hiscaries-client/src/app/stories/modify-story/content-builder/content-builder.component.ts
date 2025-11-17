@@ -35,12 +35,15 @@ import { IteratorService } from '@shared/services/statefull/iterator/iterator.se
 export class ContentBuilderComponent implements OnInit {
   private _contents: FormArray;
 
+  pageInput: number = 1;
+
   @Input() formGroup: FormGroup;
   @Input() formArrayName: string;
   @Input() set contents(value: FormArray) {
     this._contents = value;
     this.setUpperBoundary();
     this.iterator.moveToFirst();
+    this.pageInput = 1;
   }
 
   get contents(): FormArray {
@@ -65,16 +68,26 @@ export class ContentBuilderComponent implements OnInit {
     return this.contents.at(this.currentIndex);
   }
 
-  get currentPageLabel(): string {
-    return `Page: ${this.currentIndex + 1} / ${this.contents.length}`;
-  }
-
   moveNext(): boolean {
-    return this.iterator.moveNext();
+    const moved = this.iterator.moveNext();
+    if (moved) this.pageInput = this.currentIndex + 1;
+    return moved;
   }
 
   movePrev(): boolean {
-    return this.iterator.movePrev();
+    const moved = this.iterator.movePrev();
+    if (moved) this.pageInput = this.currentIndex + 1;
+    return moved;
+  }
+
+  goToPage() {
+    const page = this.pageInput - 1;
+
+    if (page >= 0 && page < this.contents.length) {
+      this.iterator.moveTo(page);
+    } else {
+      this.pageInput = this.iterator.currentIndex + 1;
+    }
   }
 
   addContent() {

@@ -2,7 +2,6 @@
   <ng-container [formArrayName]="formArrayName">
     <app-text-editor
       [control]="currentPageControl"
-      [label]="currentPageLabel"
       [errorMessage]="'Content is required'"
     ></app-text-editor>
   </ng-container>
@@ -22,7 +21,17 @@
         severity="secondary"
         (onClick)="movePrev()"
       ></p-button>
-      <span class="message">{{ currentPageLabel }}</span>
+      <div class="page-input">
+        <input
+          type="number"
+          [max]="contents.length"
+          [min]="1"
+          [(ngModel)]="pageInput"
+          [ngModelOptions]="{ standalone: true }"
+          (change)="goToPage()"
+        />
+        <span>/ {{ contents.length }}</span>
+      </div>
       <p-button
         icon="pi pi-angle-right"
         [rounded]="true"

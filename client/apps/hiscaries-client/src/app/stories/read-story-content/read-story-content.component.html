@@ -48,7 +48,17 @@
         severity="secondary"
         (onClick)="movePrev()"
       />
-      <div class="message">{{ currentPageLabel }}</div>
+      <div class="page-input">
+        <input
+          type="number"
+          [max]="contents.length"
+          [min]="1"
+          [(ngModel)]="pageInput"
+          [ngModelOptions]="{ standalone: true }"
+          (change)="goToPage()"
+        />
+        <span>/ {{ contents.length }}</span>
+      </div>
       <p-button
         icon="pi pi-angle-right"
         [rounded]="true"

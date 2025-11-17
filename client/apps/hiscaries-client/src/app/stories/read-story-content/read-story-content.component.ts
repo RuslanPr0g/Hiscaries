@@ -10,11 +10,12 @@ import { StoryWithMetadataService } from '@user-to-story/services/multiple-servi
 import { UserService } from '@users/services/user.service';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { ReadStoryRequest } from '@users/models/requests/read-story.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-read-story-content',
   standalone: true,
-  imports: [CommonModule, ButtonModule, LoadingSpinnerComponent],
+  imports: [CommonModule, ButtonModule, LoadingSpinnerComponent, FormsModule],
   providers: [IteratorService],
   templateUrl: './read-story-content.component.html',
   styleUrl: './read-story-content.component.scss',
@@ -29,6 +30,8 @@ export class ReadStoryContentComponent implements OnInit {
   storyNotFound = false;
 
   maximized = false;
+
+  pageInput: number = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -76,7 +79,8 @@ export class ReadStoryContentComponent implements OnInit {
           };
 
           if (story.LastPageRead) {
-            this.iterator.moveTo(story.LastPageRead);
+            this.pageInput = story.LastPageRead;
+            this.goToPage();
           } else {
             this.userService
               .read({
@@ -126,20 +130,36 @@ export class ReadStoryContentComponent implements OnInit {
   }
 
   moveNext(): boolean {
-    const result = this.iterator.moveNext();
+    const moved = this.iterator.moveNext();
 
-    if (result && this.storyId && this.iterator.currentIndex > (this.story?.LastPageRead ?? 0)) {
+    if (moved && this.storyId && this.iterator.currentIndex > (this.story?.LastPageRead ?? 0)) {
       this.pageRead$.next({
         StoryId: this.storyId,
         PageRead: this.currentIndex,
       });
     }
 
-    return result;
+    if (moved) {
+      this.pageInput = this.currentIndex + 1;
+    }
+
+    return moved;
   }
 
   movePrev(): boolean {
-    return this.iterator.movePrev();
+    const moved = this.iterator.movePrev();
+    if (moved) this.pageInput = this.currentIndex + 1;
+    return moved;
+  }
+
+  goToPage() {
+    const page = this.pageInput - 1;
+
+    if (page >= 0 && page < this.contents.length) {
+      this.iterator.moveTo(page);
+    } else {
+      this.pageInput = this.iterator.currentIndex + 1;
+    }
   }
 
   maximize(): void {
