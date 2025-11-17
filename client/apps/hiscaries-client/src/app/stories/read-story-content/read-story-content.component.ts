@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReadStoryContentModel } from '@stories/models/domain/story-model';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './read-story-content.component.scss',
 })
 export class ReadStoryContentComponent implements OnInit {
+  @ViewChild('contentWrapper') contentWrapper!: ElementRef<HTMLDivElement>;
+
   storyId: string | null = null;
 
   private pageRead$ = new Subject<ReadStoryRequest>();
@@ -133,6 +135,7 @@ export class ReadStoryContentComponent implements OnInit {
 
     if (moved) {
       this.pageInput = this.currentIndex + 1;
+      this.scrollToTop();
     }
 
     return moved;
@@ -140,7 +143,10 @@ export class ReadStoryContentComponent implements OnInit {
 
   movePrev(): boolean {
     const moved = this.iterator.movePrev();
-    if (moved) this.pageInput = this.currentIndex + 1;
+    if (moved) {
+      this.pageInput = this.currentIndex + 1;
+      this.scrollToTop();
+    }
     return moved;
   }
 
@@ -149,6 +155,7 @@ export class ReadStoryContentComponent implements OnInit {
 
     if (page >= 0 && page < this.contents.length) {
       this.iterator.moveTo(page);
+      this.scrollToTop();
     } else {
       this.pageInput = this.iterator.currentIndex + 1;
     }
@@ -160,5 +167,17 @@ export class ReadStoryContentComponent implements OnInit {
 
   minimize(): void {
     this.maximized = false;
+  }
+
+  private scrollToTop() {
+    if (this.contentWrapper) {
+      this.contentWrapper.nativeElement.scrollTop = 0;
+    }
+
+    this.scrollPageToTop();
+  }
+
+  private scrollPageToTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 }
