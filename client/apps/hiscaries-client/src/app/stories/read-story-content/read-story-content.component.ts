@@ -139,10 +139,10 @@ export class ReadStoryContentComponent implements OnInit {
   moveNext(): boolean {
     const moved = this.iterator.moveNext();
 
-    if (moved && this.storyId && this.iterator.currentIndex > (this.story?.LastPageRead ?? 0)) {
+    if (moved && this.storyId && this.iterator.currentIndex + 1 > (this.story?.LastPageRead ?? 0)) {
       this.pageRead$.next({
         StoryId: this.storyId,
-        PageRead: this.currentIndex,
+        PageRead: this.currentIndex + 1,
       });
     }
 
