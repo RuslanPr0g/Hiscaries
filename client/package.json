@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "nx serve hiscaries-client --proxy-config proxy.conf.json",
+    "host": "nx serve hiscaries-client --proxy-config proxy.conf.json --host 0.0.0.0",
     "watch": "nx build hiscaries-client --watch --configuration development",
     "test": "nx test hiscaries-client",
     "reset": "nx reset",
