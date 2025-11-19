@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Hiscary.PlatformUsers.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hiscary.PlatformUsers.Persistence.Context.Migrations
 {
     [DbContext(typeof(PlatformUsersContext))]
-    partial class PlatformUsersContextModelSnapshot : ModelSnapshot
+    [Migration("20251119144827_ImageUrlNameRemoveLocalHost")]
+    partial class ImageUrlNameRemoveLocalHost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

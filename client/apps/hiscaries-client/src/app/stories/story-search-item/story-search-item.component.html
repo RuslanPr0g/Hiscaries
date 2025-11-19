@@ -5,7 +5,12 @@
   tabindex="0"
 >
   <div class="story-thumbnail">
-    <img [src]="story.ImagePreviewUrl | fallbackImage" loading="lazy" alt="{{ story.Title }}" class="story-image" />
+    <img
+      [src]="story.ImagePreviewUrl | fallbackImage"
+      loading="lazy"
+      alt="{{ story.Title }}"
+      class="story-image"
+    />
     <div class="story-gradient-overlay"></div>
     <div class="story-details-overlay">
       <h3 class="story-title">

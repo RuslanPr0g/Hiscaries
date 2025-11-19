@@ -82,7 +82,7 @@ var media = builder.AddProject<Projects.Hiscary_Media_Api_Rest>("hc-media-api-re
     .WaitFor(redis)
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7014, targetPort: 7014, isProxied: false)
-    .WithEnvironment("ServiceUrls__MediaServiceUrl", "https://localhost:5001/api/v1/media")
+    .WithEnvironment("ServiceUrls__MediaServiceUrl", "api/v1/media")
     .WithReference(rabbitmq)
     .WithReference(azBlobs);
 var recommendations = builder.AddProject<Projects.Hiscary_Recommendations_Api_Rest>("hc-recommendations-api-rest")

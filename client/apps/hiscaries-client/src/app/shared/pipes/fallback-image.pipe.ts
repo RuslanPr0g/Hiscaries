@@ -3,7 +3,7 @@ import { ImageUrlSizes } from '@shared/models/image-url-sizes.model';
 
 @Pipe({
   name: 'fallbackImage',
-  standalone: true
+  standalone: true,
 })
 export class FallbackImagePipe implements PipeTransform {
   transform(images: ImageUrlSizes | string | null | undefined): string | null {
