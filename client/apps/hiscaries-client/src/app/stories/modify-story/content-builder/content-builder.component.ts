@@ -35,7 +35,7 @@ import { IteratorService } from '@shared/services/statefull/iterator/iterator.se
 export class ContentBuilderComponent implements OnInit {
   private _contents: FormArray;
 
-  pageInput: number = 1;
+  pageInput = 1;
 
   @Input() formGroup: FormGroup;
   @Input() formArrayName: string;

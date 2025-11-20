@@ -87,7 +87,7 @@ export class ModifyStoryComponent implements OnInit {
         Validators.max(18),
       ]),
       DateWritten: this.fb.control<Date | null>(null, Validators.required),
-      Contents: this.fb.array<FormControl<string | null>>([], Validators.required),
+      Contents: this.fb.array<FormControl<string>>([], Validators.required),
       PdfFile: this.fb.control<string | null>(null),
     });
 
@@ -129,8 +129,10 @@ export class ModifyStoryComponent implements OnInit {
         .subscribe({
           next: (documentContent: DocumentContent) => {
             const newContents = this.fb.array(
-              documentContent.Pages.map((page) => this.fb.control(page.Text, Validators.required)),
-            );
+              documentContent.Pages.filter((page) => !!page).map((page) =>
+                this.fb.control(page.Text, Validators.required),
+              ),
+            ) as FormArray<FormControl<string>>;
             this.modifyForm.setControl('Contents', newContents);
             this.submitted = false;
             this.pdfControl?.reset();
@@ -221,7 +223,7 @@ export class ModifyStoryComponent implements OnInit {
       GenreIds: formModel.Genres?.map((g) => g.Id),
       ImagePreview: isValidPreview ? formModel.Image : null,
       StoryId: this.storyId,
-      Contents: formModel.Contents?.filter((c: any) => !!(c as string)) ?? ([] as any),
+      Contents: formModel.Contents?.filter((c) => !!c) ?? [],
       ShouldUpdatePreview: isValidPreview,
     };
 

@@ -58,7 +58,7 @@ export class ReadStoryContentComponent implements OnInit {
 
   maximized = false;
 
-  pageInput: number = 1;
+  pageInput = 1;
 
   constructor(
     private route: ActivatedRoute,

@@ -9,6 +9,6 @@ export interface ModifyStoryFormModel {
   Genres: AbstractControl<GenreModel[] | null>;
   AgeLimit: AbstractControl<number | null>;
   DateWritten: AbstractControl<Date | null>;
-  Contents: FormArray<FormControl<string | null>>;
+  Contents: FormArray<FormControl<string>>;
   PdfFile: AbstractControl<string | null>;
 }
