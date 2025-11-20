@@ -1,0 +1,64 @@
+:host {
+  position: relative;
+  width: 100%;
+}
+
+.reading-settings-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: #2b2b2b;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  max-width: 280px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #f5f0eb;
+  margin-right: 24px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #f5f0eb;
+    border-bottom: 1px solid #444;
+    padding-bottom: 8px;
+  }
+
+  .setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    label {
+      font-size: 0.95rem;
+      color: #f5f0eb;
+      flex: 1;
+    }
+
+    .font-size-buttons {
+      display: flex;
+      gap: 4px;
+
+      button {
+        padding: 4px 8px;
+        border-radius: 6px;
+        border: 1px solid #555;
+        background: #3a3a3a;
+        color: #f5f0eb;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+
+        &:hover {
+          background: #4a4a4a;
+          border-color: #777;
+        }
+
+        &:active {
+          background: #555;
+        }
+      }
+    }
+  }
+}

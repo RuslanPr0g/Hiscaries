@@ -4,10 +4,8 @@
   flex-direction: column;
   max-width: 100%;
   min-height: 80vh;
-  background-color: rgba(20, 20, 20, 0.95);
   border-radius: 12px;
   padding: 16px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
   &__content-wrapper {
     flex: 1;
@@ -42,7 +40,6 @@
     align-items: center;
     gap: 8px;
     padding: 8px 0;
-    background: rgba(56, 41, 29, 0.25);
     border-radius: 8px;
     position: sticky;
     bottom: 0;
@@ -83,13 +80,102 @@
       max-height: calc(100vh - 60px);
     }
   }
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+
+    min-height: 48px;
+
+    & > .read-story-container__navigation,
+    & > .focus {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+// THEMES
+.read-story-container.theme-dark {
+  background-color: rgba(20, 20, 20, 0.95);
+
+  .read-story-container__content {
+    color: #f5f0eb;
+
+    p {
+      color: #f5f0eb;
+    }
+  }
+
+  .read-story-container__navigation {
+    background: rgba(56, 41, 29, 0.25);
+
+    .page-input {
+      input {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      span {
+        color: #f5f0eb;
+      }
+    }
+  }
+
+  .story-title {
+    color: #c9a27e;
+  }
+}
+
+.read-story-container.theme-white {
+  background-color: #ffffff;
+
+  .read-story-container__content {
+    color: #222222;
+
+    p {
+      color: #222222;
+    }
+  }
+
+  .read-story-container__navigation {
+    background: rgba(220, 220, 220, 0.6);
+
+    .page-input {
+      input {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.9);
+        color: #222222;
+      }
+
+      span {
+        color: #333333;
+      }
+    }
+  }
+
+  .story-title {
+    color: #444444;
+  }
+}
+
+.highligh-btn {
+  background: #22222264;
+  height: 46px;
+  border-radius: 25%;
+  padding-bottom: 6px;
 }
 
 .focus {
   display: flex;
   gap: 6px;
   align-self: flex-end;
-  padding-bottom: 6px;
 }
 
 .loading {
@@ -124,7 +210,13 @@
   }
 }
 
-@media (max-height: 650px) {
+@media (max-width: 450px) {
+  .nav-btn {
+    display: none;
+  }
+}
+
+@media (max-height: 850px) {
   .read-story-container {
     padding-bottom: 100px;
   }

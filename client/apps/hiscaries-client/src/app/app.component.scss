@@ -18,11 +18,18 @@ main {
   margin-top: 16px;
 }
 
-::ng-deep .custom-toast {
+::ng-deep .wide-toast {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 600px;
+  max-width: 90vw;
+}
+
+::ng-deep .narrow-toast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   max-width: 90vw;
 }
 

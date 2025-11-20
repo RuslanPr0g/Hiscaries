@@ -4,6 +4,13 @@
     <p>Sorry, we couldn't find the story you're looking for.</p>
   </div>
 </ng-container>
+<p-toast position="top-right" key="settings" (onClose)="onSettingsClose()" [baseZIndex]="5000">
+  <ng-template pTemplate="message" let-message let-closeFn="closeFn">
+    <section>
+      <app-reading-settings (settingsChanged)="onSettingsChanged($event)"></app-reading-settings>
+    </section>
+  </ng-template>
+</p-toast>
 <ng-template #storyFound>
   <div class="loading" *ngIf="!story">
     <app-loading-spinner></app-loading-spinner>
@@ -15,25 +22,76 @@
   <div
     class="read-story-container"
     *ngIf="story"
-    [ngClass]="{ 'read-story-container-maximized': maximized }"
+    [ngClass]="{
+      'read-story-container-maximized': maximized,
+      'theme-white': !settings.DarkMode,
+      'theme-dark': settings.DarkMode
+    }"
   >
-    <div class="focus">
-      <p-button
-        icon="pi pi-window-maximize"
-        [rounded]="true"
-        [text]="true"
-        severity="secondary"
-        (onClick)="maximize()"
-        *ngIf="!maximized"
-      />
-      <p-button
-        icon="pi pi-window-minimize"
-        [rounded]="true"
-        [text]="true"
-        severity="secondary"
-        (onClick)="minimize()"
-        *ngIf="maximized"
-      />
+    <div class="read-story-container__header">
+      <div class="read-story-container__navigation">
+        <div class="highligh-btn nav-btn">
+          <p-button
+            icon="pi pi-angle-left"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            (onClick)="movePrev()"
+          />
+        </div>
+        <div class="page-input">
+          <input
+            type="number"
+            [max]="contents.length"
+            [min]="1"
+            [(ngModel)]="pageInput"
+            [ngModelOptions]="{ standalone: true }"
+            (change)="goToPage()"
+          />
+          <span>/ {{ contents.length }}</span>
+        </div>
+        <div class="highligh-btn nav-btn">
+          <p-button
+            icon="pi pi-angle-right"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            (onClick)="moveNext()"
+          />
+        </div>
+      </div>
+      <div class="item-wrapper">
+        <div class="focus highligh-btn">
+          <p-button
+            icon="pi pi-cog"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            (onClick)="showSettingss()"
+            *ngIf="!maximized"
+          />
+        </div>
+      </div>
+      <div class="item-wrapper">
+        <div class="focus highligh-btn">
+          <p-button
+            icon="pi pi-window-maximize"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            (onClick)="maximize()"
+            *ngIf="!maximized"
+          />
+          <p-button
+            icon="pi pi-window-minimize"
+            [rounded]="true"
+            [text]="true"
+            severity="secondary"
+            (onClick)="minimize()"
+            *ngIf="maximized"
+          />
+        </div>
+      </div>
     </div>
 
     <div
@@ -43,34 +101,6 @@
       #contentWrapper
     >
       <div [innerHTML]="currentPageContent" class="read-story-container__content"></div>
-    </div>
-
-    <div class="read-story-container__navigation">
-      <p-button
-        icon="pi pi-angle-left"
-        [rounded]="true"
-        [text]="true"
-        severity="secondary"
-        (onClick)="movePrev()"
-      />
-      <div class="page-input">
-        <input
-          type="number"
-          [max]="contents.length"
-          [min]="1"
-          [(ngModel)]="pageInput"
-          [ngModelOptions]="{ standalone: true }"
-          (change)="goToPage()"
-        />
-        <span>/ {{ contents.length }}</span>
-      </div>
-      <p-button
-        icon="pi pi-angle-right"
-        [rounded]="true"
-        [text]="true"
-        severity="secondary"
-        (onClick)="moveNext()"
-      />
     </div>
   </div>
 </ng-template>

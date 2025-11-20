@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReadStoryContentModel } from '@stories/models/domain/story-model';
 import { CommonModule } from '@angular/common';
@@ -11,12 +11,27 @@ import { UserService } from '@users/services/user.service';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { ReadStoryRequest } from '@users/models/requests/read-story.model';
 import { FormsModule } from '@angular/forms';
+import { Message, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ReadingSettingsComponent } from './reading-settings/reading-settings.component';
+import {
+  defaultReadingSettings,
+  ReadingSettings,
+} from '@stories/models/domain/reading-settings.model';
+import { LoadReadingSettingsService } from '@stories/services/load-reading-settings.service';
 
 @Component({
   selector: 'app-read-story-content',
   standalone: true,
-  imports: [CommonModule, ButtonModule, LoadingSpinnerComponent, FormsModule],
-  providers: [IteratorService],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    LoadingSpinnerComponent,
+    FormsModule,
+    ToastModule,
+    ReadingSettingsComponent,
+  ],
+  providers: [IteratorService, MessageService],
   templateUrl: './read-story-content.component.html',
   styleUrl: './read-story-content.component.scss',
 })
@@ -24,6 +39,12 @@ export class ReadStoryContentComponent implements OnInit {
   @ViewChild('contentWrapper') contentWrapper!: ElementRef<HTMLDivElement>;
 
   storyId: string | null = null;
+
+  settingsVisible = false;
+  messageService = inject(MessageService);
+  settingsService = inject(LoadReadingSettingsService);
+
+  settings: ReadingSettings = defaultReadingSettings;
 
   private pageRead$ = new Subject<ReadStoryRequest>();
 
@@ -61,6 +82,8 @@ export class ReadStoryContentComponent implements OnInit {
       this.storyNotFound = true;
       return;
     }
+
+    this.settings = this.settingsService.getSettings();
 
     this.storyService
       .getStoryByIdWithContents({
@@ -176,10 +199,33 @@ export class ReadStoryContentComponent implements OnInit {
 
   maximize(): void {
     this.maximized = true;
+    this.onSettingsClose();
   }
 
   minimize(): void {
     this.maximized = false;
+  }
+
+  showSettingss() {
+    if (!this.settingsVisible) {
+      this.messageService.add({
+        key: 'settings',
+        sticky: true,
+        severity: 'custom',
+        summary: 'Settings',
+        styleClass: 'narrow-toast backdrop-blur-lg rounded-2xl',
+      } as Message);
+      this.settingsVisible = true;
+    }
+  }
+
+  onSettingsClose() {
+    this.settingsVisible = false;
+    this.messageService.clear();
+  }
+
+  onSettingsChanged(setings: ReadingSettings) {
+    this.settings = setings;
   }
 
   private handleSwipe() {

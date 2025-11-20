@@ -1,0 +1,12 @@
+<div class="reading-settings-card">
+  <h3>Reading Settings</h3>
+
+  <div class="setting-item">
+    <label for="theme-switch">Dark Mode</label>
+    <p-inputSwitch
+      id="theme-switch"
+      [(ngModel)]="settings.DarkMode"
+      (onChange)="toggleTheme()"
+    ></p-inputSwitch>
+  </div>
+</div>

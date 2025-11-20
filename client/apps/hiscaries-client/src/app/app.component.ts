@@ -118,7 +118,7 @@ export class AppComponent implements OnInit {
         sticky: true,
         severity: 'custom',
         summary: 'Notifications',
-        styleClass: 'custom-toast backdrop-blur-lg rounded-2xl',
+        styleClass: 'wide-toast backdrop-blur-lg rounded-2xl',
       });
       this.notificationsVisible = true;
     }
