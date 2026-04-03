@@ -31,6 +31,7 @@
     "@microsoft/signalr": "^8.0.7",
     "@ngrx/store": "^18.0.2",
     "@nx/eslint-plugin": "^21.5.3",
+    "ngx-extended-pdf-viewer": "^25.6.4",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.11",
     "quill": "^2.0.2",

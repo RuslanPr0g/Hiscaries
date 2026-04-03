@@ -16,7 +16,7 @@ public class NotificationReadRepository(NotificationsContext context) :
     {
         var result = await Context.Notifications
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id.Value == id);
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         if (result is null)
         {
