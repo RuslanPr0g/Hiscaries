@@ -23,6 +23,11 @@
           {
             "glob": "**/*",
             "input": "apps/hiscaries-client/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "node_modules/ngx-extended-pdf-viewer/assets/",
+            "output": "assets/"
           }
         ],
         "styles": [
