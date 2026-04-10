@@ -9,4 +9,13 @@
       (onChange)="toggleTheme()"
     ></p-inputSwitch>
   </div>
+
+  <div class="setting-item">
+    <label for="pdf-switch">Prefer PDF</label>
+    <p-inputSwitch
+      id="pdf-switch"
+      [(ngModel)]="settings.PreferPdf"
+      (onChange)="toggleTheme()"
+    ></p-inputSwitch>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   AfterViewInit,
   Component,
@@ -13,7 +13,7 @@ import { DestroyService } from '../../services/destroy.service';
 @Component({
   selector: 'app-search-input',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
   providers: [DestroyService],

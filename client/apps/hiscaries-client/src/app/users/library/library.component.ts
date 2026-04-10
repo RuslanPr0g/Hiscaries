@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LibraryModel } from '@users/models/domain/library.model';
 import { StoryModel } from '@stories/models/domain/story-model';
-import { CommonModule } from '@angular/common';
+
 import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
 import { LibraryGeneralViewComponent } from './library-general-view/library-general-view.component';
 import { LibraryGeneralEditComponent } from './library-general-edit/library-general-edit.component';
@@ -13,12 +13,11 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
   selector: 'app-library',
   standalone: true,
   imports: [
-    CommonModule,
     SearchStoryResultsComponent,
     LibraryGeneralViewComponent,
     LibraryGeneralEditComponent,
-    LoadingSpinnerComponent,
-  ],
+    LoadingSpinnerComponent
+],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
 })

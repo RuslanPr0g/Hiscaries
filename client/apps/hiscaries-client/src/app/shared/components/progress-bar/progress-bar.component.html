@@ -1,3 +1,5 @@
-<div class="progress-bar-container" *ngIf="percentage">
-  <div class="progress-bar-fill" [style.width.%]="percentage"></div>
-</div>
+@if (percentage) {
+  <div class="progress-bar-container">
+    <div class="progress-bar-fill" [style.width.%]="percentage"></div>
+  </div>
+}

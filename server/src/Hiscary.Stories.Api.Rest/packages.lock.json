@@ -816,6 +816,7 @@
           "Hiscary.Media.IntegrationEvents": "[1.0.0, )",
           "Hiscary.Notifications.IntegrationEvents": "[1.0.0, )",
           "Hiscary.PlatformUsers.IntegrationEvents": "[1.0.0, )",
+          "Hiscary.Shared.Domain": "[1.0.0, )",
           "Hiscary.Stories.Domain": "[1.0.0, )",
           "Hiscary.Stories.IntegrationEvents": "[1.0.0, )",
           "StackNucleus.DDD.Events.WolverineFx": "[4.1.0, )",

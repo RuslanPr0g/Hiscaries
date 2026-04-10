@@ -415,6 +415,11 @@
           "System.IdentityModel.Tokens.Jwt": "8.0.1"
         }
       },
+      "Microsoft.NETCore.Platforms": {
+        "type": "Transitive",
+        "resolved": "1.0.1",
+        "contentHash": "2G6OjjJzwBfNOO8myRV/nFrbTw5iA+DEm0N+qUqhrOmaVtn4pC77h38I1jsXGw5VH55+dPfQsqHD0We9sCl9FQ=="
+      },
       "Microsoft.OpenApi": {
         "type": "Transitive",
         "resolved": "2.4.1",
@@ -424,6 +429,14 @@
         "type": "Transitive",
         "resolved": "6.0.0",
         "contentHash": "hqTM5628jSsQiv+HGpiq3WKBl2c8v1KZfby2J6Pr7pEPlK9waPdgEO6b8A/+/xn/yZ9ulv8HuqK71ONy2tg67A=="
+      },
+      "NETStandard.Library": {
+        "type": "Transitive",
+        "resolved": "1.6.0",
+        "contentHash": "ypsCvIdCZ4IoYASJHt6tF2fMo7N30NLgV1EbmC+snO490OMl9FvVxmumw14rhReWU3j3g7BYudG6YCrchwHJlA==",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.0.1"
+        }
       },
       "NewId": {
         "type": "Transitive",
@@ -737,7 +750,10 @@
         }
       },
       "hiscary.media.documenttools": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "DinkToPdf": "[1.0.8, )"
+        }
       },
       "hiscary.media.documenttools.pdfpig": {
         "type": "Project",
@@ -746,9 +762,18 @@
           "PdfPig": "[0.1.14, )"
         }
       },
+      "hiscary.media.documenttools.puppeteersharp": {
+        "type": "Project",
+        "dependencies": {
+          "Hiscary.Media.DocumentTools": "[1.0.0, )",
+          "PuppeteerSharp": "[20.0.5, )"
+        }
+      },
       "hiscary.media.eventhandlers": {
         "type": "Project",
         "dependencies": {
+          "Hiscary.Media.DocumentTools": "[1.0.0, )",
+          "Hiscary.Media.FileStorage": "[1.0.0, )",
           "Hiscary.Media.IntegrationEvents": "[1.0.0, )",
           "Hiscary.Shared.Domain": "[1.0.0, )",
           "StackNucleus.DDD.Events.WolverineFx": "[4.1.0, )",
@@ -834,6 +859,15 @@
         "dependencies": {
           "Azure.Core": "1.50.0",
           "Azure.Storage.Common": "12.26.0"
+        }
+      },
+      "DinkToPdf": {
+        "type": "CentralTransitive",
+        "requested": "[1.0.8, )",
+        "resolved": "1.0.8",
+        "contentHash": "wJDlcNXjQ+OnBFwh3LBeAXgrXqlKl0RsgN60XpxEFbyqzdaG9ASb5HTXQjXQPaBguSCOrGZZESPnpcng34TEkw==",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0"
         }
       },
       "EntityFramework": {
@@ -968,6 +1002,12 @@
         "requested": "[0.1.14, )",
         "resolved": "0.1.14",
         "contentHash": "V2Anq0Yvyn3bGGG8WCQxqEAshG0KHIehB0QOotCz14vTkEk1PR3ErPOSmbnEsyOewhdF3G5XpQHywK2L50Xu+A=="
+      },
+      "PuppeteerSharp": {
+        "type": "CentralTransitive",
+        "requested": "[20.0.5, )",
+        "resolved": "20.0.5",
+        "contentHash": "eSb/TgexCYN2pG1RMzOZNfw0CG/C5aeXP+j1U46UV9sxekoyi8atPWSF7CXXTvehAyTeDVt89t1S97MU//CPzg=="
       },
       "SixLabors.ImageSharp": {
         "type": "CentralTransitive",

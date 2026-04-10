@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of, switchMap, catchError, map } from 'rxjs';
 import { ReadHistoryStory, StoryModel } from '@stories/models/domain/story-model';
 import { UserService } from '@users/services/user.service';
@@ -11,7 +11,9 @@ import { LastReadAtDateToId } from '@shared/models/last-read-date-id.model';
   providedIn: 'root',
 })
 export class UserStoryService {
-  constructor(private storyService: StoryWithMetadataService, private userService: UserService) {}
+  private storyService = inject(StoryWithMetadataService);
+  private userService = inject(UserService);
+
 
   resumeReading(queryableModel: QueryableModel): Observable<QueriedModel<StoryModel>> {
     return this.loadStoriesFromIds(() => this.userService.resumeReading(), {

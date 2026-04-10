@@ -2,24 +2,26 @@
   <p-fileUpload
     #fileUpload
     mode="basic"
-    chooseLabel="Select file"
+    [chooseLabel]="chooseLabel"
     chooseIcon="pi pi-upload"
     name="file"
     [accept]="accept"
     [maxFileSize]="maxFileSize"
     [auto]="true"
     (onSelect)="onSelect($event)"
-  />
-  <p-button
-    (click)="clearSelection()"
-    icon="pi pi-times"
-    [text]="true"
-    severity="danger"
-    *ngIf="hasFileSelected"
-  />
-</div>
-<p-message
-  severity="error"
-  [text]="requiredErrorMessage"
-  *ngIf="control?.hasError('required') && control?.touched"
-></p-message>
+    />
+    @if (hasFileSelected) {
+      <p-button
+        (click)="clearSelection()"
+        icon="pi pi-times"
+        [text]="true"
+        severity="danger"
+        />
+    }
+  </div>
+  @if (control?.hasError('required') && control?.touched) {
+    <p-message
+      severity="error"
+      [text]="requiredErrorMessage"
+    ></p-message>
+  }

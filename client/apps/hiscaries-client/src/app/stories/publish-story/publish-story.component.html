@@ -1,8 +1,10 @@
 <div
   class="publish-story-container"
   [ngStyle]="{ 'background-image': base64Image ? 'url(' + base64Image + ')' : 'none' }"
->
-  <div class="overlay" *ngIf="base64Image"></div>
+  >
+  @if (base64Image) {
+    <div class="overlay"></div>
+  }
 
   <h2>Publish New Story</h2>
 
@@ -54,13 +56,13 @@
       </div>
 
       <div class="form-controls__row">
-        <ng-container *ngIf="genres?.length">
+        @if (genres?.length) {
           <app-form-multiselect
             [formGroup]="publishForm"
             [items]="genres"
             controlName="Genres"
           ></app-form-multiselect>
-        </ng-container>
+        }
 
         <app-upload-file-control
           [control]="imageControl"
@@ -70,17 +72,20 @@
 
       <p-divider layout="horizontal" />
 
-      <p-message severity="error" [text]="globalError" *ngIf="globalError"></p-message>
+      @if (globalError) {
+        <p-message severity="error" [text]="globalError"></p-message>
+      }
 
-      <p-divider layout="horizontal" *ngIf="globalError" />
+      @if (globalError) {
+        <p-divider layout="horizontal" />
+      }
 
       <div class="center">
-        <ng-container *ngIf="submitted; else submit">
+        @if (submitted) {
           <app-loading-spinner></app-loading-spinner>
-        </ng-container>
-        <ng-template #submit>
+        } @else {
           <app-button-two label="Publish Story" (clicked)="onSubmit()"></app-button-two>
-        </ng-template>
+        }
       </div>
     </div>
   </form>

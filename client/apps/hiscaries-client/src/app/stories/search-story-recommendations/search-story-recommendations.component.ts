@@ -1,5 +1,5 @@
 import { Component, inject, signal, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { finalize } from 'rxjs';
 import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
@@ -10,7 +10,7 @@ import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried
 @Component({
   selector: 'app-search-story-recommendations',
   standalone: true,
-  imports: [CommonModule, SearchStoryResultsComponent],
+  imports: [SearchStoryResultsComponent],
   templateUrl: './search-story-recommendations.component.html',
   styleUrls: ['./search-story-recommendations.component.scss'],
   providers: [PaginationService],

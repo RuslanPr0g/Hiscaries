@@ -25,6 +25,7 @@ public sealed class Story : AggregateRoot<StoryId>
         Genres = genres;
         AgeLimit = ageLimit;
         DateWritten = dateWritten;
+        Status = StoryStatus.Draft;
     }
 
     public static Story Create(
@@ -63,7 +64,15 @@ public sealed class Story : AggregateRoot<StoryId>
 
     public ImageContainer? ImagePreviewUrl { get; private set; }
 
-    public int TotalPages => Contents.Count;
+    public ExternalPdf? ExternalPdf { get; private set; }
+
+    public bool HasExternalPdf => ExternalPdf is not null;
+
+    public int ExternalPdfPageCount { get; private set; }
+
+    public StoryStatus Status { get; private set; }
+
+    public int TotalPages => Status == StoryStatus.ConsolidatingDocuments ? Contents.Count : HasExternalPdf ? ExternalPdfPageCount : Contents.Count;
 
     public void ReadStoryUniquely()
     {
@@ -162,39 +171,76 @@ public sealed class Story : AggregateRoot<StoryId>
 
     public void ModifyContents(IEnumerable<string> newContents)
     {
+        ClearExternalPdf();
+
         if (Contents is null || Contents.Count == 0)
         {
             Contents = [.. newContents.Select((content, index) => new StoryPage(Id, index, content))];
-            return;
         }
-
-        int currentIndex = 0;
-
-        foreach (var newContent in newContents)
+        else
         {
+            int currentIndex = 0;
+
+            foreach (var newContent in newContents)
+            {
+                if (currentIndex < Contents.Count)
+                {
+                    var existingPage = Contents[currentIndex];
+
+                    if (existingPage.Content != newContent)
+                    {
+                        Contents[currentIndex] = new StoryPage(Id, currentIndex, newContent);
+                    }
+                }
+                else
+                {
+                    Contents.Add(new StoryPage(Id, currentIndex, newContent));
+                }
+
+                currentIndex++;
+            }
+
             if (currentIndex < Contents.Count)
             {
-                var existingPage = Contents[currentIndex];
-
-                if (existingPage.Content != newContent)
-                {
-                    Contents[currentIndex] = new StoryPage(Id, currentIndex, newContent);
-                }
+                Contents.RemoveRange(currentIndex, Contents.Count - currentIndex);
             }
-            else
-            {
-                Contents.Add(new StoryPage(Id, currentIndex, newContent));
-            }
-
-            currentIndex++;
         }
 
-        if (currentIndex < Contents.Count)
-        {
-            Contents.RemoveRange(currentIndex, Contents.Count - currentIndex);
-        }
-
+        MarkAsActive();
         PublishContentsChanged();
+    }
+
+    public void SetExternalPdf(ExternalPdf externalPdf, int pageCount)
+    {
+        ExternalPdf = externalPdf;
+        ExternalPdfPageCount = pageCount;
+        MarkAsActive();
+    }
+
+    public void ClearExternalPdf()
+    {
+        ExternalPdf = null;
+        ExternalPdfPageCount = 0;
+    }
+
+    public void SetExternalPdfPageCount(int count)
+    {
+        ExternalPdfPageCount = count;
+    }
+
+    public void MarkAsActive()
+    {
+        Status = StoryStatus.Active;
+    }
+
+    public void MarkAsConsolidatingDocuments()
+    {
+        Status = StoryStatus.ConsolidatingDocuments;
+    }
+
+    public void MarkAsDeleted()
+    {
+        Status = StoryStatus.Deleted;
     }
 
     public Guid? ClearAllAudio()

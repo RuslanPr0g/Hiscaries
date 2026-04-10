@@ -11,4 +11,5 @@ export interface ModifyStoryFormModel {
   DateWritten: AbstractControl<Date | null>;
   Contents: FormArray<FormControl<string>>;
   PdfFile: AbstractControl<string | null>;
+  PdfFileAsStory: AbstractControl<string | null>;
 }

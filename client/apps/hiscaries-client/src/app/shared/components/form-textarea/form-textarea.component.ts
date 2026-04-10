@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
@@ -7,7 +7,7 @@ import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-form-textarea',
   standalone: true,
-  imports: [CommonModule, InputTextareaModule, ReactiveFormsModule, MessageModule],
+  imports: [InputTextareaModule, ReactiveFormsModule, MessageModule],
   templateUrl: './form-textarea.component.html',
   styleUrls: ['./form-textarea.component.scss'],
 })

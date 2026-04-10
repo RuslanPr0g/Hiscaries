@@ -7,14 +7,14 @@ import { UserService } from '@users/services/user.service';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { LibraryModel } from '@users/models/domain/library.model';
-import { CommonModule } from '@angular/common';
+
 import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { StoryModel } from '@stories/models/domain/story-model';
 
 @Component({
   selector: 'app-publisher-library',
   standalone: true,
-  imports: [LibraryComponent, CommonModule],
+  imports: [LibraryComponent],
   templateUrl: './publisher-library.component.html',
   styleUrls: ['./publisher-library.component.scss'],
   providers: [PaginationService],

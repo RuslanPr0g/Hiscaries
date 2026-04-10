@@ -16,6 +16,8 @@ public static class DIModule
         IConfiguration configuration)
     {
         builder.Services.AddScoped<IEventHandler<ImageUploadRequestedIntegrationEvent>, ImageUploadRequestedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<ConsolidateDocumentRequestedIntegrationEvent>, ConsolidateDocumentRequestedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<GenerateAndUploadDocumentRequestedIntegrationEvent>, GenerateAndUploadDocumentRequestedIntegrationEventHandler>();
 
         var asm = Assembly.GetExecutingAssembly();
         var rabbitMqConnectionString = configuration.GetConnectionString("rabbitmq");

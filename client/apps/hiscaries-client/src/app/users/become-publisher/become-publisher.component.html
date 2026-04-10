@@ -1,4 +1,4 @@
-<ng-container *ngIf="!agreed; else agree">
+@if (!agreed) {
   <div class="publisher-confirmation-container">
     <div class="card">
       <h1>📖 Become a Publisher ✨</h1>
@@ -15,7 +15,18 @@
       <button (click)="confirmPublisher()">I Agree</button>
     </div>
   </div>
-</ng-container>
+} @else {
+  <div class="publisher-confirmation-container">
+    <div class="card">
+      <h1>In a second...</h1>
+      <p>
+        You will be redirected to the login page. Please log in again for the changes to take
+        effect!
+      </p>
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </div>
+}
 <ng-template #agree>
   <div class="publisher-confirmation-container">
     <div class="card">

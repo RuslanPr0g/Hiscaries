@@ -1,4 +1,4 @@
-<ng-container *ngIf="library">
+@if (library) {
   <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()">
     <div class="library">
       <div
@@ -6,8 +6,10 @@
         [ngStyle]="{
           'background-image': backgroundImageUrl ? 'url(' + backgroundImageUrl + ')' : 'none'
         }"
-      >
-        <div class="overlay" *ngIf="backgroundImageUrl"></div>
+        >
+        @if (backgroundImageUrl) {
+          <div class="overlay"></div>
+        }
         <div class="profile-details">
           <div class="field-wrapper">
             <app-form-textarea
@@ -18,7 +20,6 @@
               [rows]="4"
             ></app-form-textarea>
           </div>
-
           <div class="field-wrapper">
             <h3>Links to your social media</h3>
             <p-chips formControlName="LinksToSocialMedia">
@@ -30,7 +31,6 @@
               </ng-template>
             </p-chips>
           </div>
-
           <div class="field-wrapper">
             <h3>Profile image</h3>
             <app-upload-file-control
@@ -40,15 +40,16 @@
           </div>
         </div>
       </div>
-      <div class="library-edit" *ngIf="isAbleToEdit">
-        <button class="link" (click)="cancelEdit()" type="button">
-          <i class="pi pi-times" style="font-size: 2rem"></i>
-        </button>
-
-        <button class="link" type="submit">
-          <i class="pi pi-check" style="font-size: 2rem"></i>
-        </button>
-      </div>
+      @if (isAbleToEdit) {
+        <div class="library-edit">
+          <button class="link" (click)="cancelEdit()" type="button">
+            <i class="pi pi-times" style="font-size: 2rem"></i>
+          </button>
+          <button class="link" type="submit">
+            <i class="pi pi-check" style="font-size: 2rem"></i>
+          </button>
+        </div>
+      }
     </div>
   </form>
-</ng-container>
+}

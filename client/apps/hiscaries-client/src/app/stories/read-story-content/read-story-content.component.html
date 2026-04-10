@@ -1,106 +1,155 @@
-<ng-container *ngIf="storyNotFound; else storyFound">
+@if (storyNotFound) {
   <div class="error-message">
     <h2>Story not found</h2>
     <p>Sorry, we couldn't find the story you're looking for.</p>
   </div>
-</ng-container>
-<p-toast position="top-right" key="settings" (onClose)="onSettingsClose()" [baseZIndex]="5000">
-  <ng-template pTemplate="message" let-message let-closeFn="closeFn">
-    <section>
-      <app-reading-settings (settingsChanged)="onSettingsChanged($event)"></app-reading-settings>
-    </section>
-  </ng-template>
-</p-toast>
-<ng-template #storyFound>
-  <div class="loading" *ngIf="!story">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
-
-  <h2 *ngIf="story">
-    <span class="text-main">{{ story.Title }}</span>
-  </h2>
-  <div
-    class="read-story-container"
-    *ngIf="story"
+} @else {
+  @if (!story) {
+    <div class="loading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  }
+  @if (story) {
+    <h2>
+      <span class="text-main">{{ story.Title }}</span>
+    </h2>
+  }
+  @if (story) {
+    <div
+      class="read-story-container"
     [ngClass]="{
       'read-story-container-maximized': maximized,
       'theme-white': !settings.DarkMode,
       'theme-dark': settings.DarkMode
     }"
-  >
-    <div class="read-story-container__header">
-      <div class="read-story-container__navigation">
-        <div class="highligh-btn nav-btn">
-          <p-button
-            icon="pi pi-angle-left"
-            [rounded]="true"
-            [text]="true"
-            severity="secondary"
-            (onClick)="movePrev()"
-          />
+      >
+      @if (isConsolidatingDocuments) {
+        <div class="consolidating-banner">
+          <div class="consolidating-banner__content">
+            <i class="pi pi-spin pi-spinner"></i>
+            <span>PDF version is being generated. Please wait...</span>
+          </div>
         </div>
-        <div class="page-input">
-          <input
-            type="number"
-            [max]="contents.length"
-            [min]="1"
-            [(ngModel)]="pageInput"
-            [ngModelOptions]="{ standalone: true }"
-            (change)="goToPage()"
-          />
-          <span>/ {{ contents.length }}</span>
-        </div>
-        <div class="highligh-btn nav-btn">
-          <p-button
-            icon="pi pi-angle-right"
-            [rounded]="true"
-            [text]="true"
-            severity="secondary"
-            (onClick)="moveNext()"
-          />
-        </div>
-      </div>
-      <div class="item-wrapper">
-        <div class="focus highligh-btn">
-          <p-button
-            icon="pi pi-cog"
-            [rounded]="true"
-            [text]="true"
-            severity="secondary"
-            (onClick)="showSettingss()"
-            *ngIf="!maximized"
-          />
-        </div>
-      </div>
-      <div class="item-wrapper">
-        <div class="focus highligh-btn">
-          <p-button
-            icon="pi pi-window-maximize"
-            [rounded]="true"
-            [text]="true"
-            severity="secondary"
-            (onClick)="maximize()"
-            *ngIf="!maximized"
-          />
-          <p-button
-            icon="pi pi-window-minimize"
-            [rounded]="true"
-            [text]="true"
-            severity="secondary"
-            (onClick)="minimize()"
-            *ngIf="maximized"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="read-story-container__content-wrapper"
-      (touchstart)="onTouchStart($event)"
-      (touchend)="onTouchEnd($event)"
-      #contentWrapper
-    >
-      <div [innerHTML]="currentPageContent" class="read-story-container__content"></div>
-    </div>
-  </div>
-</ng-template>
+      }
+      <div class="read-story-container__header">
+        @if (!shouldShowPdf && story) {
+          <div class="read-story-container__navigation">
+            <div class="highligh-btn nav-btn">
+              <p-button
+                icon="pi pi-angle-left"
+                [rounded]="true"
+                [text]="true"
+                severity="secondary"
+                (onClick)="movePrev()"
+                />
+              </div>
+              <div class="page-input">
+                <input
+                  type="number"
+                  [max]="contents.length"
+                  [min]="1"
+                  [(ngModel)]="pageInput"
+                  [ngModelOptions]="{ standalone: true }"
+                  (change)="goToPage()"
+                  />
+                  <span>/ {{ contents.length }}</span>
+                </div>
+                <div class="highligh-btn nav-btn">
+                  <p-button
+                    icon="pi pi-angle-right"
+                    [rounded]="true"
+                    [text]="true"
+                    severity="secondary"
+                    (onClick)="moveNext()"
+                    />
+                  </div>
+                </div>
+              }
+              <div class="item-wrapper">
+                <div class="focus highligh-btn">
+                  @if (!maximized) {
+                    <p-button
+                      icon="pi pi-cog"
+                      [rounded]="true"
+                      [text]="true"
+                      severity="secondary"
+                      (onClick)="showSettingss()"
+                      />
+                  }
+                </div>
+              </div>
+              <div class="item-wrapper">
+                <div class="focus highligh-btn">
+                  @if (!maximized) {
+                    <p-button
+                      icon="pi pi-window-maximize"
+                      [rounded]="true"
+                      [text]="true"
+                      severity="secondary"
+                      (onClick)="maximize()"
+                      />
+                  }
+                  @if (maximized) {
+                    <p-button
+                      icon="pi pi-window-minimize"
+                      [rounded]="true"
+                      [text]="true"
+                      severity="secondary"
+                      (onClick)="minimize()"
+                      />
+                  }
+                </div>
+              </div>
+            </div>
+            @if (story) {
+              <div
+                class="read-story-container__content-wrapper"
+                [ngClass]="{ 'dark-mode': settings.DarkMode }"
+                >
+                @if(shouldShowPdf) { @if(!pdfUrl) {
+                  <div class="loading">
+                    <app-loading-spinner></app-loading-spinner>
+                  </div>
+                } @else {
+                  <ngx-extended-pdf-viewer
+                    [src]="pdfUrl"
+                    [page]="pdfPage"
+                    zoom="auto"
+                    height="100%"
+                    [textLayer]="true"
+                    [showToolbar]="true"
+                    [showSidebarButton]="false"
+                    [showOpenFileButton]="false"
+                    [showPrintButton]="false"
+                    [showDownloadButton]="false"
+                    [showFindButton]="true"
+                    [showPagingButtons]="true"
+                    [showZoomButtons]="true"
+                    [showHandToolButton]="false"
+                    [showSecondaryToolbarButton]="false"
+                    [showPresentationModeButton]="true"
+                    [sidebarVisible]="false"
+                    [showRotateCwButton]="false"
+                    [showRotateCcwButton]="false"
+                    [showOpenFileButton]="false"
+                    [backgroundColor]="settings.DarkMode ? '#1e1e1e' : '#ffffff'"
+                    class="pdf-viewer"
+                    (pageChange)="onPdfPageChange($event)"
+                  ></ngx-extended-pdf-viewer>
+                  } } @else {
+                  <div (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)" #contentWrapper>
+                    <div [innerHTML]="currentPageContent" class="read-story-container__content"></div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+      }
+      <p-toast position="top-right" key="settings" (onClose)="onSettingsClose()" [baseZIndex]="5000">
+        <ng-template pTemplate="message" let-message let-closeFn="closeFn">
+          <section>
+            <app-reading-settings (settingsChanged)="onSettingsChanged($event)"></app-reading-settings>
+          </section>
+        </ng-template>
+      </p-toast>

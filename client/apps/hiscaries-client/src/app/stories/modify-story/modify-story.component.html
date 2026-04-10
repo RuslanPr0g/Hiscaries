@@ -1,145 +1,153 @@
-<ng-container *ngIf="!storyNotFound; else emptyStory">
-  <div
-    class="modify-story-container"
-    *ngIf="story"
-    [ngStyle]="{ 'background-image': base64Image ? 'url(' + base64Image + ')' : 'none' }"
-  >
-    <div class="overlay" *ngIf="base64Image"></div>
-
-    <h2>Modify Story</h2>
-
-    <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()">
-      <p-tabView [activeIndex]="1">
-        <p-tabPanel header="General Information">
-          <div class="form-controls">
-            <div class="form-controls__row">
-              <app-form-input
-                [formGroup]="modifyForm"
-                controlName="Title"
-                label="Title"
-                errorMessage="Title is required"
-              ></app-form-input>
-
-              <app-form-input
-                [formGroup]="modifyForm"
-                controlName="AuthorName"
-                label="Author Name"
-                errorMessage="Author Name is required"
-              ></app-form-input>
-            </div>
-
-            <app-form-textarea
-              [formGroup]="modifyForm"
-              controlName="Description"
-              label="Description"
-              errorMessage="Description is required"
-              [rows]="4"
-            ></app-form-textarea>
-
-            <div class="form-controls__row">
-              <app-number-limit-control
-                [formGroup]="modifyForm"
-                controlName="AgeLimit"
-                label="Age Limit"
-                errorMessage="Age Limit is required and must be between 0 and 18"
-                [min]="0"
-                [max]="18"
-                [step]="1"
-                [centered]="true"
-              ></app-number-limit-control>
-
-              <app-form-date-input
-                [formGroup]="modifyForm"
-                controlName="DateWritten"
-                label="Date Written"
-                errorMessage="Date Written is required"
-                [centered]="true"
-              ></app-form-date-input>
-            </div>
-
-            <div class="form-controls__row">
-              <ng-container *ngIf="genres?.length">
-                <app-form-multiselect
+@if (!storyNotFound) {
+  @if (story) {
+    <div
+      class="modify-story-container"
+      [ngStyle]="{ 'background-image': base64Image ? 'url(' + base64Image + ')' : 'none' }"
+      >
+      @if (base64Image) {
+        <div class="overlay"></div>
+      }
+      <h2>Modify Story</h2>
+      <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()">
+        <p-tabView [activeIndex]="1">
+          <p-tabPanel header="General Information">
+            <div class="form-controls">
+              <div class="form-controls__row">
+                <app-form-input
                   [formGroup]="modifyForm"
-                  [items]="genres"
-                  controlName="Genres"
-                ></app-form-multiselect>
-              </ng-container>
-
+                  controlName="Title"
+                  label="Title"
+                  errorMessage="Title is required"
+                ></app-form-input>
+                <app-form-input
+                  [formGroup]="modifyForm"
+                  controlName="AuthorName"
+                  label="Author Name"
+                  errorMessage="Author Name is required"
+                ></app-form-input>
+              </div>
+              <app-form-textarea
+                [formGroup]="modifyForm"
+                controlName="Description"
+                label="Description"
+                errorMessage="Description is required"
+                [rows]="4"
+              ></app-form-textarea>
+              <div class="form-controls__row">
+                <app-number-limit-control
+                  [formGroup]="modifyForm"
+                  controlName="AgeLimit"
+                  label="Age Limit"
+                  errorMessage="Age Limit is required and must be between 0 and 18"
+                  [min]="0"
+                  [max]="18"
+                  [step]="1"
+                  [centered]="true"
+                ></app-number-limit-control>
+                <app-form-date-input
+                  [formGroup]="modifyForm"
+                  controlName="DateWritten"
+                  label="Date Written"
+                  errorMessage="Date Written is required"
+                  [centered]="true"
+                ></app-form-date-input>
+              </div>
+              <div class="form-controls__row">
+                @if (genres?.length) {
+                  <app-form-multiselect
+                    [formGroup]="modifyForm"
+                    [items]="genres"
+                    controlName="Genres"
+                  ></app-form-multiselect>
+                }
+                <app-upload-file-control
+                  [control]="imageControl"
+                  fileType="image"
+                ></app-upload-file-control>
+              </div>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Contents">
+            <app-content-builder
+              [formGroup]="modifyForm"
+              formArrayName="Contents"
+              [contents]="contents"
+            ></app-content-builder>
+            <div
+              class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
+              >
+              <p class="text-center mb-3 font-medium">
+                Load a story from PDF to pages
+                <small
+                  class="p-4 mb-4 text-sm text-fg-success-strong rounded-base bg-success-soft text-center"
+                  role="alert"
+                  >
+                  all pages will be overwritten
+                </small>
+              </p>
               <app-upload-file-control
-                [control]="imageControl"
-                fileType="image"
+                [control]="modifyForm.get('PdfFile')"
+                fileType="pdf"
+                class="w-full max-w-sm"
+                chooseLabel="Upload PDF"
               ></app-upload-file-control>
             </div>
-          </div>
-        </p-tabPanel>
-
-        <p-tabPanel header="Contents">
-          <app-content-builder
-            [formGroup]="modifyForm"
-            formArrayName="Contents"
-            [contents]="contents"
-          ></app-content-builder>
-
-          <div
-            class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
-          >
-            <p class="text-center mb-3 font-medium">
-              Load a story from PDF
-              <small
-                class="p-4 mb-4 text-sm text-fg-success-strong rounded-base bg-success-soft text-center"
-                role="alert"
+            <div
+              class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
               >
-                all pages will be overwritten
-              </small>
-            </p>
-
-            <app-upload-file-control
-              [control]="modifyForm.get('PdfFile')"
-              fileType="pdf"
-              class="w-full max-w-sm"
-            ></app-upload-file-control>
-          </div>
-        </p-tabPanel>
-      </p-tabView>
-
-      <div class="error-block">
-        <p-divider layout="horizontal" />
-
-        <p-message
-          *ngIf="globalError"
-          severity="error"
-          [text]="globalError"
-          class="error-message"
-        ></p-message>
-
-        <p-divider layout="horizontal" *ngIf="globalError" />
-
-        <ng-container *ngIf="submitted; else submit">
-          <app-loading-spinner></app-loading-spinner>
-        </ng-container>
-
-        <ng-template #submit>
-          <app-button-two
-            label="Apply changes"
-            [iconType]="'pi-save'"
-            (clicked)="onSubmit()"
-          ></app-button-two>
-        </ng-template>
-      </div>
-    </form>
-  </div>
-
-  <ng-container *ngIf="!story">
+              <p class="text-center mb-3 font-medium">Upload a PDF as a story</p>
+              <div class="flex">
+                <app-upload-file-control
+                  [control]="modifyForm.get('PdfFileAsStory')"
+                  fileType="pdf"
+                  class="w-full max-w-sm mr-4"
+                  chooseLabel="Upload PDF & Save"
+                ></app-upload-file-control>
+                @if (pdfExists) {
+                  <app-button-two
+                    label="Remove"
+                    [iconType]="'pi-times'"
+                    (clicked)="removePdf()"
+                  ></app-button-two>
+                }
+              </div>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+        <div class="error-block">
+          <p-divider layout="horizontal" />
+          @if (globalError) {
+            <p-message
+              severity="error"
+              [text]="globalError"
+              class="error-message"
+            ></p-message>
+          }
+          @if (globalError) {
+            <p-divider layout="horizontal" />
+          }
+          @if (submitted) {
+            <app-loading-spinner></app-loading-spinner>
+          } @else {
+            <app-button-two
+              label="Apply changes"
+              [iconType]="'pi-save'"
+              (clicked)="onSubmit()"
+            ></app-button-two>
+          }
+        </div>
+      </form>
+    </div>
+  }
+  @if (!story) {
     <div class="loading">
       <app-loading-spinner></app-loading-spinner>
     </div>
-  </ng-container>
-</ng-container>
-
-<ng-template #emptyStory>
+  }
+} @else {
   <div class="error-message">
     <h2>Story not found</h2>
     <p>Sorry, we couldn't find the story you're looking for.</p>
   </div>
-</ng-template>
+}
+

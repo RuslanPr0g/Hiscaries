@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { AuthService } from './auth.service';
 import { SignalRConnectionFactoryService } from '@shared/services/statefull/signalr-connection-factory.service';
@@ -14,18 +14,16 @@ import { BaseIdModel } from '@shared/models/base-id.model';
   providedIn: 'root',
 })
 export class UserRealTimeNotificationService {
+  private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
+  private connectionFactory = inject(SignalRConnectionFactoryService);
+  private notificationStateService = inject(NotificationStateService);
+
   private notificationHandlers: NotificationHandler[];
   private hubConnection: signalR.HubConnection;
   private readonly hubUrl = '/hubs/usernotifications';
 
   disconnected = true;
-
-  constructor(
-    private authService: AuthService,
-    private notificationService: NotificationService,
-    private connectionFactory: SignalRConnectionFactoryService,
-    private notificationStateService: NotificationStateService,
-  ) {}
 
   initialize(handlers: NotificationHandler[]): void {
     const token = this.authService.getToken();

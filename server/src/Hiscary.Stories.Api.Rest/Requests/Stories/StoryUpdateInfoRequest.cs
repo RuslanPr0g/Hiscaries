@@ -20,6 +20,8 @@ public class StoryUpdateInfoRequest
 
     public bool ShouldUpdatePreview { get; set; }
 
+    public string? PdfFileName { get; set; }
+
     public DateTime DateWritten { get; set; }
 
     public IEnumerable<string> Contents { get; set; }

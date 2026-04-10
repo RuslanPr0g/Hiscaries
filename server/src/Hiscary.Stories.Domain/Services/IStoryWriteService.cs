@@ -24,6 +24,7 @@ public interface IStoryWriteService
         int ageLimit,
         byte[]? imagePreview,
         bool shouldUpdateImage,
+        string? pdfFileName,
         DateTime dateWritten,
         IEnumerable<string> contents);
 

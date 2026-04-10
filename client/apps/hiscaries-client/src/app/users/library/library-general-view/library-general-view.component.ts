@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LibraryModel } from '@users/models/domain/library.model';
 import { SocialMediaIconMapperService } from '@shared/services/social-media-icon-mapper.service';
@@ -13,6 +13,8 @@ import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
   styleUrl: './library-general-view.component.scss',
 })
 export class LibraryGeneralViewComponent {
+  private iconService = inject(SocialMediaIconMapperService);
+
   @Input() library: LibraryModel;
   @Input() isAbleToEdit = false;
 
@@ -25,8 +27,6 @@ export class LibraryGeneralViewComponent {
 
   @Output() subscribed = new EventEmitter<void>();
   @Output() unSubscribed = new EventEmitter<void>();
-
-  constructor(private iconService: SocialMediaIconMapperService) {}
 
   getSocialNetworkIcon(link: string): string {
     return this.iconService.mapFromUrl(link);

@@ -22,6 +22,8 @@ public static class DIModule
 
         builder.Services.AddScoped<IEventHandler<ImageUploadedIntegrationEvent>, ImageUploadedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<StoryFirstReadIntegrationEvent>, StoryFirstReadIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<DocumentConsolidatedIntegrationEvent>, DocumentConsolidatedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<DocumentGeneratedAndUploadedIntegrationEvent>, DocumentGeneratedAndUploadedIntegrationEventHandler>();
 
         var asm = Assembly.GetExecutingAssembly();
         var rabbitMqConnectionString = configuration.GetConnectionString("rabbitmq");

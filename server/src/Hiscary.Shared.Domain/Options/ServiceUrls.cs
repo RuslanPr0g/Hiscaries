@@ -8,4 +8,9 @@ public class ServiceUrls
     {
         return $"{MediaServiceUrl}/images/{fileName}";
     }
+
+    public string GetDocumentsUrl(string fileName)
+    {
+        return $"{MediaServiceUrl}/documents/{fileName}";
+    }
 }

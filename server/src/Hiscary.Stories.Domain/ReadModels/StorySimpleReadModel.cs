@@ -18,6 +18,11 @@ public class StorySimpleReadModel : IReadModel
     public Guid LibraryId { get; set; }
     public int TotalPages { get; set; }
     public long UniqueReads { get; set; }
+    public bool HasExternalPdf { get; set; }
+    public string? ExternalPdfUrl { get; set; }
+    public long? ExternalPdfSize { get; set; }
+    public int? ExternalPdfPageCount { get; set; }
+    public StoryStatus Status { get; set; }
 
     public static StorySimpleReadModel FromDomainModel(Story story)
     {
@@ -34,7 +39,12 @@ public class StorySimpleReadModel : IReadModel
             ImagePreviewUrl = ImageUrlsDto.FromDomainModel(story.ImagePreviewUrl),
             TotalPages = story.TotalPages,
             UniqueReads = story.UniqueReads,
-            GenreNames = story.Genres?.Select(_ => _.Name).ToArray() ?? []
+            GenreNames = story.Genres?.Select(_ => _.Name).ToArray() ?? [],
+            HasExternalPdf = story.HasExternalPdf,
+            ExternalPdfUrl = story.ExternalPdf?.PdfUrl,
+            ExternalPdfSize = story.ExternalPdf?.FileSize,
+            ExternalPdfPageCount = story.HasExternalPdf ? story.ExternalPdfPageCount : null,
+            Status = story.Status
         };
     }
 }

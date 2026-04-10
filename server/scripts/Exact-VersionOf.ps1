@@ -10,3 +10,5 @@ try {
 catch {
     Write-Error "Package '$PackageName' not found."
 }
+
+Read-Host "Press Enter to exit"

@@ -4,10 +4,11 @@ using Hiscary.Shared.Domain.FileStorage;
 using Hiscary.Shared.Domain.Options;
 using Microsoft.Extensions.Logging;
 using StackNucleus.DDD.Domain;
+using System.Net.Mime;
 
 namespace Hiscary.Media.FileStorage;
 
-public sealed class BlobStorageService: IBlobStorageService
+public sealed class BlobStorageService : IBlobStorageService
 {
     private readonly ServiceUrls _serviceUrls;
     private readonly BlobServiceClient _blobServiceClient;
@@ -25,7 +26,7 @@ public sealed class BlobStorageService: IBlobStorageService
         string containerName,
         string blobName,
         byte[] data,
-        string contentType = "application/octet-stream",
+        string contentType = MediaTypeNames.Application.Octet,
         CancellationToken cancellationToken = default)
     {
         if (data is null || data.Length == 0)
@@ -52,13 +53,17 @@ public sealed class BlobStorageService: IBlobStorageService
             return ValueOrNull<string>.Failure("Unexpected error occured.");
         }
 
-        return ValueOrNull<string>.Success(_serviceUrls.GetImagesUrl(blobName));
+        var urls = contentType.Contains("image")
+            ? _serviceUrls.GetImagesUrl(blobName)
+            : _serviceUrls.GetDocumentsUrl(blobName);
+
+        return ValueOrNull<string>.Success(urls);
     }
 
     public async Task<ValueOrNull<FileNameToUrlDictionary>> UploadMultipleAsync(
         string containerName,
         List<FileWithData> files,
-        string contentType = "application/octet-stream",
+        string contentType = MediaTypeNames.Application.Octet,
         CancellationToken cancellationToken = default)
     {
         if (files is null || files.Count == 0)
@@ -82,7 +87,11 @@ public sealed class BlobStorageService: IBlobStorageService
                         new BlobHttpHeaders { ContentType = contentType },
                         cancellationToken: cancellationToken);
 
-                    return (file.Name, Url: _serviceUrls.GetImagesUrl(file.Name));
+                    var urls = contentType.Contains("image")
+                        ? _serviceUrls.GetImagesUrl(file.Name)
+                        : _serviceUrls.GetDocumentsUrl(file.Name);
+
+                    return (file.Name, Url: urls);
                 }
                 catch (Exception ex)
                 {
@@ -137,7 +146,7 @@ public sealed class BlobStorageService: IBlobStorageService
         await download.Value.Content.CopyToAsync(memoryStream, cancellationToken);
         memoryStream.Position = 0;
 
-        return (memoryStream, download.Value.Details.ContentType ?? "application/octet-stream");
+        return (memoryStream, download.Value.Details.ContentType ?? MediaTypeNames.Application.Octet);
     }
 
     public async Task<bool> ExistsAsync(
@@ -148,5 +157,30 @@ public sealed class BlobStorageService: IBlobStorageService
         var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
         var blobClient = containerClient.GetBlobClient(blobName);
         return await blobClient.ExistsAsync(cancellationToken);
+    }
+
+    public async Task<ValueOrNull<bool>> DeleteAsync(
+        string containerName,
+        string blobName,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+            var blobClient = containerClient.GetBlobClient(blobName);
+
+            if (!await blobClient.ExistsAsync(cancellationToken))
+            {
+                return ValueOrNull<bool>.Failure("Blob not found.");
+            }
+
+            await blobClient.DeleteAsync(cancellationToken: cancellationToken);
+            return ValueOrNull<bool>.Success(true);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Unexpected error occurred while deleting blob {BlobName} from container {ContainerName}; Error: {Error}.", blobName, containerName, ex.Message);
+            return ValueOrNull<bool>.Failure("Unexpected error occurred.");
+        }
     }
 }

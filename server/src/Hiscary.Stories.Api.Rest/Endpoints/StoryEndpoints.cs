@@ -1,5 +1,4 @@
-﻿using StackNucleus.DDD.Domain.ClientModels;
-using Hiscary.Shared.Domain.Extensions;
+﻿using Hiscary.Shared.Domain.Extensions;
 using Hiscary.Stories.Api.Rest.Requests.Comments;
 using Hiscary.Stories.Api.Rest.Requests.Stories;
 using Hiscary.Stories.Domain;
@@ -7,6 +6,7 @@ using Hiscary.Stories.Domain.ReadModels;
 using Hiscary.Stories.Domain.Stories;
 using Microsoft.AspNetCore.Mvc;
 using StackNucleus.DDD.Api.Rest;
+using StackNucleus.DDD.Domain.ClientModels;
 
 namespace Hiscary.Stories.Api.Rest.Endpoints;
 
@@ -182,6 +182,7 @@ public static class StoryEndpoints
                 request.AgeLimit,
                 image,
                 request.ShouldUpdatePreview,
+                request.PdfFileName,
                 request.DateWritten,
                 request.Contents);
         });

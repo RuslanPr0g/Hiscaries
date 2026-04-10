@@ -13,6 +13,8 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hiscary.Media.DocumentTools\Hiscary.Media.DocumentTools.csproj" />
+    <ProjectReference Include="..\Hiscary.Media.FileStorage\Hiscary.Media.FileStorage.csproj" />
     <ProjectReference Include="..\Hiscary.Media.IntegrationEvents\Hiscary.Media.IntegrationEvents.csproj" />
     <ProjectReference Include="..\Hiscary.Shared.Domain\Hiscary.Shared.Domain.csproj" />
   </ItemGroup>

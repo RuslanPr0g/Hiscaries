@@ -35,6 +35,12 @@ import { DestroyService } from '@shared/services/destroy.service';
   providers: [MessageService, DestroyService],
 })
 export class AppComponent implements OnInit {
+  private router = inject(Router);
+  authService = inject(AuthService);
+  private notificationManagerService = inject(NotificationLifecycleManagerService);
+  private notificationStateService = inject(NotificationStateService);
+  private location = inject(Location);
+
   title = 'hiscaries';
 
   loading = true;
@@ -51,14 +57,6 @@ export class AppComponent implements OnInit {
   destroyService = inject(DestroyService);
 
   notificationService = inject(NotificationStateService);
-
-  constructor(
-    private router: Router,
-    public authService: AuthService,
-    private notificationManagerService: NotificationLifecycleManagerService,
-    private notificationStateService: NotificationStateService,
-    private location: Location, // TODO: make it work // @Inject(NOTIFICATION_HANDLERS) private notificationHandlers: NotificationHandler[]
-  ) {}
 
   ngOnInit() {
     setTimeout(() => {

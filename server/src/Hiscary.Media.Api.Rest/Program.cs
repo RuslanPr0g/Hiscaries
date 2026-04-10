@@ -1,5 +1,6 @@
 using Hiscary.Media.Api.Rest.Endpoints;
 using Hiscary.Media.DocumentTools.PdfPig;
+using Hiscary.Media.DocumentTools.PuppeteerSharp;
 using Hiscary.Media.EventHandlers;
 using Hiscary.Media.FileStorage;
 using Hiscary.Media.Images;
@@ -22,6 +23,7 @@ builder.AddEventHandlers(builder.Configuration);
 builder.Services.AddSerilog();
 builder.Services.AddLogging();
 
+builder.Services.AddPuppeteerPdfGenerator();
 builder.Services.AddPdfDocumentTools();
 
 builder.AddAzureBlobServiceClient("azblobs", config => config.DisableHealthChecks = true);

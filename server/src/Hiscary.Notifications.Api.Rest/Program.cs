@@ -10,6 +10,7 @@ using Hiscary.Notifications.SignalR;
 using Hiscary.Notifications.SignalR.Hubs;
 using Hiscary.ServiceDefaults;
 using Hiscary.Shared.Api.Rest;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StackNucleus.DDD.Api.Rest.Filters;
 
@@ -70,6 +71,12 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<NotificationsContext>();
+        context.Database.Migrate();
+    }
 }
 
 app.UseSerilogRequestLogging();

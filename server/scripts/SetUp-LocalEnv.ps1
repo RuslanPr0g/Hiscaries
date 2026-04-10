@@ -15,3 +15,5 @@ dotnet user-secrets set "JwtSettings:Issuer" "hiscary" --project $projectPath
 dotnet user-secrets set "JwtSettings:Audience" "users" --project $projectPath
 dotnet user-secrets set "JwtSettings:TokenLifeTime" "30.00:00:00" --project $projectPath
 dotnet user-secrets set "SaltSettings:StoredSalt" $salt --project $projectPath
+
+Read-Host "Press Enter to exit"

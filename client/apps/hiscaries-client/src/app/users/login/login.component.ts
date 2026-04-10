@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@users/services/auth.service';
 import { take } from 'rxjs';
 import { NavigationConst } from '@shared/constants/navigation.const';
 
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
@@ -21,7 +21,6 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     CardModule,
@@ -29,10 +28,14 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
     PasswordModule,
     CheckboxModule,
     ButtonModule,
-    LoadingSpinnerComponent,
-  ],
+    LoadingSpinnerComponent
+],
 })
 export class LoginComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
   formLogin: FormGroup;
   formRegister: FormGroup;
   isLoginState = true;
@@ -40,7 +43,7 @@ export class LoginComponent implements OnInit {
   isLoading = true;
   isLoadedFully = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor() {
     this.formLogin = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],

@@ -2,7 +2,7 @@
   [formGroup]="formGroup"
   class="custom-form-field"
   [ngClass]="{ 'custom-form-field-centered': centered }"
->
+  >
   <p-multiSelect
     [options]="items"
     [formControlName]="controlName"
@@ -11,9 +11,10 @@
     filterBy="Name"
     [filter]="true"
   ></p-multiSelect>
-  <p-message
-    severity="error"
-    [text]="errorMessage"
-    *ngIf="formGroup.get(controlName)?.hasError('required') && formGroup.get(controlName)?.touched"
-  ></p-message>
+  @if (formGroup.get(controlName)?.hasError('required') && formGroup.get(controlName)?.touched) {
+    <p-message
+      severity="error"
+      [text]="errorMessage"
+    ></p-message>
+  }
 </div>

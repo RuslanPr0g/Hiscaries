@@ -1,5 +1,5 @@
 import { Component, inject, signal, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { finalize } from 'rxjs';
 import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
 import { UserStoryService } from '@user-to-story/services/multiple-services-merged/user-story.service';
@@ -10,7 +10,7 @@ import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried
 @Component({
   selector: 'app-search-story-resume-reading',
   standalone: true,
-  imports: [CommonModule, SearchStoryResultsComponent],
+  imports: [SearchStoryResultsComponent],
   templateUrl: './search-story-resume-reading.component.html',
   styleUrls: ['./search-story-resume-reading.component.scss'],
   providers: [PaginationService],

@@ -217,6 +217,7 @@ public sealed class StoryWriteService(
         int ageLimit,
         byte[]? imagePreview,
         bool shouldUpdateImage,
+        string? pdfFileName,
         DateTime dateWritten,
         IEnumerable<string> contents)
     {
@@ -261,19 +262,31 @@ public sealed class StoryWriteService(
         var imageIsEmpty = imagePreview is null || imagePreview.Length <= 0;
 
         if (shouldUpdateImage && imageIsEmpty)
-        {
-            story.ClearPreviewUrl();
-        }
+            {
+                story.ClearPreviewUrl();
+            }
 
         if (shouldUpdateImage && !imageIsEmpty && imagePreview is not null)
-        {
-            await _publisher.Publish(
-                new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories", ImageSizeExtensions.AllImageSizes()));
-        }
+            {
+                await _publisher.Publish(
+                    new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories", ImageSizeExtensions.AllImageSizes()));
+            }
 
         if (contents is not null && contents.Any())
         {
             story.ModifyContents(contents);
+        }
+
+        // TODO: Add a job to truncate unused PDF files!
+        if (!string.IsNullOrWhiteSpace(pdfFileName))
+        {
+            story.MarkAsConsolidatingDocuments();
+            await _publisher.Publish(new ConsolidateDocumentRequestedIntegrationEvent(storyId, pdfFileName));
+        }
+        else if (contents is not null && contents.Any())
+        {
+            story.MarkAsConsolidatingDocuments();
+            await _publisher.Publish(new GenerateAndUploadDocumentRequestedIntegrationEvent(storyId, contents));
         }
 
         await _repository.SaveChanges();

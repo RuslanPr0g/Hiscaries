@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import {
   defaultReadingSettings,
@@ -11,7 +11,7 @@ import { LoadReadingSettingsService } from '@stories/services/load-reading-setti
 @Component({
   selector: 'app-reading-settings',
   standalone: true,
-  imports: [CommonModule, InputSwitchModule, FormsModule],
+  imports: [InputSwitchModule, FormsModule],
   templateUrl: './reading-settings.component.html',
   styleUrls: ['./reading-settings.component.scss'],
 })

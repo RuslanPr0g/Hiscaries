@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { EditLibraryRequest } from '@users/models/requests/edit-library.model';
@@ -14,9 +14,9 @@ import { LastReadAtDateToId } from '@shared/models/last-read-date-id.model';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = `${environment.apiUrl}/users`;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = `${environment.apiUrl}/users`;
 
   getUserReadingStoryMetadata(
     request: UserReadingStoryRequest,

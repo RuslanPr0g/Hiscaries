@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit, inject } from '@angular/core';
+
 import {
   AbstractControl,
   FormArray,
@@ -19,20 +19,22 @@ import { IteratorService } from '@shared/services/statefull/iterator/iterator.se
   selector: 'app-content-builder',
   standalone: true,
   imports: [
-    CommonModule,
     EditorModule,
     ButtonModule,
     ReactiveFormsModule,
     MessageModule,
     FormsModule,
     TextEditorComponent,
-    ButtonTwoComponent,
-  ],
+    ButtonTwoComponent
+],
   providers: [IteratorService],
   templateUrl: './content-builder.component.html',
   styleUrls: ['./content-builder.component.scss'],
 })
 export class ContentBuilderComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private iterator = inject(IteratorService);
+
   private _contents: FormArray;
 
   pageInput = 1;
@@ -49,8 +51,6 @@ export class ContentBuilderComponent implements OnInit {
   get contents(): FormArray {
     return this._contents;
   }
-
-  constructor(private fb: FormBuilder, private iterator: IteratorService) {}
 
   ngOnInit(): void {
     if (this.contents.length === 0) {

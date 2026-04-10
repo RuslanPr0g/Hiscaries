@@ -3,6 +3,7 @@ using Hiscary.Recommendations.Domain.Queries;
 using Hiscary.Recommendations.Domain.Services.Read;
 using Microsoft.AspNetCore.Mvc;
 using StackNucleus.DDD.Api.Rest;
+using System.Net.Mime;
 
 namespace Hiscary.Recommendations.Api.Rest.Endpoints;
 
@@ -15,7 +16,7 @@ public static class RecommendationsEndpoints
             .WithTags("Recommendations");
 
         group.MapPost("/stories", GetRecommendations)
-            .Produces<IResult>(StatusCodes.Status200OK, contentType: "application/json")
+            .Produces<IResult>(StatusCodes.Status200OK, contentType: MediaTypeNames.Application.Json)
             .Produces(StatusCodes.Status401Unauthorized);
     }
 

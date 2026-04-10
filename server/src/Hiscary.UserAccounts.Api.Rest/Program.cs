@@ -6,6 +6,7 @@ using Hiscary.UserAccounts.EventHandlers;
 using Hiscary.UserAccounts.Jobs;
 using Hiscary.UserAccounts.Persistence.Context;
 using Hiscary.UserAccounts.Persistence.Write;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StackNucleus.DDD.Api.Rest.Filters;
 
@@ -63,6 +64,12 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<UserAccountsContext>();
+        context.Database.Migrate();
+    }
 }
 
 app.UseSerilogRequestLogging();

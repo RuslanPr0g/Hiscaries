@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DestroyService } from '../../services/destroy.service';
 import { Observable } from 'rxjs';
 import { NavigationConst } from '../../constants/navigation.const';
@@ -18,9 +18,12 @@ import { SearchInputComponent } from '../search-input/search-input.component';
   providers: [DestroyService],
 })
 export class SearchBarComponent implements OnInit {
+  private router = inject(Router);
+  private store = inject<Store<StoryStateModel>>(Store);
+
   searchTerm$: Observable<string | null>;
 
-  constructor(private router: Router, private store: Store<StoryStateModel>) {
+  constructor() {
     this.searchTerm$ = this.store.select(searchSearchTerm);
   }
 

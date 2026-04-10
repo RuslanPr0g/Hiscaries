@@ -22,17 +22,14 @@ public sealed class ReadingHistory : Entity
 
     internal void ReadPage(int page)
     {
-        if (page > LastPageRead)
-        {
-            LastPageRead = page;
-        }
+        LastPageRead = page;
     }
 
     internal void UpdateLastPageReadAfterStoryContentsChanges(int numberOfPages)
     {
         if (numberOfPages < LastPageRead)
         {
-            LastPageRead = numberOfPages;
+            LastPageRead = 0;
         }
     }
 

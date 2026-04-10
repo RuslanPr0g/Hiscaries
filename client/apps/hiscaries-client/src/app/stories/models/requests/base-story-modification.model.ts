@@ -6,4 +6,5 @@ export interface BaseStoryModificationRequest {
   AgeLimit?: number | null;
   ImagePreview?: string | null;
   DateWritten?: Date | null;
+  PdfFileName?: string | null;
 }

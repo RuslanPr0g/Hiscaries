@@ -1,8 +1,10 @@
 <app-skeleton-or-story-content [dataLoaded]="true">
   <div class="story-grid glassy-grid">
-    <div *ngFor="let story of stories.Items" class="grid-item">
-      <app-story-search-item [story]="story"></app-story-search-item>
-    </div>
+    @for (story of stories.Items; track story) {
+      <div class="grid-item">
+        <app-story-search-item [story]="story"></app-story-search-item>
+      </div>
+    }
   </div>
 </app-skeleton-or-story-content>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { take } from 'rxjs';
@@ -16,16 +16,14 @@ import { defaultQueryableModel } from '@shared/models/queryable.model';
   styleUrl: './preview-story.component.scss',
 })
 export class PreviewStoryComponent implements OnInit, OnDestroy {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private storyService = inject(StoryWithMetadataService);
+
   private storyId: string | null = null;
 
   story: StoryModel | null = null;
   storyNotFound = false;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private storyService: StoryWithMetadataService,
-  ) {}
 
   ngOnInit(): void {
     this.storyId = this.route.snapshot.paramMap.get('id');

@@ -26,3 +26,4 @@ dotnet ef migrations add $migrationName `
     --output-dir Migrations
 
 Write-Host "Migration '$migrationName' finished."
+Read-Host "Press Enter to exit"

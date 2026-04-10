@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -50,19 +50,19 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
   styleUrls: ['./publish-story.component.scss'],
 })
 export class PublishStoryComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private storyService = inject(StoryWithMetadataService);
+  private router = inject(Router);
+  private userService = inject(UserService);
+  authService = inject(AuthService);
+
   publishForm: FormGroup<PublishFormModel>;
   genres: GenreModel[] = [];
   library: LibraryModel;
   submitted = false;
   globalError: string | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private storyService: StoryWithMetadataService,
-    private router: Router,
-    private userService: UserService,
-    public authService: AuthService,
-  ) {
+  constructor() {
     if (!this.authService.isPublisher()) {
       this.navigateHome();
       return;

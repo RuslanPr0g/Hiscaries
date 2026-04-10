@@ -47,6 +47,14 @@ public class StoryConfigurations : IEntityTypeConfiguration<Story>
             .HasColumnType("jsonb")
             .HasImageContainerConversion();
 
+        builder.Property(s => s.ExternalPdf)
+            .HasColumnName("ExternalPdf")
+            .HasColumnType("jsonb");
+
+        builder.Property(s => s.Status)
+            .HasColumnName("Status")
+            .HasConversion<int>();
+
         builder.Navigation(x => x.Genres).AutoInclude();
         builder.Navigation(x => x.Ratings).AutoInclude();
         builder.Navigation(x => x.Comments).AutoInclude();

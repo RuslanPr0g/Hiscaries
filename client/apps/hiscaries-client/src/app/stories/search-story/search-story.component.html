@@ -5,8 +5,8 @@
   class="w-full"
 ></app-search-story-results>
 
-<ng-container *ngIf="stories().Items.length === 0 && !isLoading()">
+@if (stories().Items.length === 0 && !isLoading()) {
   📚 No stories found 💨
-</ng-container>
+}
 
 <div #loadMoreAnchor class="load-more-anchor"></div>

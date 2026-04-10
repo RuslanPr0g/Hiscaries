@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Output, inject } from '@angular/core';
 import { AuthService } from '@users/services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -22,11 +22,14 @@ export interface MenuItem {
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  userService = inject(AuthService);
+  private router = inject(Router);
+
   items: MenuItem[];
 
   @Output() commandExecuted = new EventEmitter<void>();
 
-  constructor(public userService: AuthService, private router: Router) {
+  constructor() {
     this.items = [];
 
     if (this.isUserPublisher) {

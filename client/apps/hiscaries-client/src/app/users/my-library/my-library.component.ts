@@ -8,7 +8,7 @@ import { StoryWithMetadataService } from '@user-to-story/services/multiple-servi
 import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { NavigationConst } from '@shared/constants/navigation.const';
 import { LibraryModel } from '@users/models/domain/library.model';
-import { CommonModule } from '@angular/common';
+
 import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
@@ -16,7 +16,7 @@ import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
 @Component({
   selector: 'app-my-library',
   standalone: true,
-  imports: [LibraryComponent, CommonModule],
+  imports: [LibraryComponent],
   templateUrl: './my-library.component.html',
   styleUrls: ['./my-library.component.scss'],
   providers: [PaginationService],

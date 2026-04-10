@@ -15,3 +15,4 @@ Get-ChildItem -Path ../ -Recurse -Directory -Include bin,obj | ForEach-Object {
 }
 
 Write-Host "All 'bin' and 'obj' folders have been processed."
+Read-Host "Press Enter to exit"

@@ -1,7 +1,8 @@
 import { Component, OnInit, HostListener, ElementRef, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ReadStoryContentModel } from '@stories/models/domain/story-model';
+import { StoryModelWithContents } from '@stories/models/domain/story-model';
 import { CommonModule } from '@angular/common';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { debounceTime, distinctUntilChanged, Subject, switchMap, take } from 'rxjs';
 import { convertToBase64 } from '@shared/helpers/image.helper';
 import { IteratorService } from '@shared/services/statefull/iterator/iterator.service';
@@ -26,6 +27,7 @@ import { LoadReadingSettingsService } from '@stories/services/load-reading-setti
   imports: [
     CommonModule,
     ButtonModule,
+    NgxExtendedPdfViewerModule,
     LoadingSpinnerComponent,
     FormsModule,
     ToastModule,
@@ -36,7 +38,18 @@ import { LoadReadingSettingsService } from '@stories/services/load-reading-setti
   styleUrl: './read-story-content.component.scss',
 })
 export class ReadStoryContentComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private storyService = inject(StoryWithMetadataService);
+  private userService = inject(UserService);
+  private iterator = inject(IteratorService);
+
   @ViewChild('contentWrapper') contentWrapper!: ElementRef<HTMLDivElement>;
+
+  private pageRead$ = new Subject<ReadStoryRequest>();
+
+  private touchStartX = 0;
+  private touchEndX = 0;
+  private minSwipeDistance = 110;
 
   storyId: string | null = null;
 
@@ -46,32 +59,40 @@ export class ReadStoryContentComponent implements OnInit {
 
   settings: ReadingSettings = defaultReadingSettings;
 
-  private pageRead$ = new Subject<ReadStoryRequest>();
-
-  private touchStartX = 0;
-  private touchEndX = 0;
-  private minSwipeDistance = 110;
-
   globalError: string | null = null;
-  story: ReadStoryContentModel | null = null;
+  story: StoryModelWithContents | null = null;
   storyNotFound = false;
 
   maximized = false;
 
   pageInput = 1;
+  pdfPage = 1;
 
-  constructor(
-    private route: ActivatedRoute,
-    private storyService: StoryWithMetadataService,
-    private userService: UserService,
-    private iterator: IteratorService,
-  ) {
+  get pdfUrl(): string | null {
+    return this.story?.HasExternalPdf && this.story.ExternalPdfUrl ? this.story.ExternalPdfUrl : null;
+  }
+
+  get pdfExists(): boolean {
+    return this.story?.HasExternalPdf ?? false;
+  }
+
+  get isConsolidatingDocuments(): boolean {
+    return this.story?.Status === 3;
+  }
+
+  get shouldShowPdf(): boolean {
+    if (this.isConsolidatingDocuments) {
+      return false;
+    }
+    return this.settings.PreferPdf && this.pdfExists;
+  }
+
+  constructor() {
     this.storyId = this.route.snapshot.paramMap.get('id');
 
     this.pageRead$
       .pipe(
         debounceTime(500),
-        distinctUntilChanged((a, b) => a.StoryId === b.StoryId && a.PageRead === b.PageRead),
         switchMap((payload) => this.userService.read(payload)),
       )
       .subscribe();
@@ -104,11 +125,12 @@ export class ReadStoryContentComponent implements OnInit {
 
           this.story = {
             ...story,
-            ImagePreviewUrl: imageUrl ? convertToBase64(imageUrl) : undefined,
+            ImagePreviewUrl: imageUrl ? (convertToBase64(imageUrl) as any) : undefined,
           };
 
           if (story.LastPageRead) {
             this.pageInput = story.LastPageRead;
+            this.pdfPage = story.LastPageRead;
             this.goToPage();
           } else {
             this.userService
@@ -179,6 +201,14 @@ export class ReadStoryContentComponent implements OnInit {
 
   movePrev(): boolean {
     const moved = this.iterator.movePrev();
+
+    if (moved && this.storyId) {
+      this.pageRead$.next({
+        StoryId: this.storyId,
+        PageRead: this.currentIndex + 1,
+      });
+    }
+
     if (moved) {
       this.pageInput = this.currentIndex + 1;
       this.scrollToTop();
@@ -226,6 +256,16 @@ export class ReadStoryContentComponent implements OnInit {
 
   onSettingsChanged(setings: ReadingSettings) {
     this.settings = setings;
+  }
+
+  onPdfPageChange(page: number) {
+    this.pdfPage = page;
+    if (this.storyId) {
+      this.userService.read({
+        StoryId: this.storyId,
+        PageRead: page,
+      }).subscribe();
+    }
   }
 
   private handleSwipe() {

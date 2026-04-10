@@ -29,7 +29,12 @@ public sealed class StoryWithContentsReadModel : StorySimpleReadModel
             ImagePreviewUrl = ImageUrlsDto.FromDomainModel(story.ImagePreviewUrl),
             TotalPages = story.TotalPages,
             UniqueReads = story.UniqueReads,
-            GenreNames = story.Genres?.Select(_ => _.Name).ToArray() ?? []
+            GenreNames = story.Genres?.Select(_ => _.Name).ToArray() ?? [],
+            HasExternalPdf = story.HasExternalPdf,
+            ExternalPdfUrl = story.ExternalPdf?.PdfUrl,
+            ExternalPdfSize = story.ExternalPdf?.FileSize,
+            ExternalPdfPageCount = story.HasExternalPdf ? story.ExternalPdfPageCount : null,
+            Status = story.Status
         };
     }
 }

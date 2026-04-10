@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, OnInit } from '@angular/core';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { SearchStoryItemComponent } from '@stories/story-search-item/story-search-item.component';
@@ -10,11 +10,10 @@ import { QueriedModel } from '@shared/models/queried.model';
   selector: 'app-search-story-results',
   standalone: true,
   imports: [
-    CommonModule,
     SearchStoryItemComponent,
     CarouselModule,
-    SkeletonOrStoryContentComponent,
-  ],
+    SkeletonOrStoryContentComponent
+],
   templateUrl: './search-story-results.component.html',
   styleUrls: ['./search-story-results.component.scss'],
 })

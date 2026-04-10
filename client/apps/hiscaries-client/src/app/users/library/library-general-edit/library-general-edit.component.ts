@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LibraryModel } from '@users/models/domain/library.model';
 import { SocialMediaIconMapperService } from '@shared/services/social-media-icon-mapper.service';
@@ -23,6 +23,9 @@ import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
   styleUrl: './library-general-edit.component.scss',
 })
 export class LibraryGeneralEditComponent implements OnInit {
+  private iconService = inject(SocialMediaIconMapperService);
+  private fb = inject(FormBuilder);
+
   modifyForm: FormGroup<ModifyLibraryFormModel>;
 
   @Input() library: LibraryModel;
@@ -30,8 +33,6 @@ export class LibraryGeneralEditComponent implements OnInit {
 
   @Output() editCancelled = new EventEmitter<void>();
   @Output() editSaved = new EventEmitter<ModifyLibraryModel>();
-
-  constructor(private iconService: SocialMediaIconMapperService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     if (this.library) {

@@ -32,6 +32,7 @@ import { StoryWithMetadataService } from '@user-to-story/services/multiple-servi
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { DocumentContent } from '@media/models/document-content.model';
 import { MediaService } from '@media/services/media.service';
+import { OperationResult } from '@shared/models/operation-result.model';
 
 @Component({
   selector: 'app-modify-story',
@@ -56,6 +57,12 @@ import { MediaService } from '@media/services/media.service';
   styleUrls: ['./modify-story.component.scss'],
 })
 export class ModifyStoryComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private fb = inject(FormBuilder);
+  private storyService = inject(StoryWithMetadataService);
+  private userService = inject(AuthService);
+  private router = inject(Router);
+
   private storyId: string | null = null;
 
   modifyForm: FormGroup<ModifyStoryFormModel>;
@@ -68,13 +75,11 @@ export class ModifyStoryComponent implements OnInit {
 
   mediaService = inject(MediaService);
 
-  constructor(
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private storyService: StoryWithMetadataService,
-    private userService: AuthService,
-    private router: Router,
-  ) {
+  pdfUrl: string | null = null;
+  pdfExists = true;
+  uploadedPdfFileName: string | null = null;
+
+  constructor() {
     this.modifyForm = this.fb.group<ModifyStoryFormModel>({
       Title: this.fb.control<string | null>(null, Validators.required),
       Description: this.fb.control<string | null>(null, Validators.required),
@@ -89,6 +94,7 @@ export class ModifyStoryComponent implements OnInit {
       DateWritten: this.fb.control<Date | null>(null, Validators.required),
       Contents: this.fb.array<FormControl<string>>([], Validators.required),
       PdfFile: this.fb.control<string | null>(null),
+      PdfFileAsStory: this.fb.control<string | null>(null),
     });
 
     this.storyId = this.route.snapshot.paramMap.get('id');
@@ -99,6 +105,8 @@ export class ModifyStoryComponent implements OnInit {
       this.storyNotFound = true;
       return;
     }
+
+    this.checkPdfExists(this.storyId);
 
     this.storyService
       .genreList()
@@ -124,7 +132,7 @@ export class ModifyStoryComponent implements OnInit {
       const file = new File([blob], 'uploaded.pdf', { type: 'application/pdf' });
 
       this.mediaService
-        .uploadPdf(file)
+        .asContents(file)
         .pipe(take(1))
         .subscribe({
           next: (documentContent: DocumentContent) => {
@@ -140,6 +148,46 @@ export class ModifyStoryComponent implements OnInit {
           error: (err) => {
             console.error('PDF parsing failed', err);
             this.submitted = false;
+          },
+        });
+    });
+
+    this.pdfAsStoryControl?.valueChanges.subscribe((pdfBase64) => {
+      if (!pdfBase64 || !this.storyId) return;
+
+      const isBase64Pdf = pdfBase64.startsWith('data:application/pdf;base64,');
+      if (!isBase64Pdf) {
+        console.warn('Selected file is not a PDF.');
+        return;
+      }
+
+      this.submitted = true;
+
+      const byteString = pdfBase64.split(',')[1];
+      const blob = this.base64ToBlob(byteString, 'application/pdf');
+      const pdfFileName = `${this.storyId}.pdf`;
+      const file = new File([blob], pdfFileName, { type: 'application/pdf' });
+
+      this.mediaService
+        .upload(this.storyId, file)
+        .pipe(take(1))
+        .subscribe({
+          next: (result: OperationResult) => {
+            if (result.ResultStatus != 0) {
+              console.error('PDF upload failed');
+              this.submitted = false;
+              this.pdfAsStoryControl?.reset();
+              return;
+            } else {
+              this.uploadedPdfFileName = pdfFileName;
+              this.onSubmit();
+              return;
+            }
+          },
+          error: (err) => {
+            console.error('PDF upload failed', err);
+            this.submitted = false;
+            this.pdfAsStoryControl?.reset();
           },
         });
     });
@@ -180,12 +228,65 @@ export class ModifyStoryComponent implements OnInit {
     return this.modifyForm.get('PdfFile');
   }
 
+  get pdfAsStoryControl(): AbstractControl<string | null, string | null> | null {
+    return this.modifyForm.get('PdfFileAsStory');
+  }
+
   get base64Image(): string | null | undefined {
     return this.imageControl?.value;
   }
 
   get contents(): FormArray {
     return this.modifyForm.get('Contents') as FormArray;
+  }
+
+  removePdf() {
+    if (!this.storyId) return;
+
+    this.submitted = true;
+
+    this.mediaService
+      .delete(this.storyId)
+      .pipe(take(1))
+      .subscribe({
+        next: (result: OperationResult) => {
+          if (result.ResultStatus != 0) {
+            console.error('PDF deletion failed');
+            this.submitted = false;
+            return;
+          }
+
+          this.pdfExists = false;
+          this.pdfUrl = null;
+          this.submitted = false;
+        },
+        error: (err) => {
+          console.error('PDF deletion failed', err);
+          this.submitted = false;
+        },
+      });
+  }
+
+  private checkPdfExists(storyId: string) {
+    const url = this.buildPdfUrl(storyId);
+
+    fetch(url, { method: 'GET' })
+      .then((res) => {
+        if (res.ok) {
+          this.pdfExists = true;
+          this.pdfUrl = url;
+        } else {
+          this.pdfExists = false;
+        }
+      })
+      .catch(() => {
+        this.pdfExists = false;
+      });
+  }
+
+  private buildPdfUrl(storyId: string): string {
+    // TODO: This should be handled in the backend, maybe add a field to the story model that contains the pdf url if it exists
+    return `api/v1/media/documents/${storyId}.pdf`;
   }
 
   updateContent(index: number, value: string) {
@@ -225,6 +326,7 @@ export class ModifyStoryComponent implements OnInit {
       StoryId: this.storyId,
       Contents: formModel.Contents?.filter((c) => !!c) ?? [],
       ShouldUpdatePreview: isValidPreview,
+      PdfFileName: this.uploadedPdfFileName,
     };
 
     this.storyService

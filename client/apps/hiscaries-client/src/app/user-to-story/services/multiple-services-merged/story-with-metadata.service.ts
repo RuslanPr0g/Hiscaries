@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, switchMap, map, catchError, of, take } from 'rxjs';
 import { BaseIdModel } from '@shared/models/base-id.model';
 import { GenreModel } from '@stories/models/domain/genre.model';
@@ -20,11 +20,10 @@ import { StoryRecommendationModel } from '@stories/models/domain/story-recommend
   providedIn: 'root',
 })
 export class StoryWithMetadataService {
-  constructor(
-    private storyService: StoryService,
-    private userService: UserService,
-    private recommendationService: StoryRecommendationService,
-  ) {}
+  private storyService = inject(StoryService);
+  private userService = inject(UserService);
+  private recommendationService = inject(StoryRecommendationService);
+
 
   genreList(): Observable<GenreModel[]> {
     return this.storyService.genreList();

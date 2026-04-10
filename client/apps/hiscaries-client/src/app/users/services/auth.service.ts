@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { environment } from '@environments/environment';
 import { RegisterUserRequest } from '@users/models/requests/register-user.model';
@@ -11,6 +11,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root',
 })
 export class AuthService {
+  private http = inject(HttpClient);
+  private jwtHelper = inject(JwtHelperService);
+
   private apiUrl = `${environment.apiUrl}/accounts`;
   private access_token_local_storage_key: string = environment.localStorageKeys.ACCESS_TOKEN_KEY;
   private refresh_token_local_storage_key: string = environment.localStorageKeys.REFRESH_TOKEN_KEY;
@@ -20,8 +23,6 @@ export class AuthService {
 
   loginEvent$ = this.loginSubject.asObservable();
   logoutEvent$ = this.logoutSubject.asObservable();
-
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
   register(request: RegisterUserRequest): Observable<UserWithTokenResponse> {
     return this.http.post<UserWithTokenResponse>(this.apiUrl + '/register', request).pipe(

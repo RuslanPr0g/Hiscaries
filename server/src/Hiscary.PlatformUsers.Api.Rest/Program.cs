@@ -8,6 +8,7 @@ using Hiscary.PlatformUsers.Persistence.Read;
 using Hiscary.PlatformUsers.Persistence.Write;
 using Hiscary.ServiceDefaults;
 using Hiscary.Shared.Api.Rest;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StackNucleus.DDD.Api.Rest.Filters;
 
@@ -67,6 +68,12 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<PlatformUsersContext>();
+        context.Database.Migrate();
+    }
 }
 
 app.UseSerilogRequestLogging();

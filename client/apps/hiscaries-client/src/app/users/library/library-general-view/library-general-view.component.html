@@ -1,39 +1,46 @@
-<ng-container *ngIf="library">
+@if (library) {
   <div class="library">
     <div
       class="profile-card background-image-configuration"
       [ngStyle]="{
         'background-image': backgroundImageUrl ? 'url(' + backgroundImageUrl + ')' : 'none'
       }"
-    >
-      <div class="overlay" *ngIf="backgroundImageUrl"></div>
+      >
+      @if (backgroundImageUrl) {
+        <div class="overlay"></div>
+      }
       <div class="avatar-container" [ngClass]="{ 'min-width-150': isAbleToSubscribe }">
-        <div class="avatar" *ngIf="library.AvatarImageUrls">
-          <img [src]="library.AvatarImageUrls | fallbackImage" alt="User Avatar" />
-        </div>
-        <div class="library-edit" *ngIf="isAbleToEdit">
-          <button class="link" (click)="startEdit()">
-            <i class="pi pi-user-edit" style="font-size: 1.5rem"></i>
-          </button>
-        </div>
-        <div class="library-subscription" *ngIf="isAbleToSubscribe">
-          <ng-container *ngIf="isSubscribed; else subscribe">
-            <app-button-two
-              label="Unsubscribe"
-              [severity]="'secondary'"
-              [disabled]="isSubscribeLoading"
-              (clicked)="unSubscribeAction()"
-            ></app-button-two>
-          </ng-container>
-          <ng-template #subscribe>
-            <app-button-two
-              label="Subscribe"
-              [severity]="'primary'"
-              [disabled]="isSubscribeLoading"
-              (clicked)="subscribeAction()"
-            ></app-button-two>
-          </ng-template>
-        </div>
+        @if (library.AvatarImageUrls) {
+          <div class="avatar">
+            <img [src]="library.AvatarImageUrls | fallbackImage" alt="User Avatar" />
+          </div>
+        }
+        @if (isAbleToEdit) {
+          <div class="library-edit">
+            <button class="link" (click)="startEdit()">
+              <i class="pi pi-user-edit" style="font-size: 1.5rem"></i>
+            </button>
+          </div>
+        }
+        @if (isAbleToSubscribe) {
+          <div class="library-subscription">
+            @if (isSubscribed) {
+              <app-button-two
+                label="Unsubscribe"
+                [severity]="'secondary'"
+                [disabled]="isSubscribeLoading"
+                (clicked)="unSubscribeAction()"
+              ></app-button-two>
+            } @else {
+              <app-button-two
+                label="Subscribe"
+                [severity]="'primary'"
+                [disabled]="isSubscribeLoading"
+                (clicked)="subscribeAction()"
+              ></app-button-two>
+            }
+          </div>
+        }
       </div>
       <div class="profile-details">
         <div class="username-wrapper">
@@ -42,11 +49,13 @@
         </div>
         <p class="bio">{{ library.Bio }}</p>
         <div class="social-links">
-          <a *ngFor="let link of library.LinksToSocialMedia" [href]="link" target="_blank">
-            <i class="pi" [ngClass]="getSocialNetworkIcon(link)" style="font-size: 2rem"></i>
-          </a>
+          @for (link of library.LinksToSocialMedia; track link) {
+            <a [href]="link" target="_blank">
+              <i class="pi" [ngClass]="getSocialNetworkIcon(link)" style="font-size: 2rem"></i>
+            </a>
+          }
         </div>
       </div>
     </div>
   </div>
-</ng-container>
+}

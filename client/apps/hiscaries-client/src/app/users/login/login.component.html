@@ -8,75 +8,77 @@
   <h2>Welcome</h2>
 
   <p-card class="glass-card">
-    <form
-      class="mainform"
-      [formGroup]="isLoginState ? formLogin : formRegister"
-      (ngSubmit)="onSubmit()"
-      autocomplete="off"
-      *ngIf="isLoadedFully"
-    >
-      <div class="form-field">
-        <input pInputText formControlName="username" placeholder="Username" class="w-full" />
-      </div>
-
-      <ng-container *ngIf="!isLoginState">
+    @if (isLoadedFully) {
+      <form
+        class="mainform"
+        [formGroup]="isLoginState ? formLogin : formRegister"
+        (ngSubmit)="onSubmit()"
+        autocomplete="off"
+        >
         <div class="form-field">
-          <input
-            pInputText
-            formControlName="email"
-            placeholder="Email"
-            type="email"
-            class="w-full"
-          />
+          <input pInputText formControlName="username" placeholder="Username" class="w-full" />
         </div>
-      </ng-container>
+        @if (!isLoginState) {
+          <div class="form-field">
+            <input
+              pInputText
+              formControlName="email"
+              placeholder="Email"
+              type="email"
+              class="w-full"
+              />
+            </div>
+          }
+          <div class="form-field">
+            <p-password
+              formControlName="password"
+              placeholder="Password"
+              [toggleMask]="true"
+              class="w-full"
+              [feedback]="false"
+            ></p-password>
+          </div>
+          @if (isLoading) {
+            <p-button
+              type="submit"
+              icon="pi pi-spin pi-spinner"
+              [label]="isLoginState ? 'Sign In' : 'Register'"
+              [disabled]="true"
+              class="w-full fancy-btn"
+            ></p-button>
+          } @else {
+            <p-button
+              tabindex="0"
+              type="submit"
+              [label]="isLoginState ? 'Sign In' : 'Register'"
+              class="w-full fancy-btn"
+            ></p-button>
+          }
+        </form>
+      }
 
-      <div class="form-field">
-        <p-password
-          formControlName="password"
-          placeholder="Password"
-          [toggleMask]="true"
-          class="w-full"
-          [feedback]="false"
-        ></p-password>
+      @if (isLoadedFully) {
+        <p
+          class="toggle-text mt-4"
+          (click)="toggleState()"
+          (keydown.enter)="toggleState()"
+          (keydown.space)="toggleState()"
+          tabindex="1"
+          >
+          {{ !isLoginState ? 'Have an account?' : 'Need an account?' }}
+        </p>
+      }
+
+      <div class="w-full center">
+        @if (isLoading && !isLoadedFully) {
+          <app-loading-spinner></app-loading-spinner>
+        }
       </div>
+    </p-card>
 
-      <ng-container *ngIf="isLoading; else loaded">
-        <p-button
-          type="submit"
-          icon="pi pi-spin pi-spinner"
-          [label]="isLoginState ? 'Sign In' : 'Register'"
-          [disabled]="true"
-          class="w-full fancy-btn"
-        ></p-button>
-      </ng-container>
-      <ng-template #loaded>
-        <p-button
-          tabindex="0"
-          type="submit"
-          [label]="isLoginState ? 'Sign In' : 'Register'"
-          class="w-full fancy-btn"
-        ></p-button>
-      </ng-template>
-    </form>
-
-    <p
-      class="toggle-text mt-4"
-      (click)="toggleState()"
-      (keydown.enter)="toggleState()"
-      (keydown.space)="toggleState()"
-      tabindex="1"
-      *ngIf="isLoadedFully"
-    >
-      {{ !isLoginState ? 'Have an account?' : 'Need an account?' }}
-    </p>
-
-    <div class="w-full center">
-      <app-loading-spinner *ngIf="isLoading && !isLoadedFully"></app-loading-spinner>
-    </div>
-  </p-card>
-
-  <div *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
+    @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+    }
   </div>
-</div>

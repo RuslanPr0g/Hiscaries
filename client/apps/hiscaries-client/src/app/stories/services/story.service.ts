@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
@@ -17,9 +17,9 @@ import { BaseIdModel } from '@shared/models/base-id.model';
   providedIn: 'root',
 })
 export class StoryService {
-  private apiUrl = `${environment.apiUrl}/stories`;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = `${environment.apiUrl}/stories`;
 
   genreList(): Observable<GenreModel[]> {
     return this.http.get<GenreModel[]>(`${this.apiUrl}/genres`);

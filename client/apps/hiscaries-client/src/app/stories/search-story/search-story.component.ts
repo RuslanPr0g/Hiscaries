@@ -8,7 +8,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { finalize } from 'rxjs';
 import { DestroyService } from '@shared/services/destroy.service';
 import { StoryModel } from '@stories/models/domain/story-model';
@@ -21,7 +21,7 @@ import { PaginationService } from '@shared/services/statefull/pagination.service
 @Component({
   selector: 'app-search-story',
   standalone: true,
-  imports: [CommonModule, SearchStoryResultsComponent],
+  imports: [SearchStoryResultsComponent],
   templateUrl: './search-story.component.html',
   styleUrls: ['./search-story.component.scss'],
   providers: [DestroyService, PaginationService],

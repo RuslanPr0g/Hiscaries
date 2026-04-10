@@ -1,4 +1,4 @@
-<ng-container *ngIf="libraryInfo; else emptyLibraryInfo">
+@if (libraryInfo) {
   <app-library
     [library]="libraryInfo"
     [stories]="stories()"
@@ -9,8 +9,9 @@
     (subscribed)="subscribeAction()"
     (unSubscribed)="unSubscribeAction()"
   ></app-library>
-</ng-container>
+} @else {
+  This library doesn't exist
+}
 
-<ng-template #emptyLibraryInfo>This library doesn't exist</ng-template>
 
 <div #loadMoreAnchor class="load-more-anchor"></div>

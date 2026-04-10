@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isEditMode; else editMode">
+@if (!isEditMode) {
   <app-library-general-view
     [library]="library"
     [isAbleToEdit]="isAbleToEdit"
@@ -9,28 +9,30 @@
     (subscribed)="subscribeAction()"
     (unSubscribed)="unSubscribeAction()"
   ></app-library-general-view>
-</ng-container>
-<ng-template #editMode>
+} @else {
   <app-library-general-edit
     [library]="library"
     [isAbleToEdit]="isAbleToEdit"
     (editCancelled)="cancelEdit()"
     (editSaved)="saveEdit($event)"
   ></app-library-general-edit>
-</ng-template>
+}
 
-<ng-container *ngIf="stories">
-  <ng-container *ngIf="stories.Items.length > 0; else noStories">
+@if (stories) {
+  @if (stories.Items.length > 0) {
     <app-search-story-results
       [stories]="stories"
       [isLoading]="isLoading"
       class="w-full"
     ></app-search-story-results>
-  </ng-container>
-  <ng-template #noStories><div class="center">Nothing posted so far!</div></ng-template>
-</ng-container>
-<ng-container *ngIf="isLoading">
+  } @else {
+    <div class="center">Nothing posted so far!</div>
+  }
+}
+@if (isLoading) {
   <div class="center">
-    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    @if (isLoading) {
+      <app-loading-spinner></app-loading-spinner>
+    }
   </div>
-</ng-container>
+}

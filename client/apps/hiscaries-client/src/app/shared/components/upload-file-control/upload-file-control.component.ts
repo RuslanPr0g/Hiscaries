@@ -25,6 +25,8 @@ export class UploadFileControlComponent {
 
   @Input() centered = false;
 
+  @Input() chooseLabel = 'Select file';
+
   requiredErrorMessage = 'File is required.';
 
   maxFileSize = 10 * 1024 * 1024; // 10 MB

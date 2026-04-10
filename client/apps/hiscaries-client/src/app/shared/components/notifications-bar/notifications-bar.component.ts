@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
+
 import { NotificationStateService } from '../../services/statefull/notification-state.service';
 import { NotificationModel } from '../../models/notification.model';
 import { DestroyService } from '../../services/destroy.service';
@@ -12,21 +12,19 @@ import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 @Component({
   selector: 'app-notifications-bar',
   standalone: true,
-  imports: [CommonModule, FallbackImagePipe],
+  imports: [FallbackImagePipe],
   templateUrl: './notifications-bar.component.html',
   styleUrls: ['./notifications-bar.component.scss'],
   providers: [DestroyService],
 })
 export class NotificationsBarComponent implements OnInit {
+  private router = inject(Router);
+  private notificationStateService = inject(NotificationStateService);
+  private destroyService = inject(DestroyService);
+
   notifications: NotificationModel[] = [];
 
   @Output() notificationClicked = new EventEmitter();
-
-  constructor(
-    private router: Router,
-    private notificationStateService: NotificationStateService,
-    private destroyService: DestroyService,
-  ) {}
 
   ngOnInit(): void {
     this.notificationStateService.notifications$

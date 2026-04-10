@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AuthService } from './auth.service';
 import { NotificationHandler } from '@shared/models/notification-handler.model';
 import { UserRealTimeNotificationService } from './real-time-notification.service';
@@ -7,12 +7,10 @@ import { UserRealTimeNotificationService } from './real-time-notification.servic
   providedIn: 'root',
 })
 export class NotificationLifecycleManagerService {
-  private isInitialized = false;
+  private authService = inject(AuthService);
+  private realTimeNotificationService = inject(UserRealTimeNotificationService);
 
-  constructor(
-    private authService: AuthService,
-    private realTimeNotificationService: UserRealTimeNotificationService,
-  ) {}
+  private isInitialized = false;
 
   initialize(handlers: NotificationHandler[]): void {
     if (this.isInitialized) {

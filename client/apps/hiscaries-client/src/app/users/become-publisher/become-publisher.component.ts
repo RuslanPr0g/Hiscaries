@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+
 import { AuthService } from '@users/services/auth.service';
 import { Router } from '@angular/router';
 import { NavigationConst } from '@shared/constants/navigation.const';
@@ -9,18 +9,18 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
 @Component({
   selector: 'app-become-publisher',
   standalone: true,
-  imports: [CommonModule, LoadingSpinnerComponent],
+  imports: [LoadingSpinnerComponent],
   templateUrl: './become-publisher.component.html',
   styleUrl: './become-publisher.component.scss',
 })
 export class BecomePublisherComponent {
+  authService = inject(AuthService);
+  private userService = inject(UserService);
+  private router = inject(Router);
+
   agreed = false;
 
-  constructor(
-    public authService: AuthService,
-    private userService: UserService,
-    private router: Router,
-  ) {
+  constructor() {
     if (this.authService.isPublisher()) {
       console.warn('User is already a publisher!');
       this.router.navigate([NavigationConst.Home]);

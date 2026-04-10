@@ -18,6 +18,19 @@ export interface StoryModel {
 
   LibraryId: string;
   LibraryName: string;
+
+  HasExternalPdf: boolean;
+  ExternalPdfUrl?: string;
+  ExternalPdfSize?: number;
+  ExternalPdfPageCount?: number;
+  Status: StoryStatus;
+}
+
+export enum StoryStatus {
+  Draft = 0,
+  Active = 1,
+  Deleted = 2,
+  ConsolidatingDocuments = 3
 }
 
 export interface StoryModelWithContents extends StoryModel {

@@ -1,10 +1,12 @@
 <form
   class="search-bar highlight-container"
   (submit)="search(searchValue.value); $event.preventDefault()"
->
-  <div class="orbit-wrapper" *ngIf="isHighlighted">
-    <div class="highlight"></div>
-  </div>
+  >
+  @if (isHighlighted) {
+    <div class="orbit-wrapper">
+      <div class="highlight"></div>
+    </div>
+  }
   <input class="content" name="search" required #searchValue />
   <button class="search-btn" (click)="search(searchValue.value); $event.preventDefault()">
     <span>Search</span>
