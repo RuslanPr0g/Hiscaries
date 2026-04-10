@@ -2,6 +2,8 @@
 using Hiscary.PlatformUsers.DomainEvents;
 using Hiscary.PlatformUsers.EventHandlers.DomainEvents;
 using Hiscary.PlatformUsers.IntegrationEvents.Outgoing;
+using Hiscary.Stories.DomainEvents;
+using Hiscary.Stories.EventHandlers.DomainEvents;
 using Hiscary.Stories.EventHandlers.IntegrationEvents;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,7 @@ public static class DIModule
         IConfiguration configuration)
     {
         builder.Services.AddScoped<IEventHandler<StoryContentsChangedDomainEvent>, StoryContentsChangedDomainEventHandler>();
+        builder.Services.AddScoped<IEventHandler<StoryTotalPagesChangedDomainEvent>, StoryTotalPagesChangedDomainEventHandler>();
 
         builder.Services.AddScoped<IEventHandler<ImageUploadedIntegrationEvent>, ImageUploadedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<StoryFirstReadIntegrationEvent>, StoryFirstReadIntegrationEventHandler>();

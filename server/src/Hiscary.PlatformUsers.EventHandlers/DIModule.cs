@@ -24,6 +24,7 @@ public static class DIModule
 
         builder.Services.AddScoped<IEventHandler<StoryPublishedIntegrationEvent>, StoryPublishedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<StoryContentsChangedIntegrationEvent>, StoryContentsChangedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<StoryTotalPagesChangedIntegrationEvent>, StoryTotalPagesChangedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<UserAccountCreatedIntegrationEvent>, UserAccountCreatedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<ImageUploadedIntegrationEvent>, ImageUploadedIntegrationEventHandler>();
 
