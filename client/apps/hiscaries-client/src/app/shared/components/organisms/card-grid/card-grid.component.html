@@ -1,0 +1,16 @@
+@switch (renderState()) {
+@case ('skeleton') {
+<ui-skeleton-grid [count]="skeletonCount()" />
+}
+@case ('error') {
+<ui-error-state [title]="errorTitle()!" [description]="errorDescription()" />
+}
+@case ('empty') {
+<ui-empty-state [icon]="emptyIcon()" [message]="emptyMessage()" />
+}
+@default {
+<div class="card-grid" [style.grid-template-columns]="gridCols()">
+    <ng-content />
+</div>
+}
+}

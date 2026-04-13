@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -23,9 +23,9 @@
     <PackageReference Include="Moq" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hiscary.IntegrationTesting\Hiscary.Shared.IntegrationTesting.csproj" />
     <ProjectReference Include="..\Hiscary.Shared.Domain\Hiscary.Shared.Domain.csproj" />
     <ProjectReference Include="..\Hiscary.Shared.Application\Hiscary.Shared.Application.csproj" />
+    <ProjectReference Include="..\Hiscary.Shared.IntegrationTesting\Hiscary.Shared.IntegrationTesting.csproj" />
     <ProjectReference Include="..\Hiscary.Stories.Application.Write\Hiscary.Stories.Application.Write.csproj" />
     <ProjectReference Include="..\Hiscary.Stories.Domain\Hiscary.Stories.Domain.csproj" />
   </ItemGroup>

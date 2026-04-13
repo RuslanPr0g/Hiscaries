@@ -1,5 +1,5 @@
-﻿using Hiscary.Media.DocumentTools;
-using Hiscary.Media.Api.Rest.Authorization;
+﻿using Hiscary.Media.Api.Rest.Authorization;
+using Hiscary.Media.DocumentTools;
 using Hiscary.Shared.Domain.Authorization;
 using Hiscary.Shared.Domain.FileStorage;
 using Microsoft.AspNetCore.Mvc;

@@ -1,10 +1,10 @@
+using Hiscary.Shared.Domain.Authorization;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Hiscary.Shared.Domain.Authorization;
-using Microsoft.IdentityModel.Tokens;
 
-namespace Hiscary.IntegrationTesting.Security;
+namespace Hiscary.Shared.IntegrationTesting.Security;
 
 public sealed class JwtTokenFactory
 {

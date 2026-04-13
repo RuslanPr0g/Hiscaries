@@ -1,0 +1,6 @@
+<div class="status-banner" [class]="'banner-' + type()">
+    @if (icon()) {
+    <i [class]="icon()"></i>
+    }
+    <span class="banner-message">{{ message() }}</span>
+</div>

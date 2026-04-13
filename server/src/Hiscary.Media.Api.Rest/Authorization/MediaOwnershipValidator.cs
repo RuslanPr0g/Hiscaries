@@ -1,6 +1,4 @@
 using Hiscary.Shared.Domain.Options;
-using Microsoft.Extensions.Logging;
-using System.Net.Http.Json;
 
 namespace Hiscary.Media.Api.Rest.Authorization;
 

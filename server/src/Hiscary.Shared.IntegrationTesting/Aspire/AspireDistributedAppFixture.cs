@@ -2,7 +2,7 @@ using Aspire.Hosting;
 using Aspire.Hosting.Testing;
 using Xunit;
 
-namespace Hiscary.IntegrationTesting.Aspire;
+namespace Hiscary.Shared.IntegrationTesting.Aspire;
 
 public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
     where TEntryPoint : class

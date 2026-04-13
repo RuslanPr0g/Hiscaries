@@ -126,7 +126,7 @@ public class StorySearchRepository : IStorySearchRepository
                     )
                 )
                 .Sort(srt => srt
-                    .Field(new FieldSort (new Field("uniqueReads")) { Order = SortOrder.Desc })
+                    .Field(new FieldSort(new Field("uniqueReads")) { Order = SortOrder.Desc })
                 )
             , ct);
         }
@@ -138,7 +138,7 @@ public class StorySearchRepository : IStorySearchRepository
                 .Size(query.ItemsCount)
                 .Query(q => q.MatchAll(new MatchAllQuery()))
                 .Sort(srt => srt
-                    .Field(new FieldSort (new Field("uniqueReads")) { Order = SortOrder.Desc })
+                    .Field(new FieldSort(new Field("uniqueReads")) { Order = SortOrder.Desc })
                 )
             , ct);
         }

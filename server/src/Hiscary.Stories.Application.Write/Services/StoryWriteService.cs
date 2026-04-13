@@ -266,15 +266,15 @@ public sealed class StoryWriteService(
         var imageIsEmpty = imagePreview is null || imagePreview.Length <= 0;
 
         if (shouldUpdateImage && imageIsEmpty)
-            {
-                story.ClearPreviewUrl();
-            }
+        {
+            story.ClearPreviewUrl();
+        }
 
         if (shouldUpdateImage && !imageIsEmpty && imagePreview is not null)
-            {
-                await _publisher.Publish(
-                    new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories", ImageSizeExtensions.AllImageSizes()));
-            }
+        {
+            await _publisher.Publish(
+                new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories", ImageSizeExtensions.AllImageSizes()));
+        }
 
         if (contents is not null && contents.Any())
         {

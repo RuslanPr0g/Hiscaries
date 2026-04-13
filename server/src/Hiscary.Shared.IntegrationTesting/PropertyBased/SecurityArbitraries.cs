@@ -1,8 +1,8 @@
 using FsCheck;
 using FsCheck.Fluent;
-using Hiscary.IntegrationTesting.Security;
+using Hiscary.Shared.IntegrationTesting.Security;
 
-namespace Hiscary.IntegrationTesting.PropertyBased;
+namespace Hiscary.Shared.IntegrationTesting.PropertyBased;
 
 public static class SecurityArbitraries
 {

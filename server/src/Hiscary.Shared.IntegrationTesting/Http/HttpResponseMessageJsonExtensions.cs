@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
 
-namespace Hiscary.IntegrationTesting.Http;
+namespace Hiscary.Shared.IntegrationTesting.Http;
 
 public static class HttpResponseMessageJsonExtensions
 {

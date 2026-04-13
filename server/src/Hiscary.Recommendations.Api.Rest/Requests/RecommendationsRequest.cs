@@ -1,6 +1,4 @@
-﻿using Hiscary.Recommendations.Domain.Queries;
-
-namespace Hiscary.Recommendations.Api.Rest.Requests;
+﻿namespace Hiscary.Recommendations.Api.Rest.Requests;
 
 public class RecommendationsRequest
 {

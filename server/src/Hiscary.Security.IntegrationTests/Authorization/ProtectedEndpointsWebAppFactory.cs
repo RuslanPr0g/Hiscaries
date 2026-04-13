@@ -1,11 +1,8 @@
-using Hiscary.IntegrationTesting.Security;
 using Hiscary.Shared.Domain.Authorization;
+using Hiscary.Shared.IntegrationTesting.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 

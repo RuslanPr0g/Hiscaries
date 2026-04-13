@@ -1,5 +1,5 @@
-﻿using StackNucleus.DDD.Persistence.EF.Postgres.Configurations;
-using Hiscary.Notifications.Domain;
+﻿using Hiscary.Notifications.Domain;
+using StackNucleus.DDD.Persistence.EF.Postgres.Configurations;
 
 namespace Hiscary.Notifications.Persistence.Context.Configurations;
 

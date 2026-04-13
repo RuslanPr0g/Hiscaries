@@ -1,6 +1,6 @@
-using Hiscary.IntegrationTesting.Assertions;
-using Hiscary.IntegrationTesting.Aspire;
-using Hiscary.IntegrationTesting.Http;
+using Hiscary.Shared.IntegrationTesting.Aspire;
+using Hiscary.Shared.IntegrationTesting.Assertions;
+using Hiscary.Shared.IntegrationTesting.Http;
 using Hiscary.UserAccounts.Api.Rest.Requests;
 using Xunit;
 

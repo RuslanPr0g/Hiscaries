@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Hiscary.IntegrationTesting.Assertions;
+namespace Hiscary.Shared.IntegrationTesting.Assertions;
 
 public static class HttpResponseAssertions
 {

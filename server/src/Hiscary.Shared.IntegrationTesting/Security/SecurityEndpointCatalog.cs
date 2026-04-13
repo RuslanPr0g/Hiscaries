@@ -1,4 +1,4 @@
-namespace Hiscary.IntegrationTesting.Security;
+namespace Hiscary.Shared.IntegrationTesting.Security;
 
 public static class SecurityEndpointCatalog
 {

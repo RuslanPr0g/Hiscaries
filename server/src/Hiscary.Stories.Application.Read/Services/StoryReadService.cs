@@ -1,8 +1,8 @@
-﻿using StackNucleus.DDD.Domain.ClientModels;
-using Hiscary.Stories.Domain;
+﻿using Hiscary.Stories.Domain;
 using Hiscary.Stories.Domain.DataAccess;
 using Hiscary.Stories.Domain.ReadModels;
 using Hiscary.Stories.Domain.Stories;
+using StackNucleus.DDD.Domain.ClientModels;
 
 namespace Hiscary.Stories.Application.Read.Services;
 

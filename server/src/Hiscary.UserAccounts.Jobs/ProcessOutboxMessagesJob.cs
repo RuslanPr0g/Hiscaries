@@ -11,6 +11,6 @@ internal class ProcessOutboxMessagesJob(
     IEventPublisher publisher) : BaseProcessOutboxMessagesJob<UserAccountsContext, Assembly>(publisher)
 {
     protected override UserAccountsContext Context { get; init; } = context;
-    protected override IReadOnlyList<Assembly> MessagesAssembly { get; init; } = 
+    protected override IReadOnlyList<Assembly> MessagesAssembly { get; init; } =
         [typeof(UserAccountIntegrationEventsAssembly).Assembly];
 }

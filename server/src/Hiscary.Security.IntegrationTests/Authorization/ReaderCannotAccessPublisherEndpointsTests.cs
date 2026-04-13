@@ -1,7 +1,7 @@
 using FsCheck;
 using FsCheck.Fluent;
 using FsCheck.Xunit;
-using Hiscary.IntegrationTesting.Security;
+using Hiscary.Shared.IntegrationTesting.Security;
 using System.Net;
 using System.Net.Http.Headers;
 using Xunit;

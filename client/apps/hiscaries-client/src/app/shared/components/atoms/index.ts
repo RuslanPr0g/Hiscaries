@@ -8,3 +8,4 @@ export * from './empty-state/empty-state.component';
 export * from './error-state/error-state.component';
 export * from './truncated-text/truncated-text.component';
 export * from './glass-overlay/glass-overlay.component';
+export * from './intersection-anchor/intersection-anchor.component';

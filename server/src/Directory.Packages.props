@@ -75,16 +75,16 @@
   </ItemGroup>
   <!-- StackNucleus DDD -->
   <ItemGroup>
-    <PackageVersion Include="StackNucleus.DDD.Domain" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Application" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Events.WolverineFx" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Outbox" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Persistence" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Persistence.EF.Postgres" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Jobs.Quartz" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Images" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Scripts" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Api.Rest" Version="4.1.0" />
+    <PackageVersion Include="StackNucleus.DDD.Domain" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Application" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Events.WolverineFx" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Outbox" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Persistence" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Persistence.EF.Postgres" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Jobs.Quartz" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Images" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Scripts" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Api.Rest" Version="4.10.0" />
   </ItemGroup>
   <!-- WolverineFx -->
   <ItemGroup>

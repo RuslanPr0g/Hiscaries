@@ -1,0 +1,14 @@
+:host {
+    display: block;
+}
+
+.skeleton-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    ui-skeleton-card {
+        flex: 1 1 300px;
+        min-width: 0;
+    }
+}

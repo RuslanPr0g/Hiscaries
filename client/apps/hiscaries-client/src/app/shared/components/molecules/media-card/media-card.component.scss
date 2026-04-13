@@ -1,0 +1,40 @@
+:host {
+    display: block;
+}
+
+.media-card {
+    position: relative;
+    cursor: default;
+    outline: none;
+    border-radius: 8px;
+    overflow: hidden;
+
+    &.interactive {
+        cursor: pointer;
+
+        &:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+
+        &:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+    }
+
+    &__image-wrapper {
+        position: relative;
+    }
+
+    &__overlay-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}

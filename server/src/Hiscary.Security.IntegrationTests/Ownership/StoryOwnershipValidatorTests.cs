@@ -6,7 +6,6 @@ using Hiscary.Stories.Domain.DataAccess;
 using Hiscary.Stories.Domain.Stories;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using Xunit;
 
 namespace Hiscary.Security.IntegrationTests.Ownership;
 
