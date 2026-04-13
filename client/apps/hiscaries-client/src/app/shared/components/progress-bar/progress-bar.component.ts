@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DestroyService } from '../../services/destroy.service';
 
 @Component({
@@ -11,5 +11,5 @@ import { DestroyService } from '../../services/destroy.service';
   providers: [DestroyService],
 })
 export class ProgressBarComponent {
-  @Input() percentage = 0;
+  readonly percentage = input(0);
 }

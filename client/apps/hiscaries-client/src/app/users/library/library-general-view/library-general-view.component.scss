@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $primary-color: #c9a27e;
 $secondary-color: #a37c5b;
 $accent-color: #d1bfa3;
@@ -82,7 +84,7 @@ $shadow: 0 8px 32px 0 rgba(34, 34, 26, 0.37);
 
   .bio {
     font-style: italic;
-    color: lighten($text-color, 20%);
+    color: color.scale($text-color, $lightness: 20%);
   }
 
   .social-links {

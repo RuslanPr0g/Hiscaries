@@ -1,11 +1,11 @@
-@if (dataLoaded) {
+@if (dataLoaded()) {
   <ng-content />
 } @else {
-  @if (!errorMessage) {
+  @if (!errorMessage()) {
     @for (_ of [1, 2, 3]; track _) {
       <div
-        class="border-round border-1 surface-border p-4 surface-card"
-        [style]="{ 'margin-bottom': '24px' }"
+        class="border-round p-4"
+        style="margin-bottom: 24px; background: rgba(56, 41, 29, 0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;"
         >
         <div class="flex mb-3">
           <div>
@@ -16,9 +16,9 @@
     }
   }
 }
-@if (errorMessage) {
+@if (errorMessage()) {
   <div class="error-message">
-    <h2>{{ errorMessage.Title }}</h2>
-    <p>{{ errorMessage.Description }}</p>
+    <h2>{{ errorMessage()!.Title }}</h2>
+    <p>{{ errorMessage()!.Description }}</p>
   </div>
 }

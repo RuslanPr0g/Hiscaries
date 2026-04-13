@@ -1,11 +1,10 @@
 @if (libraryInfo) {
-  <app-library
-    [library]="libraryInfo"
+  <app-library [library]="libraryInfo"
     [stories]="stories()"
     [isLoading]="isLoading()"
     [isAbleToEdit]="true"
     (libraryEdited)="editLibrary($event)"
-  ></app-library>
+   />
 } @else {
   This library doesn't exist
 }

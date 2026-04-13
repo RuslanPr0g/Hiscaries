@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnInit, inject, output } from '@angular/core';
 
 import { NotificationStateService } from '../../services/statefull/notification-state.service';
 import { NotificationModel } from '../../models/notification.model';
@@ -24,7 +24,7 @@ export class NotificationsBarComponent implements OnInit {
 
   notifications: NotificationModel[] = [];
 
-  @Output() notificationClicked = new EventEmitter();
+  readonly notificationClicked = output();
 
   ngOnInit(): void {
     this.notificationStateService.notifications$

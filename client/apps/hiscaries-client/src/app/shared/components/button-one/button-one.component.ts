@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, output, input } from '@angular/core';
 
 @Component({
   selector: 'app-button-one',
@@ -9,11 +9,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./button-one.component.scss'],
 })
 export class ButtonOneComponent {
-  @Input() label?: string;
-  @Input() disabled?: boolean;
-  @Output() clickAction = new EventEmitter<void>();
+  readonly label = input<string>();
+  readonly disabled = input<boolean>();
+  readonly clickAction = output<void>();
 
   click(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.clickAction?.emit();
   }
 }

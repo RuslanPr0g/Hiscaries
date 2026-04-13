@@ -1,38 +1,29 @@
-import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
+import { Component, HostBinding, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
 import { PrimeNgIcon } from '@shared/types/primeng-icon.type';
 
 @Component({
   selector: 'app-button-two',
   standalone: true,
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, Button],
   templateUrl: './button-two.component.html',
   styleUrls: ['./button-two.component.scss'],
 })
 export class ButtonTwoComponent {
-  @Input() label!: string;
-  @Input() severity:
-    | 'success'
-    | 'info'
-    | 'warning'
-    | 'danger'
-    | 'help'
-    | 'primary'
-    | 'secondary'
-    | 'contrast'
-    | null
-    | undefined = null;
-  @Input() disabled = false;
-  @Input() iconType?: PrimeNgIcon;
-  @Input() isFullWidth = false;
-  @Output() clicked = new EventEmitter<void>();
+  readonly label = input.required<string>();
+  readonly severity = input<'success' | 'info' | 'danger' | 'help' | 'primary' | 'secondary' | 'contrast' | null | undefined>(null);
+  readonly disabled = input(false);
+  readonly iconType = input<PrimeNgIcon>();
+  readonly isFullWidth = input(false);
+  readonly clicked = output<void>();
 
   @HostBinding('style.width') get hostWidth() {
-    return this.isFullWidth ? '100%' : 'auto';
+    return this.isFullWidth() ? '100%' : 'auto';
   }
 
   handleClick() {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.clicked.emit();
   }
 }

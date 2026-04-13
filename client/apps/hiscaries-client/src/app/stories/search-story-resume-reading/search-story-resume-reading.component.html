@@ -3,11 +3,10 @@
     <h1 class="fs-1rem main-title">Resume reading</h1>
   }
   @if (stories().Items.length > 0 || isLoading()) {
-    <app-search-story-results
-      [stories]="s"
+    <app-search-story-results [stories]="s"
       [isLoading]="isLoading()"
       class="w-full"
-    ></app-search-story-results>
+     />
   }
 } @else {
   📚💨 No pages turned yet — your adventure awaits!

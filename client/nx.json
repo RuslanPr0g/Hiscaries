@@ -37,5 +37,27 @@
         "targetName": "test"
       }
     }
-  ]
+  ],
+  "nxCloudId": "69d9521b046c66d660c7415c",
+  "analytics": false,
+  "release": {
+    "projects": ["hiscaries-client"],
+    "version": {
+      "currentVersionResolver": "git-tag",
+      "generatorOptions": {
+        "currentVersionResolver": "git-tag",
+        "skipLockFileUpdate": true
+      }
+    },
+    "changelog": {
+      "workspaceChangelog": {
+        "createRelease": false
+      },
+      "projectChangelogs": false
+    },
+    "releaseTagPattern": "v{version}",
+    "publish": {
+      "skip": true
+    }
+  }
 }

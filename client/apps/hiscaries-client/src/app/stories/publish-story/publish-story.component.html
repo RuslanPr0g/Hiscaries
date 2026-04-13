@@ -56,7 +56,7 @@
       </div>
 
       <div class="form-controls__row">
-        @if (genres?.length) {
+        @if (genres && genres.length > 0) {
           <app-form-multiselect
             [formGroup]="publishForm"
             [items]="genres"

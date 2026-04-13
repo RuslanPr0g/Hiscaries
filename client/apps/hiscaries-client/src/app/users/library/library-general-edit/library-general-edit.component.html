@@ -1,4 +1,4 @@
-@if (library) {
+@if (library()) {
   <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()">
     <div class="library">
       <div
@@ -22,14 +22,19 @@
           </div>
           <div class="field-wrapper">
             <h3>Links to your social media</h3>
-            <p-chips formControlName="LinksToSocialMedia">
-              <ng-template let-item pTemplate="item">
+            <p-autocomplete
+              formControlName="LinksToSocialMedia"
+              [multiple]="true"
+              [suggestions]="[]"
+              (completeMethod)="$event"
+            >
+              <ng-template let-item pTemplate="selectedItem">
                 <span class="item">
                   {{ item }}
                 </span>
                 <i class="pi" [ngClass]="getSocialNetworkIcon(item)" style="font-size: 2rem"></i>
               </ng-template>
-            </p-chips>
+            </p-autocomplete>
           </div>
           <div class="field-wrapper">
             <h3>Profile image</h3>
@@ -40,7 +45,7 @@
           </div>
         </div>
       </div>
-      @if (isAbleToEdit) {
+      @if (isAbleToEdit()) {
         <div class="library-edit">
           <button class="link" (click)="cancelEdit()" type="button">
             <i class="pi pi-times" style="font-size: 2rem"></i>

@@ -1,4 +1,4 @@
-@if (library) {
+@if (library()) {
   <div class="library">
     <div
       class="profile-card background-image-configuration"
@@ -9,33 +9,33 @@
       @if (backgroundImageUrl) {
         <div class="overlay"></div>
       }
-      <div class="avatar-container" [ngClass]="{ 'min-width-150': isAbleToSubscribe }">
-        @if (library.AvatarImageUrls) {
+      <div class="avatar-container" [ngClass]="{ 'min-width-150': isAbleToSubscribe() }">
+        @if (library()!.AvatarImageUrls) {
           <div class="avatar">
-            <img [src]="library.AvatarImageUrls | fallbackImage" alt="User Avatar" />
+            <img [src]="library()!.AvatarImageUrls | fallbackImage" alt="User Avatar" />
           </div>
         }
-        @if (isAbleToEdit) {
+        @if (isAbleToEdit()) {
           <div class="library-edit">
             <button class="link" (click)="startEdit()">
               <i class="pi pi-user-edit" style="font-size: 1.5rem"></i>
             </button>
           </div>
         }
-        @if (isAbleToSubscribe) {
+        @if (isAbleToSubscribe()) {
           <div class="library-subscription">
-            @if (isSubscribed) {
+            @if (isSubscribed()) {
               <app-button-two
                 label="Unsubscribe"
                 [severity]="'secondary'"
-                [disabled]="isSubscribeLoading"
+                [disabled]="isSubscribeLoading()"
                 (clicked)="unSubscribeAction()"
               ></app-button-two>
             } @else {
               <app-button-two
                 label="Subscribe"
                 [severity]="'primary'"
-                [disabled]="isSubscribeLoading"
+                [disabled]="isSubscribeLoading()"
                 (clicked)="subscribeAction()"
               ></app-button-two>
             }
@@ -44,12 +44,12 @@
       </div>
       <div class="profile-details">
         <div class="username-wrapper">
-          <h2>{{ library.PlatformUser.Username }}</h2>
-          <p>&nbsp;&#x2022;&nbsp;{{ library.SubscribersCount }} subscribers</p>
+          <h2>{{ library()!.PlatformUser.Username }}</h2>
+          <p>&nbsp;&#x2022;&nbsp;{{ library()!.SubscribersCount }} subscribers</p>
         </div>
-        <p class="bio">{{ library.Bio }}</p>
+        <p class="bio">{{ library()!.Bio }}</p>
         <div class="social-links">
-          @for (link of library.LinksToSocialMedia; track link) {
+          @for (link of library()!.LinksToSocialMedia; track link) {
             <a [href]="link" target="_blank">
               <i class="pi" [ngClass]="getSocialNetworkIcon(link)" style="font-size: 2rem"></i>
             </a>

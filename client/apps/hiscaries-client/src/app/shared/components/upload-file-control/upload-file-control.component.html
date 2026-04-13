@@ -1,8 +1,8 @@
-<div class="custom-form-field" [ngClass]="{ 'custom-form-field-centered': centered }">
+<div class="custom-form-field" [ngClass]="{ 'custom-form-field-centered': centered() }">
   <p-fileUpload
     #fileUpload
     mode="basic"
-    [chooseLabel]="chooseLabel"
+    [chooseLabel]="chooseLabel()"
     chooseIcon="pi pi-upload"
     name="file"
     [accept]="accept"
@@ -19,9 +19,8 @@
         />
     }
   </div>
-  @if (control?.hasError('required') && control?.touched) {
-    <p-message
-      severity="error"
+  @if (control()?.hasError('required') && control()?.touched) {
+    <p-message severity="error"
       [text]="requiredErrorMessage"
-    ></p-message>
+     />
   }

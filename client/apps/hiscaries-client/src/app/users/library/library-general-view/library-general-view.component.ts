@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, inject, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LibraryModel } from '@users/models/domain/library.model';
 import { SocialMediaIconMapperService } from '@shared/services/social-media-icon-mapper.service';
@@ -15,40 +15,44 @@ import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 export class LibraryGeneralViewComponent {
   private iconService = inject(SocialMediaIconMapperService);
 
-  @Input() library: LibraryModel;
-  @Input() isAbleToEdit = false;
+  readonly library = input<LibraryModel>();
+  readonly isAbleToEdit = input(false);
 
-  @Input() isAbleToSubscribe = false;
-  @Input() isSubscribed = false;
+  readonly isAbleToSubscribe = input(false);
+  readonly isSubscribed = input(false);
 
-  @Input() isSubscribeLoading = false;
+  readonly isSubscribeLoading = input(false);
 
-  @Output() editStarted = new EventEmitter<void>();
+  readonly editStarted = output<void>();
 
-  @Output() subscribed = new EventEmitter<void>();
-  @Output() unSubscribed = new EventEmitter<void>();
+  readonly subscribed = output<void>();
+  readonly unSubscribed = output<void>();
 
   getSocialNetworkIcon(link: string): string {
     return this.iconService.mapFromUrl(link);
   }
 
   startEdit(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.editStarted?.emit();
   }
 
   get backgroundImageUrl(): string | undefined {
+    const library = this.library();
     return (
-      this.library?.AvatarImageUrls?.Large ??
-      this.library?.AvatarImageUrls?.Medium ??
-      this.library?.AvatarImageUrls?.Small
+      library?.AvatarImageUrls?.Large ??
+      library?.AvatarImageUrls?.Medium ??
+      library?.AvatarImageUrls?.Small
     );
   }
 
   subscribeAction(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.subscribed?.emit();
   }
 
   unSubscribeAction(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.unSubscribed?.emit();
   }
 }

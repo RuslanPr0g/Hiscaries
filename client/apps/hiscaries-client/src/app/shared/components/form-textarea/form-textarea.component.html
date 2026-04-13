@@ -1,12 +1,12 @@
-<div [formGroup]="formGroup" class="form-control">
+<div [formGroup]="formGroup()" class="form-control">
   <span class="p-float-label">
-    <textarea [id]="controlName" pInputTextarea [formControlName]="controlName"></textarea>
-    <label [for]="controlName">{{ label }}</label>
+    <textarea [id]="controlName()" pInputTextarea [formControlName]="controlName()"></textarea>
+    <label [for]="controlName()">{{ label() }}</label>
   </span>
-  @if (formGroup.get(controlName)?.hasError('required') && formGroup.get(controlName)?.touched) {
+  @if (formGroup().get(controlName())?.hasError('required') && formGroup().get(controlName())?.touched) {
     <p-message
       severity="error"
-      [text]="errorMessage"
+      [text]="errorMessage()"
     ></p-message>
   }
 </div>

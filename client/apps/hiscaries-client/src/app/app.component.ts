@@ -3,9 +3,8 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '@shared/header/header.component';
 import { LoadingOverlayComponent } from '@shared/components/loading-overlay/loading-overlay.component';
 import { CommonModule } from '@angular/common';
-import { SidebarModule } from 'primeng/sidebar';
-import { ToastModule } from 'primeng/toast';
-import { ButtonModule } from 'primeng/button';
+import { Toast } from 'primeng/toast';
+import { Button } from 'primeng/button';
 import { NavigationConst } from '@shared/constants/navigation.const';
 import { AuthService } from './users/services/auth.service';
 import { NotificationLifecycleManagerService } from './users/services/notification-lifecycle-manager.service';
@@ -23,11 +22,10 @@ import { DestroyService } from '@shared/services/destroy.service';
   imports: [
     CommonModule,
     RouterOutlet,
-    ButtonModule,
-    SidebarModule,
+    Button,
     HeaderComponent,
     LoadingOverlayComponent,
-    ToastModule,
+    Toast,
     NotificationsBarComponent,
   ],
   templateUrl: './app.component.html',

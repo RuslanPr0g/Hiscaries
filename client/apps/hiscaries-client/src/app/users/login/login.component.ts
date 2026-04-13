@@ -8,11 +8,10 @@ import { NavigationConst } from '@shared/constants/navigation.const';
 
 import { FormsModule } from '@angular/forms';
 
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { CardModule } from 'primeng/card';
-import { PasswordModule } from 'primeng/password';
-import { CheckboxModule } from 'primeng/checkbox';
+import { Button } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
+import { Card } from 'primeng/card';
+import { Password } from 'primeng/password';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
@@ -23,11 +22,10 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    CardModule,
-    InputTextModule,
-    PasswordModule,
-    CheckboxModule,
-    ButtonModule,
+    Card,
+    InputText,
+    Password,
+    Button,
     LoadingSpinnerComponent
 ],
 })

@@ -14,12 +14,12 @@ import { FormTextareaComponent } from '@shared/components/form-textarea/form-tex
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { NumberLimitControlComponent } from '@shared/components/number-limit-control/number-limit-control.component';
 import { FormDateInputComponent } from '@shared/components/form-date-input/form-date-input.component';
-import { DividerModule } from 'primeng/divider';
+import { Divider } from 'primeng/divider';
 import { GenreModel } from '@stories/models/domain/genre.model';
 import { take } from 'rxjs';
 import { UploadFileControlComponent } from '@shared/components/upload-file-control/upload-file-control.component';
 import { FormMultiselectComponent } from '@shared/components/form-multiselect/form-multiselect.component';
-import { MessageModule } from 'primeng/message';
+import { Message } from 'primeng/message';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModifyStoryFormModel } from '@stories/models/form/modify-story-form.model';
 import { ModifyStoryRequest } from '@stories/models/requests/modify-story.model';
@@ -27,7 +27,7 @@ import { StoryModelWithContents } from '@stories/models/domain/story-model';
 import { NavigationConst } from '@shared/constants/navigation.const';
 import { AuthService } from '@users/services/auth.service';
 import { ContentBuilderComponent } from './content-builder/content-builder.component';
-import { TabViewModule } from 'primeng/tabview';
+import { Tabs, Tab, TabList, TabPanel, TabPanels } from 'primeng/tabs';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { DocumentContent } from '@media/models/document-content.model';
@@ -45,12 +45,16 @@ import { OperationResult } from '@shared/models/operation-result.model';
     ButtonTwoComponent,
     FormDateInputComponent,
     NumberLimitControlComponent,
-    DividerModule,
+    Divider,
     UploadFileControlComponent,
     FormMultiselectComponent,
-    MessageModule,
+    Message,
     ContentBuilderComponent,
-    TabViewModule,
+    Tabs,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
     LoadingSpinnerComponent,
   ],
   templateUrl: './modify-story.component.html',

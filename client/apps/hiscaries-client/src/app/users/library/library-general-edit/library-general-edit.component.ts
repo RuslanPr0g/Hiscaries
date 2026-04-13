@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Component, OnInit, inject, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LibraryModel } from '@users/models/domain/library.model';
 import { SocialMediaIconMapperService } from '@shared/services/social-media-icon-mapper.service';
@@ -6,7 +6,7 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@a
 import { ModifyLibraryFormModel } from '@users/models/form/modify-library.model';
 import { FormTextareaComponent } from '@shared/components/form-textarea/form-textarea.component';
 import { UploadFileControlComponent } from '@shared/components/upload-file-control/upload-file-control.component';
-import { ChipsModule } from 'primeng/chips';
+import { AutoComplete } from 'primeng/autocomplete';
 import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
 
 @Component({
@@ -15,12 +15,12 @@ import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ChipsModule,
+    AutoComplete,
     FormTextareaComponent,
     UploadFileControlComponent,
   ],
   templateUrl: './library-general-edit.component.html',
-  styleUrl: './library-general-edit.component.scss',
+  styleUrls: ['./library-general-edit.component.scss'],
 })
 export class LibraryGeneralEditComponent implements OnInit {
   private iconService = inject(SocialMediaIconMapperService);
@@ -28,23 +28,24 @@ export class LibraryGeneralEditComponent implements OnInit {
 
   modifyForm: FormGroup<ModifyLibraryFormModel>;
 
-  @Input() library: LibraryModel;
-  @Input() isAbleToEdit = false;
+  readonly library = input<LibraryModel>();
+  readonly isAbleToEdit = input(false);
 
-  @Output() editCancelled = new EventEmitter<void>();
-  @Output() editSaved = new EventEmitter<ModifyLibraryModel>();
+  readonly editCancelled = output<void>();
+  readonly editSaved = output<ModifyLibraryModel>();
 
   ngOnInit(): void {
-    if (this.library) {
+    const library = this.library();
+    if (library) {
       const imageUrl =
-        this.library.AvatarImageUrls?.Large ??
-        this.library.AvatarImageUrls?.Medium ??
-        this.library.AvatarImageUrls?.Small ??
+        library.AvatarImageUrls?.Large ??
+        library.AvatarImageUrls?.Medium ??
+        library.AvatarImageUrls?.Small ??
         null;
       this.modifyForm = this.fb.group<ModifyLibraryFormModel>({
-        Bio: this.fb.control<string | null>(this.library.Bio),
+        Bio: this.fb.control<string | null>(library.Bio),
         AvatarUrl: this.fb.control<string | null>(imageUrl),
-        LinksToSocialMedia: this.fb.control<string[] | null>(this.library.LinksToSocialMedia),
+        LinksToSocialMedia: this.fb.control<string[] | null>(library.LinksToSocialMedia),
       });
     }
   }
@@ -62,6 +63,7 @@ export class LibraryGeneralEditComponent implements OnInit {
   }
 
   cancelEdit(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.editCancelled?.emit();
   }
 
@@ -72,7 +74,7 @@ export class LibraryGeneralEditComponent implements OnInit {
   onSubmit(): void {
     const formValue = this.modifyForm.value;
     this.saveEdit({
-      ...this.library,
+      ...this.library(),
       // TODO: figure out what to do in these kinda situations
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ...(formValue as any),

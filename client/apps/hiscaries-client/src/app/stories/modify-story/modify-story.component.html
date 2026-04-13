@@ -9,8 +9,13 @@
       }
       <h2>Modify Story</h2>
       <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()">
-        <p-tabView [activeIndex]="1">
-          <p-tabPanel header="General Information">
+        <p-tabs [value]="1">
+          <p-tablist>
+            <p-tab [value]="0">General Information</p-tab>
+            <p-tab [value]="1">Contents</p-tab>
+          </p-tablist>
+          <p-tabpanels>
+          <p-tabpanel [value]="0">
             <div class="form-controls">
               <div class="form-controls__row">
                 <app-form-input
@@ -53,7 +58,7 @@
                 ></app-form-date-input>
               </div>
               <div class="form-controls__row">
-                @if (genres?.length) {
+                @if (genres && genres.length > 0) {
                   <app-form-multiselect
                     [formGroup]="modifyForm"
                     [items]="genres"
@@ -66,8 +71,8 @@
                 ></app-upload-file-control>
               </div>
             </div>
-          </p-tabPanel>
-          <p-tabPanel header="Contents">
+          </p-tabpanel>
+          <p-tabpanel [value]="1">
             <app-content-builder
               [formGroup]="modifyForm"
               formArrayName="Contents"
@@ -112,8 +117,9 @@
                 }
               </div>
             </div>
-          </p-tabPanel>
-        </p-tabView>
+          </p-tabpanel>
+          </p-tabpanels>
+        </p-tabs>
         <div class="error-block">
           <p-divider layout="horizontal" />
           @if (globalError) {

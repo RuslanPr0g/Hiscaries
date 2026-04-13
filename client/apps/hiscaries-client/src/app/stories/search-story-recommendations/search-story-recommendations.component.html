@@ -1,10 +1,9 @@
 @if (stories().Items.length > 0) {
   <h1 class="fs-1rem main-title">Stories for you to read</h1>
-  <app-search-story-results
-    [stories]="stories()"
+  <app-search-story-results [stories]="stories()"
     [isLoading]="isLoading()"
     class="w-full"
-  ></app-search-story-results>
+   />
 } @else {
   @if (!isLoading()) {
     📚💨 No stories exist on the platform, be the first legend!

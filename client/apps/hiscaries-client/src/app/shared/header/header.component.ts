@@ -1,8 +1,7 @@
-import { Component, EventEmitter, HostListener, Output, inject } from '@angular/core';
+import { Component, HostListener, inject, output } from '@angular/core';
 import { AuthService } from '@users/services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
 import { NavigationConst } from '../constants/navigation.const';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
@@ -17,7 +16,7 @@ export interface MenuItem {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, ButtonModule, SearchBarComponent, ButtonTwoComponent],
+  imports: [CommonModule, SearchBarComponent, ButtonTwoComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -27,7 +26,7 @@ export class HeaderComponent {
 
   items: MenuItem[];
 
-  @Output() commandExecuted = new EventEmitter<void>();
+  readonly commandExecuted = output<void>();
 
   constructor() {
     this.items = [];
@@ -69,6 +68,7 @@ export class HeaderComponent {
   }
 
   closeModal() {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.commandExecuted.emit();
   }
 
@@ -78,6 +78,7 @@ export class HeaderComponent {
 
   callItemCommand(item: MenuItem): void {
     item?.Command();
+    // TODO: The 'emit' function requires a mandatory void argument
     this.commandExecuted?.emit();
   }
 

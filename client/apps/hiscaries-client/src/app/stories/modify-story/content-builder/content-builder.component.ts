@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, input } from '@angular/core';
 
 import {
   AbstractControl,
@@ -8,21 +8,17 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { MessageModule } from 'primeng/message';
-import { EditorModule } from 'primeng/editor';
 import { TextEditorComponent } from '@shared/components/text-editor/text-editor.component';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
 import { IteratorService } from '@shared/services/statefull/iterator/iterator.service';
 
 @Component({
   selector: 'app-content-builder',
   standalone: true,
   imports: [
-    EditorModule,
-    ButtonModule,
+    Button,
     ReactiveFormsModule,
-    MessageModule,
     FormsModule,
     TextEditorComponent,
     ButtonTwoComponent
@@ -39,8 +35,10 @@ export class ContentBuilderComponent implements OnInit {
 
   pageInput = 1;
 
-  @Input() formGroup: FormGroup;
-  @Input() formArrayName: string;
+  readonly formGroup = input<FormGroup>();
+  readonly formArrayName = input<string>();
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input() set contents(value: FormArray) {
     this._contents = value;
     this.setUpperBoundary();

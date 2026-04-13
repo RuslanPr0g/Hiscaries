@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { Router } from '@angular/router';
 import { NavigationConst } from '@shared/constants/navigation.const';
@@ -16,7 +16,7 @@ import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 export class SearchStoryItemComponent {
   private router = inject(Router);
 
-  @Input() story: StoryModel;
+  readonly story = input<StoryModel>();
 
   previewStory(story: StoryModel): void {
     this.router.navigate([NavigationConst.PreviewStory(story.Id)]);

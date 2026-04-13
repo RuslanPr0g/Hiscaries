@@ -1,13 +1,9 @@
-<app-skeleton-or-story-content [dataLoaded]="true">
+<app-skeleton-or-story-content [dataLoaded]="!isLoading()">
   <div class="story-grid glassy-grid">
-    @for (story of stories.Items; track story) {
+    @for (story of stories()!.Items; track story) {
       <div class="grid-item">
         <app-story-search-item [story]="story"></app-story-search-item>
       </div>
     }
   </div>
 </app-skeleton-or-story-content>
-
-<app-skeleton-or-story-content [dataLoaded]="!isLoading"></app-skeleton-or-story-content>
-
-<ng-template #noStories>😕 No stories found matching your search.</ng-template>

@@ -10,6 +10,7 @@
   "quoteProps": "as-needed",
   "jsxSingleQuote": false,
   "htmlWhitespaceSensitivity": "ignore",
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "overrides": [
     {
       "files": "*.md",

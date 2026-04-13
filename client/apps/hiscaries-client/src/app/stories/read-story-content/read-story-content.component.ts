@@ -12,7 +12,7 @@ import { UserService } from '@users/services/user.service';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { ReadStoryRequest } from '@users/models/requests/read-story.model';
 import { FormsModule } from '@angular/forms';
-import { Message, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ReadingSettingsComponent } from './reading-settings/reading-settings.component';
 import {
@@ -244,7 +244,7 @@ export class ReadStoryContentComponent implements OnInit {
         severity: 'custom',
         summary: 'Settings',
         styleClass: 'narrow-toast backdrop-blur-lg rounded-2xl',
-      } as Message);
+      });
       this.settingsVisible = true;
     }
   }

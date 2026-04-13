@@ -15,6 +15,8 @@ import { environment } from '@environments/environment';
 import { storyFeatureKey, storyReducer } from './stories/store/story.reducer';
 import { NotificationHandler } from '@shared/models/notification-handler.model';
 import { StoryPublishedHandler } from './users/notification-handlers/story-published-notification.handler';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 
 export function tokenGetter() {
   return localStorage.getItem(environment.localStorageKeys.ACCESS_TOKEN_KEY);
@@ -56,5 +58,17 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideState({ name: storyFeatureKey, reducer: storyReducer }),
     provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: false,
+          cssLayer: {
+            name: 'primeng',
+            order: 'tailwind-base, primeng, tailwind-utilities',
+          },
+        },
+      },
+    }),
   ],
 };

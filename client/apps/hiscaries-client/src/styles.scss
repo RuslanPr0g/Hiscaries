@@ -1,9 +1,9 @@
+@use 'sass:color';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import 'primeng/resources/themes/lara-dark-blue/theme.css';
-@import 'primeng/resources/primeng.css';
 @import 'primeicons/primeicons.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @import '../../../node_modules/quill/dist/quill.core.css';
@@ -201,16 +201,16 @@ body.story-background-overlay::before {
 
 .w-full {
   .p-button,
-  .p-password,
-  .p-password-input {
+  p-password {
     width: 100%;
   }
 }
 
-.p-password {
+// p-password now uses fluid prop for full-width; inner input is .p-inputtext
+p-password {
   width: 100%;
 
-  .p-password-input {
+  .p-inputtext {
     padding: 0.75rem 1rem;
     border-radius: 12px;
     border: none;
@@ -230,18 +230,12 @@ body.story-background-overlay::before {
   }
 }
 
-.p-link {
-  background: $accent-color;
-}
-
-.p-highlight {
-  background: $secondary-color !important;
-}
+// .p-link and .p-highlight removed in PrimeNG v19 — use component-specific classes instead
 
 .p-button {
   background: $secondary-color;
   backdrop-filter: blur(6px);
-  border: 1px solid lighten($glass-border, 20%);
+  border: 1px solid color.adjust($glass-border, $lightness: 20%);
   color: $text-color;
   font-weight: 600;
   border-radius: 12px;
@@ -310,11 +304,13 @@ body.story-background-overlay::before {
   border-top-color: $glass-border;
 }
 
-.p-tabview {
+// Tabs component (replaces TabView in v19+)
+// New class names: p-tabs, p-tablist, p-tab, p-tabpanels, p-tabpanel
+.p-tabs {
   background: transparent;
   border: none;
 
-  .p-tabview-nav {
+  .p-tablist {
     background: $glass-bg;
     border-radius: 16px;
     padding: 0.5rem;
@@ -324,7 +320,7 @@ body.story-background-overlay::before {
     gap: 1rem;
     justify-content: center;
 
-    .p-tabview-nav-link {
+    .p-tab {
       color: $text-color;
       padding: 0.75rem 1.25rem;
       border-radius: 10px;
@@ -337,22 +333,22 @@ body.story-background-overlay::before {
         color: $hover-color;
         border: none;
       }
-    }
 
-    .p-highlight {
-      background-color: $primary-color;
-      color: #1e1e1e !important;
-      font-weight: bold;
-      box-shadow: 0 0 0 2px $accent-color;
+      &.p-tab-active {
+        background-color: $primary-color;
+        color: #1e1e1e !important;
+        font-weight: bold;
+        box-shadow: 0 0 0 2px $accent-color;
+      }
     }
   }
 
-  .p-tabview-panels {
+  .p-tabpanels {
     background: transparent;
     padding: 2rem 0 0 0;
     border: none;
 
-    .p-tabview-panel {
+    .p-tabpanel {
       animation: fadeIn 0.3s ease-in-out;
       color: $text-color;
       background: transparent;

@@ -1,14 +1,13 @@
 @if (stories().Items.length > 0) {
   @for (label of storyKeys; track label) {
     <h3 class="date-label">{{ label }}</h3>
-    <app-search-story-results
-      [stories]="{
+    <app-search-story-results [stories]="{
         Items: groupedStories()[label],
         TotalItemsCount: groupedStories()[label].length
       }"
       [isLoading]="isLoading()"
       class="w-full"
-    ></app-search-story-results>
+     />
   }
 } @else {
   📚💨 No pages turned yet — your adventure awaits!

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $primary-color: #c9a27e;
 $secondary-color: #a37c5b;
 $accent-color: #d1bfa3;
@@ -68,8 +70,8 @@ $shadow: 0 8px 32px 0 rgba(34, 34, 26, 0.37);
   &:hover {
     background: linear-gradient(
       135deg,
-      lighten($primary-color, 15%),
-      lighten($secondary-color, 15%)
+      color.scale($primary-color, $lightness: 15%),
+      color.scale($secondary-color, $lightness: 15%)
     );
     transform: translateY(-2px);
   }

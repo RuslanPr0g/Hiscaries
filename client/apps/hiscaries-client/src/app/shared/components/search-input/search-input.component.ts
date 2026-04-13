@@ -3,10 +3,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   Input,
-  Output,
   ViewChild,
+  output
 } from '@angular/core';
 import { DestroyService } from '../../services/destroy.service';
 
@@ -23,6 +22,8 @@ export class SearchInputComponent implements AfterViewInit {
 
   @ViewChild('searchValue') searchValueRef!: ElementRef;
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input() set defaultValue(value: string | null | undefined) {
     this._defaultValue = value;
     this.updateSearchInput();
@@ -32,7 +33,7 @@ export class SearchInputComponent implements AfterViewInit {
     return this._defaultValue;
   }
 
-  @Output() searchAction = new EventEmitter<string>();
+  readonly searchAction = output<string>();
 
   isHighlighted = true;
 

@@ -1,20 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CalendarModule } from 'primeng/calendar';
-import { MessageModule } from 'primeng/message';
+import { DatePicker } from 'primeng/datepicker';
+import { Message } from 'primeng/message';
 
 @Component({
   selector: 'app-form-date-input',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CalendarModule, MessageModule],
+  imports: [CommonModule, ReactiveFormsModule, DatePicker, Message],
   templateUrl: './form-date-input.component.html',
   styleUrls: ['./form-date-input.component.scss'],
 })
 export class FormDateInputComponent {
-  @Input() formGroup!: FormGroup;
-  @Input() controlName!: string;
-  @Input() label!: string;
-  @Input() errorMessage!: string;
-  @Input() centered = false;
+  readonly formGroup = input.required<FormGroup>();
+  readonly controlName = input.required<string>();
+  readonly label = input.required<string>();
+  readonly errorMessage = input.required<string>();
+  readonly centered = input(false);
 }

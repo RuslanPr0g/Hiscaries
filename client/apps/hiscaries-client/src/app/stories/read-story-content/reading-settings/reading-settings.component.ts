@@ -1,5 +1,5 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
-import { InputSwitchModule } from 'primeng/inputswitch';
+import { Component, inject, OnInit, output } from '@angular/core';
+import { ToggleSwitch } from 'primeng/toggleswitch';
 
 import { FormsModule } from '@angular/forms';
 import {
@@ -11,12 +11,12 @@ import { LoadReadingSettingsService } from '@stories/services/load-reading-setti
 @Component({
   selector: 'app-reading-settings',
   standalone: true,
-  imports: [InputSwitchModule, FormsModule],
+  imports: [ToggleSwitch, FormsModule],
   templateUrl: './reading-settings.component.html',
   styleUrls: ['./reading-settings.component.scss'],
 })
 export class ReadingSettingsComponent implements OnInit {
-  @Output() settingsChanged = new EventEmitter<ReadingSettings>();
+  readonly settingsChanged = output<ReadingSettings>();
 
   settings: ReadingSettings = defaultReadingSettings;
 

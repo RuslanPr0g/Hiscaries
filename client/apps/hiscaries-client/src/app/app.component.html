@@ -1,5 +1,5 @@
 @if (loading) {
-  <app-loading-overlay></app-loading-overlay>
+  <app-loading-overlay />
 }
 <main [ngClass]="{ container: authService.isAuthenticated() }">
   @if (authService.isAuthenticated()) {

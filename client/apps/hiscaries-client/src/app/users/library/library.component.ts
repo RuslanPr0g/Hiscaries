@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, output, input } from '@angular/core';
 import { LibraryModel } from '@users/models/domain/library.model';
 import { StoryModel } from '@stories/models/domain/story-model';
-
 import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
 import { LibraryGeneralViewComponent } from './library-general-view/library-general-view.component';
 import { LibraryGeneralEditComponent } from './library-general-edit/library-general-edit.component';
@@ -22,20 +21,20 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
   styleUrl: './library.component.scss',
 })
 export class LibraryComponent {
-  @Input() library: LibraryModel;
-  @Input() stories: QueriedModel<StoryModel>;
-  @Input() isLoading: boolean | null = false;
-  @Input() isAbleToEdit = false;
+  readonly library = input<LibraryModel>();
+  readonly stories = input<QueriedModel<StoryModel>>();
+  readonly isLoading = input<boolean | null>(false);
+  readonly isAbleToEdit = input(false);
 
-  @Input() isAbleToSubscribe = false;
-  @Input() isSubscribed = false;
+  readonly isAbleToSubscribe = input(false);
+  readonly isSubscribed = input(false);
 
-  @Input() isSubscribeLoading = false;
+  readonly isSubscribeLoading = input(false);
 
-  @Output() libraryEdited = new EventEmitter<ModifyLibraryModel>();
+  readonly libraryEdited = output<ModifyLibraryModel>();
 
-  @Output() subscribed = new EventEmitter<void>();
-  @Output() unSubscribed = new EventEmitter<void>();
+  readonly subscribed = output<void>();
+  readonly unSubscribed = output<void>();
 
   isEditMode = false;
 
@@ -53,10 +52,12 @@ export class LibraryComponent {
   }
 
   subscribeAction(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.subscribed?.emit();
   }
 
   unSubscribeAction(): void {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.unSubscribed?.emit();
   }
 }

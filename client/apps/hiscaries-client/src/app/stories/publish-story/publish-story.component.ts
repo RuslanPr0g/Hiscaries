@@ -12,14 +12,14 @@ import { FormTextareaComponent } from '@shared/components/form-textarea/form-tex
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { NumberLimitControlComponent } from '@shared/components/number-limit-control/number-limit-control.component';
 import { FormDateInputComponent } from '@shared/components/form-date-input/form-date-input.component';
-import { DividerModule } from 'primeng/divider';
+import { Divider } from 'primeng/divider';
 import { GenreModel } from '@stories/models/domain/genre.model';
 import { take } from 'rxjs';
 import { UploadFileControlComponent } from '@shared/components/upload-file-control/upload-file-control.component';
 import { FormMultiselectComponent } from '@shared/components/form-multiselect/form-multiselect.component';
 import { PublishFormModel } from '@stories/models/form/publish-story-form.model';
 import { PublishStoryRequest } from '@stories/models/requests/publish-story.model';
-import { MessageModule } from 'primeng/message';
+import { Message } from 'primeng/message';
 import { Router } from '@angular/router';
 import { BaseIdModel } from '@shared/models/base-id.model';
 import { NavigationConst } from '@shared/constants/navigation.const';
@@ -40,10 +40,10 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
     ButtonTwoComponent,
     FormDateInputComponent,
     NumberLimitControlComponent,
-    DividerModule,
+    Divider,
     UploadFileControlComponent,
     FormMultiselectComponent,
-    MessageModule,
+    Message,
     LoadingSpinnerComponent,
   ],
   templateUrl: './publish-story.component.html',

@@ -1,5 +1,5 @@
-<div [formGroup]="formGroup" class="content-editor-container">
-  <ng-container [formArrayName]="formArrayName">
+<div [formGroup]="formGroup()!" class="content-editor-container">
+  <ng-container [formArrayName]="formArrayName()!">
     <app-text-editor
       [control]="currentPageControl"
       [errorMessage]="'Content is required'"

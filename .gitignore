@@ -15,6 +15,9 @@
 # Mono auto generated files
 mono_crash.*
 
+# AI
+.windsurf
+
 **/.nx
 
 # Build results

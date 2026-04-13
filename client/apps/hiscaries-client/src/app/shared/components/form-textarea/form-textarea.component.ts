@@ -1,20 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { Textarea } from 'primeng/textarea';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MessageModule } from 'primeng/message';
+import { Message } from 'primeng/message';
 
 @Component({
   selector: 'app-form-textarea',
   standalone: true,
-  imports: [InputTextareaModule, ReactiveFormsModule, MessageModule],
+  imports: [Textarea, ReactiveFormsModule, Message],
   templateUrl: './form-textarea.component.html',
   styleUrls: ['./form-textarea.component.scss'],
 })
 export class FormTextareaComponent {
-  @Input() formGroup!: FormGroup;
-  @Input() controlName!: string;
-  @Input() label!: string;
-  @Input() errorMessage = 'This field is required';
-  @Input() rows = 4;
+  readonly formGroup = input.required<FormGroup>();
+  readonly controlName = input.required<string>();
+  readonly label = input.required<string>();
+  readonly errorMessage = input('This field is required');
+  readonly rows = input(4);
 }

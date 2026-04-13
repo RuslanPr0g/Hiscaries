@@ -1,37 +1,34 @@
 @if (!isEditMode) {
-  <app-library-general-view
-    [library]="library"
-    [isAbleToEdit]="isAbleToEdit"
-    [isAbleToSubscribe]="isAbleToSubscribe"
-    [isSubscribed]="isSubscribed"
-    [isSubscribeLoading]="isSubscribeLoading"
+  <app-library-general-view [library]="library()"
+    [isAbleToEdit]="isAbleToEdit()"
+    [isAbleToSubscribe]="isAbleToSubscribe()"
+    [isSubscribed]="isSubscribed()"
+    [isSubscribeLoading]="isSubscribeLoading()"
     (editStarted)="startEdit()"
     (subscribed)="subscribeAction()"
     (unSubscribed)="unSubscribeAction()"
-  ></app-library-general-view>
+   />
 } @else {
-  <app-library-general-edit
-    [library]="library"
-    [isAbleToEdit]="isAbleToEdit"
+  <app-library-general-edit [library]="library()"
+    [isAbleToEdit]="isAbleToEdit()"
     (editCancelled)="cancelEdit()"
     (editSaved)="saveEdit($event)"
-  ></app-library-general-edit>
+   />
 }
 
-@if (stories) {
-  @if (stories.Items.length > 0) {
-    <app-search-story-results
-      [stories]="stories"
-      [isLoading]="isLoading"
+@if (stories()) {
+  @if (stories()!.Items.length > 0) {
+    <app-search-story-results [stories]="stories()"
+      [isLoading]="isLoading()"
       class="w-full"
-    ></app-search-story-results>
+     />
   } @else {
     <div class="center">Nothing posted so far!</div>
   }
 }
-@if (isLoading) {
+@if (isLoading()) {
   <div class="center">
-    @if (isLoading) {
+    @if (isLoading()) {
       <app-loading-spinner></app-loading-spinner>
     }
   </div>

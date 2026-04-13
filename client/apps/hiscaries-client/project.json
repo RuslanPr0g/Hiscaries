@@ -31,9 +31,7 @@
           }
         ],
         "styles": [
-          "primeicons/primeicons.css",
-          "primeng/resources/themes/lara-dark-purple/theme.css",
-          "primeng/resources/primeng.min.css",
+          "node_modules/primeicons/primeicons.css",
           "apps/hiscaries-client/src/styles.scss"
         ],
         "scripts": []
@@ -49,7 +47,7 @@
             {
               "type": "anyComponentStyle",
               "maximumWarning": "2kB",
-              "maximumError": "4kB"
+              "maximumError": "5kB"
             }
           ],
           "outputHashing": "all",

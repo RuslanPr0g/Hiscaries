@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $primary-color: #c9a27e;
 $secondary-color: #a37c5b;
 $accent-color: #d1bfa3;
@@ -33,7 +35,7 @@ $background-gradient-end: #645044;
   }
 
   .toggle-text {
-    color: lighten($text-color, 20%);
+    color: color.scale($text-color, $lightness: 20%);
     cursor: pointer;
     margin-bottom: 1.5rem;
     transition: color 0.3s;
@@ -70,7 +72,7 @@ $background-gradient-end: #645044;
       flex-direction: column;
 
       input,
-      .p-password-input {
+      .p-inputtext {
         padding: 0.75rem 1rem;
         border-radius: 12px;
         border: none;

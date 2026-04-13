@@ -1,25 +1,23 @@
-import { Component, Input } from '@angular/core';
-
+import { Component, input } from '@angular/core';
 import { AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MessageModule } from 'primeng/message';
-import { EditorModule } from 'primeng/editor';
+import { Editor } from 'primeng/editor';
 
 @Component({
   selector: 'app-text-editor',
   standalone: true,
-  imports: [EditorModule, ReactiveFormsModule, MessageModule, FormsModule],
+  imports: [Editor, ReactiveFormsModule, FormsModule],
   templateUrl: './text-editor.component.html',
   styleUrls: ['./text-editor.component.scss'],
 })
 export class TextEditorComponent {
-  @Input() control!: AbstractControl<string>;
-  @Input() errorMessage!: string;
+  readonly control = input.required<AbstractControl<string>>();
+  readonly errorMessage = input.required<string>();
 
   set text(value: string) {
-    this.control.setValue(value);
+    this.control().setValue(value);
   }
 
   get text(): string | null {
-    return this.control?.value;
+    return this.control()?.value;
   }
 }
