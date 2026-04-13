@@ -39,7 +39,14 @@ export class IntersectionAnchorComponent implements OnDestroy {
   }
 
   private setupObserver(): void {
-    if (this.observer || typeof IntersectionObserver === 'undefined') return;
+    if (this.observer) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      console.warn(
+        'IntersectionObserver is not supported in this environment. ' +
+          'IntersectionAnchorComponent will not emit intersected events.',
+      );
+      return;
+    }
     this.observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

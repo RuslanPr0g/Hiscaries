@@ -10,17 +10,8 @@ public class LibraryOwnerRepository(StoriesContext context) : ILibraryOwnerRepos
 
     public async Task<Guid?> GetOwnerUserAccountIdByLibraryId(Guid libraryId)
     {
-        var result = await _context.Database
-            .SqlQueryRaw<Guid>(
-                """
-                SELECT pu."UserAccountId"
-                FROM platformusers."Libraries" l
-                JOIN platformusers."PlatformUsers" pu ON pu."Id" = l."PlatformUserId"
-                WHERE l."Id" = {0}
-                """,
-                libraryId)
+        return await _context.Stories
+            .Where(story => story.LibraryId == libraryId)
             .FirstOrDefaultAsync();
-
-        return result == Guid.Empty ? null : result;
     }
 }
