@@ -1,6 +1,6 @@
 {
   "name": "hiscaries-client",
-  "version": "5.5.0",
+  "version": "5.6.0",
   "scripts": {
     "ng": "ng",
     "start": "nx serve hiscaries-client --proxy-config proxy.conf.json",
@@ -9,7 +9,7 @@
     "watch": "nx build hiscaries-client --watch --configuration development",
     "test": "nx test hiscaries-client",
     "reset": "nx reset",
-    "lintall": "npx eslint . --ignore-pattern \".angular/*\"",
+    "lintall": "npx eslint . --ignore-pattern \".angular/*\" --ignore-pattern \".nx/*\"",
     "lint": "nx lint hiscaries-client --fix",
     "test:ci": "nx test --watch=false",
     "build": "nx build hiscaries-client",
