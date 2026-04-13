@@ -59,11 +59,13 @@ public static class PlatformUserEndpoints
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPost("/read", ReadStory)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPost("/bookmark", BookmarkStory)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
