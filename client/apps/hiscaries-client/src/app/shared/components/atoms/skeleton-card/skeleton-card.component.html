@@ -1,6 +1,6 @@
 <ui-glass-card>
-    <p-skeleton [style]="{ height: imageHeight() }" styleClass="skeleton-image" />
-    @for (i of lineItems(); track i) {
+  <p-skeleton [style]="{ height: imageHeight() }" styleClass="skeleton-image" />
+  @for (i of lineItems(); track $index) {
     <p-skeleton styleClass="skeleton-line" />
-    }
+  }
 </ui-glass-card>
