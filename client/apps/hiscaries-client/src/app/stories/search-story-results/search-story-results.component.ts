@@ -11,7 +11,7 @@ import { QueriedModel } from '@shared/models/queried.model';
   imports: [
     SearchStoryItemComponent,
     SkeletonOrStoryContentComponent
-],
+  ],
   templateUrl: './search-story-results.component.html',
   styleUrls: ['./search-story-results.component.scss'],
 })
@@ -20,7 +20,7 @@ export class SearchStoryResultsComponent implements OnInit {
   readonly isLoading = input<boolean | null>(true);
   readonly isCarousel = input(false);
 
-  responsiveOptions: any[] | undefined;
+  responsiveOptions: { breakpoint: string; numVisible: number; numScroll: number }[] | undefined;
 
   ngOnInit(): void {
     this.initializeResponsiveOptions();

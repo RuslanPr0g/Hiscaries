@@ -14,11 +14,10 @@ export class MediaService {
   private apiUrl = `${environment.apiUrl}/media`;
 
   asContents(file: File, start?: number, end?: number): Observable<DocumentContent> {
-    let url = `${this.apiUrl}/documents/as-contents`;
     const params = new URLSearchParams();
     if (start != null) params.append('start', start.toString());
     if (end != null) params.append('end', end.toString());
-    if (params.toString()) url += `?${params.toString()}`;
+    const url = params.toString() ? `${this.apiUrl}/documents/as-contents?${params.toString()}` : `${this.apiUrl}/documents/as-contents`;
 
     return this.http.post<DocumentContent>(url, file, {
       // TODO: for now only pdf
@@ -27,7 +26,7 @@ export class MediaService {
   }
 
   upload(storyId: string, file: File): Observable<OperationResult> {
-    let url = `${this.apiUrl}/documents/upload`;
+    const url = `${this.apiUrl}/documents/upload`;
     const params = new HttpParams().set('storyId', storyId);
 
     return this.http.post<OperationResult>(url, file, {
@@ -38,7 +37,7 @@ export class MediaService {
   }
 
   delete(storyId: string): Observable<OperationResult> {
-    let url = `${this.apiUrl}/documents`;
+    const url = `${this.apiUrl}/documents`;
     const params = new HttpParams().set('storyId', storyId);
 
     return this.http.delete<OperationResult>(url, { params });

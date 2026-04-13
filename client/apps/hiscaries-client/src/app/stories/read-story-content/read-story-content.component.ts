@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { StoryModelWithContents } from '@stories/models/domain/story-model';
 import { CommonModule } from '@angular/common';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { debounceTime, distinctUntilChanged, Subject, switchMap, take } from 'rxjs';
+import { debounceTime, Subject, switchMap, take } from 'rxjs';
 import { convertToBase64 } from '@shared/helpers/image.helper';
 import { IteratorService } from '@shared/services/statefull/iterator/iterator.service';
 import { ButtonModule } from 'primeng/button';
@@ -132,7 +132,7 @@ export class ReadStoryContentComponent implements OnInit {
 
           this.story = {
             ...story,
-            ImagePreviewUrl: imageUrl ? (convertToBase64(imageUrl) as any) : undefined,
+            ImagePreviewUrl: imageUrl ? { Large: convertToBase64(imageUrl) } : {},
           };
 
           if (story.LastPageRead) {
