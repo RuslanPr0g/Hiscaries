@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\\Hiscary.UserAccounts.Api.Rest\\Hiscary.UserAccounts.Api.Rest.csproj" />
     <ProjectReference Include="..\\Hiscary.AppHost\\Hiscary.AppHost.csproj" />
     <ProjectReference Include="..\\Hiscary.IntegrationTesting\\Hiscary.IntegrationTesting.csproj" />
   </ItemGroup>

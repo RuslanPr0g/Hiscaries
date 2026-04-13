@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Hiscary.Security.Tests": {
+    "Hiscary.Security.IntegrationTests": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

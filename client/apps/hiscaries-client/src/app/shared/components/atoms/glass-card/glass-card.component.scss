@@ -1,0 +1,33 @@
+.glass-card {
+  background: rgba(56, 41, 29, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+
+  &.border-radius-sm {
+    border-radius: 4px;
+  }
+
+  &.border-radius-md {
+    border-radius: 8px;
+  }
+
+  &.border-radius-lg {
+    border-radius: 16px;
+  }
+
+  &.interactive {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.4);
+      outline-offset: 2px;
+    }
+  }
+}

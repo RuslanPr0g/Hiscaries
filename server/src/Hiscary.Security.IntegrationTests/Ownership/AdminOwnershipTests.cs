@@ -8,24 +8,10 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
 
-namespace Hiscary.Security.Tests.Ownership;
+namespace Hiscary.Security.IntegrationTests.Ownership;
 
-/// <summary>
-/// Property-Based Tests for StoryOwnershipValidator.IsOwnerOrAdmin() — admin short-circuit.
-///
-/// Validates: Requirements 2.2
-///
-/// Property: ∀ admin a, ∀ story s → IsOwnerOrAdmin(s, a, "admin") returns true
-/// </summary>
 public class AdminOwnershipTests
 {
-    /// <summary>
-    /// Validates: Requirements 2.2
-    ///
-    /// Property: ∀ admin a, ∀ story s owned by a different random publisher →
-    ///   IsOwnerOrAdmin(s, a, "admin") returns true
-    ///   AND the story repository is NOT called (admin short-circuit)
-    /// </summary>
     [Property(MaxTest = 100)]
     public Property Admin_CanAlwaysAccessAnyStory_AndRepositoryIsNotCalled()
     {
@@ -37,7 +23,6 @@ public class AdminOwnershipTests
         var storyRepoMock = new Mock<IStoryWriteRepository>();
         var libraryOwnerRepoMock = new Mock<ILibraryOwnerRepository>();
 
-        // Story is owned by a different publisher — admin should bypass this entirely
         storyRepoMock
             .Setup(r => r.GetById(It.IsAny<StoryId>()))
             .ReturnsAsync(Story.Create(
@@ -61,12 +46,10 @@ public class AdminOwnershipTests
 
         var result = validator.IsOwnerOrAdmin(storyId, adminId, "admin").GetAwaiter().GetResult();
 
-        // Admin should always get true
         var isTrue = Prop.Label(
             result,
             $"Expected true for admin={adminId} accessing story owned by publisher={publisherId}, but got false");
 
-        // Repository should NOT be called — admin short-circuits before any DB access
         storyRepoMock.Verify(r => r.GetById(It.IsAny<StoryId>()), Times.Never);
 
         return isTrue;

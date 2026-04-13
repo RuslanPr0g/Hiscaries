@@ -3,30 +3,15 @@ using FsCheck.Fluent;
 using FsCheck.Xunit;
 using Hiscary.Stories.Application.Write.Services;
 using Hiscary.Stories.Domain.DataAccess;
-using Hiscary.Stories.Domain.Genres;
 using Hiscary.Stories.Domain.Stories;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
 
-namespace Hiscary.Security.Tests.Ownership;
+namespace Hiscary.Security.IntegrationTests.Ownership;
 
-/// <summary>
-/// Property-Based Tests for StoryOwnershipValidator.IsOwnerOrAdmin().
-///
-/// Validates: Requirements 2.2
-///
-/// Property: ∀ publisher p1, story s owned by p2 (p1 ≠ p2) → IsOwnerOrAdmin(s, p1, "publisher") = false
-/// Inverse:  ∀ publisher p2, story s owned by p2 → IsOwnerOrAdmin(s, p2, "publisher") = true
-/// </summary>
 public class StoryOwnershipValidatorTests
 {
-    /// <summary>
-    /// Validates: Requirements 2.2
-    ///
-    /// Property: ∀ publisher p1, story s owned by p2 (p1 ≠ p2) →
-    ///   IsOwnerOrAdmin(s, p1, "publisher") returns false
-    /// </summary>
     [Property(MaxTest = 100, Arbitrary = new[] { typeof(TwoDistinctPublishersArbitrary) })]
     public Property NonOwnerPublisher_CannotAccessAnotherPublishersStory(TwoDistinctPublishers publishers)
     {
@@ -35,7 +20,6 @@ public class StoryOwnershipValidatorTests
         var storyId = Guid.NewGuid();
         var libraryId = Guid.NewGuid();
 
-        // Story is owned by p2's library
         var story = Story.Create(
             new StoryId(storyId),
             libraryId,
@@ -54,14 +38,13 @@ public class StoryOwnershipValidatorTests
         var libraryOwnerRepoMock = new Mock<ILibraryOwnerRepository>();
         libraryOwnerRepoMock
             .Setup(r => r.GetOwnerUserAccountIdByLibraryId(libraryId))
-            .ReturnsAsync(p2Id); // library belongs to p2
+            .ReturnsAsync(p2Id);
 
         var validator = new StoryOwnershipValidator(
             storyRepoMock.Object,
             libraryOwnerRepoMock.Object,
             NullLogger<StoryOwnershipValidator>.Instance);
 
-        // p1 (non-owner) tries to access p2's story
         var result = validator.IsOwnerOrAdmin(storyId, p1Id, "publisher").GetAwaiter().GetResult();
 
         return Prop.Label(
@@ -69,12 +52,6 @@ public class StoryOwnershipValidatorTests
             $"Expected false for non-owner p1={p1Id} accessing story owned by p2={p2Id}, but got true");
     }
 
-    /// <summary>
-    /// Validates: Requirements 2.2
-    ///
-    /// Inverse property: ∀ publisher p2, story s owned by p2 →
-    ///   IsOwnerOrAdmin(s, p2, "publisher") returns true
-    /// </summary>
     [Property(MaxTest = 100, Arbitrary = new[] { typeof(TwoDistinctPublishersArbitrary) })]
     public Property OwnerPublisher_CanAccessOwnStory(TwoDistinctPublishers publishers)
     {
@@ -101,14 +78,13 @@ public class StoryOwnershipValidatorTests
         var libraryOwnerRepoMock = new Mock<ILibraryOwnerRepository>();
         libraryOwnerRepoMock
             .Setup(r => r.GetOwnerUserAccountIdByLibraryId(libraryId))
-            .ReturnsAsync(p2Id); // library belongs to p2
+            .ReturnsAsync(p2Id);
 
         var validator = new StoryOwnershipValidator(
             storyRepoMock.Object,
             libraryOwnerRepoMock.Object,
             NullLogger<StoryOwnershipValidator>.Instance);
 
-        // p2 (owner) accesses their own story
         var result = validator.IsOwnerOrAdmin(storyId, p2Id, "publisher").GetAwaiter().GetResult();
 
         return Prop.Label(
@@ -117,15 +93,8 @@ public class StoryOwnershipValidatorTests
     }
 }
 
-/// <summary>
-/// Represents two distinct publisher GUIDs (p1 ≠ p2).
-/// </summary>
 public record TwoDistinctPublishers(Guid P1, Guid P2);
 
-/// <summary>
-/// FsCheck arbitrary that generates pairs of distinct non-empty GUIDs
-/// representing two different publishers.
-/// </summary>
 public static class TwoDistinctPublishersArbitrary
 {
     public static Arbitrary<TwoDistinctPublishers> Generate()

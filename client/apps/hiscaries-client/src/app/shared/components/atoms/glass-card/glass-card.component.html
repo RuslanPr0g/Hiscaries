@@ -1,0 +1,11 @@
+<div
+  class="glass-card"
+  [class.interactive]="interactive()"
+  [class.border-radius-sm]="borderRadius() === 'sm'"
+  [class.border-radius-md]="borderRadius() === 'md'"
+  [class.border-radius-lg]="borderRadius() === 'lg'"
+  [attr.tabindex]="interactive() ? '0' : null"
+  (keydown.enter)="onEnter()"
+>
+  <ng-content />
+</div>
