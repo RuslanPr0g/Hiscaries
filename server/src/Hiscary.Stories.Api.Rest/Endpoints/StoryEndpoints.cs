@@ -3,6 +3,7 @@ using Hiscary.Shared.Domain.Extensions;
 using Hiscary.Stories.Api.Rest.Requests.Comments;
 using Hiscary.Stories.Api.Rest.Requests.Stories;
 using Hiscary.Stories.Domain;
+using Hiscary.Stories.Domain.DataAccess;
 using Hiscary.Stories.Domain.ReadModels;
 using Hiscary.Stories.Domain.Stories;
 using Microsoft.AspNetCore.Mvc;
@@ -269,6 +270,26 @@ public static class StoryEndpoints
         var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
             service.DeleteAudio(storyId, user.Id, callerRole));
+    }
+
+    private static async Task<IResult> GetStoryOwner(
+        [FromQuery] Guid storyId,
+        [FromServices] IStoryWriteRepository storyRepository,
+        [FromServices] ILibraryOwnerRepository libraryOwnerRepository)
+    {
+        var story = await storyRepository.GetById(storyId);
+        if (story is null)
+        {
+            return Results.NotFound();
+        }
+
+        var ownerUserAccountId = await libraryOwnerRepository.GetOwnerUserAccountIdByLibraryId(story.LibraryId);
+        if (ownerUserAccountId is null)
+        {
+            return Results.NotFound();
+        }
+
+        return Results.Ok(ownerUserAccountId);
     }
 
 }

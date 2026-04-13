@@ -1,3 +1,4 @@
+using Hiscary.Media.Api.Rest.Authorization;
 using Hiscary.Media.Api.Rest.Endpoints;
 using Hiscary.Media.DocumentTools.PdfPig;
 using Hiscary.Media.DocumentTools.PuppeteerSharp;
@@ -30,6 +31,9 @@ builder.AddAzureBlobServiceClient("azblobs", config => config.DisableHealthCheck
 
 builder.Services.AddBoundSettingsWithSectionAsEntityName<ServiceUrls>(builder.Configuration, out var serviceUrls);
 builder.Services.AddSingleton(serviceUrls);
+
+builder.Services.AddHttpClient("StoriesService");
+builder.Services.AddScoped<IMediaOwnershipValidator, MediaOwnershipValidator>();
 
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));

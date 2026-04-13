@@ -21,27 +21,20 @@ public sealed class MediaOwnershipValidator(
         try
         {
             var client = httpClientFactory.CreateClient("StoriesService");
-            var response = await client.PostAsJsonAsync(
-                $"{serviceUrls.StoriesServiceBaseUrl}/api/v1/stories/by-id-with-contents",
-                new { Id = storyId });
+            var response = await client.GetAsync(
+                $"{serviceUrls.StoriesServiceBaseUrl}/api/v1/stories/owner?storyId={storyId}");
 
             if (!response.IsSuccessStatusCode)
             {
                 logger.LogWarning(
-                    "Stories service returned {StatusCode} when resolving ownership for story {StoryId}",
+                    "Stories service returned {StatusCode} when resolving ownership for story {StoryId}. Denying access (fail-closed).",
                     response.StatusCode, storyId);
                 return false;
             }
 
-            var story = await response.Content.ReadFromJsonAsync<StoryOwnershipDto>();
+            var ownerUserAccountId = await response.Content.ReadFromJsonAsync<Guid>();
 
-            if (story is null)
-            {
-                logger.LogWarning("Stories service returned null response for story {StoryId}", storyId);
-                return false;
-            }
-
-            return story.PublisherId == callerId;
+            return ownerUserAccountId == callerId;
         }
         catch (Exception ex)
         {
@@ -50,10 +43,5 @@ public sealed class MediaOwnershipValidator(
                 storyId);
             return false;
         }
-    }
-
-    private sealed class StoryOwnershipDto
-    {
-        public Guid PublisherId { get; set; }
     }
 }
