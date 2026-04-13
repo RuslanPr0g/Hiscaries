@@ -11,11 +11,26 @@ import * as fc from 'fast-check';
  *
  * Validates: Requirements 17.2, 17.3
  */
+
+// Stub IntersectionObserver so IntersectionAnchorComponent doesn't warn in jsdom
+class MockIntersectionObserver {
+  observe = jest.fn();
+  disconnect = jest.fn();
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor(_cb: IntersectionObserverCallback) {}
+}
+
 describe('InfiniteScrollGridComponent — Property 10: does not emit loadMore when hasMore=false or isLoading=true', () => {
   let fixture: ComponentFixture<InfiniteScrollGridComponent>;
   let component: InfiniteScrollGridComponent;
 
   beforeEach(async () => {
+    Object.defineProperty(window, 'IntersectionObserver', {
+      writable: true,
+      configurable: true,
+      value: MockIntersectionObserver,
+    });
+
     await TestBed.configureTestingModule({
       imports: [InfiniteScrollGridComponent],
       schemas: [NO_ERRORS_SCHEMA],

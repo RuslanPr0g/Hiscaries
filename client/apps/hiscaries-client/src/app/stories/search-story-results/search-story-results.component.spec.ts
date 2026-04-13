@@ -2,6 +2,7 @@ import { SearchStoryResultsComponent } from './search-story-results.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { ImageUrlSizes } from '@shared/models/image-url-sizes.model';
 import { QueriedModel } from '@shared/models/queried.model';
 import { StoryModel, StoryStatus } from '@stories/models/domain/story-model';
 
@@ -11,7 +12,7 @@ const mockStory = (overrides: Partial<StoryModel> = {}): StoryModel => ({
   Description: 'A test description',
   AuthorName: 'Author One',
   AgeLimit: 12,
-  ImagePreviewUrl: null as unknown as string,
+  ImagePreviewUrl: null as unknown as ImageUrlSizes,
   GenreNames: [],
   DatePublished: new Date(),
   DateWritten: new Date(),

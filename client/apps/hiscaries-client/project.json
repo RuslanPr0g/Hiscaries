@@ -31,7 +31,8 @@
           }
         ],
         "styles": ["node_modules/primeicons/primeicons.css", "apps/hiscaries-client/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "allowedCommonJsDependencies": ["quill-delta"]
       },
       "configurations": {
         "production": {

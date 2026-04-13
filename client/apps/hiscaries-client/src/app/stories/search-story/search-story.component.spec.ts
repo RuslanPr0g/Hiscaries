@@ -2,6 +2,7 @@ import { SearchStoryComponent } from './search-story.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
+import { ImageUrlSizes } from '@shared/models/image-url-sizes.model';
 import { generateEmptyQueriedResult } from '@shared/models/queried.model';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { StoryModel, StoryStatus } from '@stories/models/domain/story-model';
@@ -16,7 +17,7 @@ const makeStory = (overrides: Partial<StoryModel> = {}): StoryModel => ({
   Description: 'A description',
   AuthorName: 'Author',
   AgeLimit: 0,
-  ImagePreviewUrl: null as unknown as string,
+  ImagePreviewUrl: null as unknown as ImageUrlSizes,
   GenreNames: [],
   DatePublished: new Date(),
   DateWritten: new Date(),

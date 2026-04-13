@@ -26,7 +26,7 @@ import { StoryModel } from '@stories/models/domain/story-model';
 export class SearchStoryResultsComponent {
   private router = inject(Router);
 
-  readonly stories = input<QueriedModel<StoryModel> | null>(null);
+  readonly stories = input<QueriedModel<StoryModel> | null | undefined>(null);
   readonly isLoading = input<boolean | null>(false);
   readonly isCarousel = input(false);
 

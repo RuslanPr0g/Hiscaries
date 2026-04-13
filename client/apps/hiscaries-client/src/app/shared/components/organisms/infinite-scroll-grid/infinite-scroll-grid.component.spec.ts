@@ -4,11 +4,25 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 // Requirements 17.1–17.6
 
+// Stub IntersectionObserver so IntersectionAnchorComponent doesn't warn in jsdom
+class MockIntersectionObserver {
+  observe = jest.fn();
+  disconnect = jest.fn();
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor(_cb: IntersectionObserverCallback) {}
+}
+
 describe('InfiniteScrollGridComponent', () => {
   let fixture: ComponentFixture<InfiniteScrollGridComponent>;
   let component: InfiniteScrollGridComponent;
 
   beforeEach(async () => {
+    Object.defineProperty(window, 'IntersectionObserver', {
+      writable: true,
+      configurable: true,
+      value: MockIntersectionObserver,
+    });
+
     await TestBed.configureTestingModule({
       imports: [InfiniteScrollGridComponent],
       schemas: [NO_ERRORS_SCHEMA],
