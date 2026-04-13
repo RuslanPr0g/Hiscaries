@@ -1,3 +1,4 @@
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { ModifyStoryComponent } from './stories/modify-story/modify-story.component';
 import { PreviewStoryComponent } from './stories/preview-story/preview-story.component';
 import { PublishStoryComponent } from './stories/publish-story/publish-story.component';
@@ -12,7 +13,9 @@ import { MyLibraryComponent } from './users/my-library/my-library.component';
 import { PublisherLibraryComponent } from './users/publisher-library/publisher-library.component';
 import { Routes } from '@angular/router';
 import { provideState } from '@ngrx/store';
+import { adminGuard } from '@shared/auth/guards/admin.guard';
 import { authGuard } from '@shared/auth/guards/auth.guard';
+import { publisherGuard } from '@shared/auth/guards/publisher.guard';
 
 export const routes: Routes = [
   {
@@ -36,7 +39,7 @@ export const routes: Routes = [
     path: 'publish-story',
     title: 'Publish Story',
     component: PublishStoryComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, publisherGuard],
   },
   {
     path: 'reading-history',
@@ -60,7 +63,7 @@ export const routes: Routes = [
     path: 'modify-story/:id',
     title: 'Modify Story',
     component: ModifyStoryComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, publisherGuard],
   },
   {
     path: 'preview-story/:id',
@@ -80,6 +83,12 @@ export const routes: Routes = [
     component: SearchStoryComponent,
     canActivate: [authGuard],
     providers: [provideState({ name: storyFeatureKey, reducer: storyReducer })],
+  },
+  {
+    path: 'admin-panel',
+    title: 'Admin Panel',
+    component: AdminPanelComponent,
+    canActivate: [authGuard, adminGuard],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

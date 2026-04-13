@@ -73,7 +73,11 @@ export class HeaderComponent {
   }
 
   get isUserPublisher(): boolean {
-    return this.userService.isPublisher();
+    return this.canPublish();
+  }
+
+  canPublish(): boolean {
+    return this.userService.isPublisher() || this.userService.isAdmin();
   }
 
   callItemCommand(item: MenuItem): void {
