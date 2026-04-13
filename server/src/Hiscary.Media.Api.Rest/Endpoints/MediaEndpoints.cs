@@ -128,12 +128,19 @@ public static class MediaEndpoints
             return Results.BadRequest(OperationResult.CreateValidationsError("Please provide story id to upload PDF for."));
         }
 
+        var token = httpContext.Request.Headers.Authorization.FirstOrDefault();
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return Results.Unauthorized();
+        }
+
         var callerId = httpContext.User.GetUserId() ?? Guid.Empty;
         var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
 
         try
         {
-            var isOwner = await ownershipValidator.IsStoryOwnerOrAdmin(storyId, callerId, callerRole);
+            var isOwner = await ownershipValidator.IsStoryOwnerOrAdmin(storyId, callerId, callerRole, token);
             if (!isOwner)
             {
                 return Results.Forbid();
@@ -174,6 +181,13 @@ public static class MediaEndpoints
             return Results.BadRequest(OperationResult.CreateValidationsError("Please provide story id to delete PDF for."));
         }
 
+        var token = httpContext.Request.Headers.Authorization.FirstOrDefault();
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return Results.Unauthorized();
+        }
+
         var callerId = httpContext.User.GetUserId() ?? Guid.Empty;
         var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
             ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
@@ -181,7 +195,7 @@ public static class MediaEndpoints
 
         try
         {
-            var isOwner = await ownershipValidator.IsStoryOwnerOrAdmin(storyId, callerId, callerRole);
+            var isOwner = await ownershipValidator.IsStoryOwnerOrAdmin(storyId, callerId, callerRole, token);
             if (!isOwner)
             {
                 return Results.Forbid();

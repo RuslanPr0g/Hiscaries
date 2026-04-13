@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .glass-card {
   background: rgba(56, 41, 29, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -18,7 +22,9 @@
 
   &.interactive {
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
 
     &:hover {
       transform: translateY(-2px);

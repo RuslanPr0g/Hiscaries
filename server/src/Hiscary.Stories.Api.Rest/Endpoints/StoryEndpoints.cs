@@ -32,6 +32,10 @@ public static class StoryEndpoints
             .Produces<IEnumerable<StorySimpleReadModel>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized);
 
+        group.MapGet("/owner", GetStoryOwner)
+            .Produces<Guid>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status401Unauthorized);
+
         group.MapGet("/sortable-properties", GetSortableProperties)
             .Produces<IEnumerable<string>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized);

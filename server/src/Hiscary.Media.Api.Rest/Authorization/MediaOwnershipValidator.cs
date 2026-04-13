@@ -9,7 +9,7 @@ public sealed class MediaOwnershipValidator(
 {
     private const string AdminRole = "admin";
 
-    public async Task<bool> IsStoryOwnerOrAdmin(Guid storyId, Guid callerId, string callerRole)
+    public async Task<bool> IsStoryOwnerOrAdmin(Guid storyId, Guid callerId, string callerRole, string token, CancellationToken cancellationToken = default)
     {
         if (callerRole == AdminRole)
         {
@@ -19,8 +19,16 @@ public sealed class MediaOwnershipValidator(
         try
         {
             var client = httpClientFactory.CreateClient("StoriesService");
-            var response = await client.GetAsync(
+            var requestMessage = new HttpRequestMessage(
+                HttpMethod.Get,
                 $"{serviceUrls.StoriesServiceBaseUrl}/api/v1/stories/owner?storyId={storyId}");
+
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                requestMessage.Headers.TryAddWithoutValidation("Authorization", token);
+            }
+
+            var response = await client.SendAsync(requestMessage, cancellationToken);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -30,7 +38,7 @@ public sealed class MediaOwnershipValidator(
                 return false;
             }
 
-            var ownerUserAccountId = await response.Content.ReadFromJsonAsync<Guid>();
+            var ownerUserAccountId = await response.Content.ReadFromJsonAsync<Guid>(cancellationToken);
 
             return ownerUserAccountId == callerId;
         }

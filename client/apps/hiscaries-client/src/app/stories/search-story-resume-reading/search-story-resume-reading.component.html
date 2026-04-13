@@ -13,6 +13,7 @@
       [title]="story.Title"
       [subtitle]="story.AuthorName ?? null"
       [progressPercentage]="story.PercentageRead"
+      (clicked)="previewStory(story)"
     />
   }
 </ui-infinite-scroll-grid>

@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { MediaCardComponent } from '@shared/components/molecules/media-card/media-card.component';
 import { SectionHeaderComponent } from '@shared/components/molecules/section-header/section-header.component';
 import { InfiniteScrollGridComponent } from '@shared/components/organisms/infinite-scroll-grid/infinite-scroll-grid.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
 import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
@@ -25,6 +27,7 @@ import { finalize } from 'rxjs';
 })
 export class SearchStoryResumeReadingComponent {
   private userStoryService = inject(UserStoryService);
+  private router = inject(Router);
   pagination = inject(PaginationService);
 
   stories = signal<QueriedModel<StoryModel>>(generateEmptyQueriedResult());
@@ -66,5 +69,9 @@ export class SearchStoryResumeReadingComponent {
     if (this.pagination.snapshot.StartIndex === 0) return;
     this.pagination.prevPage();
     this.loadStories();
+  }
+
+  previewStory(story: StoryModel): void {
+    this.router.navigate([NavigationConst.PreviewStory(story.Id)]);
   }
 }
