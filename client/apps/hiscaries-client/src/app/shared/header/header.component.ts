@@ -31,6 +31,17 @@ export class HeaderComponent {
   constructor() {
     this.items = [];
 
+    if (this.userService.isAdmin()) {
+      this.items = [
+        ...this.items,
+        {
+          Label: 'Admin Panel',
+          Command: () => this.navigateToAdminPanel(),
+          Icon: 'pi-shield',
+        },
+      ];
+    }
+
     if (this.isUserPublisher) {
       this.items = [
         ...this.items,
@@ -105,6 +116,10 @@ export class HeaderComponent {
 
   navigateToReadingHistory(): void {
     this.router.navigate([NavigationConst.ReadingHistory]);
+  }
+
+  navigateToAdminPanel(): void {
+    this.router.navigate([NavigationConst.AdminPanel]);
   }
 
   navigateToBecomePublisherPage(): void {

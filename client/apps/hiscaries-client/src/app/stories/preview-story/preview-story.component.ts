@@ -6,6 +6,7 @@ import { NavigationConst } from '@shared/constants/navigation.const';
 import { defaultQueryableModel } from '@shared/models/queryable.model';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
+import { AuthService } from '@users/services/auth.service';
 import { take } from 'rxjs';
 
 @Component({
@@ -19,6 +20,7 @@ export class PreviewStoryComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private storyService = inject(StoryWithMetadataService);
+  protected authService = inject(AuthService);
 
   private storyId: string | null = null;
 
@@ -60,6 +62,10 @@ export class PreviewStoryComponent implements OnInit, OnDestroy {
 
   get isEditable(): boolean {
     return this.story?.IsEditable ?? false;
+  }
+
+  canEditStory(): boolean {
+    return (this.story?.IsEditable ?? false) || this.authService.isAdmin();
   }
 
   readStory(): void {

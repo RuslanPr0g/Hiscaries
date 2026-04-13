@@ -20,8 +20,8 @@ export class BecomePublisherComponent {
   agreed = false;
 
   constructor() {
-    if (this.authService.isPublisher()) {
-      console.warn('User is already a publisher!');
+    if (this.authService.isPublisher() || this.authService.isAdmin()) {
+      console.warn('User is already a publisher or admin!');
       this.router.navigate([NavigationConst.Home]);
       return;
     }

@@ -6,6 +6,7 @@ export class NavigationConst {
   public static readonly BecomePublisher: string = '/become-publisher';
   public static readonly PublishStory: string = '/publish-story';
   public static readonly ReadingHistory: string = '/reading-history';
+  public static readonly AdminPanel: string = '/admin-panel';
   public static readonly PublisherLibrary = (libraryId: string): string =>
     this.ByRouteParameter('library', libraryId);
   public static readonly PreviewStory = (storyId: string): string =>
