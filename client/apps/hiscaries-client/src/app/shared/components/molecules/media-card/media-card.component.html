@@ -1,21 +1,26 @@
-<div class="media-card" [class.interactive]="interactive()" tabindex="0" (click)="onInteract()"
-    (keydown.enter)="onInteract()">
-    <div class="media-card__image-wrapper">
-        <ui-cover-image [src]="imageSrc()" [alt]="imageAlt()" />
+<ui-glass-card
+  [interactive]="interactive()"
+  borderRadius="sm"
+  (cardClick)="onInteract()"
+  (mouseenter)="hovered.set(true)"
+  (mouseleave)="hovered.set(false)"
+>
+  <div class="media-card__image-wrapper">
+    <ui-cover-image [src]="imageSrc()" [alt]="imageAlt()" />
 
-        <ui-hover-reveal-panel>
-            <div class="media-card__overlay-content">
-                <ui-truncated-text [text]="title()" [maxLength]="50" tag="h4" />
-                @if (subtitle()) {
-                <ui-truncated-text [text]="subtitle()!" [maxLength]="60" tag="span" />
-                }
-            </div>
-        </ui-hover-reveal-panel>
-    </div>
+    <ui-hover-reveal-panel [visible]="hovered()">
+      <div class="media-card__overlay-content">
+        <ui-truncated-text [text]="title()" [maxLength]="50" tag="h4" />
+        @if (subtitle()) {
+          <ui-truncated-text [text]="subtitle()!" [maxLength]="60" tag="span" />
+        }
+      </div>
+    </ui-hover-reveal-panel>
+  </div>
 
-    @if (progressPercentage() !== null) {
+  @if (progressPercentage() !== null) {
     <app-progress-bar [percentage]="progressPercentage()!" />
-    }
+  }
 
-    <ng-content select="[card-footer]" />
-</div>
+  <ng-content select="[card-footer]" />
+</ui-glass-card>

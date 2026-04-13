@@ -45,13 +45,13 @@ public class ProtectedEndpointsWebAppFactory : WebApplicationFactory<TestProgram
         services.AddAuthorization(options =>
         {
             options.AddPolicy(AuthorizationPolicies.RequirePublisher, policy =>
-                policy.RequireClaim(AuthorizationPolicies.RoleClaimType, "publisher", "admin"));
+                policy.RequireClaim(AuthorizationPolicies.FullRoleClaimType, "publisher", "admin"));
 
             options.AddPolicy(AuthorizationPolicies.RequireAdmin, policy =>
-                policy.RequireClaim(AuthorizationPolicies.RoleClaimType, "admin"));
+                policy.RequireClaim(AuthorizationPolicies.FullRoleClaimType, "admin"));
 
             options.AddPolicy(AuthorizationPolicies.RequireReaderOrAbove, policy =>
-                policy.RequireClaim(AuthorizationPolicies.RoleClaimType, "reader", "publisher", "admin"));
+                policy.RequireClaim(AuthorizationPolicies.FullRoleClaimType, "reader", "publisher", "admin"));
         });
 
         services.AddRouting();

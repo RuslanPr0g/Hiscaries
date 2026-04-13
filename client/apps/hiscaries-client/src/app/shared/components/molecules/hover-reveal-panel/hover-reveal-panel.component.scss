@@ -4,11 +4,12 @@
   opacity: 0;
   transition: opacity 0.3s ease;
   display: block;
+  pointer-events: none;
 }
 
-:host-context(.story-card:hover) :host,
-:host-context(*:hover) :host {
+:host(.is-visible) {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .hover-reveal-panel {
@@ -16,8 +17,8 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-start;
   padding: 1rem;
   box-sizing: border-box;
 }

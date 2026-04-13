@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 @Component({
-  selector: 'app-glass-overlay',
+  selector: 'ui-glass-overlay',
   standalone: true,
   templateUrl: './glass-overlay.component.html',
   styleUrl: './glass-overlay.component.scss',

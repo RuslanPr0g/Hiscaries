@@ -1,40 +1,35 @@
 :host {
-    display: block;
+  display: block;
 }
 
-.media-card {
-    position: relative;
-    cursor: default;
-    outline: none;
-    border-radius: 8px;
-    overflow: hidden;
+.media-card__image-wrapper {
+  position: relative;
+}
 
-    &.interactive {
-        cursor: pointer;
+.media-card__overlay-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 
-        &:hover {
-            transform: translateY(-2px);
-            transition: transform 0.2s ease;
-        }
+  h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+  }
 
-        &:focus-visible {
-            outline: 2px solid rgba(255, 255, 255, 0.5);
-            outline-offset: 2px;
-        }
-    }
+  span {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
 
-    &__image-wrapper {
-        position: relative;
-    }
-
-    &__overlay-content {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 0.75rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.25rem;
-    }
+// Card footer slot — projected content below the image
+::ng-deep [card-footer] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.6rem 0.75rem 0.75rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
 }

@@ -16,12 +16,10 @@ public static class MediaEndpoints
             .WithTags("Media");
 
         group.MapGet("/images/{fileName}", GetImage)
-            .RequireAuthorization()
             .Produces<IResult>(StatusCodes.Status200OK, contentType: MediaTypeNames.Application.Octet)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapGet("/documents/{fileName}", GetDocument)
-            .RequireAuthorization()
             .Produces<IResult>(StatusCodes.Status200OK, contentType: MediaTypeNames.Application.Pdf)
             .Produces(StatusCodes.Status401Unauthorized);
 
@@ -177,7 +175,9 @@ public static class MediaEndpoints
         }
 
         var callerId = httpContext.User.GetUserId() ?? Guid.Empty;
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
 
         try
         {

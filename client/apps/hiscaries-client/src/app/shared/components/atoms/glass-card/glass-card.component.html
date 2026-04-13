@@ -5,6 +5,7 @@
   [class.border-radius-md]="borderRadius() === 'md'"
   [class.border-radius-lg]="borderRadius() === 'lg'"
   [attr.tabindex]="interactive() ? '0' : null"
+  (click)="onEnter()"
   (keydown.enter)="onEnter()"
 >
   <ng-content />

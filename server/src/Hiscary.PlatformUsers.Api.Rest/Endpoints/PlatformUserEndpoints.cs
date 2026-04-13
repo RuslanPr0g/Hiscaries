@@ -97,7 +97,9 @@ public static class PlatformUserEndpoints
         IAuthorizedEndpointHandler endpointHandler,
         [FromServices] IPlatformUserWriteService service)
     {
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
         return await endpointHandler.WithUser(user =>
             service.BecomePublisher(user.Id, callerRole));
     }

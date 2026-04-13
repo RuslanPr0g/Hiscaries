@@ -179,7 +179,9 @@ public static class StoryEndpoints
         IAuthorizedEndpointHandler endpointHandler,
         [FromServices] IStoryWriteService service)
     {
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
         {
             var image = request.ImagePreview.GetImageBytes();
@@ -228,7 +230,9 @@ public static class StoryEndpoints
         IAuthorizedEndpointHandler endpointHandler,
         [FromServices] IStoryWriteService service)
     {
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
             service.DeleteComment(storyId, commentId, user.Id, callerRole));
     }
@@ -239,7 +243,9 @@ public static class StoryEndpoints
         IAuthorizedEndpointHandler endpointHandler,
         [FromServices] IStoryWriteService service)
     {
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
             service.DeleteStory(storyId, user.Id, callerRole));
     }
@@ -250,7 +256,9 @@ public static class StoryEndpoints
         IAuthorizedEndpointHandler endpointHandler,
         [FromServices] IStoryWriteService service)
     {
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
             service.UpdateComment(
                 request.CommentId,
@@ -267,7 +275,9 @@ public static class StoryEndpoints
         IAuthorizedEndpointHandler endpointHandler,
         [FromServices] IStoryWriteService service)
     {
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
             service.DeleteAudio(storyId, user.Id, callerRole));
     }
