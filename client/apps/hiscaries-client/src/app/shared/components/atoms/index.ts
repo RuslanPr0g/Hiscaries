@@ -7,3 +7,4 @@ export * from './cover-image/cover-image.component';
 export * from './empty-state/empty-state.component';
 export * from './error-state/error-state.component';
 export * from './truncated-text/truncated-text.component';
+export * from './glass-overlay/glass-overlay.component';

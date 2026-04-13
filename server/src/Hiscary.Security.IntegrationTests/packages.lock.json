@@ -527,17 +527,6 @@
         "resolved": "16.3.0",
         "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
       },
-      "hiscary.integrationtesting": {
-        "type": "Project",
-        "dependencies": {
-          "Aspire.Hosting.Testing": "[13.2.1, )",
-          "FsCheck": "[3.2.0, )",
-          "Hiscary.Shared.Domain": "[1.0.0, )",
-          "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
-          "System.IdentityModel.Tokens.Jwt": "[8.17.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
       "hiscary.media.integrationevents": {
         "type": "Project",
         "dependencies": {
@@ -562,6 +551,17 @@
           "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
           "StackNucleus.DDD.Domain": "[4.1.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.17.0, )"
+        }
+      },
+      "hiscary.shared.integrationtesting": {
+        "type": "Project",
+        "dependencies": {
+          "Aspire.Hosting.Testing": "[13.2.1, )",
+          "FsCheck": "[3.2.0, )",
+          "Hiscary.Shared.Domain": "[1.0.0, )",
+          "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
+          "System.IdentityModel.Tokens.Jwt": "[8.17.0, )",
+          "xunit": "[2.9.3, )"
         }
       },
       "hiscary.stories.application.write": {

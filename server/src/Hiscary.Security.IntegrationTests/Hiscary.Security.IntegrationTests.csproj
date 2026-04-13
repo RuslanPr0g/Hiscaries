@@ -23,7 +23,7 @@
     <PackageReference Include="Moq" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hiscary.IntegrationTesting\Hiscary.IntegrationTesting.csproj" />
+    <ProjectReference Include="..\Hiscary.IntegrationTesting\Hiscary.Shared.IntegrationTesting.csproj" />
     <ProjectReference Include="..\Hiscary.Shared.Domain\Hiscary.Shared.Domain.csproj" />
     <ProjectReference Include="..\Hiscary.Shared.Application\Hiscary.Shared.Application.csproj" />
     <ProjectReference Include="..\Hiscary.Stories.Application.Write\Hiscary.Stories.Application.Write.csproj" />

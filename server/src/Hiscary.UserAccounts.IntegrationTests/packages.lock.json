@@ -1605,17 +1605,6 @@
           "Aspire.RabbitMQ.Client": "[13.2.1, )"
         }
       },
-      "hiscary.integrationtesting": {
-        "type": "Project",
-        "dependencies": {
-          "Aspire.Hosting.Testing": "[13.2.1, )",
-          "FsCheck": "[3.2.0, )",
-          "Hiscary.Shared.Domain": "[1.0.0, )",
-          "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
-          "System.IdentityModel.Tokens.Jwt": "[8.17.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
       "hiscary.platformusers.integrationevents": {
         "type": "Project",
         "dependencies": {
@@ -1662,6 +1651,17 @@
           "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
           "StackNucleus.DDD.Domain": "[4.1.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.17.0, )"
+        }
+      },
+      "hiscary.shared.integrationtesting": {
+        "type": "Project",
+        "dependencies": {
+          "Aspire.Hosting.Testing": "[13.2.1, )",
+          "FsCheck": "[3.2.0, )",
+          "Hiscary.Shared.Domain": "[1.0.0, )",
+          "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
+          "System.IdentityModel.Tokens.Jwt": "[8.17.0, )",
+          "xunit": "[2.9.3, )"
         }
       },
       "hiscary.shared.jwt": {

@@ -1,0 +1,23 @@
+:host {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: block;
+}
+
+:host-context(.story-card:hover) :host,
+:host-context(*:hover) :host {
+  opacity: 1;
+}
+
+.hover-reveal-panel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}

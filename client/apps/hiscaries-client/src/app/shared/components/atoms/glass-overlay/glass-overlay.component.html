@@ -1,0 +1,7 @@
+@if (visible()) {
+  <div
+    class="glass-overlay"
+    [style.background-color]="bgStyle()"
+    [style.backdrop-filter]="blur() ? 'blur(8px)' : null"
+  ></div>
+}
