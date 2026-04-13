@@ -34,14 +34,8 @@ public class StoryOwnershipValidatorTests
             .Setup(r => r.GetById(new StoryId(storyId)))
             .ReturnsAsync(story);
 
-        var libraryOwnerRepoMock = new Mock<ILibraryOwnerRepository>();
-        libraryOwnerRepoMock
-            .Setup(r => r.GetOwnerUserAccountIdByLibraryId(libraryId))
-            .ReturnsAsync(p2Id);
-
         var validator = new StoryOwnershipValidator(
             storyRepoMock.Object,
-            libraryOwnerRepoMock.Object,
             NullLogger<StoryOwnershipValidator>.Instance);
 
         var result = validator.IsOwnerOrAdmin(storyId, p1Id, "publisher").GetAwaiter().GetResult();
@@ -74,14 +68,8 @@ public class StoryOwnershipValidatorTests
             .Setup(r => r.GetById(new StoryId(storyId)))
             .ReturnsAsync(story);
 
-        var libraryOwnerRepoMock = new Mock<ILibraryOwnerRepository>();
-        libraryOwnerRepoMock
-            .Setup(r => r.GetOwnerUserAccountIdByLibraryId(libraryId))
-            .ReturnsAsync(p2Id);
-
         var validator = new StoryOwnershipValidator(
             storyRepoMock.Object,
-            libraryOwnerRepoMock.Object,
             NullLogger<StoryOwnershipValidator>.Instance);
 
         var result = validator.IsOwnerOrAdmin(storyId, p2Id, "publisher").GetAwaiter().GetResult();

@@ -6,12 +6,11 @@ namespace Hiscary.Stories.Application.Write.Services;
 
 public sealed class StoryOwnershipValidator(
     IStoryWriteRepository storyRepository,
-    ILibraryOwnerRepository libraryOwnerRepository,
     ILogger<StoryOwnershipValidator> logger) : IStoryOwnershipValidator
 {
     private const string AdminRole = "admin";
 
-    public async Task<bool> IsOwnerOrAdmin(Guid storyId, Guid callerId, string callerRole)
+    public async Task<bool> IsOwnerOrAdmin(Guid storyId, Guid callerLibraryId, string callerRole)
     {
         if (callerRole == AdminRole)
         {
@@ -26,18 +25,10 @@ public sealed class StoryOwnershipValidator(
             return false;
         }
 
-        var ownerUserAccountId = await libraryOwnerRepository.GetOwnerUserAccountIdByLibraryId(story.LibraryId);
-
-        if (ownerUserAccountId is null)
-        {
-            logger.LogWarning("Library {LibraryId} not found during ownership check for story {StoryId}", story.LibraryId, storyId);
-            return false;
-        }
-
-        return ownerUserAccountId == callerId;
+        return story.LibraryId == callerLibraryId;
     }
 
-    public async Task<bool> IsCommentOwner(Guid storyId, Guid commentId, Guid callerId, string callerRole)
+    public async Task<bool> IsCommentOwner(Guid storyId, Guid commentId, Guid callerPlatformUserId, string callerRole)
     {
         if (callerRole == AdminRole)
         {
@@ -60,6 +51,6 @@ public sealed class StoryOwnershipValidator(
             return false;
         }
 
-        return comment.PlatformUserId == callerId;
+        return comment.PlatformUserId == callerPlatformUserId;
     }
 }

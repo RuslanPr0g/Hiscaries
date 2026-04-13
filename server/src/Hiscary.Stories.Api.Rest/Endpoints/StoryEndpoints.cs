@@ -288,8 +288,7 @@ public static class StoryEndpoints
 
     private static async Task<IResult> GetStoryOwner(
         [FromQuery] Guid storyId,
-        [FromServices] IStoryWriteRepository storyRepository,
-        [FromServices] ILibraryOwnerRepository libraryOwnerRepository)
+        [FromServices] IStoryWriteRepository storyRepository)
     {
         var story = await storyRepository.GetById(storyId);
         if (story is null)
@@ -297,13 +296,7 @@ public static class StoryEndpoints
             return Results.NotFound();
         }
 
-        var ownerUserAccountId = await libraryOwnerRepository.GetOwnerUserAccountIdByLibraryId(story.LibraryId);
-        if (ownerUserAccountId is null)
-        {
-            return Results.NotFound();
-        }
-
-        return Results.Ok(ownerUserAccountId);
+        return Results.Ok(story.LibraryId);
     }
 
 }

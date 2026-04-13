@@ -20,7 +20,6 @@ public class AdminOwnershipTests
         var libraryId = Guid.NewGuid();
 
         var storyRepoMock = new Mock<IStoryWriteRepository>();
-        var libraryOwnerRepoMock = new Mock<ILibraryOwnerRepository>();
 
         storyRepoMock
             .Setup(r => r.GetById(It.IsAny<StoryId>()))
@@ -34,13 +33,8 @@ public class AdminOwnershipTests
                 18,
                 DateTime.UtcNow));
 
-        libraryOwnerRepoMock
-            .Setup(r => r.GetOwnerUserAccountIdByLibraryId(libraryId))
-            .ReturnsAsync(publisherId);
-
         var validator = new StoryOwnershipValidator(
             storyRepoMock.Object,
-            libraryOwnerRepoMock.Object,
             NullLogger<StoryOwnershipValidator>.Instance);
 
         var result = validator.IsOwnerOrAdmin(storyId, adminId, "admin").GetAwaiter().GetResult();
