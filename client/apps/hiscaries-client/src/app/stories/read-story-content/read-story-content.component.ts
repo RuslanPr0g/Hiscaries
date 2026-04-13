@@ -87,6 +87,13 @@ export class ReadStoryContentComponent implements OnInit {
     return this.settings.PreferPdf && this.pdfExists;
   }
 
+  get preferPdfDisabled(): boolean {
+    if (this.shouldShowPdf) {
+      return this.pdfPage > this.contents.length;
+    }
+    return this.pageInput > this.pdfPage;
+  }
+
   constructor() {
     this.storyId = this.route.snapshot.paramMap.get('id');
 
@@ -193,6 +200,7 @@ export class ReadStoryContentComponent implements OnInit {
 
     if (moved) {
       this.pageInput = this.currentIndex + 1;
+      this.pdfPage = this.pageInput;
       this.scrollToTop();
     }
 
@@ -211,6 +219,7 @@ export class ReadStoryContentComponent implements OnInit {
 
     if (moved) {
       this.pageInput = this.currentIndex + 1;
+      this.pdfPage = this.pageInput;
       this.scrollToTop();
     }
     return moved;
@@ -221,6 +230,7 @@ export class ReadStoryContentComponent implements OnInit {
 
     if (page >= 0 && page < this.contents.length) {
       this.iterator.moveTo(page);
+      this.pdfPage = this.pageInput;
       this.scrollToTop();
     } else {
       this.pageInput = this.iterator.currentIndex + 1;
@@ -254,12 +264,25 @@ export class ReadStoryContentComponent implements OnInit {
     this.messageService.clear();
   }
 
-  onSettingsChanged(setings: ReadingSettings) {
-    this.settings = setings;
+  onSettingsChanged(newSettings: ReadingSettings) {
+    const wasShowingPdf = this.shouldShowPdf;
+    this.settings = newSettings;
+    const isNowShowingPdf = this.shouldShowPdf;
+
+    if (!wasShowingPdf && isNowShowingPdf) {
+      // switched to PDF — sync PDF page from text page
+      this.pdfPage = this.pageInput;
+    } else if (wasShowingPdf && !isNowShowingPdf) {
+      // switched to text — sync text page from PDF page
+      this.pageInput = this.pdfPage;
+      this.iterator.moveTo(this.pdfPage - 1);
+    }
   }
 
   onPdfPageChange(page: number) {
     this.pdfPage = page;
+    this.pageInput = page;
+    this.iterator.moveTo(page - 1);
     if (this.storyId) {
       this.userService.read({
         StoryId: this.storyId,

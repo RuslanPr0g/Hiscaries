@@ -73,7 +73,7 @@ public sealed class Story : AggregateRoot<StoryId>
 
     public StoryStatus Status { get; private set; }
 
-    public int TotalPages => Status == StoryStatus.ConsolidatingDocuments ? Contents.Count : HasExternalPdf ? ExternalPdfPageCount : Contents.Count;
+    public int TotalPages => Status == StoryStatus.ConsolidatingDocuments ? Contents.Count : Math.Max(ExternalPdfPageCount, Contents.Count);
 
     public void ReadStoryUniquely()
     {

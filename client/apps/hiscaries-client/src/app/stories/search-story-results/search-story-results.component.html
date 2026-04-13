@@ -1,4 +1,4 @@
-<app-skeleton-or-story-content [dataLoaded]="!isLoading()">
+@if (stories()?.Items?.length) {
   <div class="story-grid glassy-grid">
     @for (story of stories()!.Items; track story) {
       <div class="grid-item">
@@ -6,4 +6,6 @@
       </div>
     }
   </div>
-</app-skeleton-or-story-content>
+} @else {
+  <app-skeleton-or-story-content [dataLoaded]="!isLoading()" />
+}

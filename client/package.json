@@ -1,6 +1,6 @@
 {
   "name": "hiscaries-client",
-  "version": "5.0.0",
+  "version": "5.2.0",
   "scripts": {
     "ng": "ng",
     "start": "nx serve hiscaries-client --proxy-config proxy.conf.json",
@@ -16,9 +16,9 @@
     "show-config": "cd apps/hiscaries-client & tsc --showConfig",
     "update": "nx migrate latest",
     "release": "nx release",
-    "release:patch": "nx release patch && npm run version:sync",
-    "release:minor": "nx release minor && npm run version:sync",
-    "release:major": "nx release major && npm run version:sync",
+    "release:patch": "nx release patch && npm run version:sync && git push origin --follow-tags",
+    "release:minor": "nx release minor && npm run version:sync && git push origin --follow-tags",
+    "release:major": "nx release major && npm run version:sync && git push origin --follow-tags",
     "version:sync": "node -e \"const fs=require('fs');const t=JSON.parse(fs.readFileSync('./package.json'));const tag=require('child_process').execSync('git describe --tags --abbrev=0').toString().trim().replace('v','');t.version=tag;fs.writeFileSync('./package.json',JSON.stringify(t,null,2)+'\\n');\""
   },
   "private": true,

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, output } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 
 import { FormsModule } from '@angular/forms';
@@ -17,6 +17,7 @@ import { LoadReadingSettingsService } from '@stories/services/load-reading-setti
 })
 export class ReadingSettingsComponent implements OnInit {
   readonly settingsChanged = output<ReadingSettings>();
+  readonly preferPdfDisabled = input<boolean>(false);
 
   settings: ReadingSettings = defaultReadingSettings;
 

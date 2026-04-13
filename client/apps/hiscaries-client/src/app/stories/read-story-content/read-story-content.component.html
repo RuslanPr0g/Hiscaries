@@ -149,7 +149,7 @@
       <p-toast position="top-right" key="settings" (onClose)="onSettingsClose()" [baseZIndex]="5000">
         <ng-template pTemplate="message" let-message let-closeFn="closeFn">
           <section>
-            <app-reading-settings (settingsChanged)="onSettingsChanged($event)"></app-reading-settings>
+            <app-reading-settings (settingsChanged)="onSettingsChanged($event)" [preferPdfDisabled]="preferPdfDisabled"></app-reading-settings>
           </section>
         </ng-template>
       </p-toast>

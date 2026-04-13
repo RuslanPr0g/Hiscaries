@@ -11,11 +11,14 @@
   </div>
 
   <div class="setting-item">
-    <label for="pdf-switch">Prefer PDF</label>
+    <label for="pdf-switch" [title]="preferPdfDisabled() ? 'Cannot switch — current page exceeds the other format\'s page count' : ''">
+      Prefer PDF
+    </label>
     <p-toggleswitch
       id="pdf-switch"
       [(ngModel)]="settings.PreferPdf"
       (onChange)="toggleTheme()"
+      [disabled]="preferPdfDisabled()"
     ></p-toggleswitch>
   </div>
 </div>
