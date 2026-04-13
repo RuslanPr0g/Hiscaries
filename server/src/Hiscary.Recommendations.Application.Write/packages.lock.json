@@ -167,7 +167,7 @@
         "type": "Project",
         "dependencies": {
           "Aspire.Elastic.Clients.Elasticsearch": "[13.2.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "Aspire.Elastic.Clients.Elasticsearch": {
@@ -225,9 +225,9 @@
       },
       "StackNucleus.DDD.Domain": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "HsAGRzH1kumqFPaVI5S/wIvAezuSwIrpRQXLkBpRkBI+UMX57tCUO/tIoHg3VwGs15rgDy+TrWnSKS/UZT6Xkg=="
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "4qVHDpWITV3lHeF5KrIMWOVkczsA4vtb+SgA9lTA5QZXHnJr1+q3bc4Hu8rwGdd2wy9RTR7icmpG1BOMUHtNqA=="
       }
     }
   }

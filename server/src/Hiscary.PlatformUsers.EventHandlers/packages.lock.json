@@ -10,11 +10,11 @@
       },
       "StackNucleus.DDD.Events.WolverineFx": {
         "type": "Direct",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "lKsk3UwrN1c/lC2Y7okC5xZmaM4n3zhsPYeDkRvTCshVazDP27+Iae2Gkm/i67ZoZuYdks6Oa0mP9tC0SQOHYg==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "obk5Mn5i9bkA5Y+BkOQMISFFf9fBfOBC4mOlhA8M5rekFogyfs9ChmRjhRzpDJL6ftwFHPQUoxqRoUbHx4vdiQ==",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "4.1.0",
+          "StackNucleus.DDD.Domain": "4.10.0",
           "WolverineFx": "5.27.0",
           "WolverineFx.RabbitMq": "5.27.0"
         }
@@ -566,7 +566,7 @@
         "type": "Project",
         "dependencies": {
           "Hiscary.Shared.Domain": "[1.0.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.platformusers.domain": {
@@ -574,39 +574,39 @@
         "dependencies": {
           "Hiscary.PlatformUsers.DomainEvents": "[1.0.0, )",
           "Hiscary.Shared.Domain": "[1.0.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.platformusers.domainevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.platformusers.integrationevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.shared.domain": {
         "type": "Project",
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )",
+          "StackNucleus.DDD.Domain": "[4.10.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.17.0, )"
         }
       },
       "hiscary.stories.integrationevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.useraccounts.integrationevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "Microsoft.Extensions.Configuration": {
@@ -699,9 +699,9 @@
       },
       "StackNucleus.DDD.Domain": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "HsAGRzH1kumqFPaVI5S/wIvAezuSwIrpRQXLkBpRkBI+UMX57tCUO/tIoHg3VwGs15rgDy+TrWnSKS/UZT6Xkg=="
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "4qVHDpWITV3lHeF5KrIMWOVkczsA4vtb+SgA9lTA5QZXHnJr1+q3bc4Hu8rwGdd2wy9RTR7icmpG1BOMUHtNqA=="
       },
       "System.IdentityModel.Tokens.Jwt": {
         "type": "CentralTransitive",

@@ -1,11 +1,21 @@
-@if (stories()?.Items?.length) {
-  <div class="story-grid glassy-grid">
-    @for (story of stories()!.Items; track story) {
-      <div class="grid-item">
-        <app-story-search-item [story]="story" />
+<ui-card-grid
+  [isLoading]="!!isLoading()"
+  [isEmpty]="!stories()?.Items?.length && !isLoading()"
+  emptyMessage="No stories found"
+  [skeletonCount]="3"
+>
+  @for (story of stories()?.Items ?? []; track story.Id) {
+    <ui-media-card
+      [imageSrc]="story.ImagePreviewUrl | fallbackImage"
+      [title]="story.Title"
+      [subtitle]="story.AuthorName ?? null"
+      [progressPercentage]="story.PercentageRead"
+      (clicked)="previewStory(story)"
+    >
+      <div card-footer>
+        <ui-badge [label]="story.AgeLimit + '+'" />
+        <ui-truncated-text [text]="story.Description" [maxLength]="70" />
       </div>
-    }
-  </div>
-} @else {
-  <app-skeleton-or-story-content [dataLoaded]="!isLoading()" />
-}
+    </ui-media-card>
+  }
+</ui-card-grid>

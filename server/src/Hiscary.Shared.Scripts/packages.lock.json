@@ -4,9 +4,9 @@
     "net10.0": {
       "StackNucleus.DDD.Scripts": {
         "type": "Direct",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "mCJoe4sObFpHoG7mzpDuZGYPsJ4RaDUiQvsmYolC5Ys5HLCiuBh92ip9ufaOaLBPj/zvh6sD4aZAtVAhPMbg+g=="
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "QJcnfZYrRc67Iky9lQ+C1yxotBSuKo4tnkLdxcClGJRwMqqD6xCVOYA5TM58/L7GRyXZEAj1L+Z2ZgJg5uTleA=="
       }
     }
   }

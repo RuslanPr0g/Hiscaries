@@ -1,20 +1,31 @@
-import { Component, inject, signal, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { IntersectionAnchorComponent } from '@shared/components/atoms/intersection-anchor/intersection-anchor.component';
+import { MediaCardComponent } from '@shared/components/molecules/media-card/media-card.component';
+import { SectionHeaderComponent } from '@shared/components/molecules/section-header/section-header.component';
+import { CardGridComponent } from '@shared/components/organisms/card-grid/card-grid.component';
 import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { ReadHistoryStory } from '@stories/models/domain/story-model';
-import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
 import { UserStoryService } from '@user-to-story/services/multiple-services-merged/user-story.service';
 import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-reading-history',
   standalone: true,
-  imports: [SearchStoryResultsComponent],
+  imports: [
+    CardGridComponent,
+    IntersectionAnchorComponent,
+    MediaCardComponent,
+    SectionHeaderComponent,
+    FallbackImagePipe,
+  ],
   templateUrl: './reading-history.component.html',
   styleUrls: ['./reading-history.component.scss'],
   providers: [PaginationService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReadingHistoryComponent implements AfterViewInit {
+export class ReadingHistoryComponent {
   private userStoryService = inject(UserStoryService);
   pagination = inject(PaginationService);
 
@@ -22,28 +33,8 @@ export class ReadingHistoryComponent implements AfterViewInit {
   groupedStories = signal<Record<string, ReadHistoryStory[]>>({});
   isLoading = signal(false);
 
-  @ViewChild('loadMoreAnchor', { static: true }) loadMoreAnchor!: ElementRef<HTMLDivElement>;
-  private observer!: IntersectionObserver;
-
   constructor() {
     this.loadStories(true);
-  }
-
-  ngAfterViewInit() {
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !this.isLoading()) {
-            this.nextPage();
-          }
-        });
-      },
-      { threshold: 0 },
-    );
-
-    if (this.loadMoreAnchor) {
-      this.observer.observe(this.loadMoreAnchor.nativeElement);
-    }
   }
 
   public get storyKeys() {

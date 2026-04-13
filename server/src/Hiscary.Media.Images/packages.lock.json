@@ -10,13 +10,13 @@
       },
       "StackNucleus.DDD.Images": {
         "type": "Direct",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "ADi5LJ4ZuXydMkQvqMO+CjlrUYh58M1YTO14KMuqiW488fFHAVg2jjEYi1cYc9jUaB+Ua3UZJg3kUKQVudZSUA==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "ruPpO3FsOoaXM09jqO9HqDZfH3/JGvCX0ZzofIFya/cQccvv7I7+xwYfdgsMEL11oIL60WeSflOMe2sJNwQ5RA==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.4",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
           "SixLabors.ImageSharp": "3.1.12",
-          "StackNucleus.DDD.Domain": "4.1.0"
+          "StackNucleus.DDD.Domain": "4.10.0"
         }
       },
       "Microsoft.IdentityModel.Abstractions": {
@@ -36,7 +36,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )",
+          "StackNucleus.DDD.Domain": "[4.10.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.17.0, )"
         }
       },
@@ -76,9 +76,9 @@
       },
       "StackNucleus.DDD.Domain": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "HsAGRzH1kumqFPaVI5S/wIvAezuSwIrpRQXLkBpRkBI+UMX57tCUO/tIoHg3VwGs15rgDy+TrWnSKS/UZT6Xkg=="
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "4qVHDpWITV3lHeF5KrIMWOVkczsA4vtb+SgA9lTA5QZXHnJr1+q3bc4Hu8rwGdd2wy9RTR7icmpG1BOMUHtNqA=="
       },
       "System.IdentityModel.Tokens.Jwt": {
         "type": "CentralTransitive",

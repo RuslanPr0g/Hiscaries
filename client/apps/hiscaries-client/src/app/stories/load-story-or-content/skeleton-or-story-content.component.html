@@ -2,20 +2,9 @@
   <ng-content />
 } @else {
   @if (!errorMessage()) {
-    @for (_ of [1, 2, 3]; track _) {
-      <div class="skeleton-card">
-        <p-skeleton width="100%" height="170px" borderRadius="20px 20px 0 0" />
-        <div class="skeleton-body">
-          <p-skeleton width="70%" height="14px" borderRadius="4px" />
-          <p-skeleton width="40%" height="12px" borderRadius="4px" styleClass="mt-2" />
-        </div>
-      </div>
-    }
+    <ui-skeleton-grid [count]="3" />
   }
 }
 @if (errorMessage()) {
-  <div class="error-message">
-    <h2>{{ errorMessage()!.Title }}</h2>
-    <p>{{ errorMessage()!.Description }}</p>
-  </div>
+  <ui-error-state [title]="errorMessage()!.Title" [description]="errorMessage()!.Description" />
 }

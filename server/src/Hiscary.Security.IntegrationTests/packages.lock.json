@@ -531,7 +531,7 @@
         "type": "Project",
         "dependencies": {
           "Hiscary.Shared.Domain": "[1.0.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.shared.application": {
@@ -541,7 +541,7 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "[10.0.5, )",
           "Microsoft.IdentityModel.JsonWebTokens": "[8.17.0, )",
           "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
-          "StackNucleus.DDD.Application": "[4.1.0, )",
+          "StackNucleus.DDD.Application": "[4.10.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.17.0, )"
         }
       },
@@ -549,7 +549,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )",
+          "StackNucleus.DDD.Domain": "[4.10.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.17.0, )"
         }
       },
@@ -577,19 +577,19 @@
         "dependencies": {
           "Hiscary.Shared.Domain": "[1.0.0, )",
           "Hiscary.Stories.DomainEvents": "[1.0.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.stories.domainevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.stories.integrationevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "Aspire.Hosting.Testing": {
@@ -646,15 +646,15 @@
       },
       "StackNucleus.DDD.Application": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "Se4vMZXOnnGZ4D7mZ0XM279bniO+I5XhyJucVM464mET4ouvAm2icHxiWwo776vYKJVRuWLrju9NU4XRRefYlA=="
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "CFWeE0kf115ndXp7zvBF3tLI/W18LIdlW3iM8Gx5QLgZtPiOh5xFClBF9pz9UcdUdv/3ZMsvtlG5dR05RIt8Vw=="
       },
       "StackNucleus.DDD.Domain": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "HsAGRzH1kumqFPaVI5S/wIvAezuSwIrpRQXLkBpRkBI+UMX57tCUO/tIoHg3VwGs15rgDy+TrWnSKS/UZT6Xkg=="
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "4qVHDpWITV3lHeF5KrIMWOVkczsA4vtb+SgA9lTA5QZXHnJr1+q3bc4Hu8rwGdd2wy9RTR7icmpG1BOMUHtNqA=="
       }
     }
   }

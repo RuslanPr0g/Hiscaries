@@ -4,19 +4,19 @@
     "net10.0": {
       "StackNucleus.DDD.Persistence.EF.Postgres": {
         "type": "Direct",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "pC4hMzl2rgM3T8onjtCH7dQkxl7dO1XwskUOTDViF6IW2J0R6i7n2oU6RuKVXkLWGQWkIHRf3H49VdAJOK9l5A==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "EqpivZVtk8KINji1Ynfk5PZR2lj475wwXLWaQmzVI4w+I1xzQMg/1m7ek9z4ovlIRS++PafILjbwa9nKOhsaRQ==",
         "dependencies": {
           "EntityFramework": "6.5.1",
-          "Microsoft.EntityFrameworkCore": "10.0.4",
-          "Microsoft.Extensions.Configuration.FileExtensions": "10.0.4",
-          "Microsoft.Extensions.Configuration.Json": "10.0.4",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.4",
+          "Microsoft.EntityFrameworkCore": "10.0.5",
+          "Microsoft.Extensions.Configuration.FileExtensions": "10.0.5",
+          "Microsoft.Extensions.Configuration.Json": "10.0.5",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
           "Newtonsoft.Json": "13.0.4",
           "Npgsql": "10.0.2",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1",
-          "StackNucleus.DDD.Domain": "4.1.0"
+          "StackNucleus.DDD.Domain": "4.10.0"
         }
       },
       "Microsoft.EntityFrameworkCore.Abstractions": {
@@ -219,20 +219,20 @@
         "dependencies": {
           "Hiscary.Notifications.DomainEvents": "[1.0.0, )",
           "Hiscary.Shared.Domain": "[1.0.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.notifications.domainevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.shared.domain": {
         "type": "Project",
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )",
+          "StackNucleus.DDD.Domain": "[4.10.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.17.0, )"
         }
       },
@@ -248,7 +248,7 @@
           "Newtonsoft.Json": "[13.0.4, )",
           "Npgsql": "[10.0.2, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.1, )",
-          "StackNucleus.DDD.Persistence.EF.Postgres": "[4.1.0, )"
+          "StackNucleus.DDD.Persistence.EF.Postgres": "[4.10.0, )"
         }
       },
       "hiscary.stories.domain": {
@@ -256,13 +256,13 @@
         "dependencies": {
           "Hiscary.Shared.Domain": "[1.0.0, )",
           "Hiscary.Stories.DomainEvents": "[1.0.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.stories.domainevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "EntityFramework": {
@@ -395,9 +395,9 @@
       },
       "StackNucleus.DDD.Domain": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "HsAGRzH1kumqFPaVI5S/wIvAezuSwIrpRQXLkBpRkBI+UMX57tCUO/tIoHg3VwGs15rgDy+TrWnSKS/UZT6Xkg=="
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "4qVHDpWITV3lHeF5KrIMWOVkczsA4vtb+SgA9lTA5QZXHnJr1+q3bc4Hu8rwGdd2wy9RTR7icmpG1BOMUHtNqA=="
       },
       "System.IdentityModel.Tokens.Jwt": {
         "type": "CentralTransitive",

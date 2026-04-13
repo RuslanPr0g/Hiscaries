@@ -1,8 +1,18 @@
-<h1 class="fs-1rem main-title">Search result</h1>
-<app-search-story-results [stories]="stories()" [isLoading]="isLoading()" class="w-full" />
+<ui-section-header title="Search result" />
 
-@if (stories().Items.length === 0 && !isLoading()) {
-  📚 No stories found 💨
-}
-
-<div #loadMoreAnchor class="load-more-anchor"></div>
+<ui-infinite-scroll-grid
+  [isLoading]="isLoading()"
+  [isEmpty]="stories().Items.length === 0 && !isLoading()"
+  [hasMore]="stories().Items.length < stories().TotalItemsCount"
+  emptyMessage="No stories found 💨"
+  (loadMore)="nextPage()"
+>
+  @for (story of stories().Items; track story.Id) {
+    <ui-media-card
+      [imageSrc]="story.ImagePreviewUrl | fallbackImage"
+      [title]="story.Title"
+      [subtitle]="story.AuthorName ?? null"
+      [progressPercentage]="story.PercentageRead"
+    />
+  }
+</ui-infinite-scroll-grid>

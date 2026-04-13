@@ -1,51 +1,37 @@
-import { Component, inject, signal, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { MediaCardComponent } from '@shared/components/molecules/media-card/media-card.component';
+import { SectionHeaderComponent } from '@shared/components/molecules/section-header/section-header.component';
+import { InfiniteScrollGridComponent } from '@shared/components/organisms/infinite-scroll-grid/infinite-scroll-grid.component';
 import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { StoryModel } from '@stories/models/domain/story-model';
-import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-search-story-recommendations',
   standalone: true,
-  imports: [SearchStoryResultsComponent],
+  imports: [
+    InfiniteScrollGridComponent,
+    MediaCardComponent,
+    SectionHeaderComponent,
+    FallbackImagePipe,
+  ],
   templateUrl: './search-story-recommendations.component.html',
   styleUrls: ['./search-story-recommendations.component.scss'],
   providers: [PaginationService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchStoryRecommendationsComponent implements AfterViewInit {
+export class SearchStoryRecommendationsComponent {
   private storyService = inject(StoryWithMetadataService);
   pagination = inject(PaginationService);
 
   stories = signal<QueriedModel<StoryModel>>(generateEmptyQueriedResult());
   isLoading = signal(false);
 
-  @ViewChild('loadMoreAnchor', { static: true }) loadMoreAnchor!: ElementRef<HTMLDivElement>;
-
-  private observer!: IntersectionObserver;
-
   constructor() {
     this.loadStories(true);
-  }
-
-  ngAfterViewInit() {
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !this.isLoading()) {
-            this.nextPage();
-          }
-        });
-      },
-      {
-        threshold: 0,
-      },
-    );
-
-    if (this.loadMoreAnchor) {
-      this.observer.observe(this.loadMoreAnchor.nativeElement);
-    }
   }
 
   private loadStories(reset = false) {
@@ -69,7 +55,6 @@ export class SearchStoryRecommendationsComponent implements AfterViewInit {
       )
       .subscribe((data) => {
         if (!data?.Items || data.Items.length === 0) {
-          this.observer.unobserve(this.loadMoreAnchor.nativeElement);
           return;
         }
 

@@ -1,10 +1,18 @@
-@if (stories(); as s) {
-  @if (stories().Items.length > 0) {
-    <h1 class="fs-1rem main-title">Resume reading</h1>
+<ui-section-header title="Resume reading" />
+
+<ui-infinite-scroll-grid
+  [isLoading]="isLoading()"
+  [isEmpty]="stories().Items.length === 0 && !isLoading()"
+  [hasMore]="stories().Items.length < stories().TotalItemsCount"
+  emptyMessage="📚💨 No pages turned yet — your adventure awaits!"
+  (loadMore)="nextPage()"
+>
+  @for (story of stories().Items; track story.Id) {
+    <ui-media-card
+      [imageSrc]="story.ImagePreviewUrl | fallbackImage"
+      [title]="story.Title"
+      [subtitle]="story.AuthorName ?? null"
+      [progressPercentage]="story.PercentageRead"
+    />
   }
-  @if (stories().Items.length > 0 || isLoading()) {
-    <app-search-story-results [stories]="s" [isLoading]="isLoading()" class="w-full" />
-  }
-} @else {
-  📚💨 No pages turned yet — your adventure awaits!
-}
+</ui-infinite-scroll-grid>
