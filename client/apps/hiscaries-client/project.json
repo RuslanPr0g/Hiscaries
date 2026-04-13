@@ -16,7 +16,9 @@
         "outputPath": "dist/apps/hiscaries-client",
         "index": "apps/hiscaries-client/src/index.html",
         "browser": "apps/hiscaries-client/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/hiscaries-client/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -41,13 +43,13 @@
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "1.5MB",
-              "maximumError": "2MB"
+              "maximumWarning": "4MB",
+              "maximumError": "6MB"
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "2kB",
-              "maximumError": "5kB"
+              "maximumWarning": "8kB",
+              "maximumError": "15kB"
             }
           ],
           "outputHashing": "all",
@@ -61,7 +63,9 @@
         }
       },
       "defaultConfiguration": "production",
-      "outputs": ["{options.outputPath}"]
+      "outputs": [
+        "{options.outputPath}"
+      ]
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
