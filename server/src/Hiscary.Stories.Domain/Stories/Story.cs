@@ -1,5 +1,4 @@
-﻿using Hiscary.PlatformUsers.DomainEvents;
-using Hiscary.Shared.Domain.ValueObjects;
+﻿using Hiscary.Shared.Domain.ValueObjects;
 using Hiscary.Stories.Domain.Genres;
 using Hiscary.Stories.DomainEvents;
 using StackNucleus.DDD.Domain;
@@ -208,7 +207,6 @@ public sealed class Story : AggregateRoot<StoryId>
         }
 
         MarkAsActive();
-        PublishTotalPagesChanged();
     }
 
     public void SetExternalPdf(ExternalPdf externalPdf, int pageCount)
@@ -223,13 +221,6 @@ public sealed class Story : AggregateRoot<StoryId>
     {
         ExternalPdf = null;
         ExternalPdfPageCount = 0;
-        PublishTotalPagesChanged();
-    }
-
-    public void SetExternalPdfPageCount(int count)
-    {
-        ExternalPdfPageCount = count;
-        PublishTotalPagesChanged();
     }
 
     public void MarkAsActive()
@@ -269,11 +260,6 @@ public sealed class Story : AggregateRoot<StoryId>
         {
             Audios.Add(StoryAudio.Create(storyAudioId, name));
         }
-    }
-
-    private void PublishContentsChanged()
-    {
-        PublishEvent(new StoryContentsChangedDomainEvent(Id, Contents.Count));
     }
 
     private void PublishTotalPagesChanged()

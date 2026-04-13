@@ -81,7 +81,7 @@ export class ModifyStoryComponent implements OnInit {
 
   pdfUrl: string | null = null;
   pdfExists = true;
-  uploadedPdfFileName: string | null = null;
+  uploadedPdfFileName?: string | null = null;
 
   constructor() {
     this.modifyForm = this.fb.group<ModifyStoryFormModel>({
@@ -109,8 +109,6 @@ export class ModifyStoryComponent implements OnInit {
       this.storyNotFound = true;
       return;
     }
-
-    this.checkPdfExists(this.storyId);
 
     this.storyService
       .genreList()
@@ -218,6 +216,8 @@ export class ModifyStoryComponent implements OnInit {
 
           this.story = story;
 
+          this.checkPdfExists(this.storyId, story.ExternalPdfUrl);
+
           this.populateFormWithValue();
         },
         error: () => (this.storyNotFound = true),
@@ -271,14 +271,18 @@ export class ModifyStoryComponent implements OnInit {
       });
   }
 
-  private checkPdfExists(storyId: string) {
-    const url = this.buildPdfUrl(storyId);
+  private checkPdfExists(storyId: string | null, url?: string) {
+    if (!url || !storyId) {
+      this.pdfExists = false;
+      return;
+    }
 
     fetch(url, { method: 'GET' })
       .then((res) => {
         if (res.ok) {
           this.pdfExists = true;
           this.pdfUrl = url;
+          this.uploadedPdfFileName = `${storyId}.pdf`;
         } else {
           this.pdfExists = false;
         }
@@ -286,11 +290,6 @@ export class ModifyStoryComponent implements OnInit {
       .catch(() => {
         this.pdfExists = false;
       });
-  }
-
-  private buildPdfUrl(storyId: string): string {
-    // TODO: This should be handled in the backend, maybe add a field to the story model that contains the pdf url if it exists
-    return `api/v1/media/documents/${storyId}.pdf`;
   }
 
   updateContent(index: number, value: string) {
