@@ -9,18 +9,11 @@
     [maxFileSize]="maxFileSize"
     [auto]="true"
     (onSelect)="onSelect($event)"
-    />
-    @if (hasFileSelected) {
-      <p-button
-        (click)="clearSelection()"
-        icon="pi pi-times"
-        [text]="true"
-        severity="danger"
-        />
-    }
-  </div>
-  @if (control()?.hasError('required') && control()?.touched) {
-    <p-message severity="error"
-      [text]="requiredErrorMessage"
-     />
+  />
+  @if (hasFileSelected) {
+    <p-button (click)="clearSelection()" icon="pi pi-times" [text]="true" severity="danger" />
   }
+</div>
+@if (control()?.hasError('required') && control()?.touched) {
+  <p-message severity="error" [text]="requiredErrorMessage" />
+}

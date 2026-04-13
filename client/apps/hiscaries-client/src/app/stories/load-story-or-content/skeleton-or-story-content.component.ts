@@ -1,7 +1,6 @@
 import { Component, input } from '@angular/core';
-
-import { Skeleton } from 'primeng/skeleton';
 import { TemplateMessageModel } from '@stories/models/template-message.model';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-skeleton-or-story-content',

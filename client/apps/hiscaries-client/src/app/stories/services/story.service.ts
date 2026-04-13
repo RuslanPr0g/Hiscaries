@@ -1,17 +1,17 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '@environments/environment';
-import { PublishStoryRequest } from '@stories/models/requests/publish-story.model';
+import { BaseIdModel } from '@shared/models/base-id.model';
+import { QueriedModel } from '@shared/models/queried.model';
 import { GenreModel } from '@stories/models/domain/genre.model';
 import { StoryModel, StoryModelWithContents } from '@stories/models/domain/story-model';
-import { SearchStoryRequest } from '@stories/models/requests/search-story.model';
 import { ModifyStoryRequest } from '@stories/models/requests/modify-story.model';
-import { SearchStoryWithContentsRequest } from '@stories/models/requests/search-story-with-contents.model';
-import { SearchStoryByIdsRequest } from '@stories/models/requests/story-by-ids.model';
+import { PublishStoryRequest } from '@stories/models/requests/publish-story.model';
 import { SearchStoryByLibraryRequest } from '@stories/models/requests/search-story-by-library.model';
-import { QueriedModel } from '@shared/models/queried.model';
-import { BaseIdModel } from '@shared/models/base-id.model';
+import { SearchStoryWithContentsRequest } from '@stories/models/requests/search-story-with-contents.model';
+import { SearchStoryRequest } from '@stories/models/requests/search-story.model';
+import { SearchStoryByIdsRequest } from '@stories/models/requests/story-by-ids.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

@@ -3,10 +3,9 @@
     <input [id]="controlName()" type="text" pInputText [formControlName]="controlName()" />
     <label [for]="controlName()">{{ label() }}</label>
   </span>
-  @if (formGroup().get(controlName())?.hasError('required') && formGroup().get(controlName())?.touched) {
-    <p-message
-      severity="error"
-      [text]="errorMessage()"
-    ></p-message>
+  @if (
+    formGroup().get(controlName())?.hasError('required') && formGroup().get(controlName())?.touched
+  ) {
+    <p-message severity="error" [text]="errorMessage()"></p-message>
   }
 </div>

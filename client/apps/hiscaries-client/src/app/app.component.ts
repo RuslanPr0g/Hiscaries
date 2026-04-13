@@ -1,20 +1,20 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from '@shared/header/header.component';
-import { LoadingOverlayComponent } from '@shared/components/loading-overlay/loading-overlay.component';
-import { CommonModule } from '@angular/common';
-import { Toast } from 'primeng/toast';
-import { Button } from 'primeng/button';
-import { NavigationConst } from '@shared/constants/navigation.const';
+import { StoryPublishedHandler } from './users/notification-handlers/story-published-notification.handler';
 import { AuthService } from './users/services/auth.service';
 import { NotificationLifecycleManagerService } from './users/services/notification-lifecycle-manager.service';
-import { StoryPublishedHandler } from './users/notification-handlers/story-published-notification.handler';
-import { NotificationStateService } from '@shared/services/statefull/notification-state.service';
+import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
-import { filter, takeUntil } from 'rxjs';
-import { MessageService } from 'primeng/api';
+import { Component, inject, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { LoadingOverlayComponent } from '@shared/components/loading-overlay/loading-overlay.component';
 import { NotificationsBarComponent } from '@shared/components/notifications-bar/notifications-bar.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
+import { HeaderComponent } from '@shared/header/header.component';
 import { DestroyService } from '@shared/services/destroy.service';
+import { NotificationStateService } from '@shared/services/statefull/notification-state.service';
+import { MessageService } from 'primeng/api';
+import { Button } from 'primeng/button';
+import { Toast } from 'primeng/toast';
+import { filter, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-root',

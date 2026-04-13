@@ -1,5 +1,6 @@
 @if (libraryInfo) {
-  <app-library [library]="libraryInfo"
+  <app-library
+    [library]="libraryInfo"
     [stories]="stories()"
     [isLoading]="isLoading()"
     [isAbleToSubscribe]="!!libraryInfo"
@@ -7,10 +8,9 @@
     [isSubscribeLoading]="isSubscribeLoading"
     (subscribed)="subscribeAction()"
     (unSubscribed)="unSubscribeAction()"
-   />
+  />
 } @else {
   This library doesn't exist
 }
-
 
 <div #loadMoreAnchor class="load-more-anchor"></div>

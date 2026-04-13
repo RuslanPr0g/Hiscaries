@@ -1,7 +1,7 @@
-import { Component, HostBinding, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Button } from 'primeng/button';
+import { Component, HostBinding, output, input } from '@angular/core';
 import { PrimeNgIcon } from '@shared/types/primeng-icon.type';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-button-two',
@@ -12,7 +12,9 @@ import { PrimeNgIcon } from '@shared/types/primeng-icon.type';
 })
 export class ButtonTwoComponent {
   readonly label = input.required<string>();
-  readonly severity = input<'success' | 'info' | 'danger' | 'help' | 'primary' | 'secondary' | 'contrast' | null | undefined>(null);
+  readonly severity = input<
+    'success' | 'info' | 'danger' | 'help' | 'primary' | 'secondary' | 'contrast' | null | undefined
+  >(null);
   readonly disabled = input(false);
   readonly iconType = input<PrimeNgIcon>();
   readonly isFullWidth = input(false);

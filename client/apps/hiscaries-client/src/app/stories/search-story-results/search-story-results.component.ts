@@ -1,17 +1,13 @@
-
 import { Component, OnInit, input } from '@angular/core';
+import { QueriedModel } from '@shared/models/queried.model';
+import { SkeletonOrStoryContentComponent } from '@stories/load-story-or-content/skeleton-or-story-content.component';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { SearchStoryItemComponent } from '@stories/story-search-item/story-search-item.component';
-import { SkeletonOrStoryContentComponent } from '@stories/load-story-or-content/skeleton-or-story-content.component';
-import { QueriedModel } from '@shared/models/queried.model';
 
 @Component({
   selector: 'app-search-story-results',
   standalone: true,
-  imports: [
-    SearchStoryItemComponent,
-    SkeletonOrStoryContentComponent
-  ],
+  imports: [SearchStoryItemComponent, SkeletonOrStoryContentComponent],
   templateUrl: './search-story-results.component.html',
   styleUrls: ['./search-story-results.component.scss'],
 })

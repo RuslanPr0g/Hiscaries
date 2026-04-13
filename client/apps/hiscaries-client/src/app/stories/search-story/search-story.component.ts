@@ -8,15 +8,14 @@ import {
   ElementRef,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { finalize } from 'rxjs';
-import { DestroyService } from '@shared/services/destroy.service';
-import { StoryModel } from '@stories/models/domain/story-model';
-import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
-import { TemplateMessageModel } from '@stories/models/template-message.model';
-import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { DestroyService } from '@shared/services/destroy.service';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
+import { StoryModel } from '@stories/models/domain/story-model';
+import { TemplateMessageModel } from '@stories/models/template-message.model';
+import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
+import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-search-story',

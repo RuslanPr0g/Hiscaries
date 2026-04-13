@@ -1,14 +1,14 @@
+import { AuthService } from './auth.service';
+import { NotificationService } from './notification.service';
 import { Injectable, inject } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { AuthService } from './auth.service';
-import { SignalRConnectionFactoryService } from '@shared/services/statefull/signalr-connection-factory.service';
-import { NotificationHandler } from '@shared/models/notification-handler.model';
-import { NotificationStateService } from '@shared/services/statefull/notification-state.service';
-import { take } from 'rxjs';
-import { NotificationModel } from '@shared/models/notification.model';
 import { UserNotificationTypes } from '@shared/constants/notification-type.const';
-import { NotificationService } from './notification.service';
 import { BaseIdModel } from '@shared/models/base-id.model';
+import { NotificationHandler } from '@shared/models/notification-handler.model';
+import { NotificationModel } from '@shared/models/notification.model';
+import { NotificationStateService } from '@shared/services/statefull/notification-state.service';
+import { SignalRConnectionFactoryService } from '@shared/services/statefull/signalr-connection-factory.service';
+import { take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

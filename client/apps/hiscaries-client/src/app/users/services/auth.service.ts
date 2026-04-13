@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '@environments/environment';
+import { LoginUserRequest } from '@users/models/requests/login-user.model';
 import { RegisterUserRequest } from '@users/models/requests/register-user.model';
 import { UserWithTokenResponse } from '@users/models/response/user-with-token.model';
-import { LoginUserRequest } from '@users/models/requests/login-user.model';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

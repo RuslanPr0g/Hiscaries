@@ -26,7 +26,12 @@
       "cache": true
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json", "{workspaceRoot}/eslint.config.cjs"],
+      "inputs": [
+        "default",
+        "{workspaceRoot}/eslint.config.js",
+        "{workspaceRoot}/apps/hiscaries-client/eslint.config.cjs",
+        "{workspaceRoot}/.prettierrc"
+      ],
       "cache": true
     }
   },

@@ -14,7 +14,7 @@
         [formGroup]="isLoginState ? formLogin : formRegister"
         (ngSubmit)="onSubmit()"
         autocomplete="off"
-        >
+      >
         <div class="form-field">
           <input pInputText formControlName="username" placeholder="Username" class="w-full" />
         </div>
@@ -26,59 +26,59 @@
               placeholder="Email"
               type="email"
               class="w-full"
-              />
-            </div>
-          }
-          <div class="form-field">
-            <p-password
-              formControlName="password"
-              placeholder="Password"
-              [toggleMask]="true"
-              class="w-full"
-              [feedback]="false"
-            ></p-password>
+            />
           </div>
-          @if (isLoading) {
-            <p-button
-              type="submit"
-              icon="pi pi-spin pi-spinner"
-              [label]="isLoginState ? 'Sign In' : 'Register'"
-              [disabled]="true"
-              class="w-full fancy-btn"
-            ></p-button>
-          } @else {
-            <p-button
-              tabindex="0"
-              type="submit"
-              [label]="isLoginState ? 'Sign In' : 'Register'"
-              class="w-full fancy-btn"
-            ></p-button>
-          }
-        </form>
-      }
-
-      @if (isLoadedFully) {
-        <p
-          class="toggle-text mt-4"
-          (click)="toggleState()"
-          (keydown.enter)="toggleState()"
-          (keydown.space)="toggleState()"
-          tabindex="1"
-          >
-          {{ !isLoginState ? 'Have an account?' : 'Need an account?' }}
-        </p>
-      }
-
-      <div class="w-full center">
-        @if (isLoading && !isLoadedFully) {
-          <app-loading-spinner></app-loading-spinner>
         }
-      </div>
-    </p-card>
-
-    @if (errorMessage) {
-      <div class="error-message">
-        {{ errorMessage }}
-      </div>
+        <div class="form-field">
+          <p-password
+            formControlName="password"
+            placeholder="Password"
+            [toggleMask]="true"
+            class="w-full"
+            [feedback]="false"
+          ></p-password>
+        </div>
+        @if (isLoading) {
+          <p-button
+            type="submit"
+            icon="pi pi-spin pi-spinner"
+            [label]="isLoginState ? 'Sign In' : 'Register'"
+            [disabled]="true"
+            class="w-full fancy-btn"
+          ></p-button>
+        } @else {
+          <p-button
+            tabindex="0"
+            type="submit"
+            [label]="isLoginState ? 'Sign In' : 'Register'"
+            class="w-full fancy-btn"
+          ></p-button>
+        }
+      </form>
     }
-  </div>
+
+    @if (isLoadedFully) {
+      <p
+        class="toggle-text mt-4"
+        (click)="toggleState()"
+        (keydown.enter)="toggleState()"
+        (keydown.space)="toggleState()"
+        tabindex="1"
+      >
+        {{ !isLoginState ? 'Have an account?' : 'Need an account?' }}
+      </p>
+    }
+
+    <div class="w-full center">
+      @if (isLoading && !isLoadedFully) {
+        <app-loading-spinner></app-loading-spinner>
+      }
+    </div>
+  </p-card>
+
+  @if (errorMessage) {
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+  }
+</div>

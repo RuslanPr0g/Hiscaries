@@ -1,11 +1,11 @@
+import { StoryWithMetadataService } from './story-with-metadata.service';
 import { Injectable, inject } from '@angular/core';
-import { Observable, of, switchMap, catchError, map } from 'rxjs';
+import { LastReadAtDateToId } from '@shared/models/last-read-date-id.model';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { QueryableModel } from '@shared/models/queryable.model';
 import { ReadHistoryStory, StoryModel } from '@stories/models/domain/story-model';
 import { UserService } from '@users/services/user.service';
-import { StoryWithMetadataService } from './story-with-metadata.service';
-import { QueryableModel } from '@shared/models/queryable.model';
-import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
-import { LastReadAtDateToId } from '@shared/models/last-read-date-id.model';
+import { Observable, of, switchMap, catchError, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,6 @@ import { LastReadAtDateToId } from '@shared/models/last-read-date-id.model';
 export class UserStoryService {
   private storyService = inject(StoryWithMetadataService);
   private userService = inject(UserService);
-
 
   resumeReading(queryableModel: QueryableModel): Observable<QueriedModel<StoryModel>> {
     return this.loadStoriesFromIds(() => this.userService.resumeReading(), {

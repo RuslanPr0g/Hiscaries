@@ -1,5 +1,7 @@
-import 'jest-preset-angular/setup-jest';
-import '@angular/localize/init';
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+
+setupZoneTestEnv();
+
 Object.defineProperty(window, 'TextEncoder', {
   writable: true,
 });

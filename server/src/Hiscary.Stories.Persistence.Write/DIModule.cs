@@ -10,6 +10,7 @@ public static class DIModule
     {
         services.AddScoped<IStoryWriteRepository, StoryWriteRepository>();
         services.AddScoped<IGenreWriteRepository, GenreWriteRepository>();
+        services.AddScoped<ILibraryOwnerRepository, LibraryOwnerRepository>();
         return services;
     }
 }

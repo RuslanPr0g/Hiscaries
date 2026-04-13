@@ -1,8 +1,5 @@
 <h1 class="fs-1rem main-title">Search result</h1>
-<app-search-story-results [stories]="stories()"
-  [isLoading]="isLoading()"
-  class="w-full"
- />
+<app-search-story-results [stories]="stories()" [isLoading]="isLoading()" class="w-full" />
 
 @if (stories().Items.length === 0 && !isLoading()) {
   📚 No stories found 💨

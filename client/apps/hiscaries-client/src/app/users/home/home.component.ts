@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { SearchStoryRecommendationsComponent } from '@stories/search-story-recommendations/search-story-recommendations.component';
 import { SearchStoryResumeReadingComponent } from '@stories/search-story-resume-reading/search-story-resume-reading.component';
 

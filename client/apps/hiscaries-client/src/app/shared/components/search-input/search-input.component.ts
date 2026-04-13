@@ -1,13 +1,5 @@
-
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-  output
-} from '@angular/core';
 import { DestroyService } from '../../services/destroy.service';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild, output } from '@angular/core';
 
 @Component({
   selector: 'app-search-input',

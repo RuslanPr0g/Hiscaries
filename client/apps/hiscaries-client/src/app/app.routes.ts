@@ -1,18 +1,18 @@
-import { Routes } from '@angular/router';
-import { LoginComponent } from './users/login/login.component';
-import { HomeComponent } from './users/home/home.component';
-import { authGuard } from '@shared/auth/guards/auth.guard';
-import { provideState } from '@ngrx/store';
-import { PublishStoryComponent } from './stories/publish-story/publish-story.component';
-import { PreviewStoryComponent } from './stories/preview-story/preview-story.component';
 import { ModifyStoryComponent } from './stories/modify-story/modify-story.component';
+import { PreviewStoryComponent } from './stories/preview-story/preview-story.component';
+import { PublishStoryComponent } from './stories/publish-story/publish-story.component';
 import { ReadStoryContentComponent } from './stories/read-story-content/read-story-content.component';
+import { ReadingHistoryComponent } from './stories/reading-history/reading-history.component';
 import { SearchStoryComponent } from './stories/search-story/search-story.component';
 import { storyFeatureKey, storyReducer } from './stories/store/story.reducer';
-import { ReadingHistoryComponent } from './stories/reading-history/reading-history.component';
 import { BecomePublisherComponent } from './users/become-publisher/become-publisher.component';
+import { HomeComponent } from './users/home/home.component';
+import { LoginComponent } from './users/login/login.component';
 import { MyLibraryComponent } from './users/my-library/my-library.component';
 import { PublisherLibraryComponent } from './users/publisher-library/publisher-library.component';
+import { Routes } from '@angular/router';
+import { provideState } from '@ngrx/store';
+import { authGuard } from '@shared/auth/guards/auth.guard';
 
 export const routes: Routes = [
   {

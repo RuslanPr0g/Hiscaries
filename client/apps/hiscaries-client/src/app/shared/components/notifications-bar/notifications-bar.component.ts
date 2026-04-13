@@ -1,13 +1,12 @@
-import { Component, OnInit, inject, output } from '@angular/core';
-
-import { NotificationStateService } from '../../services/statefull/notification-state.service';
+import { NavigationConst } from '../../constants/navigation.const';
+import { UserNotificationTypes } from '../../constants/notification-type.const';
 import { NotificationModel } from '../../models/notification.model';
 import { DestroyService } from '../../services/destroy.service';
-import { takeUntil } from 'rxjs';
-import { UserNotificationTypes } from '../../constants/notification-type.const';
-import { NavigationConst } from '../../constants/navigation.const';
+import { NotificationStateService } from '../../services/statefull/notification-state.service';
+import { Component, OnInit, inject, output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-notifications-bar',

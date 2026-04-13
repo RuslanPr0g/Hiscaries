@@ -3,6 +3,7 @@
 public class ServiceUrls
 {
     public string MediaServiceUrl { get; set; }
+    public string StoriesServiceBaseUrl { get; set; }
 
     public string GetImagesUrl(string fileName)
     {

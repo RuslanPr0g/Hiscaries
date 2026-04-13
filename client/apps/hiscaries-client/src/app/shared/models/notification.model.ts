@@ -1,4 +1,4 @@
-import { ImageUrlSizes } from "@shared/models/image-url-sizes.model";
+import { ImageUrlSizes } from '@shared/models/image-url-sizes.model';
 
 export interface NotificationModel {
   Id: string;

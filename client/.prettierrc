@@ -11,6 +11,7 @@
   "jsxSingleQuote": false,
   "htmlWhitespaceSensitivity": "ignore",
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrderParserPlugins": ["typescript", "decorators-legacy"],
   "overrides": [
     {
       "files": "*.md",

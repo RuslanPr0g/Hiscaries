@@ -1,8 +1,7 @@
 import { Component, input } from '@angular/core';
-
-import { Textarea } from 'primeng/textarea';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Message } from 'primeng/message';
+import { Textarea } from 'primeng/textarea';
 
 @Component({
   selector: 'app-form-textarea',

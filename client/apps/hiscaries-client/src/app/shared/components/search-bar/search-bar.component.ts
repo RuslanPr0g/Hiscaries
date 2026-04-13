@@ -1,13 +1,13 @@
+import { NavigationConst } from '../../constants/navigation.const';
+import { DestroyService } from '../../services/destroy.service';
+import { SearchInputComponent } from '../search-input/search-input.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { DestroyService } from '../../services/destroy.service';
-import { Observable } from 'rxjs';
-import { NavigationConst } from '../../constants/navigation.const';
 import { Router } from '@angular/router';
-import { StoryStateModel } from '@stories/store/story-state.model';
 import { Store } from '@ngrx/store';
+import { StoryStateModel } from '@stories/store/story-state.model';
 import { searchSearchTerm } from '@stories/store/story.selector';
-import { SearchInputComponent } from '../search-input/search-input.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',

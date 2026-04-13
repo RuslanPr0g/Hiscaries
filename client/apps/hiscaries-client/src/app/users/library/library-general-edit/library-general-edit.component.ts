@@ -1,13 +1,13 @@
-import { Component, OnInit, inject, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LibraryModel } from '@users/models/domain/library.model';
-import { SocialMediaIconMapperService } from '@shared/services/social-media-icon-mapper.service';
+import { Component, OnInit, inject, output, input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ModifyLibraryFormModel } from '@users/models/form/modify-library.model';
 import { FormTextareaComponent } from '@shared/components/form-textarea/form-textarea.component';
 import { UploadFileControlComponent } from '@shared/components/upload-file-control/upload-file-control.component';
-import { AutoComplete } from 'primeng/autocomplete';
+import { SocialMediaIconMapperService } from '@shared/services/social-media-icon-mapper.service';
+import { LibraryModel } from '@users/models/domain/library.model';
 import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
+import { ModifyLibraryFormModel } from '@users/models/form/modify-library.model';
+import { AutoComplete } from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-library-general-edit',

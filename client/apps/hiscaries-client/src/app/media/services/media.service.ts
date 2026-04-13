@@ -1,9 +1,9 @@
+import { DocumentContent } from '../models/document-content.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '@environments/environment';
-import { DocumentContent } from '../models/document-content.model';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { OperationResult } from '@shared/models/operation-result.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,9 @@ export class MediaService {
     const params = new URLSearchParams();
     if (start != null) params.append('start', start.toString());
     if (end != null) params.append('end', end.toString());
-    const url = params.toString() ? `${this.apiUrl}/documents/as-contents?${params.toString()}` : `${this.apiUrl}/documents/as-contents`;
+    const url = params.toString()
+      ? `${this.apiUrl}/documents/as-contents?${params.toString()}`
+      : `${this.apiUrl}/documents/as-contents`;
 
     return this.http.post<DocumentContent>(url, file, {
       // TODO: for now only pdf

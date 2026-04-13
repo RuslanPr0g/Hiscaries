@@ -1,12 +1,12 @@
+import { LibraryGeneralEditComponent } from './library-general-edit/library-general-edit.component';
+import { LibraryGeneralViewComponent } from './library-general-view/library-general-view.component';
 import { Component, output, input } from '@angular/core';
-import { LibraryModel } from '@users/models/domain/library.model';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { QueriedModel } from '@shared/models/queried.model';
 import { StoryModel } from '@stories/models/domain/story-model';
 import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
-import { LibraryGeneralViewComponent } from './library-general-view/library-general-view.component';
-import { LibraryGeneralEditComponent } from './library-general-edit/library-general-edit.component';
-import { QueriedModel } from '@shared/models/queried.model';
+import { LibraryModel } from '@users/models/domain/library.model';
 import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
-import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-library',
@@ -15,8 +15,8 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
     SearchStoryResultsComponent,
     LibraryGeneralViewComponent,
     LibraryGeneralEditComponent,
-    LoadingSpinnerComponent
-],
+    LoadingSpinnerComponent,
+  ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
 })

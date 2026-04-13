@@ -4,9 +4,9 @@
       <div
         class="profile-card background-image-configuration"
         [ngStyle]="{
-          'background-image': backgroundImageUrl ? 'url(' + backgroundImageUrl + ')' : 'none'
+          'background-image': backgroundImageUrl ? 'url(' + backgroundImageUrl + ')' : 'none',
         }"
-        >
+      >
         @if (backgroundImageUrl) {
           <div class="overlay"></div>
         }
@@ -26,7 +26,7 @@
               formControlName="LinksToSocialMedia"
               [multiple]="true"
               [suggestions]="[]"
-              (completeMethod)="$event"
+              (completeMethod)="($event)"
             >
               <ng-template let-item pTemplate="selectedItem">
                 <span class="item">

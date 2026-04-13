@@ -18,13 +18,15 @@ public sealed class StoryWriteService(
     IStoryWriteRepository storyWriteRepository,
     IGenreWriteRepository genreWriteRepository,
     IIdGenerator idGenerator,
-    ILogger<StoryWriteService> logger) : IStoryWriteService
+    ILogger<StoryWriteService> logger,
+    IStoryOwnershipValidator ownershipValidator) : IStoryWriteService
 {
     private readonly IEventPublisher _publisher = publisher;
     private readonly IStoryWriteRepository _repository = storyWriteRepository;
     private readonly IGenreWriteRepository _genreRepository = genreWriteRepository;
     private readonly IIdGenerator _idGenerator = idGenerator;
     private readonly ILogger<StoryWriteService> _logger = logger;
+    private readonly IStoryOwnershipValidator _ownershipValidator = ownershipValidator;
 
     public async Task<OperationResult> AddComment(Guid storyId, Guid userId, string content, int score)
     {
@@ -94,7 +96,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> UpdateComment(Guid commentId, Guid storyId, string content, int score)
+    public async Task<OperationResult> UpdateComment(Guid commentId, Guid storyId, string content, int score, Guid callerId, string callerRole)
     {
         _logger.LogInformation("Updating comment {CommentId} for story {StoryId}", commentId, storyId);
         var story = await _repository.GetById(storyId);
@@ -105,7 +107,11 @@ public sealed class StoryWriteService(
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
         }
 
-        // TODO: add a check that only the owner is going to update his comment
+        if (!await _ownershipValidator.IsCommentOwner(storyId, commentId, callerId, callerRole))
+        {
+            _logger.LogWarning("User {CallerId} is not authorized to update comment {CommentId} on story {StoryId}", callerId, commentId, storyId);
+            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
+        }
 
         story.UpdateComment(commentId, content, score);
         await _repository.SaveChanges();
@@ -209,6 +215,7 @@ public sealed class StoryWriteService(
 
     public async Task<OperationResult> UpdateStory(
         Guid currentUserId,
+        string callerRole,
         Guid storyId,
         string title,
         string description,
@@ -230,14 +237,11 @@ public sealed class StoryWriteService(
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
         }
 
-        // TODO: do the check using command to validate the data and send it to another service request to another microservice
-        // or insert this data into the jwt token somehow
-        //if (story.Library.PlatformUserId.Value != currentUserId)
-        //{
-        //    _logger.LogWarning("Story {StoryId} can only be updated by its publisher or an administrator, user {UserId} tried to update not his story.",
-        //        storyId, currentUserId);
-        //    return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
-        //}
+        if (!await _ownershipValidator.IsOwnerOrAdmin(storyId, currentUserId, callerRole))
+        {
+            _logger.LogWarning("User {CallerId} is not authorized to update story {StoryId}", currentUserId, storyId);
+            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
+        }
 
         var existingGenres = await _genreRepository.GetByIds(genreIds.ToArray());
 
@@ -327,7 +331,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> DeleteAudio(Guid storyId)
+    public async Task<OperationResult> DeleteAudio(Guid storyId, Guid callerId, string callerRole)
     {
         _logger.LogInformation("Deleting audio for story {StoryId}", storyId);
         var story = await _repository.GetById(storyId);
@@ -336,6 +340,12 @@ public sealed class StoryWriteService(
         {
             _logger.LogWarning("Story {StoryId} not found when deleting audio", storyId);
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
+        }
+
+        if (!await _ownershipValidator.IsOwnerOrAdmin(storyId, callerId, callerRole))
+        {
+            _logger.LogWarning("User {CallerId} is not authorized to delete audio for story {StoryId}", callerId, storyId);
+            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
         }
 
         Guid? removedAudioId = story.ClearAllAudio();
@@ -367,7 +377,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> DeleteComment(Guid storyId, Guid commentId)
+    public async Task<OperationResult> DeleteComment(Guid storyId, Guid commentId, Guid callerId, string callerRole)
     {
         _logger.LogInformation("Deleting comment {CommentId} from story {StoryId}", commentId, storyId);
         var story = await _repository.GetById(storyId);
@@ -378,7 +388,11 @@ public sealed class StoryWriteService(
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
         }
 
-        // TODO: add rights check
+        if (!await _ownershipValidator.IsCommentOwner(storyId, commentId, callerId, callerRole))
+        {
+            _logger.LogWarning("User {CallerId} is not authorized to delete comment {CommentId} on story {StoryId}", callerId, commentId, storyId);
+            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
+        }
 
         story.DeleteComment(commentId);
         await _repository.SaveChanges();
@@ -406,25 +420,28 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> DeleteStory(Guid storyId)
+    public async Task<OperationResult> DeleteStory(Guid storyId, Guid callerId, string callerRole)
     {
         _logger.LogInformation("Deleting story {StoryId}", storyId);
         var story = await _repository.GetById(storyId);
 
-        // TODO: add rights check
-
-        if (story is not null)
-        {
-            // TODO: let's mark it as isDeleted and then have a
-            // job that would remove all the isdeleted records once per month or smth
-            _repository.Delete(story);
-            await _repository.SaveChanges();
-            _logger.LogInformation("Story {StoryId} deleted successfully", storyId);
-        }
-        else
+        if (story is null)
         {
             _logger.LogWarning("Story {StoryId} not found when deleting", storyId);
+            return OperationResult.CreateSuccess();
         }
+
+        if (!await _ownershipValidator.IsOwnerOrAdmin(storyId, callerId, callerRole))
+        {
+            _logger.LogWarning("User {CallerId} is not authorized to delete story {StoryId}", callerId, storyId);
+            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
+        }
+
+        // TODO: let's mark it as isDeleted and then have a
+        // job that would remove all the isdeleted records once per month or smth
+        _repository.Delete(story);
+        await _repository.SaveChanges();
+        _logger.LogInformation("Story {StoryId} deleted successfully", storyId);
 
         return OperationResult.CreateSuccess();
     }

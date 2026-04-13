@@ -1,17 +1,16 @@
 import { Component, inject, signal, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { LibraryComponent } from '@users/library/library.component';
 import { Router } from '@angular/router';
-import { take } from 'rxjs';
+import { NavigationConst } from '@shared/constants/navigation.const';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { PaginationService } from '@shared/services/statefull/pagination.service';
+import { StoryModel } from '@stories/models/domain/story-model';
+import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
+import { LibraryComponent } from '@users/library/library.component';
+import { LibraryModel } from '@users/models/domain/library.model';
+import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
 import { AuthService } from '@users/services/auth.service';
 import { UserService } from '@users/services/user.service';
-import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
-import { PaginationService } from '@shared/services/statefull/pagination.service';
-import { NavigationConst } from '@shared/constants/navigation.const';
-import { LibraryModel } from '@users/models/domain/library.model';
-
-import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
-import { StoryModel } from '@stories/models/domain/story-model';
-import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-my-library',

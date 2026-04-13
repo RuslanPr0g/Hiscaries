@@ -1,11 +1,11 @@
-import { Component, HostListener, inject, output } from '@angular/core';
-import { AuthService } from '@users/services/auth.service';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { NavigationConst } from '../constants/navigation.const';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
+import { NavigationConst } from '../constants/navigation.const';
+import { CommonModule } from '@angular/common';
+import { Component, HostListener, inject, output } from '@angular/core';
+import { Router } from '@angular/router';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { PrimeNgIcon } from '@shared/types/primeng-icon.type';
+import { AuthService } from '@users/services/auth.service';
 
 export interface MenuItem {
   Label: string;

@@ -1,11 +1,10 @@
 import { Component, inject, signal, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-
-import { finalize } from 'rxjs';
-import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
-import { UserStoryService } from '@user-to-story/services/multiple-services-merged/user-story.service';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { StoryModel } from '@stories/models/domain/story-model';
-import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
+import { UserStoryService } from '@user-to-story/services/multiple-services-merged/user-story.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-search-story-resume-reading',

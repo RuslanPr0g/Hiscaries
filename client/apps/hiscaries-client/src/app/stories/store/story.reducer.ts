@@ -1,6 +1,6 @@
-import { createReducer, on } from '@ngrx/store';
 import { InitialStoryStateModel } from './story-state.model';
 import { searchStoryByTerm } from './story.actions';
+import { createReducer, on } from '@ngrx/store';
 
 export const storyFeatureKey = 'story';
 

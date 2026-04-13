@@ -24,6 +24,8 @@ public static class DIModule
 
         services.AddJwtBearerSupport(jwtSettings);
 
+        services.AddAuthorizationPolicies();
+
         return services;
     }
 }

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
@@ -6,28 +7,27 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { FormInputComponent } from '@shared/components/form-input/form-input.component';
-import { FormTextareaComponent } from '@shared/components/form-textarea/form-textarea.component';
+import { Router } from '@angular/router';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
-import { NumberLimitControlComponent } from '@shared/components/number-limit-control/number-limit-control.component';
 import { FormDateInputComponent } from '@shared/components/form-date-input/form-date-input.component';
-import { Divider } from 'primeng/divider';
-import { GenreModel } from '@stories/models/domain/genre.model';
-import { take } from 'rxjs';
-import { UploadFileControlComponent } from '@shared/components/upload-file-control/upload-file-control.component';
+import { FormInputComponent } from '@shared/components/form-input/form-input.component';
 import { FormMultiselectComponent } from '@shared/components/form-multiselect/form-multiselect.component';
+import { FormTextareaComponent } from '@shared/components/form-textarea/form-textarea.component';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { NumberLimitControlComponent } from '@shared/components/number-limit-control/number-limit-control.component';
+import { UploadFileControlComponent } from '@shared/components/upload-file-control/upload-file-control.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
+import { BaseIdModel } from '@shared/models/base-id.model';
+import { GenreModel } from '@stories/models/domain/genre.model';
 import { PublishFormModel } from '@stories/models/form/publish-story-form.model';
 import { PublishStoryRequest } from '@stories/models/requests/publish-story.model';
-import { Message } from 'primeng/message';
-import { Router } from '@angular/router';
-import { BaseIdModel } from '@shared/models/base-id.model';
-import { NavigationConst } from '@shared/constants/navigation.const';
-import { AuthService } from '@users/services/auth.service';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
-import { UserService } from '@users/services/user.service';
 import { LibraryModel } from '@users/models/domain/library.model';
-import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { AuthService } from '@users/services/auth.service';
+import { UserService } from '@users/services/user.service';
+import { Divider } from 'primeng/divider';
+import { Message } from 'primeng/message';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-publish-story',

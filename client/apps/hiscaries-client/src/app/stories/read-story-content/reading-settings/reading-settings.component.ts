@@ -1,12 +1,11 @@
 import { Component, inject, input, OnInit, output } from '@angular/core';
-import { ToggleSwitch } from 'primeng/toggleswitch';
-
 import { FormsModule } from '@angular/forms';
 import {
   defaultReadingSettings,
   ReadingSettings,
 } from '@stories/models/domain/reading-settings.model';
 import { LoadReadingSettingsService } from '@stories/services/load-reading-settings.service';
+import { ToggleSwitch } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-reading-settings',

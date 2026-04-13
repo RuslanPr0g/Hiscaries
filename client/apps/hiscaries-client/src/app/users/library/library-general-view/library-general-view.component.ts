@@ -1,9 +1,9 @@
-import { Component, inject, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LibraryModel } from '@users/models/domain/library.model';
-import { SocialMediaIconMapperService } from '@shared/services/social-media-icon-mapper.service';
+import { Component, inject, output, input } from '@angular/core';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
+import { SocialMediaIconMapperService } from '@shared/services/social-media-icon-mapper.service';
+import { LibraryModel } from '@users/models/domain/library.model';
 
 @Component({
   selector: 'app-library-general-view',
