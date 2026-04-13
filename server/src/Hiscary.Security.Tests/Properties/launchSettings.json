@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Hiscary.Security.Tests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:62290;http://localhost:62291"
+    }
+  }
+}

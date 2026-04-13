@@ -87,3 +87,5 @@ app.UseAuthorization();
 app.MapUserAccountsEndpoints();
 
 app.Run();
+
+public partial class Program;

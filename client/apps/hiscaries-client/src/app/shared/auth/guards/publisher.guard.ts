@@ -9,7 +9,6 @@ export const publisherGuard: CanActivateFn = () => {
     return true;
   }
 
-  console.warn('User does not have publisher or admin role');
   inject(Router).navigate(['/']);
   return false;
 };

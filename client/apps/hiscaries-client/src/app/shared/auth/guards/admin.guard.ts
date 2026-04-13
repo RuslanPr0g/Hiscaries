@@ -9,7 +9,6 @@ export const adminGuard: CanActivateFn = () => {
     return true;
   }
 
-  console.warn('User does not have admin role');
   inject(Router).navigate(['/']);
   return false;
 };
