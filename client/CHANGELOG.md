@@ -1,3 +1,7 @@
+## 5.4.0 (2026-04-13)
+
+This was a version bump only, there were no code changes.
+
 ## 5.3.0 (2026-04-13)
 
 This was a version bump only, there were no code changes.
