@@ -21,7 +21,7 @@
         {{ story()!.AuthorName | slice: 0 : 30 }}
       </div>
     </div>
-    <app-progress-bar [percentage]="story()!.PercentageRead"></app-progress-bar>
+    <app-progress-bar [percentage]="story()!.PercentageRead" />
   </div>
 
   <div class="story-hover-details">

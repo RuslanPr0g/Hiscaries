@@ -18,7 +18,7 @@
               label="Bio"
               errorMessage="Bio is required"
               [rows]="4"
-            ></app-form-textarea>
+            />
           </div>
           <div class="field-wrapper">
             <h3>Links to your social media</h3>
@@ -38,10 +38,7 @@
           </div>
           <div class="field-wrapper">
             <h3>Profile image</h3>
-            <app-upload-file-control
-              [control]="imageControl"
-              fileType="image"
-            ></app-upload-file-control>
+            <app-upload-file-control [control]="imageControl" fileType="image" />
           </div>
         </div>
       </div>

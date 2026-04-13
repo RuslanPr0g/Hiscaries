@@ -36,7 +36,7 @@
             [toggleMask]="true"
             class="w-full"
             [feedback]="false"
-          ></p-password>
+          />
         </div>
         @if (isLoading) {
           <p-button
@@ -45,14 +45,14 @@
             [label]="isLoginState ? 'Sign In' : 'Register'"
             [disabled]="true"
             class="w-full fancy-btn"
-          ></p-button>
+          />
         } @else {
           <p-button
             tabindex="0"
             type="submit"
             [label]="isLoginState ? 'Sign In' : 'Register'"
             class="w-full fancy-btn"
-          ></p-button>
+          />
         }
       </form>
     }
@@ -71,7 +71,7 @@
 
     <div class="w-full center">
       @if (isLoading && !isLoadedFully) {
-        <app-loading-spinner></app-loading-spinner>
+        <app-loading-spinner />
       }
     </div>
   </p-card>

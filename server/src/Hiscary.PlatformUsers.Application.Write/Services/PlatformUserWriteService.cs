@@ -23,9 +23,16 @@ public sealed class PlatformUserWriteService(
     private readonly IIdGenerator _idGenerator = idGenerator;
     private readonly ILogger<PlatformUserWriteService> _logger = logger;
 
-    public async Task<OperationResult> BecomePublisher(Guid userAccountId)
+    public async Task<OperationResult> BecomePublisher(Guid userAccountId, string callerRole)
     {
         _logger.LogInformation("Attempting to make user {id} a publisher", userAccountId);
+
+        if (callerRole == "publisher" || callerRole == "admin")
+        {
+            _logger.LogWarning("User {id} is already a publisher or admin", userAccountId);
+            return OperationResult.CreateClientSideError("User is already a publisher or admin");
+        }
+
         PlatformUser? user = await _repository.GetByUserAccountId(userAccountId);
 
         if (user is null)

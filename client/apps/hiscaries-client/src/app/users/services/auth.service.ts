@@ -106,4 +106,46 @@ export class AuthService {
 
     return role === 'publisher';
   }
+
+  isAdmin(): boolean {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+
+    if (!token) {
+      return false;
+    }
+
+    if (this.jwtHelper.isTokenExpired(token)) {
+      return false;
+    }
+
+    const decodedToken = this.jwtHelper.decodeToken(token);
+
+    const role = decodedToken?.role;
+
+    return role === 'admin';
+  }
+
+  getUserRole(): string | null {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+
+    if (!token) {
+      return null;
+    }
+
+    const decodedToken = this.jwtHelper.decodeToken(token);
+
+    return decodedToken?.role ?? null;
+  }
+
+  getUserId(): string | null {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+
+    if (!token) {
+      return null;
+    }
+
+    const decodedToken = this.jwtHelper.decodeToken(token);
+
+    return decodedToken?.id ?? null;
+  }
 }

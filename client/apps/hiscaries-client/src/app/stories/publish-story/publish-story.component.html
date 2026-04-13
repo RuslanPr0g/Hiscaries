@@ -16,14 +16,14 @@
           controlName="Title"
           label="Title"
           errorMessage="Title is required"
-        ></app-form-input>
+        />
 
         <app-form-input
           [formGroup]="publishForm"
           controlName="AuthorName"
           label="Author Name"
           errorMessage="Author Name is required"
-        ></app-form-input>
+        />
       </div>
 
       <app-form-textarea
@@ -32,7 +32,7 @@
         label="Description"
         errorMessage="Description is required"
         [rows]="4"
-      ></app-form-textarea>
+      />
 
       <div class="form-controls__row">
         <app-number-limit-control
@@ -44,7 +44,7 @@
           [max]="18"
           [step]="1"
           [centered]="true"
-        ></app-number-limit-control>
+        />
 
         <app-form-date-input
           [formGroup]="publishForm"
@@ -52,28 +52,21 @@
           label="Date Written"
           errorMessage="Date Written is required"
           [centered]="true"
-        ></app-form-date-input>
+        />
       </div>
 
       <div class="form-controls__row">
         @if (genres && genres.length > 0) {
-          <app-form-multiselect
-            [formGroup]="publishForm"
-            [items]="genres"
-            controlName="Genres"
-          ></app-form-multiselect>
+          <app-form-multiselect [formGroup]="publishForm" [items]="genres" controlName="Genres" />
         }
 
-        <app-upload-file-control
-          [control]="imageControl"
-          fileType="image"
-        ></app-upload-file-control>
+        <app-upload-file-control [control]="imageControl" fileType="image" />
       </div>
 
       <p-divider layout="horizontal" />
 
       @if (globalError) {
-        <p-message severity="error" [text]="globalError"></p-message>
+        <p-message severity="error" [text]="globalError" />
       }
 
       @if (globalError) {
@@ -82,9 +75,9 @@
 
       <div class="center">
         @if (submitted) {
-          <app-loading-spinner></app-loading-spinner>
+          <app-loading-spinner />
         } @else {
-          <app-button-two label="Publish Story" (clicked)="onSubmit()"></app-button-two>
+          <app-button-two label="Publish Story" (clicked)="onSubmit()" />
         }
       </div>
     </div>

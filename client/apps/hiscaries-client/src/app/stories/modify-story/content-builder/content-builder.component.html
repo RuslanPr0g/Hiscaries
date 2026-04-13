@@ -1,17 +1,10 @@
 <div [formGroup]="formGroup()!" class="content-editor-container">
   <ng-container [formArrayName]="formArrayName()!">
-    <app-text-editor
-      [control]="currentPageControl"
-      [errorMessage]="'Content is required'"
-    ></app-text-editor>
+    <app-text-editor [control]="currentPageControl" [errorMessage]="'Content is required'" />
   </ng-container>
 
   <div class="controls-glassy">
-    <app-button-two
-      severity="danger"
-      label="Remove Page"
-      (clicked)="removeContent()"
-    ></app-button-two>
+    <app-button-two severity="danger" label="Remove Page" (clicked)="removeContent()" />
 
     <div class="pagination">
       <p-button
@@ -20,7 +13,7 @@
         [text]="true"
         severity="secondary"
         (onClick)="movePrev()"
-      ></p-button>
+      />
       <div class="page-input">
         <input
           type="number"
@@ -38,9 +31,9 @@
         [text]="true"
         severity="secondary"
         (onClick)="moveNext()"
-      ></p-button>
+      />
     </div>
 
-    <app-button-two severity="success" label="Add Page" (clicked)="addContent()"></app-button-two>
+    <app-button-two severity="success" label="Add Page" (clicked)="addContent()" />
   </div>
 </div>

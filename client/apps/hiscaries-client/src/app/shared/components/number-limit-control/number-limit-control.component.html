@@ -17,9 +17,9 @@
     incrementButtonClass="p-button-secondary"
     incrementButtonIcon="pi pi-plus"
     decrementButtonIcon="pi pi-minus"
-  ></p-inputNumber>
+  />
 
   @if (formGroup().get(controlName())?.invalid && formGroup().get(controlName())?.touched) {
-    <p-message severity="error" [text]="errorMessage()"></p-message>
+    <p-message severity="error" [text]="errorMessage()" />
   }
 </div>

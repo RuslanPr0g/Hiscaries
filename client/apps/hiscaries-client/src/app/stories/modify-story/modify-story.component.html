@@ -23,13 +23,13 @@
                     controlName="Title"
                     label="Title"
                     errorMessage="Title is required"
-                  ></app-form-input>
+                  />
                   <app-form-input
                     [formGroup]="modifyForm"
                     controlName="AuthorName"
                     label="Author Name"
                     errorMessage="Author Name is required"
-                  ></app-form-input>
+                  />
                 </div>
                 <app-form-textarea
                   [formGroup]="modifyForm"
@@ -37,7 +37,7 @@
                   label="Description"
                   errorMessage="Description is required"
                   [rows]="4"
-                ></app-form-textarea>
+                />
                 <div class="form-controls__row">
                   <app-number-limit-control
                     [formGroup]="modifyForm"
@@ -48,14 +48,14 @@
                     [max]="18"
                     [step]="1"
                     [centered]="true"
-                  ></app-number-limit-control>
+                  />
                   <app-form-date-input
                     [formGroup]="modifyForm"
                     controlName="DateWritten"
                     label="Date Written"
                     errorMessage="Date Written is required"
                     [centered]="true"
-                  ></app-form-date-input>
+                  />
                 </div>
                 <div class="form-controls__row">
                   @if (genres && genres.length > 0) {
@@ -63,12 +63,9 @@
                       [formGroup]="modifyForm"
                       [items]="genres"
                       controlName="Genres"
-                    ></app-form-multiselect>
+                    />
                   }
-                  <app-upload-file-control
-                    [control]="imageControl"
-                    fileType="image"
-                  ></app-upload-file-control>
+                  <app-upload-file-control [control]="imageControl" fileType="image" />
                 </div>
               </div>
             </p-tabpanel>
@@ -77,7 +74,7 @@
                 [formGroup]="modifyForm"
                 formArrayName="Contents"
                 [contents]="contents"
-              ></app-content-builder>
+              />
               <div
                 class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
               >
@@ -95,7 +92,7 @@
                   fileType="pdf"
                   class="w-full max-w-sm"
                   chooseLabel="Upload PDF"
-                ></app-upload-file-control>
+                />
               </div>
               <div
                 class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
@@ -107,13 +104,13 @@
                     fileType="pdf"
                     class="w-full max-w-sm mr-4"
                     chooseLabel="Upload PDF & Save"
-                  ></app-upload-file-control>
+                  />
                   @if (pdfExists) {
                     <app-button-two
                       label="Remove"
                       [iconType]="'pi-times'"
                       (clicked)="removePdf()"
-                    ></app-button-two>
+                    />
                   }
                 </div>
               </div>
@@ -123,19 +120,15 @@
         <div class="error-block">
           <p-divider layout="horizontal" />
           @if (globalError) {
-            <p-message severity="error" [text]="globalError" class="error-message"></p-message>
+            <p-message severity="error" [text]="globalError" class="error-message" />
           }
           @if (globalError) {
             <p-divider layout="horizontal" />
           }
           @if (submitted) {
-            <app-loading-spinner></app-loading-spinner>
+            <app-loading-spinner />
           } @else {
-            <app-button-two
-              label="Apply changes"
-              [iconType]="'pi-save'"
-              (clicked)="onSubmit()"
-            ></app-button-two>
+            <app-button-two label="Apply changes" [iconType]="'pi-save'" (clicked)="onSubmit()" />
           }
         </div>
       </form>
@@ -143,7 +136,7 @@
   }
   @if (!story) {
     <div class="loading">
-      <app-loading-spinner></app-loading-spinner>
+      <app-loading-spinner />
     </div>
   }
 } @else {

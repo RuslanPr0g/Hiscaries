@@ -30,14 +30,14 @@
                 [severity]="'secondary'"
                 [disabled]="isSubscribeLoading()"
                 (clicked)="unSubscribeAction()"
-              ></app-button-two>
+              />
             } @else {
               <app-button-two
                 label="Subscribe"
                 [severity]="'primary'"
                 [disabled]="isSubscribeLoading()"
                 (clicked)="subscribeAction()"
-              ></app-button-two>
+              />
             }
           </div>
         }

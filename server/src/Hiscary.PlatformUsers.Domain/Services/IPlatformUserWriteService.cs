@@ -4,7 +4,7 @@ namespace Hiscary.PlatformUsers.Domain.Services;
 
 public interface IPlatformUserWriteService
 {
-    Task<OperationResult> BecomePublisher(Guid id);
+    Task<OperationResult> BecomePublisher(Guid id, string callerRole);
 
     Task<OperationResult> PublishReview(
         Guid libraryId,

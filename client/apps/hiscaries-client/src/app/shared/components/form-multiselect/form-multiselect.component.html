@@ -10,10 +10,10 @@
     optionLabel="Name"
     filterBy="Name"
     [filter]="true"
-  ></p-multiSelect>
+  />
   @if (
     formGroup().get(controlName())?.hasError('required') && formGroup().get(controlName())?.touched
   ) {
-    <p-message severity="error" [text]="errorMessage"></p-message>
+    <p-message severity="error" [text]="errorMessage" />
   }
 </div>

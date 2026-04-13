@@ -7,7 +7,7 @@
       <div class="navigation">
         @if (sidebarVisible) {
           <div class="sidebar">
-            <app-header (commandExecuted)="sidebarVisible = false"></app-header>
+            <app-header (commandExecuted)="sidebarVisible = false" />
           </div>
         }
         <div class="notification-wrapper">
@@ -18,7 +18,7 @@
             [rounded]="true"
             [text]="true"
             (click)="goBack()"
-          ></p-button>
+          />
           <p-button
             class="logo ml-2"
             icon="pi pi-home"
@@ -26,7 +26,7 @@
             [rounded]="true"
             [text]="true"
             (click)="home()"
-          ></p-button>
+          />
           <p-button
             class="logo ml-2"
             icon="pi pi-user"
@@ -34,7 +34,7 @@
             [rounded]="true"
             [text]="true"
             (click)="sidebarVisible = !sidebarVisible"
-          ></p-button>
+          />
           <p-button
             class="logo ml-2"
             severity="info"
@@ -59,13 +59,11 @@
   >
     <ng-template pTemplate="message" let-message let-closeFn="closeFn">
       <section>
-        <app-notifications-bar
-          (notificationClicked)="onNotificationClose()"
-        ></app-notifications-bar>
+        <app-notifications-bar (notificationClicked)="onNotificationClose()" />
       </section>
     </ng-template>
   </p-toast>
   <div class="right-panel" [ngClass]="{ 'mt-16': authService.isAuthenticated() }">
-    <router-outlet></router-outlet>
+    <router-outlet />
   </div>
 </main>

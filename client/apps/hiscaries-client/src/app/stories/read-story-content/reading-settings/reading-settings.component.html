@@ -3,11 +3,7 @@
 
   <div class="setting-item">
     <label for="theme-switch">Dark Mode</label>
-    <p-toggleswitch
-      id="theme-switch"
-      [(ngModel)]="settings.DarkMode"
-      (onChange)="toggleTheme()"
-    ></p-toggleswitch>
+    <p-toggleswitch id="theme-switch" [(ngModel)]="settings.DarkMode" (onChange)="toggleTheme()" />
   </div>
 
   <div class="setting-item">
@@ -26,6 +22,6 @@
       [(ngModel)]="settings.PreferPdf"
       (onChange)="toggleTheme()"
       [disabled]="preferPdfDisabled()"
-    ></p-toggleswitch>
+    />
   </div>
 </div>

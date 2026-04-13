@@ -10,9 +10,9 @@
     [showIcon]="true"
     dateFormat="yy-mm-dd"
     [iconDisplay]="'input'"
-  ></p-datepicker>
+  />
 
   @if (formGroup().get(controlName())?.invalid && formGroup().get(controlName())?.touched) {
-    <p-message severity="error" [text]="errorMessage()"></p-message>
+    <p-message severity="error" [text]="errorMessage()" />
   }
 </div>
