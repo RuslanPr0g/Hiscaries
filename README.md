@@ -74,9 +74,12 @@ dotnet run --project ./Hiscary.AppHost/Hiscary.AppHost.csproj
 Navigate to the frontend (client) directory, then run:
 
 ```bash
-npm install
+npm ci
 npm run start
 ```
+
+For full frontend setup, team conventions, and all commands, see
+[`client/README.md`](client/README.md).
 
 ---
 

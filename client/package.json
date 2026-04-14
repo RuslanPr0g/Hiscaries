@@ -4,24 +4,37 @@
   "scripts": {
     "ng": "ng",
     "start": "nx serve hiscaries-client --proxy-config proxy.conf.json",
-    "start-backup": "nx serve hiscaries-client --proxy-config proxy.conf.json --port=4002",
+    "start:backup": "nx serve hiscaries-client --proxy-config proxy.conf.json --port=4002",
+    "start-backup": "npm run start:backup",
     "host": "nx serve hiscaries-client --proxy-config proxy.conf.json --host 0.0.0.0 --watch=false",
     "watch": "nx build hiscaries-client --watch --configuration development",
     "test": "nx test hiscaries-client",
     "reset": "nx reset",
-    "lintall": "npx eslint . --ignore-pattern \".angular/*\" --ignore-pattern \".nx/*\"",
-    "lint": "nx lint hiscaries-client --fix",
-    "test:ci": "nx test --watch=false",
+    "lint:all": "npx eslint . --ignore-pattern \".angular/*\" --ignore-pattern \".nx/*\" --ignore-pattern \"dist/*\" --ignore-pattern \"node_modules/*\"",
+    "lintall": "npm run lint:all",
+    "lint": "nx lint hiscaries-client",
+    "lint:fix": "nx lint hiscaries-client --fix",
+    "prettier:write": "prettier . --write",
+    "prettier:check": "prettier . --check",
+    "format": "npm run prettier:write",
+    "format:check": "npm run prettier:check",
+    "test:ci": "nx test hiscaries-client --watch=false --ci",
     "build": "nx build hiscaries-client",
-    "show-config": "cd apps/hiscaries-client & tsc --showConfig",
+    "show-config": "tsc --showConfig -p apps/hiscaries-client/tsconfig.app.json",
     "update": "nx migrate latest",
     "release": "nx release",
     "release:patch": "nx release patch && npm run version:sync && git push origin --follow-tags",
     "release:minor": "nx release minor && npm run version:sync && git push origin --follow-tags",
     "release:major": "nx release major && npm run version:sync && git push origin --follow-tags",
-    "version:sync": "node -e \"const fs=require('fs');const t=JSON.parse(fs.readFileSync('./package.json'));const tag=require('child_process').execSync('git describe --tags --abbrev=0').toString().trim().replace('v','');t.version=tag;fs.writeFileSync('./package.json',JSON.stringify(t,null,2)+'\\n');\""
+    "version:sync": "node -e \"const fs=require('fs');const t=JSON.parse(fs.readFileSync('./package.json'));const tag=require('child_process').execSync('git describe --tags --abbrev=0').toString().trim().replace('v','');t.version=tag;fs.writeFileSync('./package.json',JSON.stringify(t,null,2)+'\\n');\"",
+    "prepare": "cd .. && husky client/.husky"
   },
   "private": true,
+  "engines": {
+    "node": ">=20 <21",
+    "npm": ">=10 <11"
+  },
+  "packageManager": "npm@10.0.0",
   "dependencies": {
     "@angular/animations": "20.3.9",
     "@angular/cdk": "^20.0.0",
@@ -29,6 +42,7 @@
     "@angular/compiler": "20.3.9",
     "@angular/core": "20.3.9",
     "@angular/forms": "20.3.9",
+    "@angular/localize": "^20.3.9",
     "@angular/platform-browser": "20.3.9",
     "@angular/platform-browser-dynamic": "20.3.9",
     "@angular/router": "20.3.9",
@@ -52,6 +66,8 @@
     "@angular/cli": "20.3.9",
     "@angular/compiler-cli": "20.3.9",
     "@babel/preset-typescript": "^7.27.1",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.13.0",
     "@jest/globals": "^29.7.0",
     "@nx/angular": "22.6.5",
@@ -65,14 +81,18 @@
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.19.9",
-    "@typescript-eslint/utils": "^8.40.0",
+    "@typescript-eslint/utils": "^8.58.1",
     "angular-eslint": "20.0.0",
     "autoprefixer": "^10.4.0",
     "eslint": "^9.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "fast-check": "^4.6.0",
     "globals": "^15.11.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-esm-transformer": "^1.0.0",
+    "jest-preset-angular": "^14.6.2",
     "lint-staged": "^15.2.10",
     "nx": "22.6.5",
     "postcss": "^8.4.5",
@@ -81,18 +101,15 @@
     "ts-jest": "^29.4.4",
     "ts-node": "10.9.1",
     "typescript": "~5.8.0",
-    "typescript-eslint": "8.16.0"
+    "typescript-eslint": "^8.58.1"
   },
   "lint-staged": {
-    "*.{ts,js}": [
+    "*.{html,ts,tsx,js,mjs,cjs}": [
       "eslint --fix --ignore-pattern \".angular/*\"",
-      "prettier --write"
+      "prettier . --write"
     ],
-    "*.scss": [
-      "prettier --write"
-    ],
-    "*.html": [
-      "prettier --write"
+    "*.{scss,css,html,json,jsonc,yml,yaml,md}": [
+      "prettier . --write"
     ]
   }
 }

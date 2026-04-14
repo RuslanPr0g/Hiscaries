@@ -1,0 +1,14 @@
+<ui-card-grid
+  [isLoading]="isLoading()"
+  [isEmpty]="isEmpty()"
+  [errorTitle]="errorTitle()"
+  [errorDescription]="errorDescription()"
+  [emptyIcon]="emptyIcon()"
+  [emptyMessage]="emptyMessage()"
+  [skeletonCount]="skeletonCount()"
+  [minCardWidth]="minCardWidth()"
+  [appendMode]="true"
+>
+  <ng-content />
+</ui-card-grid>
+<ui-intersection-anchor [disabled]="!hasMore() || isLoading()" (intersected)="onIntersected()" />

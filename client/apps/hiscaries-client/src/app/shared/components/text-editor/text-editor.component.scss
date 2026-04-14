@@ -35,7 +35,9 @@ $background-gradient-end: #645044;
         color: $text-color;
         background-color: transparent;
         border: none;
-        transition: background 0.3s, color 0.3s;
+        transition:
+          background 0.3s,
+          color 0.3s;
         border-radius: 6px;
 
         &:hover {

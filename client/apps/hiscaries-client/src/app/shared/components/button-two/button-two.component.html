@@ -1,16 +1,18 @@
 @if (iconType()) {
-  <p-button [icon]="'pi ' + iconType()"
+  <p-button
+    [icon]="'pi ' + iconType()"
     [label]="label()"
     [disabled]="disabled()"
     (onClick)="handleClick()"
     [ngClass]="{ 'w-full': isFullWidth() }"
     [severity]="severity()"
-   />
+  />
 } @else {
-  <p-button [label]="label()"
+  <p-button
+    [label]="label()"
     [disabled]="disabled()"
     (onClick)="handleClick()"
     [ngClass]="{ 'w-full': isFullWidth() }"
     [severity]="severity()"
-   />
+  />
 }

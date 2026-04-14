@@ -1,7 +1,7 @@
-﻿using StackNucleus.DDD.Domain.ClientModels;
-using Hiscary.Stories.Domain;
+﻿using Hiscary.Stories.Domain;
 using Hiscary.Stories.Domain.ReadModels;
 using Hiscary.Stories.Domain.Stories;
+using StackNucleus.DDD.Domain.ClientModels;
 
 public interface IStoryReadService
 {

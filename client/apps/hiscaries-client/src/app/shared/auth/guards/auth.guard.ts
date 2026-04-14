@@ -15,7 +15,6 @@ export const authGuard: CanActivateFn = (
     return true;
   }
 
-  console.warn('User is not authenticated');
   inject(Router).navigate(['/login'], { queryParams: { returnUrl: state.url } });
   return false;
 };

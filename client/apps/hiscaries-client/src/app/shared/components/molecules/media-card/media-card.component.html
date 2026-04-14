@@ -1,0 +1,37 @@
+<ui-glass-card
+  [interactive]="interactive()"
+  borderRadius="md"
+  (cardClick)="onInteract()"
+  (mouseenter)="hovered.set(true)"
+  (mouseleave)="hovered.set(false)"
+>
+  <div class="media-card__image-wrapper">
+    <ui-cover-image [src]="imageSrc()" [alt]="imageAlt()" />
+
+    @if (progressPercentage() !== null) {
+      <div class="media-card__progress-overlay">
+        <app-progress-bar [percentage]="progressPercentage()!" />
+      </div>
+    }
+
+    <ui-hover-reveal-panel [visible]="hovered()">
+      <div class="media-card__overlay-content">
+        @if (ageLimit() !== null) {
+          <span class="media-card__age-badge">{{ ageLimit() }}+</span>
+        }
+        @if (description()) {
+          <span class="media-card__desc">{{ description() }}</span>
+        }
+      </div>
+    </ui-hover-reveal-panel>
+  </div>
+
+  <div class="media-card__info">
+    <p class="media-card__title">{{ title() }}</p>
+    @if (subtitle()) {
+      <span class="media-card__subtitle">{{ subtitle() }}</span>
+    }
+  </div>
+
+  <ng-content select="[card-footer]" />
+</ui-glass-card>

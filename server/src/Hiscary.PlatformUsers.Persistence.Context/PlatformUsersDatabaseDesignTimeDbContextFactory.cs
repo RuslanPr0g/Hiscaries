@@ -1,5 +1,5 @@
-﻿using StackNucleus.DDD.Persistence.EF.Postgres;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using StackNucleus.DDD.Persistence.EF.Postgres;
 
 namespace Hiscary.PlatformUsers.Persistence.Context;
 

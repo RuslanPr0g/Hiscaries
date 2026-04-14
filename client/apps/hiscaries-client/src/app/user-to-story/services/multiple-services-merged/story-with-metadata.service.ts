@@ -1,20 +1,20 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, switchMap, map, catchError, of, take } from 'rxjs';
 import { BaseIdModel } from '@shared/models/base-id.model';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { defaultQueryableModel, QueryableModel } from '@shared/models/queryable.model';
 import { GenreModel } from '@stories/models/domain/genre.model';
 import { StoryModel, StoryModelWithContents } from '@stories/models/domain/story-model';
+import { StoryRecommendationModel } from '@stories/models/domain/story-recommendation.model';
 import { ModifyStoryRequest } from '@stories/models/requests/modify-story.model';
 import { PublishStoryRequest } from '@stories/models/requests/publish-story.model';
+import { SearchStoryByLibraryRequest } from '@stories/models/requests/search-story-by-library.model';
 import { SearchStoryWithContentsRequest } from '@stories/models/requests/search-story-with-contents.model';
 import { SearchStoryRequest } from '@stories/models/requests/search-story.model';
+import { SearchStoryByIdsRequest } from '@stories/models/requests/story-by-ids.model';
+import { StoryRecommendationService } from '@stories/services/story-recommendation.service';
 import { StoryService } from '@stories/services/story.service';
 import { UserService } from '@users/services/user.service';
-import { SearchStoryByIdsRequest } from '@stories/models/requests/story-by-ids.model';
-import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
-import { SearchStoryByLibraryRequest } from '@stories/models/requests/search-story-by-library.model';
-import { defaultQueryableModel, QueryableModel } from '@shared/models/queryable.model';
-import { StoryRecommendationService } from '@stories/services/story-recommendation.service';
-import { StoryRecommendationModel } from '@stories/models/domain/story-recommendation.model';
+import { Observable, switchMap, map, catchError, of, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,6 @@ export class StoryWithMetadataService {
   private storyService = inject(StoryService);
   private userService = inject(UserService);
   private recommendationService = inject(StoryRecommendationService);
-
 
   genreList(): Observable<GenreModel[]> {
     return this.storyService.genreList();

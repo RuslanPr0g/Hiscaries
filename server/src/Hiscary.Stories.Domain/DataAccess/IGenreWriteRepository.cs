@@ -1,5 +1,5 @@
-﻿using StackNucleus.DDD.Domain.Repositories;
-using Hiscary.Stories.Domain.Genres;
+﻿using Hiscary.Stories.Domain.Genres;
+using StackNucleus.DDD.Domain.Repositories;
 
 namespace Hiscary.Stories.Domain.DataAccess;
 

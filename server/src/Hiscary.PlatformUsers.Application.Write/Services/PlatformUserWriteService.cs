@@ -26,6 +26,7 @@ public sealed class PlatformUserWriteService(
     public async Task<OperationResult> BecomePublisher(Guid userAccountId)
     {
         _logger.LogInformation("Attempting to make user {id} a publisher", userAccountId);
+
         PlatformUser? user = await _repository.GetByUserAccountId(userAccountId);
 
         if (user is null)

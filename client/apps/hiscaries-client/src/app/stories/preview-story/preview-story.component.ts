@@ -1,12 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StoryModel } from '@stories/models/domain/story-model';
-import { take } from 'rxjs';
-import { CommonModule } from '@angular/common';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { NavigationConst } from '@shared/constants/navigation.const';
-import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { defaultQueryableModel } from '@shared/models/queryable.model';
+import { StoryModel } from '@stories/models/domain/story-model';
+import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
+import { AuthService } from '@users/services/auth.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-preview-story',
@@ -19,6 +20,7 @@ export class PreviewStoryComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private storyService = inject(StoryWithMetadataService);
+  protected authService = inject(AuthService);
 
   private storyId: string | null = null;
 
@@ -60,6 +62,10 @@ export class PreviewStoryComponent implements OnInit, OnDestroy {
 
   get isEditable(): boolean {
     return this.story?.IsEditable ?? false;
+  }
+
+  canEditStory(): boolean {
+    return (this.story?.IsEditable ?? false) || this.authService.isAdmin();
   }
 
   readStory(): void {

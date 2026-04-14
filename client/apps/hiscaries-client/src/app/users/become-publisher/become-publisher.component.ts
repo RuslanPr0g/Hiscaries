@@ -1,10 +1,9 @@
 import { Component, inject } from '@angular/core';
-
-import { AuthService } from '@users/services/auth.service';
 import { Router } from '@angular/router';
-import { NavigationConst } from '@shared/constants/navigation.const';
-import { UserService } from '@users/services/user.service';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
+import { AuthService } from '@users/services/auth.service';
+import { UserService } from '@users/services/user.service';
 
 @Component({
   selector: 'app-become-publisher',
@@ -21,8 +20,8 @@ export class BecomePublisherComponent {
   agreed = false;
 
   constructor() {
-    if (this.authService.isPublisher()) {
-      console.warn('User is already a publisher!');
+    if (this.authService.isPublisher() || this.authService.isAdmin()) {
+      console.warn('User is already a publisher or admin!');
       this.router.navigate([NavigationConst.Home]);
       return;
     }

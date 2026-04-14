@@ -10,7 +10,7 @@ namespace Hiscary.PlatformUsers.Persistence.Context.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-    migrationBuilder.Sql(@"
+            migrationBuilder.Sql(@"
 UPDATE platformusers.""Libraries""
 SET ""AvatarImageUrls"" = jsonb_set(
     ""AvatarImageUrls"",

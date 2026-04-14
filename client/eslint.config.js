@@ -3,6 +3,7 @@ const nx = require('@nx/eslint-plugin');
 const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
+const eslintConfigPrettier = require('eslint-config-prettier');
 
 module.exports = tseslint.config(
   {
@@ -15,6 +16,10 @@ module.exports = tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       '@angular-eslint/directive-selector': [
         'error',
         {
@@ -27,7 +32,7 @@ module.exports = tseslint.config(
         'error',
         {
           type: 'element',
-          prefix: 'app',
+          prefix: ['app', 'ui'],
           style: 'kebab-case',
         },
       ],
@@ -38,4 +43,5 @@ module.exports = tseslint.config(
     extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
     rules: {},
   },
+  eslintConfigPrettier,
 );

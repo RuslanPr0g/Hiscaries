@@ -1,5 +1,6 @@
 @if (!isEditMode) {
-  <app-library-general-view [library]="library()"
+  <app-library-general-view
+    [library]="library()"
     [isAbleToEdit]="isAbleToEdit()"
     [isAbleToSubscribe]="isAbleToSubscribe()"
     [isSubscribed]="isSubscribed()"
@@ -7,29 +8,20 @@
     (editStarted)="startEdit()"
     (subscribed)="subscribeAction()"
     (unSubscribed)="unSubscribeAction()"
-   />
+  />
 } @else {
-  <app-library-general-edit [library]="library()"
+  <app-library-general-edit
+    [library]="library()"
     [isAbleToEdit]="isAbleToEdit()"
     (editCancelled)="cancelEdit()"
     (editSaved)="saveEdit($event)"
-   />
+  />
 }
 
 @if (stories()) {
-  @if (stories()!.Items.length > 0) {
-    <app-search-story-results [stories]="stories()"
-      [isLoading]="isLoading()"
-      class="w-full"
-     />
+  @if (stories()!.Items.length > 0 || isLoading()) {
+    <app-search-story-results [stories]="stories()" [isLoading]="isLoading()" class="w-full" />
   } @else {
     <div class="center">Nothing posted so far!</div>
   }
-}
-@if (isLoading()) {
-  <div class="center">
-    @if (isLoading()) {
-      <app-loading-spinner></app-loading-spinner>
-    }
-  </div>
 }

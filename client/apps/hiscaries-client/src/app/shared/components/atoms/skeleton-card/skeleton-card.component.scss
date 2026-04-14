@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+::ng-deep .p-skeleton {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+
+  &::after {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.06),
+      transparent
+    ) !important;
+  }
+}
+
+::ng-deep .skeleton-image {
+  width: 100%;
+  border-radius: 0;
+}
+
+::ng-deep .skeleton-line {
+  width: 100%;
+  height: 1rem;
+  margin: 0.5rem 0.75rem;
+  width: calc(100% - 1.5rem);
+}

@@ -2,19 +2,20 @@
   [formGroup]="formGroup()"
   class="custom-form-field"
   [ngClass]="{ 'custom-form-field-centered': centered() }"
-  >
+>
+  <label [for]="controlName()">Genres</label>
   <p-multiSelect
+    [inputId]="controlName()"
     [options]="items()"
     [formControlName]="controlName()"
     [placeholder]="placeholder"
     optionLabel="Name"
     filterBy="Name"
     [filter]="true"
-  ></p-multiSelect>
-  @if (formGroup().get(controlName())?.hasError('required') && formGroup().get(controlName())?.touched) {
-    <p-message
-      severity="error"
-      [text]="errorMessage"
-    ></p-message>
+  />
+  @if (
+    formGroup().get(controlName())?.hasError('required') && formGroup().get(controlName())?.touched
+  ) {
+    <p-message severity="error">{{ errorMessage }}</p-message>
   }
 </div>

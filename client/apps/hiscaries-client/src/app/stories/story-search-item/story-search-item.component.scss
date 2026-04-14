@@ -20,7 +20,9 @@ $shadow: 0 8px 32px 0 rgba(34, 34, 26, 0.4);
   cursor: pointer;
   user-select: none;
   min-width: 200px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   color: $text-color;
 
   &:hover {
@@ -108,7 +110,9 @@ $shadow: 0 8px 32px 0 rgba(34, 34, 26, 0.4);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   border-radius: 20px;
 
   display: flex;

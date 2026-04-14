@@ -1,11 +1,11 @@
-import { Component, HostListener, inject, output } from '@angular/core';
-import { AuthService } from '@users/services/auth.service';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { NavigationConst } from '../constants/navigation.const';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
+import { NavigationConst } from '../constants/navigation.const';
+import { CommonModule } from '@angular/common';
+import { Component, HostListener, inject, output } from '@angular/core';
+import { Router } from '@angular/router';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
 import { PrimeNgIcon } from '@shared/types/primeng-icon.type';
+import { AuthService } from '@users/services/auth.service';
 
 export interface MenuItem {
   Label: string;
@@ -30,6 +30,17 @@ export class HeaderComponent {
 
   constructor() {
     this.items = [];
+
+    if (this.userService.isAdmin()) {
+      this.items = [
+        ...this.items,
+        {
+          Label: 'Admin Panel',
+          Command: () => this.navigateToAdminPanel(),
+          Icon: 'pi-shield',
+        },
+      ];
+    }
 
     if (this.isUserPublisher) {
       this.items = [
@@ -73,7 +84,11 @@ export class HeaderComponent {
   }
 
   get isUserPublisher(): boolean {
-    return this.userService.isPublisher();
+    return this.canPublish();
+  }
+
+  canPublish(): boolean {
+    return this.userService.isPublisher() || this.userService.isAdmin();
   }
 
   callItemCommand(item: MenuItem): void {
@@ -101,6 +116,10 @@ export class HeaderComponent {
 
   navigateToReadingHistory(): void {
     this.router.navigate([NavigationConst.ReadingHistory]);
+  }
+
+  navigateToAdminPanel(): void {
+    this.router.navigate([NavigationConst.AdminPanel]);
   }
 
   navigateToBecomePublisherPage(): void {

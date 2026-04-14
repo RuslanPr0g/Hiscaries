@@ -1,3 +1,5 @@
+import { ContentBuilderComponent } from './content-builder/content-builder.component';
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -8,31 +10,29 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { FormInputComponent } from '@shared/components/form-input/form-input.component';
-import { FormTextareaComponent } from '@shared/components/form-textarea/form-textarea.component';
-import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
-import { NumberLimitControlComponent } from '@shared/components/number-limit-control/number-limit-control.component';
-import { FormDateInputComponent } from '@shared/components/form-date-input/form-date-input.component';
-import { Divider } from 'primeng/divider';
-import { GenreModel } from '@stories/models/domain/genre.model';
-import { take } from 'rxjs';
-import { UploadFileControlComponent } from '@shared/components/upload-file-control/upload-file-control.component';
-import { FormMultiselectComponent } from '@shared/components/form-multiselect/form-multiselect.component';
-import { Message } from 'primeng/message';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModifyStoryFormModel } from '@stories/models/form/modify-story-form.model';
-import { ModifyStoryRequest } from '@stories/models/requests/modify-story.model';
-import { StoryModelWithContents } from '@stories/models/domain/story-model';
-import { NavigationConst } from '@shared/constants/navigation.const';
-import { AuthService } from '@users/services/auth.service';
-import { ContentBuilderComponent } from './content-builder/content-builder.component';
-import { Tabs, Tab, TabList, TabPanel, TabPanels } from 'primeng/tabs';
-import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
-import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { DocumentContent } from '@media/models/document-content.model';
 import { MediaService } from '@media/services/media.service';
+import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
+import { FormDateInputComponent } from '@shared/components/form-date-input/form-date-input.component';
+import { FormInputComponent } from '@shared/components/form-input/form-input.component';
+import { FormMultiselectComponent } from '@shared/components/form-multiselect/form-multiselect.component';
+import { FormTextareaComponent } from '@shared/components/form-textarea/form-textarea.component';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { NumberLimitControlComponent } from '@shared/components/number-limit-control/number-limit-control.component';
+import { UploadFileControlComponent } from '@shared/components/upload-file-control/upload-file-control.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
 import { OperationResult } from '@shared/models/operation-result.model';
+import { GenreModel } from '@stories/models/domain/genre.model';
+import { StoryModelWithContents } from '@stories/models/domain/story-model';
+import { ModifyStoryFormModel } from '@stories/models/form/modify-story-form.model';
+import { ModifyStoryRequest } from '@stories/models/requests/modify-story.model';
+import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
+import { AuthService } from '@users/services/auth.service';
+import { Divider } from 'primeng/divider';
+import { Message } from 'primeng/message';
+import { Tabs, Tab, TabList, TabPanel, TabPanels } from 'primeng/tabs';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-modify-story',

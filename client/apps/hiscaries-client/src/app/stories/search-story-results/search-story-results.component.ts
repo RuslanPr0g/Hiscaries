@@ -1,48 +1,28 @@
-
-import { Component, OnInit, input } from '@angular/core';
-import { StoryModel } from '@stories/models/domain/story-model';
-import { SearchStoryItemComponent } from '@stories/story-search-item/story-search-item.component';
-import { SkeletonOrStoryContentComponent } from '@stories/load-story-or-content/skeleton-or-story-content.component';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { Router } from '@angular/router';
+import { MediaCardComponent } from '@shared/components/molecules/media-card/media-card.component';
+import { CardGridComponent } from '@shared/components/organisms/card-grid/card-grid.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
 import { QueriedModel } from '@shared/models/queried.model';
+import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
+import { StoryModel } from '@stories/models/domain/story-model';
 
 @Component({
   selector: 'app-search-story-results',
   standalone: true,
-  imports: [
-    SearchStoryItemComponent,
-    SkeletonOrStoryContentComponent
-  ],
+  imports: [CardGridComponent, MediaCardComponent, FallbackImagePipe],
   templateUrl: './search-story-results.component.html',
   styleUrls: ['./search-story-results.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchStoryResultsComponent implements OnInit {
-  readonly stories = input<QueriedModel<StoryModel>>();
-  readonly isLoading = input<boolean | null>(true);
+export class SearchStoryResultsComponent {
+  private router = inject(Router);
+
+  readonly stories = input<QueriedModel<StoryModel> | null | undefined>(null);
+  readonly isLoading = input<boolean | null>(false);
   readonly isCarousel = input(false);
 
-  responsiveOptions: { breakpoint: string; numVisible: number; numScroll: number }[] | undefined;
-
-  ngOnInit(): void {
-    this.initializeResponsiveOptions();
-  }
-
-  private initializeResponsiveOptions(): void {
-    this.responsiveOptions = [
-      {
-        breakpoint: '1950px',
-        numVisible: 3,
-        numScroll: 2,
-      },
-      {
-        breakpoint: '1150px',
-        numVisible: 2,
-        numScroll: 1,
-      },
-      {
-        breakpoint: '767px',
-        numVisible: 1,
-        numScroll: 1,
-      },
-    ];
+  previewStory(story: StoryModel): void {
+    this.router.navigate([NavigationConst.PreviewStory(story.Id)]);
   }
 }

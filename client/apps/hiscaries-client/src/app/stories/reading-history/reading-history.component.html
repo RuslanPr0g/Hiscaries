@@ -1,17 +1,23 @@
-@if (stories().Items.length > 0) {
-  @for (label of storyKeys; track label) {
-    <h3 class="date-label">{{ label }}</h3>
-    <app-search-story-results [stories]="{
-        Items: groupedStories()[label],
-        TotalItemsCount: groupedStories()[label].length
-      }"
-      [isLoading]="isLoading()"
-      class="w-full"
-     />
-  }
-} @else {
-  📚💨 No pages turned yet — your adventure awaits!
+<ui-section-header title="Reading history" />
+
+@for (label of storyKeys; track label) {
+  <ui-section-header [title]="label" [level]="3" />
+  <ui-card-grid [isLoading]="false" [isEmpty]="false">
+    @for (story of groupedStories()[label]; track story.Id) {
+      <ui-media-card
+        [imageSrc]="story.ImagePreviewUrl | fallbackImage"
+        [title]="story.Title"
+        [subtitle]="story.AuthorName ?? null"
+        [description]="story.Description"
+        [ageLimit]="story.AgeLimit"
+        [progressPercentage]="story.PercentageRead"
+        (clicked)="previewStory(story)"
+      />
+    }
+  </ui-card-grid>
 }
 
-
-<div #loadMoreAnchor class="load-more-anchor"></div>
+<ui-intersection-anchor
+  [disabled]="isLoading() || stories().Items.length >= stories().TotalItemsCount"
+  (intersected)="nextPage()"
+/>

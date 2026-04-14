@@ -1,9 +1,9 @@
-import { Component, ViewChild, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, ViewChild, input } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
-import { Message } from 'primeng/message';
 import { Button } from 'primeng/button';
 import { FileSelectEvent, FileUpload } from 'primeng/fileupload';
+import { Message } from 'primeng/message';
 
 export type UploadedFile = File;
 
@@ -17,7 +17,10 @@ export type UploadedFile = File;
 export class UploadFileControlComponent {
   @ViewChild('fileUpload') fileUpload!: FileUpload;
 
-  readonly control = input<AbstractControl<UploadedFile | string | null, UploadedFile | string | null> | null>();
+  readonly control = input<AbstractControl<
+    UploadedFile | string | null,
+    UploadedFile | string | null
+  > | null>();
 
   readonly fileType = input<'image' | 'pdf'>('image');
 

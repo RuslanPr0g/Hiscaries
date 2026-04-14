@@ -3,15 +3,18 @@
 
   <div class="setting-item">
     <label for="theme-switch">Dark Mode</label>
-    <p-toggleswitch
-      id="theme-switch"
-      [(ngModel)]="settings.DarkMode"
-      (onChange)="toggleTheme()"
-    ></p-toggleswitch>
+    <p-toggleswitch id="theme-switch" [(ngModel)]="settings.DarkMode" (onChange)="toggleTheme()" />
   </div>
 
   <div class="setting-item">
-    <label for="pdf-switch" [title]="preferPdfDisabled() ? 'Cannot switch — current page exceeds the other format\'s page count' : ''">
+    <label
+      for="pdf-switch"
+      [title]="
+        preferPdfDisabled()
+          ? 'Cannot switch — current page exceeds the other format\'s page count'
+          : ''
+      "
+    >
       Prefer PDF
     </label>
     <p-toggleswitch
@@ -19,6 +22,6 @@
       [(ngModel)]="settings.PreferPdf"
       (onChange)="toggleTheme()"
       [disabled]="preferPdfDisabled()"
-    ></p-toggleswitch>
+    />
   </div>
 </div>

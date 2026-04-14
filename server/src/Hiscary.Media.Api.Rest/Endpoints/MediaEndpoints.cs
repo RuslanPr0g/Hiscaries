@@ -6,6 +6,7 @@ using System.Net.Mime;
 
 namespace Hiscary.Media.Api.Rest.Endpoints;
 
+// TODO: add proper RBAC
 public static class MediaEndpoints
 {
     public static void MapMediaEndpoints(this IEndpointRouteBuilder app)
@@ -22,6 +23,7 @@ public static class MediaEndpoints
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPost("/documents/as-contents", GetDocumentAsContents)
+            .RequireAuthorization()
             .Accepts<Stream>(MediaTypeNames.Application.Pdf)
             .Produces<IResult>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
@@ -106,6 +108,7 @@ public static class MediaEndpoints
 
     private static async Task<IResult> UploadDocument(
         HttpRequest request,
+        HttpContext httpContext,
         [FromServices] IBlobStorageService storageService,
         [FromQuery] Guid storyId,
         [FromQuery] int? start,
@@ -119,6 +122,13 @@ public static class MediaEndpoints
         if (storyId == default || storyId == Guid.Empty)
         {
             return Results.BadRequest(OperationResult.CreateValidationsError("Please provide story id to upload PDF for."));
+        }
+
+        var token = httpContext.Request.Headers.Authorization.FirstOrDefault();
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return Results.Unauthorized();
         }
 
         await using var stream = new MemoryStream();
@@ -141,12 +151,20 @@ public static class MediaEndpoints
     }
 
     private static async Task<IResult> DeleteDocument(
+        HttpContext httpContext,
         [FromServices] IBlobStorageService storageService,
         [FromQuery] Guid storyId)
     {
         if (storyId == default || storyId == Guid.Empty)
         {
             return Results.BadRequest(OperationResult.CreateValidationsError("Please provide story id to delete PDF for."));
+        }
+
+        var token = httpContext.Request.Headers.Authorization.FirstOrDefault();
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return Results.Unauthorized();
         }
 
         var result = await storageService.DeleteAsync(

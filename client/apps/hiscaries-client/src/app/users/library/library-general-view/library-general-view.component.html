@@ -3,9 +3,9 @@
     <div
       class="profile-card background-image-configuration"
       [ngStyle]="{
-        'background-image': backgroundImageUrl ? 'url(' + backgroundImageUrl + ')' : 'none'
+        'background-image': backgroundImageUrl ? 'url(' + backgroundImageUrl + ')' : 'none',
       }"
-      >
+    >
       @if (backgroundImageUrl) {
         <div class="overlay"></div>
       }
@@ -30,14 +30,14 @@
                 [severity]="'secondary'"
                 [disabled]="isSubscribeLoading()"
                 (clicked)="unSubscribeAction()"
-              ></app-button-two>
+              />
             } @else {
               <app-button-two
                 label="Subscribe"
                 [severity]="'primary'"
                 [disabled]="isSubscribeLoading()"
                 (clicked)="subscribeAction()"
-              ></app-button-two>
+              />
             }
           </div>
         }

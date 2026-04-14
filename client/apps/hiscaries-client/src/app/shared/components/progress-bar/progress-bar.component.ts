@@ -1,6 +1,5 @@
-
-import { Component, input } from '@angular/core';
 import { DestroyService } from '../../services/destroy.service';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-progress-bar',

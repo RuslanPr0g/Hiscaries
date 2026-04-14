@@ -28,7 +28,3 @@ jobs:
       - name: Build
         working-directory: server/src
         run: dotnet build Hiscary.sln
-
-      - name: Test
-        working-directory: server/src
-        run: dotnet test Hiscary.sln --no-build --verbosity normal

@@ -1,10 +1,10 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '@environments/environment';
 import { QueriedModel } from '@shared/models/queried.model';
 import { QueryableModel } from '@shared/models/queryable.model';
 import { StoryRecommendationModel } from '@stories/models/domain/story-recommendation.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

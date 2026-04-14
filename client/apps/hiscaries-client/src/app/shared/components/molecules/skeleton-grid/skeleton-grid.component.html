@@ -1,0 +1,5 @@
+<div class="skeleton-grid">
+  @for (item of items(); track $index) {
+    <ui-skeleton-card [imageHeight]="imageHeight()" [lines]="skeletonLines()" />
+  }
+</div>

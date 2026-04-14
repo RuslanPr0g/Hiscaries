@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '@environments/environment';
+import { LoginUserRequest } from '@users/models/requests/login-user.model';
 import { RegisterUserRequest } from '@users/models/requests/register-user.model';
 import { UserWithTokenResponse } from '@users/models/response/user-with-token.model';
-import { LoginUserRequest } from '@users/models/requests/login-user.model';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -105,5 +105,47 @@ export class AuthService {
     const role = decodedToken?.role;
 
     return role === 'publisher';
+  }
+
+  isAdmin(): boolean {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+
+    if (!token) {
+      return false;
+    }
+
+    if (this.jwtHelper.isTokenExpired(token)) {
+      return false;
+    }
+
+    const decodedToken = this.jwtHelper.decodeToken(token);
+
+    const role = decodedToken?.role;
+
+    return role === 'admin';
+  }
+
+  getUserRole(): string | null {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+
+    if (!token) {
+      return null;
+    }
+
+    const decodedToken = this.jwtHelper.decodeToken(token);
+
+    return decodedToken?.role ?? null;
+  }
+
+  getUserId(): string | null {
+    const token = localStorage.getItem(this.access_token_local_storage_key);
+
+    if (!token) {
+      return null;
+    }
+
+    const decodedToken = this.jwtHelper.decodeToken(token);
+
+    return decodedToken?.id ?? null;
   }
 }

@@ -3,7 +3,7 @@
     <div
       class="modify-story-container"
       [ngStyle]="{ 'background-image': base64Image ? 'url(' + base64Image + ')' : 'none' }"
-      >
+    >
       @if (base64Image) {
         <div class="overlay"></div>
       }
@@ -15,131 +15,124 @@
             <p-tab [value]="1">Contents</p-tab>
           </p-tablist>
           <p-tabpanels>
-          <p-tabpanel [value]="0">
-            <div class="form-controls">
-              <div class="form-controls__row">
-                <app-form-input
-                  [formGroup]="modifyForm"
-                  controlName="Title"
-                  label="Title"
-                  errorMessage="Title is required"
-                ></app-form-input>
-                <app-form-input
-                  [formGroup]="modifyForm"
-                  controlName="AuthorName"
-                  label="Author Name"
-                  errorMessage="Author Name is required"
-                ></app-form-input>
-              </div>
-              <app-form-textarea
-                [formGroup]="modifyForm"
-                controlName="Description"
-                label="Description"
-                errorMessage="Description is required"
-                [rows]="4"
-              ></app-form-textarea>
-              <div class="form-controls__row">
-                <app-number-limit-control
-                  [formGroup]="modifyForm"
-                  controlName="AgeLimit"
-                  label="Age Limit"
-                  errorMessage="Age Limit is required and must be between 0 and 18"
-                  [min]="0"
-                  [max]="18"
-                  [step]="1"
-                  [centered]="true"
-                ></app-number-limit-control>
-                <app-form-date-input
-                  [formGroup]="modifyForm"
-                  controlName="DateWritten"
-                  label="Date Written"
-                  errorMessage="Date Written is required"
-                  [centered]="true"
-                ></app-form-date-input>
-              </div>
-              <div class="form-controls__row">
-                @if (genres && genres.length > 0) {
-                  <app-form-multiselect
+            <p-tabpanel [value]="0">
+              <div class="form-controls">
+                <div class="form-controls__row">
+                  <app-form-input
                     [formGroup]="modifyForm"
-                    [items]="genres"
-                    controlName="Genres"
-                  ></app-form-multiselect>
-                }
-                <app-upload-file-control
-                  [control]="imageControl"
-                  fileType="image"
-                ></app-upload-file-control>
+                    controlName="Title"
+                    label="Title"
+                    errorMessage="Title is required"
+                  />
+                  <app-form-input
+                    [formGroup]="modifyForm"
+                    controlName="AuthorName"
+                    label="Author Name"
+                    errorMessage="Author Name is required"
+                  />
+                </div>
+                <app-form-textarea
+                  [formGroup]="modifyForm"
+                  controlName="Description"
+                  label="Description"
+                  errorMessage="Description is required"
+                  [rows]="4"
+                />
+                <div class="form-controls__row--compact">
+                  <app-number-limit-control
+                    [formGroup]="modifyForm"
+                    controlName="AgeLimit"
+                    label="Age Limit"
+                    errorMessage="Age Limit is required and must be between 0 and 18"
+                    [min]="0"
+                    [max]="18"
+                    [step]="1"
+                    [centered]="true"
+                  />
+                  <app-form-date-input
+                    [formGroup]="modifyForm"
+                    controlName="DateWritten"
+                    label="Date Written"
+                    errorMessage="Date Written is required"
+                    [centered]="true"
+                  />
+                </div>
+                <div class="form-controls__row--genres">
+                  @if (genres && genres.length > 0) {
+                    <div class="genres-col">
+                      <app-form-multiselect
+                        [formGroup]="modifyForm"
+                        [items]="genres"
+                        controlName="Genres"
+                      />
+                    </div>
+                  }
+                  <div class="image-col">
+                    <app-upload-file-control [control]="imageControl" fileType="image" />
+                  </div>
+                </div>
               </div>
-            </div>
-          </p-tabpanel>
-          <p-tabpanel [value]="1">
-            <app-content-builder
-              [formGroup]="modifyForm"
-              formArrayName="Contents"
-              [contents]="contents"
-            ></app-content-builder>
-            <div
-              class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
+            </p-tabpanel>
+            <p-tabpanel [value]="1">
+              <app-content-builder
+                [formGroup]="modifyForm"
+                formArrayName="Contents"
+                [contents]="contents"
+              />
+              <div
+                class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
               >
-              <p class="text-center mb-3 font-medium">
-                Load a story from PDF to pages
-                <small
-                  class="p-4 mb-4 text-sm text-fg-success-strong rounded-base bg-success-soft text-center"
-                  role="alert"
+                <p class="text-center mb-3 font-medium">
+                  Load a story from PDF to pages
+                  <small
+                    class="p-4 mb-4 text-sm text-fg-success-strong rounded-base bg-success-soft text-center"
+                    role="alert"
                   >
-                  all pages will be overwritten
-                </small>
-              </p>
-              <app-upload-file-control
-                [control]="modifyForm.get('PdfFile')"
-                fileType="pdf"
-                class="w-full max-w-sm"
-                chooseLabel="Upload PDF"
-              ></app-upload-file-control>
-            </div>
-            <div
-              class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
-              >
-              <p class="text-center mb-3 font-medium">Upload a PDF as a story</p>
-              <div class="flex">
+                    all pages will be overwritten
+                  </small>
+                </p>
                 <app-upload-file-control
-                  [control]="modifyForm.get('PdfFileAsStory')"
+                  [control]="modifyForm.get('PdfFile')"
                   fileType="pdf"
-                  class="w-full max-w-sm mr-4"
-                  chooseLabel="Upload PDF & Save"
-                ></app-upload-file-control>
-                @if (pdfExists) {
-                  <app-button-two
-                    label="Remove"
-                    [iconType]="'pi-times'"
-                    (clicked)="removePdf()"
-                  ></app-button-two>
-                }
+                  class="w-full max-w-sm"
+                  chooseLabel="Upload PDF"
+                />
               </div>
-            </div>
-          </p-tabpanel>
+              <div
+                class="mt-6 flex flex-col items-center p-4 rounded-lg shadow-sm border border-gray-200"
+              >
+                <p class="text-center mb-3 font-medium">Upload a PDF as a story</p>
+                <div class="flex">
+                  <app-upload-file-control
+                    [control]="modifyForm.get('PdfFileAsStory')"
+                    fileType="pdf"
+                    class="w-full max-w-sm mr-4"
+                    chooseLabel="Upload PDF & Save"
+                  />
+                  @if (pdfExists) {
+                    <app-button-two
+                      label="Remove"
+                      [iconType]="'pi-times'"
+                      (clicked)="removePdf()"
+                    />
+                  }
+                </div>
+              </div>
+            </p-tabpanel>
           </p-tabpanels>
         </p-tabs>
         <div class="error-block">
           <p-divider layout="horizontal" />
           @if (globalError) {
-            <p-message
-              severity="error"
-              [text]="globalError"
-              class="error-message"
-            ></p-message>
+            <p-message severity="error" class="error-message">{{ globalError }}</p-message>
           }
           @if (globalError) {
             <p-divider layout="horizontal" />
           }
           @if (submitted) {
-            <app-loading-spinner></app-loading-spinner>
+            <app-loading-spinner />
           } @else {
-            <app-button-two
-              label="Apply changes"
-              [iconType]="'pi-save'"
-              (clicked)="onSubmit()"
-            ></app-button-two>
+            <app-button-two label="Apply changes" [iconType]="'pi-save'" (clicked)="onSubmit()" />
           }
         </div>
       </form>
@@ -147,7 +140,7 @@
   }
   @if (!story) {
     <div class="loading">
-      <app-loading-spinner></app-loading-spinner>
+      <app-loading-spinner />
     </div>
   }
 } @else {
@@ -156,4 +149,3 @@
     <p>Sorry, we couldn't find the story you're looking for.</p>
   </div>
 }
-

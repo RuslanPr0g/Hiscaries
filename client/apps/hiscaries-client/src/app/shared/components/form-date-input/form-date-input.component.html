@@ -2,7 +2,7 @@
   [formGroup]="formGroup()"
   class="custom-form-field"
   [ngClass]="{ 'custom-form-field-centered': centered() }"
-  >
+>
   <label [for]="controlName()">{{ label() }}</label>
 
   <p-datepicker
@@ -10,12 +10,9 @@
     [showIcon]="true"
     dateFormat="yy-mm-dd"
     [iconDisplay]="'input'"
-  ></p-datepicker>
+  />
 
   @if (formGroup().get(controlName())?.invalid && formGroup().get(controlName())?.touched) {
-    <p-message
-      severity="error"
-      [text]="errorMessage()"
-    ></p-message>
+    <p-message severity="error">{{ errorMessage() }}</p-message>
   }
 </div>

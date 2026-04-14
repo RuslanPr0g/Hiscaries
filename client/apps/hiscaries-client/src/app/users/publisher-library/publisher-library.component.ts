@@ -1,15 +1,14 @@
 import { Component, inject, signal, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { LibraryComponent } from '@users/library/library.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take } from 'rxjs';
 import { NavigationConst } from '@shared/constants/navigation.const';
-import { UserService } from '@users/services/user.service';
-import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
-import { PaginationService } from '@shared/services/statefull/pagination.service';
-import { LibraryModel } from '@users/models/domain/library.model';
-
 import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { StoryModel } from '@stories/models/domain/story-model';
+import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
+import { LibraryComponent } from '@users/library/library.component';
+import { LibraryModel } from '@users/models/domain/library.model';
+import { UserService } from '@users/services/user.service';
+import { finalize, take } from 'rxjs';
 
 @Component({
   selector: 'app-publisher-library',
@@ -44,12 +43,12 @@ export class PublisherLibraryComponent implements AfterViewInit {
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !this.isLoading()) {
+          if (entry.isIntersecting && !this.isLoading() && this.stories().Items.length > 0) {
             this.nextPage();
           }
         });
       },
-      { threshold: 0 },
+      { threshold: 0, rootMargin: '0px 0px 200px 0px' },
     );
 
     if (this.loadMoreAnchor) this.observer.observe(this.loadMoreAnchor.nativeElement);
@@ -87,22 +86,22 @@ export class PublisherLibraryComponent implements AfterViewInit {
     this.isLoading.set(true);
     this.storyService
       .getStoriesByLibrary({ LibraryId: this.libraryId!, QueryableModel: this.pagination.snapshot })
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        finalize(() => this.isLoading.set(false)),
+      )
       .subscribe({
         next: (data) => {
           if (!data?.Items || data.Items.length === 0) {
-            this.observer.unobserve(this.loadMoreAnchor.nativeElement);
+            this.observer?.unobserve(this.loadMoreAnchor.nativeElement);
             return;
           }
-
           const current = reset ? generateEmptyQueriedResult<StoryModel>() : this.stories();
           this.stories.set({
             Items: [...current.Items, ...data.Items],
             TotalItemsCount: data.TotalItemsCount,
           });
         },
-        complete: () => this.isLoading.set(false),
-        error: () => this.isLoading.set(false),
       });
   }
 

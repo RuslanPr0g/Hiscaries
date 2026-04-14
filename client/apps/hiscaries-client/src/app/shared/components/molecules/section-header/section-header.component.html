@@ -1,0 +1,11 @@
+@switch (level()) {
+  @case (1) {
+    <h1 class="section-title section-title--h1 main-title">{{ title() }}</h1>
+  }
+  @case (2) {
+    <h2 class="section-title section-title--h2 main-title">{{ title() }}</h2>
+  }
+  @default {
+    <h3 class="section-title section-title--h3 main-title">{{ title() }}</h3>
+  }
+}

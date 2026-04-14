@@ -1,5 +1,5 @@
-﻿using StackNucleus.DDD.Domain.Repositories;
-using Hiscary.Notifications.Domain.ReadModels;
+﻿using Hiscary.Notifications.Domain.ReadModels;
+using StackNucleus.DDD.Domain.Repositories;
 
 namespace Hiscary.Notifications.Domain.DataAccess;
 

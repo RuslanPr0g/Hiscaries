@@ -1,0 +1,19 @@
+@if (src()) {
+  <img
+    class="avatar"
+    [class.avatar-sm]="size() === 'sm'"
+    [class.avatar-md]="size() === 'md'"
+    [class.avatar-lg]="size() === 'lg'"
+    [src]="src()"
+    [alt]="alt()"
+  />
+} @else {
+  <span
+    class="avatar avatar-initials"
+    [class.avatar-sm]="size() === 'sm'"
+    [class.avatar-md]="size() === 'md'"
+    [class.avatar-lg]="size() === 'lg'"
+  >
+    {{ initials() }}
+  </span>
+}

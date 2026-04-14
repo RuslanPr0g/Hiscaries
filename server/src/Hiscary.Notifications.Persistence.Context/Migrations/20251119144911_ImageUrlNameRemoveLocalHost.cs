@@ -10,7 +10,7 @@ namespace Hiscary.Notifications.Persistence.Context.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-    migrationBuilder.Sql(@"
+            migrationBuilder.Sql(@"
 UPDATE notifications.""Notifications""
 SET ""ImageUrls"" = jsonb_set(
     ""ImageUrls"",

@@ -1,18 +1,15 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '@users/services/auth.service';
-import { take } from 'rxjs';
-import { NavigationConst } from '@shared/constants/navigation.const';
-
-
 import { FormsModule } from '@angular/forms';
-
-import { Button } from 'primeng/button';
-import { InputText } from 'primeng/inputtext';
-import { Card } from 'primeng/card';
-import { Password } from 'primeng/password';
+import { Router } from '@angular/router';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
+import { AuthService } from '@users/services/auth.service';
+import { Button } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { InputText } from 'primeng/inputtext';
+import { Password } from 'primeng/password';
+import { take } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -26,8 +23,8 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
     InputText,
     Password,
     Button,
-    LoadingSpinnerComponent
-],
+    LoadingSpinnerComponent,
+  ],
 })
 export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);

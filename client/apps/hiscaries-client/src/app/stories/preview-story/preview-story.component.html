@@ -11,7 +11,7 @@
             </button>
           </span>
           &nbsp;•&nbsp;
-          <span class="story-date">{{ story.DatePublished | date : 'longDate' }}</span>
+          <span class="story-date">{{ story.DatePublished | date: 'longDate' }}</span>
           &nbsp;•&nbsp;
           <span class="story-date">{{ story.AgeLimit }}+</span>
         </div>
@@ -24,15 +24,15 @@
             iconType="pi-book"
             severity="secondary"
             (clicked)="navigateToLibrary()"
-          ></app-button-two>
-          <app-button-two label="Read" iconType="pi-eye" (clicked)="readStory()"></app-button-two>
-          @if (isEditable) {
+          />
+          <app-button-two label="Read" iconType="pi-eye" (clicked)="readStory()" />
+          @if (canEditStory()) {
             <app-button-two
               label="Modify"
               iconType="pi-pencil"
               severity="secondary"
               (clicked)="modifyStory()"
-            ></app-button-two>
+            />
           }
         </div>
       </div>

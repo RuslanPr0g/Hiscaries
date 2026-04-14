@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+cd client || exit 1
+npx --no -- commitlint --edit "$1"

@@ -73,11 +73,28 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    padding: 16px;
+    padding: 0;
     border-radius: 0;
+    z-index: 9999;
 
-    &__content-wrapper {
-      max-height: calc(100vh - 60px);
+    .read-story-container__header {
+      padding: 8px 16px;
+      min-height: 44px;
+    }
+
+    .read-story-container__content-wrapper {
+      flex: 1;
+      height: calc(100vh - 44px);
+      max-height: calc(100vh - 44px);
+      padding: 0;
+      overflow: hidden;
+
+      ngx-extended-pdf-viewer,
+      .pdf-viewer {
+        display: block;
+        width: 100%;
+        height: 100% !important;
+      }
     }
   }
 

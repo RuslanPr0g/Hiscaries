@@ -13,7 +13,7 @@ internal class ProcessOutboxMessagesJob(
     IEventPublisher publisher) : BaseProcessOutboxMessagesJob<PlatformUsersContext, Assembly>(publisher)
 {
     protected override PlatformUsersContext Context { get; init; } = context;
-    protected override IReadOnlyList<Assembly> MessagesAssembly { get; init; } = 
+    protected override IReadOnlyList<Assembly> MessagesAssembly { get; init; } =
         [
         typeof(PlatformUserDomainEventsAssembly).Assembly,
         typeof(PlatformUserIntegrationEventsAssembly).Assembly,

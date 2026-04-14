@@ -1,38 +1,37 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  inject,
-  signal,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { finalize } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MediaCardComponent } from '@shared/components/molecules/media-card/media-card.component';
+import { SectionHeaderComponent } from '@shared/components/molecules/section-header/section-header.component';
+import { InfiniteScrollGridComponent } from '@shared/components/organisms/infinite-scroll-grid/infinite-scroll-grid.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
+import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
+import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 import { DestroyService } from '@shared/services/destroy.service';
+import { PaginationService } from '@shared/services/statefull/pagination.service';
 import { StoryModel } from '@stories/models/domain/story-model';
-import { SearchStoryResultsComponent } from '@stories/search-story-results/search-story-results.component';
 import { TemplateMessageModel } from '@stories/models/template-message.model';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
-import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
-import { PaginationService } from '@shared/services/statefull/pagination.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-search-story',
   standalone: true,
-  imports: [SearchStoryResultsComponent],
+  imports: [
+    InfiniteScrollGridComponent,
+    MediaCardComponent,
+    SectionHeaderComponent,
+    FallbackImagePipe,
+  ],
   templateUrl: './search-story.component.html',
   styleUrls: ['./search-story.component.scss'],
   providers: [DestroyService, PaginationService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchStoryComponent implements OnInit, AfterViewInit {
+export class SearchStoryComponent implements OnInit {
   private storyService = inject(StoryWithMetadataService);
   private pagination = inject(PaginationService);
   private route = inject(ActivatedRoute);
-
-  @ViewChild('loadMoreAnchor', { static: true }) loadMoreAnchor!: ElementRef<HTMLDivElement>;
-  private observer!: IntersectionObserver;
+  private router = inject(Router);
 
   stories = signal<QueriedModel<StoryModel>>(generateEmptyQueriedResult());
   errorMessage = signal<TemplateMessageModel | null>(null);
@@ -45,23 +44,6 @@ export class SearchStoryComponent implements OnInit, AfterViewInit {
         this.loadStories(term, true);
       }
     });
-  }
-
-  ngAfterViewInit() {
-    this.observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !this.isLoading()) {
-            this.nextPage();
-          }
-        });
-      },
-      { threshold: 0 },
-    );
-
-    if (this.loadMoreAnchor) {
-      this.observer.observe(this.loadMoreAnchor.nativeElement);
-    }
   }
 
   private loadStories(term: string, reset = false) {
@@ -81,7 +63,6 @@ export class SearchStoryComponent implements OnInit, AfterViewInit {
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe((data) => {
         if (!data?.Items || data.Items.length === 0) {
-          this.observer.unobserve(this.loadMoreAnchor.nativeElement);
           return;
         }
 
@@ -90,12 +71,6 @@ export class SearchStoryComponent implements OnInit, AfterViewInit {
           Items: [...current.Items, ...data.Items],
           TotalItemsCount: data.TotalItemsCount,
         });
-
-        this.errorMessage.set(
-          data.Items.length === 0 && this.stories().Items.length === 0
-            ? { Title: 'Search criteria', Description: 'No stories found by the criteria' }
-            : null,
-        );
       });
   }
 
@@ -115,5 +90,9 @@ export class SearchStoryComponent implements OnInit, AfterViewInit {
 
   get storiesLoaded(): boolean {
     return this.stories().Items.length > 0;
+  }
+
+  previewStory(story: StoryModel): void {
+    this.router.navigate([NavigationConst.PreviewStory(story.Id)]);
   }
 }

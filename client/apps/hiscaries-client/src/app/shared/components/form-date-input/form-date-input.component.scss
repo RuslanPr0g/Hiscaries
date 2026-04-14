@@ -29,7 +29,7 @@ $background-gradient-end: #645044;
   }
 
   ::ng-deep {
-    .p-calendar {
+    .p-datepicker {
       width: 100%;
 
       .p-inputtext {
@@ -38,7 +38,8 @@ $background-gradient-end: #645044;
         border: 1px solid $glass-border;
         border-radius: 10px;
         color: $text-color;
-        padding: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
         transition: background 0.3s ease;
 
         &::placeholder {
@@ -49,17 +50,12 @@ $background-gradient-end: #645044;
         &:focus {
           background: $input-focus-bg;
           border-color: $accent-color;
+          outline: none;
         }
       }
 
-      .p-datepicker-trigger {
-        background: transparent;
-        border: none;
+      .p-datepicker-input-icon-container {
         color: $text-color;
-
-        &:hover {
-          color: $hover-color;
-        }
       }
     }
 

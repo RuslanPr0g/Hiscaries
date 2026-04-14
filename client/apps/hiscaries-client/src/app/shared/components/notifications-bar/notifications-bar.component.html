@@ -14,7 +14,7 @@
           (click)="clickNotification(notification)"
           (keydown)="clickNotification(notification)"
           tabindex="0"
-          >
+        >
           <div class="notification-content">
             <p class="notification-message">{{ notification.Message }}</p>
             @if (notification.ImageUrls) {
@@ -22,8 +22,8 @@
                 [src]="notification.ImageUrls | fallbackImage"
                 alt="{{ notification.Message }}"
                 class="notification-image"
-                onerror="this.style.display='none'"
-                />
+                onerror="this.style.display = 'none'"
+              />
             }
           </div>
         </li>

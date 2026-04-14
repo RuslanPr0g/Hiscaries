@@ -26,15 +26,19 @@ jobs:
 
       - name: Clean install dependencies
         working-directory: client
-        run: npm install
+        run: npm ci
 
       - name: Run lint
         working-directory: client
-        run: npm run lintall
+        run: npm run lint:all
 
-      # - name: Run unit tests
-      #   working-directory: client
-      #   run: npm run test
+      - name: Check formatting
+        working-directory: client
+        run: npm run format:check
+
+      - name: Run unit tests
+        working-directory: client
+        run: npm run test:ci
 
       - name: Build the project
         working-directory: client

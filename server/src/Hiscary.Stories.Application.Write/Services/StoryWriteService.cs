@@ -11,6 +11,7 @@ using StackNucleus.DDD.Domain.Generators;
 using StackNucleus.DDD.Domain.ResultModels;
 
 // TODO: this implementation is hideous please fix
+// also add proper RBAC
 namespace Hiscary.Stories.Application.Write.Services;
 
 public sealed class StoryWriteService(
@@ -94,7 +95,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> UpdateComment(Guid commentId, Guid storyId, string content, int score)
+    public async Task<OperationResult> UpdateComment(Guid commentId, Guid storyId, string content, int score, Guid callerId)
     {
         _logger.LogInformation("Updating comment {CommentId} for story {StoryId}", commentId, storyId);
         var story = await _repository.GetById(storyId);
@@ -104,8 +105,6 @@ public sealed class StoryWriteService(
             _logger.LogWarning("Story {StoryId} not found when updating comment", storyId);
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
         }
-
-        // TODO: add a check that only the owner is going to update his comment
 
         story.UpdateComment(commentId, content, score);
         await _repository.SaveChanges();
@@ -230,15 +229,6 @@ public sealed class StoryWriteService(
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
         }
 
-        // TODO: do the check using command to validate the data and send it to another service request to another microservice
-        // or insert this data into the jwt token somehow
-        //if (story.Library.PlatformUserId.Value != currentUserId)
-        //{
-        //    _logger.LogWarning("Story {StoryId} can only be updated by its publisher or an administrator, user {UserId} tried to update not his story.",
-        //        storyId, currentUserId);
-        //    return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
-        //}
-
         var existingGenres = await _genreRepository.GetByIds(genreIds.ToArray());
 
         story.UpdateInformation(
@@ -262,15 +252,15 @@ public sealed class StoryWriteService(
         var imageIsEmpty = imagePreview is null || imagePreview.Length <= 0;
 
         if (shouldUpdateImage && imageIsEmpty)
-            {
-                story.ClearPreviewUrl();
-            }
+        {
+            story.ClearPreviewUrl();
+        }
 
         if (shouldUpdateImage && !imageIsEmpty && imagePreview is not null)
-            {
-                await _publisher.Publish(
-                    new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories", ImageSizeExtensions.AllImageSizes()));
-            }
+        {
+            await _publisher.Publish(
+                new ImageUploadRequestedIntegrationEvent(imagePreview, storyId, "stories", ImageSizeExtensions.AllImageSizes()));
+        }
 
         if (contents is not null && contents.Any())
         {
@@ -327,7 +317,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> DeleteAudio(Guid storyId)
+    public async Task<OperationResult> DeleteAudio(Guid storyId, Guid callerId)
     {
         _logger.LogInformation("Deleting audio for story {StoryId}", storyId);
         var story = await _repository.GetById(storyId);
@@ -367,7 +357,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> DeleteComment(Guid storyId, Guid commentId)
+    public async Task<OperationResult> DeleteComment(Guid storyId, Guid commentId, Guid callerId)
     {
         _logger.LogInformation("Deleting comment {CommentId} from story {StoryId}", commentId, storyId);
         var story = await _repository.GetById(storyId);
@@ -377,8 +367,6 @@ public sealed class StoryWriteService(
             _logger.LogWarning("Story {StoryId} not found when deleting comment", storyId);
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
         }
-
-        // TODO: add rights check
 
         story.DeleteComment(commentId);
         await _repository.SaveChanges();
@@ -406,25 +394,22 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> DeleteStory(Guid storyId)
+    public async Task<OperationResult> DeleteStory(Guid storyId, Guid callerId)
     {
         _logger.LogInformation("Deleting story {StoryId}", storyId);
         var story = await _repository.GetById(storyId);
 
-        // TODO: add rights check
-
-        if (story is not null)
-        {
-            // TODO: let's mark it as isDeleted and then have a
-            // job that would remove all the isdeleted records once per month or smth
-            _repository.Delete(story);
-            await _repository.SaveChanges();
-            _logger.LogInformation("Story {StoryId} deleted successfully", storyId);
-        }
-        else
+        if (story is null)
         {
             _logger.LogWarning("Story {StoryId} not found when deleting", storyId);
+            return OperationResult.CreateSuccess();
         }
+
+        // TODO: let's mark it as isDeleted and then have a
+        // job that would remove all the isdeleted records once per month or smth
+        _repository.Delete(story);
+        await _repository.SaveChanges();
+        _logger.LogInformation("Story {StoryId} deleted successfully", storyId);
 
         return OperationResult.CreateSuccess();
     }

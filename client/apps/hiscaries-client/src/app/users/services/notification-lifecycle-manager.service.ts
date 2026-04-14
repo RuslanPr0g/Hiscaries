@@ -1,7 +1,7 @@
-import { Injectable, inject } from '@angular/core';
 import { AuthService } from './auth.service';
-import { NotificationHandler } from '@shared/models/notification-handler.model';
 import { UserRealTimeNotificationService } from './real-time-notification.service';
+import { Injectable, inject } from '@angular/core';
+import { NotificationHandler } from '@shared/models/notification-handler.model';
 
 @Injectable({
   providedIn: 'root',

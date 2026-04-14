@@ -1,7 +1,6 @@
 import { Component, input } from '@angular/core';
-
-import { InputText } from 'primeng/inputtext';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { InputText } from 'primeng/inputtext';
 import { Message } from 'primeng/message';
 
 @Component({

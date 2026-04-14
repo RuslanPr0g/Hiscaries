@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { NotificationModel } from '@shared/models/notification.model';
 import { ReadNotificationsRequest } from '@users/models/requests/read-notifications.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

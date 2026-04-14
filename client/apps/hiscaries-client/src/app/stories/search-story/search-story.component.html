@@ -1,11 +1,21 @@
-<h1 class="fs-1rem main-title">Search result</h1>
-<app-search-story-results [stories]="stories()"
+<ui-section-header title="Search result" />
+
+<ui-infinite-scroll-grid
   [isLoading]="isLoading()"
-  class="w-full"
- />
-
-@if (stories().Items.length === 0 && !isLoading()) {
-  📚 No stories found 💨
-}
-
-<div #loadMoreAnchor class="load-more-anchor"></div>
+  [isEmpty]="stories().Items.length === 0 && !isLoading()"
+  [hasMore]="stories().Items.length < stories().TotalItemsCount"
+  emptyMessage="No stories found 💨"
+  (loadMore)="nextPage()"
+>
+  @for (story of stories().Items; track story.Id) {
+    <ui-media-card
+      [imageSrc]="story.ImagePreviewUrl | fallbackImage"
+      [title]="story.Title"
+      [subtitle]="story.AuthorName ?? null"
+      [description]="story.Description"
+      [ageLimit]="story.AgeLimit"
+      [progressPercentage]="story.PercentageRead"
+      (clicked)="previewStory(story)"
+    />
+  }
+</ui-infinite-scroll-grid>

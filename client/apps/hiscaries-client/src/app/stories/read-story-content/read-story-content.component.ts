@@ -1,25 +1,33 @@
-import { Component, OnInit, HostListener, ElementRef, ViewChild, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { StoryModelWithContents } from '@stories/models/domain/story-model';
+import { ReadingSettingsComponent } from './reading-settings/reading-settings.component';
 import { CommonModule } from '@angular/common';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { debounceTime, Subject, switchMap, take } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  ElementRef,
+  ViewChild,
+  inject,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { convertToBase64 } from '@shared/helpers/image.helper';
 import { IteratorService } from '@shared/services/statefull/iterator/iterator.service';
-import { ButtonModule } from 'primeng/button';
-import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
-import { UserService } from '@users/services/user.service';
-import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
-import { ReadStoryRequest } from '@users/models/requests/read-story.model';
-import { FormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { ReadingSettingsComponent } from './reading-settings/reading-settings.component';
 import {
   defaultReadingSettings,
   ReadingSettings,
 } from '@stories/models/domain/reading-settings.model';
+import { StoryModelWithContents } from '@stories/models/domain/story-model';
 import { LoadReadingSettingsService } from '@stories/services/load-reading-settings.service';
+import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
+import { ReadStoryRequest } from '@users/models/requests/read-story.model';
+import { UserService } from '@users/services/user.service';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { debounceTime, Subject, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-read-story-content',
@@ -37,7 +45,7 @@ import { LoadReadingSettingsService } from '@stories/services/load-reading-setti
   templateUrl: './read-story-content.component.html',
   styleUrl: './read-story-content.component.scss',
 })
-export class ReadStoryContentComponent implements OnInit {
+export class ReadStoryContentComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private storyService = inject(StoryWithMetadataService);
   private userService = inject(UserService);
@@ -69,7 +77,9 @@ export class ReadStoryContentComponent implements OnInit {
   pdfPage = 1;
 
   get pdfUrl(): string | null {
-    return this.story?.HasExternalPdf && this.story.ExternalPdfUrl ? this.story.ExternalPdfUrl : null;
+    return this.story?.HasExternalPdf && this.story.ExternalPdfUrl
+      ? this.story.ExternalPdfUrl
+      : null;
   }
 
   get pdfExists(): boolean {
@@ -237,13 +247,38 @@ export class ReadStoryContentComponent implements OnInit {
     }
   }
 
+  private onFullscreenChange = () => {
+    if (!document.fullscreenElement) {
+      this.maximized = false;
+    }
+  };
+
   maximize(): void {
     this.maximized = true;
     this.onSettingsClose();
+    document.documentElement.requestFullscreen().catch((_err) => {
+      /* fullscreen not supported */
+    });
+    document.addEventListener('fullscreenchange', this.onFullscreenChange);
   }
 
   minimize(): void {
     this.maximized = false;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch((_err) => {
+        /* fullscreen not supported */
+      });
+    }
+    document.removeEventListener('fullscreenchange', this.onFullscreenChange);
+  }
+
+  ngOnDestroy(): void {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch((_err) => {
+        /* fullscreen not supported */
+      });
+    }
+    document.removeEventListener('fullscreenchange', this.onFullscreenChange);
   }
 
   showSettingss() {
@@ -284,10 +319,12 @@ export class ReadStoryContentComponent implements OnInit {
     this.pageInput = page;
     this.iterator.moveTo(page - 1);
     if (this.storyId) {
-      this.userService.read({
-        StoryId: this.storyId,
-        PageRead: page,
-      }).subscribe();
+      this.userService
+        .read({
+          StoryId: this.storyId,
+          PageRead: page,
+        })
+        .subscribe();
     }
   }
 

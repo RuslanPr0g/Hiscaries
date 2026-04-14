@@ -1,14 +1,21 @@
-@if (stories().Items.length > 0) {
-  <h1 class="fs-1rem main-title">Stories for you to read</h1>
-  <app-search-story-results [stories]="stories()"
-    [isLoading]="isLoading()"
-    class="w-full"
-   />
-} @else {
-  @if (!isLoading()) {
-    📚💨 No stories exist on the platform, be the first legend!
+<ui-section-header title="Stories for you to read" />
+
+<ui-infinite-scroll-grid
+  [isLoading]="isLoading()"
+  [isEmpty]="stories().Items.length === 0 && !isLoading()"
+  [hasMore]="stories().Items.length < stories().TotalItemsCount"
+  emptyMessage="📚💨 No stories exist on the platform, be the first legend!"
+  (loadMore)="nextPage()"
+>
+  @for (story of stories().Items; track story.Id) {
+    <ui-media-card
+      [imageSrc]="story.ImagePreviewUrl | fallbackImage"
+      [title]="story.Title"
+      [subtitle]="story.AuthorName ?? null"
+      [description]="story.Description"
+      [ageLimit]="story.AgeLimit"
+      [progressPercentage]="story.PercentageRead"
+      (clicked)="previewStory(story)"
+    />
   }
-}
-
-
-<div #loadMoreAnchor class="load-more-anchor"></div>
+</ui-infinite-scroll-grid>

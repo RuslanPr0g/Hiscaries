@@ -1,0 +1,22 @@
+.error-state {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+.error-state__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fca5a5;
+  margin: 0;
+}
+
+.error-state__description {
+  font-size: 0.875rem;
+  color: rgba(252, 165, 165, 0.8);
+  margin: 0;
+}

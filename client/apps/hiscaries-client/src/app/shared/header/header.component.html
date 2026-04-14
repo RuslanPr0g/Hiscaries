@@ -4,18 +4,18 @@
   (keydown.enter)="closeModal()"
   (keydown.space)="closeModal()"
   tabindex="0"
-  >
+>
   <div
     class="modal-window"
     (click)="$event.stopPropagation()"
     (keydown.enter)="$event.stopPropagation()"
     (keydown.space)="$event.stopPropagation()"
     tabindex="0"
-    >
+  >
     <button class="modal-close-btn" (click)="closeModal()" aria-label="Close modal">×</button>
 
     <div class="search">
-      <app-search-bar></app-search-bar>
+      <app-search-bar />
     </div>
 
     <div class="header__options-grid">
@@ -27,7 +27,7 @@
             [ngClass]="{ warning: item.Label === 'Sign out' }"
             [isFullWidth]="true"
             (clicked)="callItemCommand(item)"
-            >
+          >
             {{ item.Label }}
           </app-button-two>
         </div>

@@ -1,4 +1,4 @@
-﻿    using Hiscary.PlatformUsers.Api.Rest.Requests;
+﻿using Hiscary.PlatformUsers.Api.Rest.Requests;
 using Hiscary.PlatformUsers.Api.Rest.Requests.Libraries;
 using Hiscary.PlatformUsers.Domain.ProcessModels;
 using Hiscary.PlatformUsers.Domain.Services;
@@ -59,11 +59,13 @@ public static class PlatformUserEndpoints
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPost("/read", ReadStory)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPost("/bookmark", BookmarkStory)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
@@ -90,10 +92,13 @@ public static class PlatformUserEndpoints
             service.ReadStoryPage(user.Id, request.StoryId, request.PageRead)));
 
     private static async Task<IResult> BecomePublisher(
+        HttpContext httpContext,
         IAuthorizedEndpointHandler endpointHandler,
-        [FromServices] IPlatformUserWriteService service) =>
-        await endpointHandler.WithUser(user =>
+        [FromServices] IPlatformUserWriteService service)
+    {
+        return await endpointHandler.WithUser(user =>
             service.BecomePublisher(user.Id));
+    }
 
     private static async Task<IResult> GetLibrary(
         [FromQuery] Guid? libraryId,

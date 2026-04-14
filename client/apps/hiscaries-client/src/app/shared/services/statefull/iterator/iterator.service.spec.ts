@@ -1,5 +1,5 @@
-import { TestBed } from '@angular/core/testing';
 import { IteratorService } from './iterator.service';
+import { TestBed } from '@angular/core/testing';
 
 describe('IteratorService', () => {
   let service: IteratorService;

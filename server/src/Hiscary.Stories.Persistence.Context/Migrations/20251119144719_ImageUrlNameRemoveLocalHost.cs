@@ -10,7 +10,7 @@ namespace Hiscary.Stories.Persistence.Context.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-    migrationBuilder.Sql(@"
+            migrationBuilder.Sql(@"
 UPDATE stories.""Stories""
 SET ""ImagePreviewUrl"" = jsonb_set(
     ""ImagePreviewUrl"",

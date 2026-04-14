@@ -1,7 +1,9 @@
-﻿using Hiscary.Shared.Domain.Extensions;
+﻿using Hiscary.Shared.Domain.Authorization;
+using Hiscary.Shared.Domain.Extensions;
 using Hiscary.Stories.Api.Rest.Requests.Comments;
 using Hiscary.Stories.Api.Rest.Requests.Stories;
 using Hiscary.Stories.Domain;
+using Hiscary.Stories.Domain.DataAccess;
 using Hiscary.Stories.Domain.ReadModels;
 using Hiscary.Stories.Domain.Stories;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +32,10 @@ public static class StoryEndpoints
             .Produces<IEnumerable<StorySimpleReadModel>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized);
 
+        group.MapGet("/owner", GetStoryOwner)
+            .Produces<Guid>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status401Unauthorized);
+
         group.MapGet("/sortable-properties", GetSortableProperties)
             .Produces<IEnumerable<string>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized);
@@ -47,11 +53,13 @@ public static class StoryEndpoints
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPost("/", PublishStory)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPatch("/", UpdateStoryInformation)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
@@ -67,21 +75,25 @@ public static class StoryEndpoints
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapDelete("/comments", DeleteComment)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapDelete("/", DeleteStory)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPatch("/comments", UpdateComment)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapDelete("/audio", DeleteAudioForStory)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
@@ -167,9 +179,11 @@ public static class StoryEndpoints
 
     private static async Task<IResult> UpdateStoryInformation(
         [FromBody] StoryUpdateInfoRequest request,
+        HttpContext httpContext,
         IAuthorizedEndpointHandler endpointHandler,
-        [FromServices] IStoryWriteService service) =>
-        await endpointHandler.WithUserOperation(user =>
+        [FromServices] IStoryWriteService service)
+    {
+        return await endpointHandler.WithUserOperation(user =>
         {
             var image = request.ImagePreview.GetImageBytes();
             return service.UpdateStory(
@@ -186,6 +200,7 @@ public static class StoryEndpoints
                 request.DateWritten,
                 request.Contents);
         });
+    }
 
     private static async Task<IResult> AddComment(
         [FromBody] CreateCommentRequest request,
@@ -211,26 +226,72 @@ public static class StoryEndpoints
     private static async Task<IResult> DeleteComment(
         Guid storyId,
         Guid commentId,
-        [FromServices] IStoryWriteService service) =>
-        (await service.DeleteComment(storyId, commentId)).OperationToHttpResult();
+        HttpContext httpContext,
+        IAuthorizedEndpointHandler endpointHandler,
+        [FromServices] IStoryWriteService service)
+    {
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
+        return await endpointHandler.WithUserOperation(user =>
+            service.DeleteComment(storyId, commentId, user.Id));
+    }
 
     private static async Task<IResult> DeleteStory(
         Guid storyId,
-        [FromServices] IStoryWriteService service) =>
-        (await service.DeleteStory(storyId)).OperationToHttpResult();
+        HttpContext httpContext,
+        IAuthorizedEndpointHandler endpointHandler,
+        [FromServices] IStoryWriteService service)
+    {
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
+        return await endpointHandler.WithUserOperation(user =>
+            service.DeleteStory(storyId, user.Id));
+    }
 
     private static async Task<IResult> UpdateComment(
         [FromBody] UpdateCommentRequest request,
-        [FromServices] IStoryWriteService service) =>
-        (await service.UpdateComment(
-            request.CommentId,
-            request.StoryId,
-            request.Content,
-            request.Score)).OperationToHttpResult();
+        HttpContext httpContext,
+        IAuthorizedEndpointHandler endpointHandler,
+        [FromServices] IStoryWriteService service)
+    {
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
+        return await endpointHandler.WithUserOperation(user =>
+            service.UpdateComment(
+                request.CommentId,
+                request.StoryId,
+                request.Content,
+                request.Score,
+                user.Id));
+    }
 
     private static async Task<IResult> DeleteAudioForStory(
         Guid storyId,
-        [FromServices] IStoryWriteService service) =>
-        (await service.DeleteAudio(storyId)).OperationToHttpResult();
+        HttpContext httpContext,
+        IAuthorizedEndpointHandler endpointHandler,
+        [FromServices] IStoryWriteService service)
+    {
+        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
+            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
+            ?? string.Empty;
+        return await endpointHandler.WithUserOperation(user =>
+            service.DeleteAudio(storyId, user.Id));
+    }
+
+    private static async Task<IResult> GetStoryOwner(
+        [FromQuery] Guid storyId,
+        [FromServices] IStoryWriteRepository storyRepository)
+    {
+        var story = await storyRepository.GetById(storyId);
+        if (story is null)
+        {
+            return Results.NotFound();
+        }
+
+        return Results.Ok(story.LibraryId);
+    }
 
 }

@@ -1,6 +1,6 @@
-﻿using StackNucleus.DDD.Persistence.EF.Postgres.Extensions;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackNucleus.DDD.Persistence.EF.Postgres.Extensions;
 
 namespace Hiscary.PlatformUsers.Persistence.Context;
 

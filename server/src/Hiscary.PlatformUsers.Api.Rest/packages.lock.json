@@ -45,18 +45,18 @@
       },
       "StackNucleus.DDD.Api.Rest": {
         "type": "Direct",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "tBlDveI1YK4P0UAycoLGFjkArdd6mCksYa1PZYFjqyfWV1vEfEk/sqa0l1IIJ4tUEq3QHvhC7pclL1UefBEUTA==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "SFBaAtYdYU+S4PyjFQZAC/6U9IBBwPRQlPgZHvYCTdEW8XFGMgrpMXtMazEHsD0HuuuA2UikzoYm3DvZasSsCg==",
         "dependencies": {
           "Serilog.AspNetCore": "10.0.0",
           "Serilog.Extensions.Hosting": "10.0.0",
           "Serilog.Sinks.Console": "6.1.1",
-          "StackNucleus.DDD.Domain": "4.1.0",
-          "StackNucleus.DDD.Events.WolverineFx": "4.1.0",
-          "StackNucleus.DDD.Generators": "4.1.0",
-          "StackNucleus.DDD.Persistence": "4.1.0",
-          "StackNucleus.DDD.Persistence.EF.Postgres": "4.1.0",
+          "StackNucleus.DDD.Domain": "4.10.0",
+          "StackNucleus.DDD.Events.WolverineFx": "4.10.0",
+          "StackNucleus.DDD.Generators": "4.10.0",
+          "StackNucleus.DDD.Persistence": "4.10.0",
+          "StackNucleus.DDD.Persistence.EF.Postgres": "4.10.0",
           "Swashbuckle.AspNetCore": "10.1.7",
           "Swashbuckle.AspNetCore.SwaggerGen": "10.1.7",
           "Swashbuckle.AspNetCore.SwaggerUI": "10.1.7"
@@ -576,11 +576,11 @@
       },
       "StackNucleus.DDD.Generators": {
         "type": "Transitive",
-        "resolved": "4.1.0",
-        "contentHash": "sjlKHkQuXVJpeRTYsPyUyaUncAUjUCY6YFdJnjD2wwznU6xAAgiwJjJU+VSL2I5Tsleem+l4UNJ6U7G5rvHr5w==",
+        "resolved": "4.10.0",
+        "contentHash": "1SKJ+cBjow3OPRp424C3V34QZzB/h2m5D3kXEY4U1vU4h/ds8ee+de64gFqG0ujPCthIFj7J5fDjvK1Ix1Mzbw==",
         "dependencies": {
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.4",
-          "StackNucleus.DDD.Domain": "4.1.0"
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.5",
+          "StackNucleus.DDD.Domain": "4.10.0"
         }
       },
       "Swashbuckle.AspNetCore.Swagger": {
@@ -712,7 +712,7 @@
         "type": "Project",
         "dependencies": {
           "Hiscary.Shared.Domain": "[1.0.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.notifications.domain": {
@@ -720,13 +720,13 @@
         "dependencies": {
           "Hiscary.Notifications.DomainEvents": "[1.0.0, )",
           "Hiscary.Shared.Domain": "[1.0.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.notifications.domainevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.platformusers.application.read": {
@@ -749,13 +749,13 @@
         "dependencies": {
           "Hiscary.PlatformUsers.DomainEvents": "[1.0.0, )",
           "Hiscary.Shared.Domain": "[1.0.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.platformusers.domainevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.platformusers.eventhandlers": {
@@ -766,7 +766,7 @@
           "Hiscary.PlatformUsers.IntegrationEvents": "[1.0.0, )",
           "Hiscary.Stories.IntegrationEvents": "[1.0.0, )",
           "Hiscary.UserAccounts.IntegrationEvents": "[1.0.0, )",
-          "StackNucleus.DDD.Events.WolverineFx": "[4.1.0, )",
+          "StackNucleus.DDD.Events.WolverineFx": "[4.10.0, )",
           "WolverineFx": "[5.27.0, )",
           "WolverineFx.RabbitMQ": "[5.27.0, )"
         }
@@ -774,7 +774,7 @@
       "hiscary.platformusers.integrationevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.platformusers.jobs": {
@@ -784,8 +784,8 @@
           "Hiscary.PlatformUsers.IntegrationEvents": "[1.0.0, )",
           "Hiscary.PlatformUsers.Persistence.Context": "[1.0.0, )",
           "Hiscary.Shared.Domain": "[1.0.0, )",
-          "StackNucleus.DDD.Jobs.Quartz": "[4.1.0, )",
-          "StackNucleus.DDD.Outbox": "[4.1.0, )"
+          "StackNucleus.DDD.Jobs.Quartz": "[4.10.0, )",
+          "StackNucleus.DDD.Outbox": "[4.10.0, )"
         }
       },
       "hiscary.platformusers.persistence.context": {
@@ -793,7 +793,7 @@
         "dependencies": {
           "Hiscary.PlatformUsers.Domain": "[1.0.0, )",
           "Hiscary.Shared.Persistence.EF.Postgres": "[1.0.0, )",
-          "StackNucleus.DDD.Persistence.EF.Postgres": "[4.1.0, )"
+          "StackNucleus.DDD.Persistence.EF.Postgres": "[4.10.0, )"
         }
       },
       "hiscary.platformusers.persistence.read": {
@@ -835,8 +835,8 @@
         "dependencies": {
           "Hiscary.Shared.Application": "[1.0.0, )",
           "Hiscary.Shared.Jwt": "[1.0.0, )",
-          "StackNucleus.DDD.Api.Rest": "[4.1.0, )",
-          "StackNucleus.DDD.Images": "[4.1.0, )"
+          "StackNucleus.DDD.Api.Rest": "[4.10.0, )",
+          "StackNucleus.DDD.Images": "[4.10.0, )"
         }
       },
       "hiscary.shared.application": {
@@ -846,7 +846,7 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "[10.0.5, )",
           "Microsoft.IdentityModel.JsonWebTokens": "[8.17.0, )",
           "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
-          "StackNucleus.DDD.Application": "[4.1.0, )",
+          "StackNucleus.DDD.Application": "[4.10.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.17.0, )"
         }
       },
@@ -854,7 +854,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "[8.17.0, )",
-          "StackNucleus.DDD.Domain": "[4.1.0, )",
+          "StackNucleus.DDD.Domain": "[4.10.0, )",
           "System.IdentityModel.Tokens.Jwt": "[8.17.0, )"
         }
       },
@@ -875,19 +875,19 @@
           "Newtonsoft.Json": "[13.0.4, )",
           "Npgsql": "[10.0.2, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "[10.0.1, )",
-          "StackNucleus.DDD.Persistence.EF.Postgres": "[4.1.0, )"
+          "StackNucleus.DDD.Persistence.EF.Postgres": "[4.10.0, )"
         }
       },
       "hiscary.stories.integrationevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "hiscary.useraccounts.integrationevents": {
         "type": "Project",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "[4.1.0, )"
+          "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
       "EntityFramework": {
@@ -1034,81 +1034,81 @@
       },
       "StackNucleus.DDD.Application": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "Se4vMZXOnnGZ4D7mZ0XM279bniO+I5XhyJucVM464mET4ouvAm2icHxiWwo776vYKJVRuWLrju9NU4XRRefYlA=="
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "CFWeE0kf115ndXp7zvBF3tLI/W18LIdlW3iM8Gx5QLgZtPiOh5xFClBF9pz9UcdUdv/3ZMsvtlG5dR05RIt8Vw=="
       },
       "StackNucleus.DDD.Domain": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "HsAGRzH1kumqFPaVI5S/wIvAezuSwIrpRQXLkBpRkBI+UMX57tCUO/tIoHg3VwGs15rgDy+TrWnSKS/UZT6Xkg=="
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "4qVHDpWITV3lHeF5KrIMWOVkczsA4vtb+SgA9lTA5QZXHnJr1+q3bc4Hu8rwGdd2wy9RTR7icmpG1BOMUHtNqA=="
       },
       "StackNucleus.DDD.Events.WolverineFx": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "lKsk3UwrN1c/lC2Y7okC5xZmaM4n3zhsPYeDkRvTCshVazDP27+Iae2Gkm/i67ZoZuYdks6Oa0mP9tC0SQOHYg==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "obk5Mn5i9bkA5Y+BkOQMISFFf9fBfOBC4mOlhA8M5rekFogyfs9ChmRjhRzpDJL6ftwFHPQUoxqRoUbHx4vdiQ==",
         "dependencies": {
-          "StackNucleus.DDD.Domain": "4.1.0",
+          "StackNucleus.DDD.Domain": "4.10.0",
           "WolverineFx": "5.27.0",
           "WolverineFx.RabbitMq": "5.27.0"
         }
       },
       "StackNucleus.DDD.Images": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "ADi5LJ4ZuXydMkQvqMO+CjlrUYh58M1YTO14KMuqiW488fFHAVg2jjEYi1cYc9jUaB+Ua3UZJg3kUKQVudZSUA==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "ruPpO3FsOoaXM09jqO9HqDZfH3/JGvCX0ZzofIFya/cQccvv7I7+xwYfdgsMEL11oIL60WeSflOMe2sJNwQ5RA==",
         "dependencies": {
           "SixLabors.ImageSharp": "3.1.12",
-          "StackNucleus.DDD.Domain": "4.1.0"
+          "StackNucleus.DDD.Domain": "4.10.0"
         }
       },
       "StackNucleus.DDD.Jobs.Quartz": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "WIDsPDCbv7xvUBGYOm4Q2kfVAqDF/Xf/OCbzOqvENJOLGfiUJHabNm6PiJ7TuKZMq4eN4bXxFqNE0LDXHdcdcw==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "F6M5xg7I3SE4JZUNwDidKOb5QQcXq5T3GkyzTNx+RLPgHzGz4Tr5SpWGAf47gz12PXYDJyBdY4QDnyTrg2HqiQ==",
         "dependencies": {
           "Quartz.Extensions.Hosting": "3.17.1",
-          "StackNucleus.DDD.Domain": "4.1.0"
+          "StackNucleus.DDD.Domain": "4.10.0"
         }
       },
       "StackNucleus.DDD.Outbox": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "rrpFr74hIkDmwP5B3RgjEnEmb82Ll+CQiI8MOJjnhSr9yR3nvyMA6dEx4j0Nb+F7bM1IxP1SHap9bH6WChZfuw==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "ZfI6VYxvQqWjJn8GlpeH1iorwwWC7ywoj1rU6YoQXMMw0ct1IiUeiZ6yCqTxRpq0xIBFlyMXzCHYSN9ubkRU9g==",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "10.0.4",
+          "Microsoft.EntityFrameworkCore": "10.0.5",
           "Newtonsoft.Json": "13.0.4",
           "Quartz": "3.15.1",
-          "StackNucleus.DDD.Domain": "4.1.0"
+          "StackNucleus.DDD.Domain": "4.10.0"
         }
       },
       "StackNucleus.DDD.Persistence": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "chICyx/kLHUvXK9ceLLmd8uJIqbPoKY73lwVrrP5guVilpSzJdHNlF4DF1jl/l+s7MXsQhMs43ltwxjd1+AEZg==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "giReRvhfQ6Kz5SvP7Kczl3Zopxit/tIKSGHeACIk4anRY59FV22a9tWGL5k1CJvCzDNqoUAU5V92JS3CymX9tw==",
         "dependencies": {
           "Newtonsoft.Json": "13.0.4",
-          "StackNucleus.DDD.Domain": "4.1.0"
+          "StackNucleus.DDD.Domain": "4.10.0"
         }
       },
       "StackNucleus.DDD.Persistence.EF.Postgres": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "pC4hMzl2rgM3T8onjtCH7dQkxl7dO1XwskUOTDViF6IW2J0R6i7n2oU6RuKVXkLWGQWkIHRf3H49VdAJOK9l5A==",
+        "requested": "[4.10.0, )",
+        "resolved": "4.10.0",
+        "contentHash": "EqpivZVtk8KINji1Ynfk5PZR2lj475wwXLWaQmzVI4w+I1xzQMg/1m7ek9z4ovlIRS++PafILjbwa9nKOhsaRQ==",
         "dependencies": {
           "EntityFramework": "6.5.1",
-          "Microsoft.EntityFrameworkCore": "10.0.4",
+          "Microsoft.EntityFrameworkCore": "10.0.5",
           "Newtonsoft.Json": "13.0.4",
           "Npgsql": "10.0.2",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1",
-          "StackNucleus.DDD.Domain": "4.1.0"
+          "StackNucleus.DDD.Domain": "4.10.0"
         }
       },
       "System.IdentityModel.Tokens.Jwt": {

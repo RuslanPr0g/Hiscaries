@@ -5,7 +5,9 @@
   </PropertyGroup>
   <!-- DinkToPdf -->
   <ItemGroup>
+    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.2.1" />
     <PackageVersion Include="DinkToPdf" Version="1.0.8" />
+    <PackageVersion Include="Testcontainers.RabbitMq" Version="4.11.0" />
   </ItemGroup>
   <!-- Aspire Packages -->
   <ItemGroup>
@@ -73,16 +75,16 @@
   </ItemGroup>
   <!-- StackNucleus DDD -->
   <ItemGroup>
-    <PackageVersion Include="StackNucleus.DDD.Domain" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Application" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Events.WolverineFx" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Outbox" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Persistence" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Persistence.EF.Postgres" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Jobs.Quartz" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Images" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Scripts" Version="4.1.0" />
-    <PackageVersion Include="StackNucleus.DDD.Api.Rest" Version="4.1.0" />
+    <PackageVersion Include="StackNucleus.DDD.Domain" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Application" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Events.WolverineFx" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Outbox" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Persistence" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Persistence.EF.Postgres" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Jobs.Quartz" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Images" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Scripts" Version="4.10.0" />
+    <PackageVersion Include="StackNucleus.DDD.Api.Rest" Version="4.10.0" />
   </ItemGroup>
   <!-- WolverineFx -->
   <ItemGroup>
@@ -99,5 +101,17 @@
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.1.7" />
     <PackageVersion Include="Yarp.ReverseProxy" Version="2.3.0" />
     <PackageVersion Include="PdfPig" Version="0.1.14" />
+  </ItemGroup>
+  <!-- Testing -->
+  <ItemGroup>
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageVersion Include="FsCheck" Version="3.2.0" />
+    <PackageVersion Include="FsCheck.Xunit" Version="3.2.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.5" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="Testcontainers" Version="4.11.0" />
+    <PackageVersion Include="Testcontainers.PostgreSql" Version="4.11.0" />
   </ItemGroup>
 </Project>

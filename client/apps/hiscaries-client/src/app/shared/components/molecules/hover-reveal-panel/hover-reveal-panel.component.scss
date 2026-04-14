@@ -1,0 +1,24 @@
+:host {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: block;
+  pointer-events: none;
+}
+
+:host(.is-visible) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hover-reveal-panel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 1rem;
+  box-sizing: border-box;
+}

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, inject, input } from '@angular/core';
-
 import {
   AbstractControl,
   FormArray,
@@ -8,21 +7,15 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { TextEditorComponent } from '@shared/components/text-editor/text-editor.component';
 import { ButtonTwoComponent } from '@shared/components/button-two/button-two.component';
-import { Button } from 'primeng/button';
+import { TextEditorComponent } from '@shared/components/text-editor/text-editor.component';
 import { IteratorService } from '@shared/services/statefull/iterator/iterator.service';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-content-builder',
   standalone: true,
-  imports: [
-    Button,
-    ReactiveFormsModule,
-    FormsModule,
-    TextEditorComponent,
-    ButtonTwoComponent
-],
+  imports: [Button, ReactiveFormsModule, FormsModule, TextEditorComponent, ButtonTwoComponent],
   providers: [IteratorService],
   templateUrl: './content-builder.component.html',
   styleUrls: ['./content-builder.component.scss'],

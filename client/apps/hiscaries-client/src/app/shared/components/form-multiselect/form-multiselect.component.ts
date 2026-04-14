@@ -1,9 +1,9 @@
-import { Component, input } from '@angular/core';
+import { BaseOptionModel } from '../../models/base-option.model';
 import { CommonModule } from '@angular/common';
+import { Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Message } from 'primeng/message';
 import { MultiSelect } from 'primeng/multiselect';
-import { BaseOptionModel } from '../../models/base-option.model';
 
 @Component({
   selector: 'app-form-multiselect',

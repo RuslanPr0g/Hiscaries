@@ -1,6 +1,6 @@
-﻿using StackNucleus.DDD.Domain.Repositories;
-using Hiscary.PlatformUsers.Domain.ProcessModels;
+﻿using Hiscary.PlatformUsers.Domain.ProcessModels;
 using Hiscary.PlatformUsers.Domain.ReadModels;
+using StackNucleus.DDD.Domain.Repositories;
 
 namespace Hiscary.PlatformUsers.Domain.DataAccess;
 

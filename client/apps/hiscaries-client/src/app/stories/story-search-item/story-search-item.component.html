@@ -14,14 +14,14 @@
     <div class="story-gradient-overlay"></div>
     <div class="story-details-overlay">
       <h3 class="story-title">
-        {{ story()!.Title | slice : 0 : 40 }}{{ story()!.Title.length > 40 ? '...' : '' }}
+        {{ story()!.Title | slice: 0 : 40 }}{{ story()!.Title.length > 40 ? '...' : '' }}
       </h3>
       <div class="story-info__item-age">
         <i class="fas fa-calendar-alt"></i>
-        {{ story()!.AuthorName | slice : 0 : 30 }}
+        {{ story()!.AuthorName | slice: 0 : 30 }}
       </div>
     </div>
-    <app-progress-bar [percentage]="story()!.PercentageRead"></app-progress-bar>
+    <app-progress-bar [percentage]="story()!.PercentageRead" />
   </div>
 
   <div class="story-hover-details">
@@ -29,7 +29,7 @@
       <span>{{ story()!.AgeLimit }}+</span>
     </h4>
     <p class="full-description">
-      {{ story()!.Description | slice : 0 : 70 }}{{ story()!.Description.length > 70 ? '...' : '' }}
+      {{ story()!.Description | slice: 0 : 70 }}{{ story()!.Description.length > 70 ? '...' : '' }}
     </p>
   </div>
 </div>
