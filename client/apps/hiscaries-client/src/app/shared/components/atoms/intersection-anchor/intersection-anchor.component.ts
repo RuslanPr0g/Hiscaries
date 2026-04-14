@@ -29,6 +29,7 @@ export class IntersectionAnchorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (typeof IntersectionObserver === 'undefined') {
+      console.warn('IntersectionObserver is not available in this environment.');
       return;
     }
 
