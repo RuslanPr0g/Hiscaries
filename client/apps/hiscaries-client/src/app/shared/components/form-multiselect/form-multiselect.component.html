@@ -3,8 +3,9 @@
   class="custom-form-field"
   [ngClass]="{ 'custom-form-field-centered': centered() }"
 >
-  <label>Genres</label>
+  <label [for]="controlName()">Genres</label>
   <p-multiSelect
+    [inputId]="controlName()"
     [options]="items()"
     [formControlName]="controlName()"
     [placeholder]="placeholder"
@@ -15,6 +16,6 @@
   @if (
     formGroup().get(controlName())?.hasError('required') && formGroup().get(controlName())?.touched
   ) {
-    <p-message severity="error" [text]="errorMessage" />
+    <p-message severity="error">{{ errorMessage }}</p-message>
   }
 </div>

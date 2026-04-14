@@ -69,7 +69,7 @@ public sealed class UserAccountsAppHostFixture : AspireDistributedAppFixture<Pro
                 // Service may still be starting up; retry.
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            await Task.Delay(TimeSpan.FromSeconds(10));
         }
 
         throw new TimeoutException("UserAccounts service did not become healthy in time.");

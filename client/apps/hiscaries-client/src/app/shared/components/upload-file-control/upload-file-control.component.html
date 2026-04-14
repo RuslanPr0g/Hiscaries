@@ -15,5 +15,5 @@
   }
 </div>
 @if (control()?.hasError('required') && control()?.touched) {
-  <p-message severity="error" [text]="requiredErrorMessage" />
+  <p-message severity="error">{{ requiredErrorMessage }}</p-message>
 }

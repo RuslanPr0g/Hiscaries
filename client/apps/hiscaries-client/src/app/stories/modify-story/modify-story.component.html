@@ -124,7 +124,7 @@
         <div class="error-block">
           <p-divider layout="horizontal" />
           @if (globalError) {
-            <p-message severity="error" [text]="globalError" class="error-message" />
+            <p-message severity="error" class="error-message">{{ globalError }}</p-message>
           }
           @if (globalError) {
             <p-divider layout="horizontal" />
