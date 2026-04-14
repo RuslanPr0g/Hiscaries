@@ -12,6 +12,8 @@
       [imageSrc]="story.ImagePreviewUrl | fallbackImage"
       [title]="story.Title"
       [subtitle]="story.AuthorName ?? null"
+      [description]="story.Description"
+      [ageLimit]="story.AgeLimit"
       [progressPercentage]="story.PercentageRead"
       (clicked)="previewStory(story)"
     />
