@@ -21,24 +21,28 @@ import {
 })
 export class IntersectionAnchorComponent implements OnInit, OnDestroy {
   readonly disabled = input(false);
+  readonly threshold = input(0);
   readonly intersected = output<void>();
 
   private readonly el = inject(ElementRef);
   private observer: IntersectionObserver | undefined;
 
   ngOnInit(): void {
-    if (typeof IntersectionObserver === 'undefined') return;
+    if (typeof IntersectionObserver === 'undefined') {
+      return;
+    }
+
+    if (this.disabled()) return;
 
     this.observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          // Gate here — never disconnect/reconnect, just check disabled at emit time
-          if (entry.isIntersecting && !this.disabled()) {
+          if (entry.isIntersecting) {
             this.intersected.emit();
           }
         }
       },
-      { threshold: 0, rootMargin: '0px 0px 300px 0px' },
+      { threshold: this.threshold(), rootMargin: '0px 0px 300px 0px' },
     );
 
     this.observer.observe(this.el.nativeElement);
