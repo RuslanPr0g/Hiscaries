@@ -1,6 +1,4 @@
-﻿using Hiscary.Media.Api.Rest.Authorization;
-using Hiscary.Media.DocumentTools;
-using Hiscary.Shared.Domain.Authorization;
+﻿using Hiscary.Media.DocumentTools;
 using Hiscary.Shared.Domain.FileStorage;
 using Microsoft.AspNetCore.Mvc;
 using StackNucleus.DDD.Domain.ResultModels;
@@ -8,6 +6,7 @@ using System.Net.Mime;
 
 namespace Hiscary.Media.Api.Rest.Endpoints;
 
+// TODO: add proper RBAC
 public static class MediaEndpoints
 {
     public static void MapMediaEndpoints(this IEndpointRouteBuilder app)
@@ -31,14 +30,12 @@ public static class MediaEndpoints
             .Produces(StatusCodes.Status422UnprocessableEntity);
 
         group.MapPost("/documents/upload", UploadDocument)
-            .RequireAuthorization(AuthorizationPolicies.RequirePublisher)
             .Accepts<Stream>(MediaTypeNames.Application.Pdf)
             .Produces<IResult>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity);
 
         group.MapDelete("/documents", DeleteDocument)
-            .RequireAuthorization(AuthorizationPolicies.RequirePublisher)
             .Produces<IResult>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity);
@@ -113,7 +110,6 @@ public static class MediaEndpoints
         HttpRequest request,
         HttpContext httpContext,
         [FromServices] IBlobStorageService storageService,
-        [FromServices] IMediaOwnershipValidator ownershipValidator,
         [FromQuery] Guid storyId,
         [FromQuery] int? start,
         [FromQuery] int? end)
@@ -133,22 +129,6 @@ public static class MediaEndpoints
         if (string.IsNullOrWhiteSpace(token))
         {
             return Results.Unauthorized();
-        }
-
-        var callerId = httpContext.User.GetUserId() ?? Guid.Empty;
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value ?? string.Empty;
-
-        try
-        {
-            var isOwner = await ownershipValidator.IsStoryOwnerOrAdmin(storyId, callerId, callerRole, token);
-            if (!isOwner)
-            {
-                return Results.Forbid();
-            }
-        }
-        catch
-        {
-            return Results.StatusCode(StatusCodes.Status503ServiceUnavailable);
         }
 
         await using var stream = new MemoryStream();
@@ -173,7 +153,6 @@ public static class MediaEndpoints
     private static async Task<IResult> DeleteDocument(
         HttpContext httpContext,
         [FromServices] IBlobStorageService storageService,
-        [FromServices] IMediaOwnershipValidator ownershipValidator,
         [FromQuery] Guid storyId)
     {
         if (storyId == default || storyId == Guid.Empty)
@@ -186,24 +165,6 @@ public static class MediaEndpoints
         if (string.IsNullOrWhiteSpace(token))
         {
             return Results.Unauthorized();
-        }
-
-        var callerId = httpContext.User.GetUserId() ?? Guid.Empty;
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
-            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
-            ?? string.Empty;
-
-        try
-        {
-            var isOwner = await ownershipValidator.IsStoryOwnerOrAdmin(storyId, callerId, callerRole, token);
-            if (!isOwner)
-            {
-                return Results.Forbid();
-            }
-        }
-        catch
-        {
-            return Results.StatusCode(StatusCodes.Status503ServiceUnavailable);
         }
 
         var result = await storageService.DeleteAsync(

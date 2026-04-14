@@ -9,6 +9,7 @@
         [title]="story.Title"
         [subtitle]="story.AuthorName ?? null"
         [progressPercentage]="story.PercentageRead"
+        (clicked)="previewStory(story)"
       />
     }
   </ui-card-grid>

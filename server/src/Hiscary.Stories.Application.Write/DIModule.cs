@@ -8,7 +8,6 @@ public static class DIModule
     public static IServiceCollection AddStoriesApplicationWriteLayer(this IServiceCollection services)
     {
         services.AddScoped<IStoryWriteService, StoryWriteService>();
-        services.AddScoped<IStoryOwnershipValidator, StoryOwnershipValidator>();
         return services;
     }
 }

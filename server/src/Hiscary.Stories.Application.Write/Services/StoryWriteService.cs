@@ -11,6 +11,7 @@ using StackNucleus.DDD.Domain.Generators;
 using StackNucleus.DDD.Domain.ResultModels;
 
 // TODO: this implementation is hideous please fix
+// also add proper RBAC
 namespace Hiscary.Stories.Application.Write.Services;
 
 public sealed class StoryWriteService(
@@ -18,15 +19,13 @@ public sealed class StoryWriteService(
     IStoryWriteRepository storyWriteRepository,
     IGenreWriteRepository genreWriteRepository,
     IIdGenerator idGenerator,
-    ILogger<StoryWriteService> logger,
-    IStoryOwnershipValidator ownershipValidator) : IStoryWriteService
+    ILogger<StoryWriteService> logger) : IStoryWriteService
 {
     private readonly IEventPublisher _publisher = publisher;
     private readonly IStoryWriteRepository _repository = storyWriteRepository;
     private readonly IGenreWriteRepository _genreRepository = genreWriteRepository;
     private readonly IIdGenerator _idGenerator = idGenerator;
     private readonly ILogger<StoryWriteService> _logger = logger;
-    private readonly IStoryOwnershipValidator _ownershipValidator = ownershipValidator;
 
     public async Task<OperationResult> AddComment(Guid storyId, Guid userId, string content, int score)
     {
@@ -105,12 +104,6 @@ public sealed class StoryWriteService(
         {
             _logger.LogWarning("Story {StoryId} not found when updating comment", storyId);
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
-        }
-
-        if (!await _ownershipValidator.IsCommentOwner(storyId, commentId, callerId, callerRole))
-        {
-            _logger.LogWarning("User {CallerId} is not authorized to update comment {CommentId} on story {StoryId}", callerId, commentId, storyId);
-            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
         }
 
         story.UpdateComment(commentId, content, score);
@@ -215,7 +208,6 @@ public sealed class StoryWriteService(
 
     public async Task<OperationResult> UpdateStory(
         Guid currentUserId,
-        string callerRole,
         Guid storyId,
         string title,
         string description,
@@ -235,12 +227,6 @@ public sealed class StoryWriteService(
         {
             _logger.LogWarning("Story {StoryId} not found when updating", storyId);
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
-        }
-
-        if (!await _ownershipValidator.IsOwnerOrAdmin(storyId, currentUserId, callerRole))
-        {
-            _logger.LogWarning("User {CallerId} is not authorized to update story {StoryId}", currentUserId, storyId);
-            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
         }
 
         var existingGenres = await _genreRepository.GetByIds(genreIds.ToArray());
@@ -342,12 +328,6 @@ public sealed class StoryWriteService(
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
         }
 
-        if (!await _ownershipValidator.IsOwnerOrAdmin(storyId, callerId, callerRole))
-        {
-            _logger.LogWarning("User {CallerId} is not authorized to delete audio for story {StoryId}", callerId, storyId);
-            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
-        }
-
         Guid? removedAudioId = story.ClearAllAudio();
 
         if (removedAudioId.HasValue)
@@ -388,12 +368,6 @@ public sealed class StoryWriteService(
             return OperationResult.CreateClientSideError(UserFriendlyMessages.StoryWasNotFound);
         }
 
-        if (!await _ownershipValidator.IsCommentOwner(storyId, commentId, callerId, callerRole))
-        {
-            _logger.LogWarning("User {CallerId} is not authorized to delete comment {CommentId} on story {StoryId}", callerId, commentId, storyId);
-            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
-        }
-
         story.DeleteComment(commentId);
         await _repository.SaveChanges();
 
@@ -429,12 +403,6 @@ public sealed class StoryWriteService(
         {
             _logger.LogWarning("Story {StoryId} not found when deleting", storyId);
             return OperationResult.CreateSuccess();
-        }
-
-        if (!await _ownershipValidator.IsOwnerOrAdmin(storyId, callerId, callerRole))
-        {
-            _logger.LogWarning("User {CallerId} is not authorized to delete story {StoryId}", callerId, storyId);
-            return OperationResult.CreateUnauthorizedError(UserFriendlyMessages.NoRights);
         }
 
         // TODO: let's mark it as isDeleted and then have a

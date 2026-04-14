@@ -10,7 +10,6 @@
 
     <ui-hover-reveal-panel [visible]="hovered()">
       <div class="media-card__overlay-content">
-        <ui-truncated-text [text]="title()" [maxLength]="50" tag="h4" />
         @if (subtitle()) {
           <ui-truncated-text [text]="subtitle()!" [maxLength]="60" tag="span" />
         }
@@ -21,6 +20,18 @@
   @if (progressPercentage() !== null) {
     <app-progress-bar [percentage]="progressPercentage()!" />
   }
+
+  <div class="media-card__info">
+    <ui-truncated-text [text]="title()" [maxLength]="40" tag="p" />
+    @if (subtitle()) {
+      <ui-truncated-text
+        [text]="subtitle()!"
+        [maxLength]="30"
+        tag="span"
+        class="media-card__subtitle"
+      />
+    }
+  </div>
 
   <ng-content select="[card-footer]" />
 </ui-glass-card>

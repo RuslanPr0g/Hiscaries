@@ -24,7 +24,7 @@ public sealed class JwtTokenFactory
     {
         var claims = new[]
         {
-            new Claim(AuthorizationPolicies.RoleClaimType, role),
+            new Claim(AuthorizationPolicies.FullRoleClaimType, role),
             new Claim(JwtRegisteredClaimNames.Sub, Guid.NewGuid().ToString()),
             new Claim("id", Guid.NewGuid().ToString())
         };

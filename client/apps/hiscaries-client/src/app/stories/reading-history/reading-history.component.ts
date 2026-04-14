@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { IntersectionAnchorComponent } from '@shared/components/atoms/intersection-anchor/intersection-anchor.component';
 import { MediaCardComponent } from '@shared/components/molecules/media-card/media-card.component';
 import { SectionHeaderComponent } from '@shared/components/molecules/section-header/section-header.component';
 import { CardGridComponent } from '@shared/components/organisms/card-grid/card-grid.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
 import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 import { PaginationService } from '@shared/services/statefull/pagination.service';
@@ -27,6 +29,7 @@ import { finalize } from 'rxjs';
 })
 export class ReadingHistoryComponent {
   private userStoryService = inject(UserStoryService);
+  private router = inject(Router);
   pagination = inject(PaginationService);
 
   stories = signal<QueriedModel<ReadHistoryStory>>(generateEmptyQueriedResult());
@@ -98,5 +101,9 @@ export class ReadingHistoryComponent {
     if (this.pagination.snapshot.StartIndex === 0) return;
     this.pagination.prevPage();
     this.loadStories();
+  }
+
+  previewStory(story: ReadHistoryStory): void {
+    this.router.navigate([NavigationConst.PreviewStory(story.Id)]);
   }
 }

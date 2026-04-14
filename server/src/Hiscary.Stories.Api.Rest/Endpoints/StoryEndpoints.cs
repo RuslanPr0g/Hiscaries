@@ -53,13 +53,13 @@ public static class StoryEndpoints
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPost("/", PublishStory)
-            .RequireAuthorization(AuthorizationPolicies.RequirePublisher)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPatch("/", UpdateStoryInformation)
-            .RequireAuthorization(AuthorizationPolicies.RequirePublisher)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
@@ -75,25 +75,25 @@ public static class StoryEndpoints
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapDelete("/comments", DeleteComment)
-            .RequireAuthorization(AuthorizationPolicies.RequireReaderOrAbove)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapDelete("/", DeleteStory)
-            .RequireAuthorization(AuthorizationPolicies.RequirePublisher)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPatch("/comments", UpdateComment)
-            .RequireAuthorization(AuthorizationPolicies.RequireReaderOrAbove)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapDelete("/audio", DeleteAudioForStory)
-            .RequireAuthorization(AuthorizationPolicies.RequirePublisher)
+            .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
@@ -183,15 +183,11 @@ public static class StoryEndpoints
         IAuthorizedEndpointHandler endpointHandler,
         [FromServices] IStoryWriteService service)
     {
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
-            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
-            ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
         {
             var image = request.ImagePreview.GetImageBytes();
             return service.UpdateStory(
                 user.Id,
-                callerRole,
                 request.StoryId,
                 request.Title,
                 request.Description,

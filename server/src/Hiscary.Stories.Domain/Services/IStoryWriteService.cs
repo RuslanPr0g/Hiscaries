@@ -16,7 +16,6 @@ public interface IStoryWriteService
 
     Task<OperationResult> UpdateStory(
         Guid currentUserId,
-        string callerRole,
         Guid storyId,
         string title,
         string description,
@@ -29,17 +28,17 @@ public interface IStoryWriteService
         DateTime dateWritten,
         IEnumerable<string> contents);
 
-    Task<OperationResult> DeleteStory(Guid storyId, Guid callerId, string callerRole);
+    Task<OperationResult> DeleteStory(Guid storyId, Guid callerId);
 
-    Task<OperationResult> DeleteAudio(Guid storyId, Guid callerId, string callerRole);
+    Task<OperationResult> DeleteAudio(Guid storyId, Guid callerId);
 
     Task<OperationResult> UpdateAudio(Guid storyId, string name, byte[] audio);
 
     Task<OperationResult> AddComment(Guid storyId, Guid userId, string content, int score);
 
-    Task<OperationResult> UpdateComment(Guid commentId, Guid storyId, string content, int score, Guid callerId, string callerRole);
+    Task<OperationResult> UpdateComment(Guid commentId, Guid storyId, string content, int score, Guid callerId);
 
-    Task<OperationResult> DeleteComment(Guid storyId, Guid commentId, Guid callerId, string callerRole);
+    Task<OperationResult> DeleteComment(Guid storyId, Guid commentId, Guid callerId);
 
     Task<OperationResult> SetStoryScoreForAUser(Guid storyId, Guid userId, int score);
 

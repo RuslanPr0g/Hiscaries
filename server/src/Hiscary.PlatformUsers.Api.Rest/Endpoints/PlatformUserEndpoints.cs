@@ -2,7 +2,6 @@
 using Hiscary.PlatformUsers.Api.Rest.Requests.Libraries;
 using Hiscary.PlatformUsers.Domain.ProcessModels;
 using Hiscary.PlatformUsers.Domain.Services;
-using Hiscary.Shared.Domain.Authorization;
 using Hiscary.Shared.Domain.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using StackNucleus.DDD.Api.Rest;
@@ -97,11 +96,8 @@ public static class PlatformUserEndpoints
         IAuthorizedEndpointHandler endpointHandler,
         [FromServices] IPlatformUserWriteService service)
     {
-        var callerRole = httpContext.User.FindFirst(AuthorizationPolicies.FullRoleClaimType)?.Value
-            ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
-            ?? string.Empty;
         return await endpointHandler.WithUser(user =>
-            service.BecomePublisher(user.Id, callerRole));
+            service.BecomePublisher(user.Id));
     }
 
     private static async Task<IResult> GetLibrary(
