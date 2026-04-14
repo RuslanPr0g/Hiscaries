@@ -12,6 +12,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   },
 })
 export class HoverRevealPanelComponent {
-  readonly background = input('rgba(56,41,29,0.8)');
+  readonly background = input('rgba(30,18,10,0.88)');
   readonly visible = input(false);
 }

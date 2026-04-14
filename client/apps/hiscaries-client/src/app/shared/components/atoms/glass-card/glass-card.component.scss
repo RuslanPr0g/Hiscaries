@@ -3,17 +3,17 @@
 }
 
 .glass-card {
-  background: rgba(56, 41, 29, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  background: rgba(46, 32, 22, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   overflow: hidden;
 
   &.border-radius-sm {
-    border-radius: 4px;
+    border-radius: 6px;
   }
 
   &.border-radius-md {
-    border-radius: 8px;
+    border-radius: 10px;
   }
 
   &.border-radius-lg {
@@ -24,15 +24,17 @@
     cursor: pointer;
     transition:
       transform 0.2s ease,
-      box-shadow 0.2s ease;
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      border-color: rgba(201, 162, 126, 0.3);
     }
 
     &:focus-visible {
-      outline: 2px solid rgba(255, 255, 255, 0.4);
+      outline: 2px solid rgba(201, 162, 126, 0.5);
       outline-offset: 2px;
     }
   }

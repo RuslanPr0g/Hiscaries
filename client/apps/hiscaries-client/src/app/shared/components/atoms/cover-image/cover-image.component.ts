@@ -10,7 +10,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 export class CoverImageComponent {
   readonly src = input<string | null>(null);
   readonly alt = input('');
-  readonly aspectRatio = input('43%');
+  readonly aspectRatio = input('140%');
   readonly showGradient = input(true);
   readonly lazy = input(true);
 }

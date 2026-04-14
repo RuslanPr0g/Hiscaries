@@ -1,6 +1,6 @@
 <ui-glass-card
   [interactive]="interactive()"
-  borderRadius="sm"
+  borderRadius="md"
   (cardClick)="onInteract()"
   (mouseenter)="hovered.set(true)"
   (mouseleave)="hovered.set(false)"
@@ -20,21 +20,16 @@
           <span class="media-card__age-badge">{{ ageLimit() }}+</span>
         }
         @if (description()) {
-          <ui-truncated-text [text]="description()!" [maxLength]="80" tag="span" />
+          <span class="media-card__desc">{{ description() }}</span>
         }
       </div>
     </ui-hover-reveal-panel>
   </div>
 
   <div class="media-card__info">
-    <ui-truncated-text [text]="title()" [maxLength]="40" tag="p" />
+    <p class="media-card__title">{{ title() }}</p>
     @if (subtitle()) {
-      <ui-truncated-text
-        [text]="subtitle()!"
-        [maxLength]="30"
-        tag="span"
-        class="media-card__subtitle"
-      />
+      <span class="media-card__subtitle">{{ subtitle() }}</span>
     }
   </div>
 

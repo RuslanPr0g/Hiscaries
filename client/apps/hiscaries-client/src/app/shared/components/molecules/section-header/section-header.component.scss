@@ -1,4 +1,31 @@
-// SectionHeader applies the global .main-title class — no additional styles needed
 :host {
   display: block;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #f5f0eb;
+  letter-spacing: 0.01em;
+
+  &--h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    padding-bottom: 0.4rem;
+  }
+
+  &--h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: rgba(201, 162, 126, 0.95);
+  }
+
+  &--h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
 }

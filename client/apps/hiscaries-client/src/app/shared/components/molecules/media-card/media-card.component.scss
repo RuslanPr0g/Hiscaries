@@ -4,6 +4,7 @@
 
 .media-card__image-wrapper {
   position: relative;
+  overflow: hidden;
 }
 
 .media-card__progress-overlay {
@@ -14,56 +15,78 @@
   z-index: 2;
 }
 
+// Hover overlay — clipped to image, text never overflows
 .media-card__overlay-content {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  height: 100%;
+  overflow: hidden;
 
   .media-card__age-badge {
     display: inline-block;
-    background: rgba(201, 162, 126, 0.85);
+    background: rgba(201, 162, 126, 0.9);
     color: #1e1e1e;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    padding: 0.1rem 0.4rem;
+    padding: 0.15rem 0.45rem;
     border-radius: 4px;
     align-self: flex-start;
+    letter-spacing: 0.03em;
   }
 
-  span {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.4;
+  .media-card__desc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.45;
+    // clamp to 3 lines max — no overflow
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
+// Info section below image
 .media-card__info {
-  padding: 0.5rem 0.75rem 0.6rem;
+  padding: 0.65rem 0.85rem 0.7rem;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.2rem;
+  background: rgba(30, 20, 14, 0.45);
 
-  p {
+  .media-card__title {
     margin: 0;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #f5f0eb;
     line-height: 1.3;
+    // clamp to 2 lines
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
-  span,
   .media-card__subtitle {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(201, 162, 126, 0.8);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
-// Card footer slot — projected content below the image
+// Card footer slot
 ::ng-deep [card-footer] {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  padding: 0.6rem 0.75rem 0.75rem;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.8);
+  padding: 0.5rem 0.85rem 0.75rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(30, 20, 14, 0.3);
 }
