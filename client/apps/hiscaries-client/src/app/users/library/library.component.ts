@@ -10,12 +10,7 @@ import { ModifyLibraryModel } from '@users/models/domain/modify-library.model';
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [
-    SearchStoryResultsComponent,
-    LibraryGeneralViewComponent,
-    LibraryGeneralEditComponent,
-    LoadingSpinnerComponent,
-  ],
+  imports: [SearchStoryResultsComponent, LibraryGeneralViewComponent, LibraryGeneralEditComponent],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
 })
