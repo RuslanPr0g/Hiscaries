@@ -29,11 +29,7 @@ jobs:
         working-directory: server/src
         run: dotnet build Hiscary.sln
 
-      - name: Test (non-containerized)
-        working-directory: server/src
-        run: dotnet test Hiscary.Security.IntegrationTests/Hiscary.Security.IntegrationTests.csproj --no-build --verbosity normal
-
-      - name: Test (containerized integration)
+      - name: Integration Tests
         working-directory: server/src
         timeout-minutes: 15
         run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj --no-build --verbosity normal

@@ -38,7 +38,7 @@
                   errorMessage="Description is required"
                   [rows]="4"
                 />
-                <div class="form-controls__row">
+                <div class="form-controls__row--compact">
                   <app-number-limit-control
                     [formGroup]="modifyForm"
                     controlName="AgeLimit"
@@ -57,15 +57,19 @@
                     [centered]="true"
                   />
                 </div>
-                <div class="form-controls__row">
+                <div class="form-controls__row--genres">
                   @if (genres && genres.length > 0) {
-                    <app-form-multiselect
-                      [formGroup]="modifyForm"
-                      [items]="genres"
-                      controlName="Genres"
-                    />
+                    <div class="genres-col">
+                      <app-form-multiselect
+                        [formGroup]="modifyForm"
+                        [items]="genres"
+                        controlName="Genres"
+                      />
+                    </div>
                   }
-                  <app-upload-file-control [control]="imageControl" fileType="image" />
+                  <div class="image-col">
+                    <app-upload-file-control [control]="imageControl" fileType="image" />
+                  </div>
                 </div>
               </div>
             </p-tabpanel>
