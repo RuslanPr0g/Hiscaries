@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
-import { BadgeComponent } from '@shared/components/atoms/badge/badge.component';
-import { TruncatedTextComponent } from '@shared/components/atoms/truncated-text/truncated-text.component';
 import { MediaCardComponent } from '@shared/components/molecules/media-card/media-card.component';
 import { CardGridComponent } from '@shared/components/organisms/card-grid/card-grid.component';
 import { NavigationConst } from '@shared/constants/navigation.const';
@@ -12,13 +10,7 @@ import { StoryModel } from '@stories/models/domain/story-model';
 @Component({
   selector: 'app-search-story-results',
   standalone: true,
-  imports: [
-    CardGridComponent,
-    MediaCardComponent,
-    BadgeComponent,
-    TruncatedTextComponent,
-    FallbackImagePipe,
-  ],
+  imports: [CardGridComponent, MediaCardComponent, FallbackImagePipe],
   templateUrl: './search-story-results.component.html',
   styleUrls: ['./search-story-results.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

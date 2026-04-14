@@ -8,7 +8,7 @@
   <div class="media-card__image-wrapper">
     <ui-cover-image [src]="imageSrc()" [alt]="imageAlt()" />
 
-    @if (progressPercentage() !== null && progressPercentage()! > 0) {
+    @if (progressPercentage() !== null) {
       <div class="media-card__progress-overlay">
         <app-progress-bar [percentage]="progressPercentage()!" />
       </div>

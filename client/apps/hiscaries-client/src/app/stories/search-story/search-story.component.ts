@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MediaCardComponent } from '@shared/components/molecules/media-card/media-card.component';
 import { SectionHeaderComponent } from '@shared/components/molecules/section-header/section-header.component';
 import { InfiniteScrollGridComponent } from '@shared/components/organisms/infinite-scroll-grid/infinite-scroll-grid.component';
+import { NavigationConst } from '@shared/constants/navigation.const';
 import { generateEmptyQueriedResult, QueriedModel } from '@shared/models/queried.model';
 import { FallbackImagePipe } from '@shared/pipes/fallback-image.pipe';
 import { DestroyService } from '@shared/services/destroy.service';
@@ -30,6 +31,7 @@ export class SearchStoryComponent implements OnInit {
   private storyService = inject(StoryWithMetadataService);
   private pagination = inject(PaginationService);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   stories = signal<QueriedModel<StoryModel>>(generateEmptyQueriedResult());
   errorMessage = signal<TemplateMessageModel | null>(null);
@@ -88,5 +90,9 @@ export class SearchStoryComponent implements OnInit {
 
   get storiesLoaded(): boolean {
     return this.stories().Items.length > 0;
+  }
+
+  previewStory(story: StoryModel): void {
+    this.router.navigate([NavigationConst.PreviewStory(story.Id)]);
   }
 }

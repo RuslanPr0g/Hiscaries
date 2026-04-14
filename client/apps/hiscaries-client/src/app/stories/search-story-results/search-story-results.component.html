@@ -9,13 +9,10 @@
       [imageSrc]="story.ImagePreviewUrl | fallbackImage"
       [title]="story.Title"
       [subtitle]="story.AuthorName ?? null"
+      [description]="story.Description"
+      [ageLimit]="story.AgeLimit"
       [progressPercentage]="story.PercentageRead"
       (clicked)="previewStory(story)"
-    >
-      <div card-footer>
-        <ui-badge [label]="story.AgeLimit + '+'" />
-        <ui-truncated-text [text]="story.Description" [maxLength]="70" />
-      </div>
-    </ui-media-card>
+    />
   }
 </ui-card-grid>
