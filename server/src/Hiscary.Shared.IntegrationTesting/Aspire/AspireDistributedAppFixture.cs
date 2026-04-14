@@ -12,6 +12,8 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
     protected DistributedApplication App =>
         _app ?? throw new InvalidOperationException("AppHost is not initialized.");
 
+    protected TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(5);
+
     protected virtual string[] AppHostArgs => ["UseVolumes=false", "--environment=Development"];
 
     public async Task InitializeAsync()
@@ -19,8 +21,8 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
         var appHostBuilder = await DistributedApplicationTestingBuilder
             .CreateAsync<TEntryPoint>(AppHostArgs);
 
-        _app = await appHostBuilder.BuildAsync();
-        await _app.StartAsync();
+        _app = await appHostBuilder.BuildAsync().WaitAsync(DefaultTimeOut);
+        await _app.StartAsync().WaitAsync(DefaultTimeOut);
     }
 
     public async Task DisposeAsync()
@@ -31,6 +33,11 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
         }
     }
 
-    protected HttpClient CreateHttpClientForResource(string resourceName) =>
-        App.CreateHttpClient(resourceName);
+    protected async Task<HttpClient> CreateHttpClientForResource(string resourceName, TimeSpan? timeout = null)
+    {
+        var client = App.CreateHttpClient(resourceName);
+        await App.ResourceNotifications.WaitForResourceHealthyAsync(resourceName).WaitAsync(DefaultTimeOut);
+        client.Timeout = timeout ?? TimeSpan.FromMinutes(2);
+        return client;
+    }
 }

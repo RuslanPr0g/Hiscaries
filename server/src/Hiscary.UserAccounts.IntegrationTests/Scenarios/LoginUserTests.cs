@@ -2,6 +2,7 @@ using Hiscary.Shared.IntegrationTesting.Aspire;
 using Hiscary.Shared.IntegrationTesting.Assertions;
 using Hiscary.Shared.IntegrationTesting.Http;
 using Hiscary.UserAccounts.Api.Rest.Requests;
+using StackNucleus.DDD.Domain.ResultModels;
 using Xunit;
 
 namespace Hiscary.UserAccounts.IntegrationTests.Scenarios;
@@ -11,6 +12,7 @@ public sealed class LoginUserTests(UserAccountsAppHostFixture fixture) : IClassF
     [Fact]
     public async Task LoginUser_WithValidCredentials_ReturnsTokenMetadata_WhenUserIsRegistered()
     {
+        // TODO: might be better to create http client once per fixture
         using var client = await fixture.CreateReadyUserAccountsClientAsync();
         var username = $"integration_{Guid.NewGuid():N}";
         const string password = "integration_password";
@@ -29,50 +31,19 @@ public sealed class LoginUserTests(UserAccountsAppHostFixture fixture) : IClassF
             Username = username,
             Password = password
         });
+        loginResponse.AssertSuccess();
 
-        var payload = await loginResponse.ReadRequiredJsonAsync<TokenMetadataResponse>();
+        var payload = await loginResponse.ReadRequiredJsonAsync<TokenMetadata>();
         Assert.False(string.IsNullOrWhiteSpace(payload.Token));
         Assert.False(string.IsNullOrWhiteSpace(payload.RefreshToken));
     }
-
-    private sealed record TokenMetadataResponse(
-        string Token,
-        string RefreshToken);
 }
 
 public sealed class UserAccountsAppHostFixture : AspireDistributedAppFixture<Projects.Hiscary_AppHost>
 {
-    public async Task<HttpClient> CreateReadyUserAccountsClientAsync()
+    public Task<HttpClient> CreateReadyUserAccountsClientAsync()
     {
-        var client = CreateHttpClientForResource("hc-useraccounts-api-rest");
-        client.Timeout = TimeSpan.FromMinutes(5);
-        await WaitUntilHealthyAsync(client, TimeSpan.FromMinutes(8));
-        return client;
-    }
-
-    private static async Task WaitUntilHealthyAsync(HttpClient client, TimeSpan timeout)
-    {
-        var startedAt = DateTime.UtcNow;
-
-        while (DateTime.UtcNow - startedAt < timeout)
-        {
-            try
-            {
-                using var response = await client.GetAsync("/health");
-                if ((int)response.StatusCode < 500)
-                {
-                    return;
-                }
-            }
-            catch
-            {
-                // Service may still be starting up; retry.
-            }
-
-            await Task.Delay(TimeSpan.FromSeconds(10));
-        }
-
-        throw new TimeoutException("UserAccounts service did not become healthy in time.");
+        return CreateHttpClientForResource("hc-useraccounts-api-rest");
     }
 
     protected override string[] AppHostArgs =>

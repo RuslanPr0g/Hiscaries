@@ -322,8 +322,10 @@ export class ModifyStoryComponent implements OnInit {
 
     const isValidPreview = isValidImageBase64Selected(formModel.Image as string);
 
+    const { PdfFile: _PdfFile, PdfFileAsStory: _PdfFileAsStory, ...restFormModel } = formModel;
+
     const request: ModifyStoryRequest = {
-      ...formModel,
+      ...restFormModel,
       GenreIds: formModel.Genres?.map((g) => g.Id),
       ImagePreview: isValidPreview ? formModel.Image : null,
       StoryId: this.storyId,
