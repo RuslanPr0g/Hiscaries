@@ -95,7 +95,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> UpdateComment(Guid commentId, Guid storyId, string content, int score, Guid callerId, string callerRole)
+    public async Task<OperationResult> UpdateComment(Guid commentId, Guid storyId, string content, int score, Guid callerId)
     {
         _logger.LogInformation("Updating comment {CommentId} for story {StoryId}", commentId, storyId);
         var story = await _repository.GetById(storyId);
@@ -317,7 +317,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> DeleteAudio(Guid storyId, Guid callerId, string callerRole)
+    public async Task<OperationResult> DeleteAudio(Guid storyId, Guid callerId)
     {
         _logger.LogInformation("Deleting audio for story {StoryId}", storyId);
         var story = await _repository.GetById(storyId);
@@ -357,7 +357,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> DeleteComment(Guid storyId, Guid commentId, Guid callerId, string callerRole)
+    public async Task<OperationResult> DeleteComment(Guid storyId, Guid commentId, Guid callerId)
     {
         _logger.LogInformation("Deleting comment {CommentId} from story {StoryId}", commentId, storyId);
         var story = await _repository.GetById(storyId);
@@ -394,7 +394,7 @@ public sealed class StoryWriteService(
         return OperationResult.CreateSuccess();
     }
 
-    public async Task<OperationResult> DeleteStory(Guid storyId, Guid callerId, string callerRole)
+    public async Task<OperationResult> DeleteStory(Guid storyId, Guid callerId)
     {
         _logger.LogInformation("Deleting story {StoryId}", storyId);
         var story = await _repository.GetById(storyId);

@@ -234,7 +234,7 @@ public static class StoryEndpoints
             ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
             ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
-            service.DeleteComment(storyId, commentId, user.Id, callerRole));
+            service.DeleteComment(storyId, commentId, user.Id));
     }
 
     private static async Task<IResult> DeleteStory(
@@ -247,7 +247,7 @@ public static class StoryEndpoints
             ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
             ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
-            service.DeleteStory(storyId, user.Id, callerRole));
+            service.DeleteStory(storyId, user.Id));
     }
 
     private static async Task<IResult> UpdateComment(
@@ -265,8 +265,7 @@ public static class StoryEndpoints
                 request.StoryId,
                 request.Content,
                 request.Score,
-                user.Id,
-                callerRole));
+                user.Id));
     }
 
     private static async Task<IResult> DeleteAudioForStory(
@@ -279,7 +278,7 @@ public static class StoryEndpoints
             ?? httpContext.User.FindFirst(AuthorizationPolicies.RoleClaimType)?.Value
             ?? string.Empty;
         return await endpointHandler.WithUserOperation(user =>
-            service.DeleteAudio(storyId, user.Id, callerRole));
+            service.DeleteAudio(storyId, user.Id));
     }
 
     private static async Task<IResult> GetStoryOwner(

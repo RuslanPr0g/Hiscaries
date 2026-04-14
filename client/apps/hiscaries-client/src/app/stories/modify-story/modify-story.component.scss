@@ -57,15 +57,41 @@ $background-gradient-end: #645044;
     flex-direction: column;
     gap: 1rem;
 
-    &__row,
-    &__same-line {
+    &__row {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 1rem;
 
       > * {
-        flex: 1 1 48%;
+        flex: 1 1 200px;
+      }
+    }
+
+    &__row--compact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      > * {
+        flex: 0 1 auto;
+        min-width: 160px;
+        max-width: 260px;
+      }
+    }
+
+    &__row--genres {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-start;
+
+      .genres-col {
+        flex: 1 1 260px;
+        max-width: 420px;
+      }
+
+      .image-col {
+        flex: 1 1 200px;
       }
     }
   }
