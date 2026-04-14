@@ -6,14 +6,34 @@
   position: relative;
 }
 
+.media-card__progress-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
 .media-card__overlay-content {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.35rem;
+
+  .media-card__age-badge {
+    display: inline-block;
+    background: rgba(201, 162, 126, 0.85);
+    color: #1e1e1e;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    align-self: flex-start;
+  }
 
   span {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.4;
   }
 }
 

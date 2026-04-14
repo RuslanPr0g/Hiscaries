@@ -1,33 +1,33 @@
 .avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: var(--primary-color, rgba(56, 41, 29, 0.6));
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 600;
-    overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--primary-color, rgba(56, 41, 29, 0.6));
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  overflow: hidden;
 
-    &.avatar-sm {
-        width: 40px;
-        height: 40px;
-        font-size: 0.875rem;
-    }
+  &.avatar-sm {
+    width: 40px;
+    height: 40px;
+    font-size: 0.875rem;
+  }
 
-    &.avatar-md {
-        width: 80px;
-        height: 80px;
-        font-size: 1.25rem;
-    }
+  &.avatar-md {
+    width: 80px;
+    height: 80px;
+    font-size: 1.25rem;
+  }
 
-    &.avatar-lg {
-        width: 120px;
-        height: 120px;
-        font-size: 1.75rem;
-    }
+  &.avatar-lg {
+    width: 120px;
+    height: 120px;
+    font-size: 1.75rem;
+  }
 }
 
 .avatar-initials {
-    user-select: none;
+  user-select: none;
 }

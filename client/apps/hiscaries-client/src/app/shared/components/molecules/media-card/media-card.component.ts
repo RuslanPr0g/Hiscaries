@@ -24,6 +24,8 @@ export class MediaCardComponent {
   readonly imageAlt = input('');
   readonly title = input.required<string>();
   readonly subtitle = input<string | null>(null);
+  readonly description = input<string | null>(null);
+  readonly ageLimit = input<number | null>(null);
   readonly progressPercentage = input<number | null>(null);
   readonly interactive = input(true);
 

@@ -1,20 +1,20 @@
 @switch (tag()) {
-@case ('p') {
-<p>{{ display() }}</p>
-}
-@case ('h1') {
-<h1>{{ display() }}</h1>
-}
-@case ('h2') {
-<h2>{{ display() }}</h2>
-}
-@case ('h3') {
-<h3>{{ display() }}</h3>
-}
-@case ('h4') {
-<h4>{{ display() }}</h4>
-}
-@default {
-<span>{{ display() }}</span>
-}
+  @case ('p') {
+    <p>{{ display() }}</p>
+  }
+  @case ('h1') {
+    <h1>{{ display() }}</h1>
+  }
+  @case ('h2') {
+    <h2>{{ display() }}</h2>
+  }
+  @case ('h3') {
+    <h3>{{ display() }}</h3>
+  }
+  @case ('h4') {
+    <h4>{{ display() }}</h4>
+  }
+  @default {
+    <span>{{ display() }}</span>
+  }
 }

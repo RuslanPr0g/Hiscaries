@@ -19,7 +19,7 @@ export class InfiniteScrollGridComponent {
   readonly emptyIcon = input('📚');
   readonly emptyMessage = input('Nothing here yet.');
   readonly skeletonCount = input(3);
-  readonly minCardWidth = input('300px');
+  readonly minCardWidth = input('180px');
 
   readonly loadMore = output<void>();
 

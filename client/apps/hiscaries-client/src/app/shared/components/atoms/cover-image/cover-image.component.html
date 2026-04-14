@@ -1,12 +1,17 @@
 <div class="cover-container">
-    <div class="cover-ratio" [style.padding-bottom]="aspectRatio()">
-        @if (src()) {
-        <img class="cover-img" [src]="src()" [alt]="alt()" [attr.loading]="lazy() ? 'lazy' : 'eager'" />
-        } @else {
-        <div class="cover-placeholder"></div>
-        }
-        @if (showGradient()) {
-        <div class="cover-gradient"></div>
-        }
-    </div>
+  <div class="cover-ratio" [style.padding-bottom]="aspectRatio()">
+    @if (src()) {
+      <img
+        class="cover-img"
+        [src]="src()"
+        [alt]="alt()"
+        [attr.loading]="lazy() ? 'lazy' : 'eager'"
+      />
+    } @else {
+      <div class="cover-placeholder"></div>
+    }
+    @if (showGradient()) {
+      <div class="cover-gradient"></div>
+    }
+  </div>
 </div>
