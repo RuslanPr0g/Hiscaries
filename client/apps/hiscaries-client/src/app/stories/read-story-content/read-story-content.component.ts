@@ -1,6 +1,14 @@
 import { ReadingSettingsComponent } from './reading-settings/reading-settings.component';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, HostListener, ElementRef, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+  ElementRef,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
@@ -37,7 +45,7 @@ import { debounceTime, Subject, switchMap, take } from 'rxjs';
   templateUrl: './read-story-content.component.html',
   styleUrl: './read-story-content.component.scss',
 })
-export class ReadStoryContentComponent implements OnInit {
+export class ReadStoryContentComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private storyService = inject(StoryWithMetadataService);
   private userService = inject(UserService);
@@ -239,13 +247,38 @@ export class ReadStoryContentComponent implements OnInit {
     }
   }
 
+  private onFullscreenChange = () => {
+    if (!document.fullscreenElement) {
+      this.maximized = false;
+    }
+  };
+
   maximize(): void {
     this.maximized = true;
     this.onSettingsClose();
+    document.documentElement.requestFullscreen().catch((_err) => {
+      /* fullscreen not supported */
+    });
+    document.addEventListener('fullscreenchange', this.onFullscreenChange);
   }
 
   minimize(): void {
     this.maximized = false;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch((_err) => {
+        /* fullscreen not supported */
+      });
+    }
+    document.removeEventListener('fullscreenchange', this.onFullscreenChange);
+  }
+
+  ngOnDestroy(): void {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch((_err) => {
+        /* fullscreen not supported */
+      });
+    }
+    document.removeEventListener('fullscreenchange', this.onFullscreenChange);
   }
 
   showSettingss() {

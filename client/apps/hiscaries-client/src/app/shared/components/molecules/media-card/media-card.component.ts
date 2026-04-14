@@ -1,6 +1,5 @@
 import { CoverImageComponent } from '../../atoms/cover-image/cover-image.component';
 import { GlassCardComponent } from '../../atoms/glass-card/glass-card.component';
-import { TruncatedTextComponent } from '../../atoms/truncated-text/truncated-text.component';
 import { ProgressBarComponent } from '../../progress-bar/progress-bar.component';
 import { HoverRevealPanelComponent } from '../hover-reveal-panel/hover-reveal-panel.component';
 import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
@@ -11,7 +10,6 @@ import { ChangeDetectionStrategy, Component, input, output, signal } from '@angu
   imports: [
     GlassCardComponent,
     CoverImageComponent,
-    TruncatedTextComponent,
     HoverRevealPanelComponent,
     ProgressBarComponent,
   ],

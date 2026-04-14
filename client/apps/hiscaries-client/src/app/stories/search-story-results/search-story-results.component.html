@@ -3,6 +3,7 @@
   [isEmpty]="!stories()?.Items?.length && !isLoading()"
   emptyMessage="No stories found"
   [skeletonCount]="3"
+  [appendMode]="true"
 >
   @for (story of stories()?.Items ?? []; track story.Id) {
     <ui-media-card

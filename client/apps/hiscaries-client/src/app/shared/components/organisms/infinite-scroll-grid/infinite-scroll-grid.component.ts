@@ -23,9 +23,12 @@ export class InfiniteScrollGridComponent {
 
   readonly loadMore = output<void>();
 
+  private lastEmit = 0;
+
   onIntersected(): void {
-    if (this.hasMore() && !this.isLoading()) {
-      this.loadMore.emit();
-    }
+    const now = Date.now();
+    if (!this.hasMore() || this.isLoading() || now - this.lastEmit < 1000) return;
+    this.lastEmit = now;
+    this.loadMore.emit();
   }
 }

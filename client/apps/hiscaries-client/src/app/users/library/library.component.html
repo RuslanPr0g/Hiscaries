@@ -19,16 +19,9 @@
 }
 
 @if (stories()) {
-  @if (stories()!.Items.length > 0) {
+  @if (stories()!.Items.length > 0 || isLoading()) {
     <app-search-story-results [stories]="stories()" [isLoading]="isLoading()" class="w-full" />
   } @else {
     <div class="center">Nothing posted so far!</div>
   }
-}
-@if (isLoading()) {
-  <div class="center">
-    @if (isLoading()) {
-      <app-loading-spinner />
-    }
-  </div>
 }

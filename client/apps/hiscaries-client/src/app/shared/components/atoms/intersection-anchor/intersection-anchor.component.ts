@@ -3,7 +3,7 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  effect,
+  OnInit,
   inject,
   input,
   output,
@@ -16,47 +16,31 @@ import {
   styleUrl: './intersection-anchor.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    style: 'height: 0; display: block;',
+    style: 'height: 1px; display: block;',
   },
 })
-export class IntersectionAnchorComponent implements OnDestroy {
-  readonly threshold = input(0);
+export class IntersectionAnchorComponent implements OnInit, OnDestroy {
   readonly disabled = input(false);
   readonly intersected = output<void>();
 
   private readonly el = inject(ElementRef);
   private observer: IntersectionObserver | undefined;
 
-  constructor() {
-    effect(() => {
-      if (this.disabled()) {
-        this.observer?.disconnect();
-        this.observer = undefined;
-      } else {
-        this.setupObserver();
-      }
-    });
-  }
+  ngOnInit(): void {
+    if (typeof IntersectionObserver === 'undefined') return;
 
-  private setupObserver(): void {
-    if (this.observer) return;
-    if (typeof IntersectionObserver === 'undefined') {
-      console.warn(
-        'IntersectionObserver is not supported in this environment. ' +
-          'IntersectionAnchorComponent will not emit intersected events.',
-      );
-      return;
-    }
     this.observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
+          // Gate here — never disconnect/reconnect, just check disabled at emit time
           if (entry.isIntersecting && !this.disabled()) {
             this.intersected.emit();
           }
         }
       },
-      { threshold: this.threshold() },
+      { threshold: 0, rootMargin: '0px 0px 300px 0px' },
     );
+
     this.observer.observe(this.el.nativeElement);
   }
 
