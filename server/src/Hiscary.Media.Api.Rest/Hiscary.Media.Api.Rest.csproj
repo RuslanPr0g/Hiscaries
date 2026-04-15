@@ -13,11 +13,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hiscary.Shared.Api.Rest\Hiscary.Shared.Api.Rest.csproj" />
+    <ProjectReference Include="..\Hiscary.Media.Application.Write\Hiscary.Media.Application.Write.csproj" />
     <ProjectReference Include="..\Hiscary.Media.DocumentTools.PuppeteerSharp\Hiscary.Media.DocumentTools.PuppeteerSharp.csproj" />
     <ProjectReference Include="..\Hiscary.Media.DocumentTools.PdfPig\Hiscary.Media.DocumentTools.PdfPig.csproj" />
     <ProjectReference Include="..\Hiscary.Media.EventHandlers\Hiscary.Media.EventHandlers.csproj" />
     <ProjectReference Include="..\Hiscary.Media.FileStorage\Hiscary.Media.FileStorage.csproj" />
     <ProjectReference Include="..\Hiscary.Media.Images\Hiscary.Media.Images.csproj" />
+    <ProjectReference Include="..\Hiscary.Media.IntegrationEvents\Hiscary.Media.IntegrationEvents.csproj" />
     <ProjectReference Include="..\Hiscary.ServiceDefaults\Hiscary.ServiceDefaults.csproj" />
   </ItemGroup>
 </Project>

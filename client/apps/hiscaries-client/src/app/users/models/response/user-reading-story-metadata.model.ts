@@ -4,4 +4,6 @@ export interface UserReadingStoryMetadataResponse {
   IsEditable: boolean;
   PercentageRead: number;
   LastPageRead: number;
+  UserAnnotatedPdfUrl?: string;
+  HasPdfConflict?: boolean;
 }

@@ -98,6 +98,7 @@ public class PlatformUserReadRepository(PlatformUsersContext context) :
             .AsSplitQuery()
             .Include(_ => _.Libraries)
             .Include(_ => _.ReadHistory)
+            .Include(_ => _.AnnotatedPdfs)
             .FirstOrDefaultAsync(_ => _.UserAccountId == requesterUserAccountId);
 
         if (currentUser is null)
@@ -126,6 +127,7 @@ public class PlatformUserReadRepository(PlatformUsersContext context) :
         }).ToDictionary(_ => _.StoryId);
 
         var storyIdToReadHistory = currentUser.ReadHistory.ToDictionary(_ => _.StoryId);
+        var storyIdToAnnotatedPdf = currentUser.AnnotatedPdfs.ToDictionary(_ => _.StoryId);
 
         var storiesMetadata = stories.Select(_ =>
         {
@@ -139,6 +141,8 @@ public class PlatformUserReadRepository(PlatformUsersContext context) :
             var readingHistoryExists = storyIdToReadHistory.TryGetValue(_.StoryId, out var readingHistory);
             var lastPageRead = readingHistory?.LastPageRead;
 
+            storyIdToAnnotatedPdf.TryGetValue(_.StoryId, out var annotatedPdf);
+
             return new UserReadingStoryMetadataReadModel
             {
                 StoryId = _.StoryId,
@@ -147,7 +151,9 @@ public class PlatformUserReadRepository(PlatformUsersContext context) :
                 PercentageRead = RetrieveReadingProgressForAUser(
                 lastPageRead,
                 story?.TotalPages),
-                LastPageRead = lastPageRead ?? 0
+                LastPageRead = lastPageRead ?? 0,
+                UserAnnotatedPdfUrl = annotatedPdf?.PdfUrl,
+                HasPdfConflict = annotatedPdf?.HasConflict ?? false
             };
         });
 

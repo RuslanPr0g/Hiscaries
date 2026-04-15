@@ -48,6 +48,7 @@
     "@angular/router": "20.3.9",
     "@auth0/angular-jwt": "^5.2.0",
     "@microsoft/signalr": "^8.0.7",
+    "@ngrx/effects": "^20.1.0",
     "@ngrx/store": "^20.0.0",
     "@nx/eslint-plugin": "22.6.5",
     "@primeuix/themes": "^2.0.3",

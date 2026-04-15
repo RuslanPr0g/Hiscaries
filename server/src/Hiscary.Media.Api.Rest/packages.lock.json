@@ -749,6 +749,13 @@
           "System.Drawing.Common": "6.0.0"
         }
       },
+      "hiscary.media.application.write": {
+        "type": "Project",
+        "dependencies": {
+          "Hiscary.Media.IntegrationEvents": "[1.0.0, )",
+          "Hiscary.Shared.Domain": "[1.0.0, )"
+        }
+      },
       "hiscary.media.documenttools": {
         "type": "Project",
         "dependencies": {

@@ -27,4 +27,6 @@ public interface IPlatformUserWriteService
 
     Task<OperationResult> SubscribeToLibrary(Guid userId, Guid libraryId);
     Task<OperationResult> UnsubscribeFromLibrary(Guid userId, Guid libraryId);
+
+    Task<OperationResult> ResolveAnnotatedPdfConflict(Guid userId, Guid storyId, bool keepMine);
 }

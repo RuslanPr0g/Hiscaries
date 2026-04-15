@@ -136,6 +136,7 @@
                 [backgroundColor]="settings.DarkMode ? '#1e1e1e' : '#ffffff'"
                 class="pdf-viewer"
                 (pageChange)="onPdfPageChange($event)"
+                (error)="onPdfLoadError()"
               />
             }
           } @else {
@@ -152,6 +153,8 @@
     </div>
   }
 }
+
+<!-- Settings toast -->
 <p-toast position="top-right" key="settings" (onClose)="onSettingsClose()" [baseZIndex]="5000">
   <ng-template pTemplate="message" let-message let-closeFn="closeFn">
     <section>
@@ -162,3 +165,30 @@
     </section>
   </ng-template>
 </p-toast>
+
+<!-- PDF saving toast -->
+<p-toast position="bottom-right" key="pdf-saving" [baseZIndex]="5000" />
+
+<!-- PDF save error toast -->
+<p-toast position="bottom-right" key="pdf-error" [baseZIndex]="5000" />
+
+<!-- PDF conflict resolution modal -->
+<p-dialog
+  header="PDF Version Conflict"
+  [(visible)]="conflictModalVisible"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="conflict-modal"
+  [style]="{ width: '420px' }"
+>
+  <p>
+    The story's PDF has been updated by the publisher since you last annotated it. Would you like to
+    keep your annotated copy or load the latest version?
+  </p>
+  <ng-template pTemplate="footer">
+    <p-button label="Keep Mine" severity="secondary" [outlined]="true" (onClick)="onKeepMine()" />
+    <p-button label="Load Latest" severity="primary" (onClick)="onLoadLatest()" />
+  </ng-template>
+</p-dialog>

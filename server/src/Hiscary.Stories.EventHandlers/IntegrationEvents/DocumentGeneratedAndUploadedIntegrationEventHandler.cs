@@ -1,17 +1,21 @@
 using Hiscary.Media.IntegrationEvents.Outgoing;
 using Hiscary.Shared.Domain.ValueObjects;
 using Hiscary.Stories.Domain.DataAccess;
+using Hiscary.Stories.IntegrationEvents.Outgoing;
 using Microsoft.Extensions.Logging;
 using StackNucleus.DDD.Domain.EventHandlers;
+using StackNucleus.DDD.Domain.EventPublishers;
 using Wolverine;
 
 namespace Hiscary.Stories.EventHandlers.IntegrationEvents;
 
 public sealed class DocumentGeneratedAndUploadedIntegrationEventHandler(
+    IEventPublisher publisher,
     IStoryWriteRepository repository,
     ILogger<DocumentGeneratedAndUploadedIntegrationEventHandler> logger)
     : IEventHandler<DocumentGeneratedAndUploadedIntegrationEvent>
 {
+    private readonly IEventPublisher _publisher = publisher;
     private readonly IStoryWriteRepository _repository = repository;
     private readonly ILogger<DocumentGeneratedAndUploadedIntegrationEventHandler> _logger = logger;
 
@@ -32,6 +36,8 @@ public sealed class DocumentGeneratedAndUploadedIntegrationEventHandler(
         story.SetExternalPdf(externalPdf, integrationEvent.PageCount);
 
         await _repository.SaveChanges();
+
+        await _publisher.Publish(new StoryPdfUpdatedIntegrationEvent(storyId, integrationEvent.PdfUrl));
 
         _logger.LogInformation("Document generated and external PDF cleared for story {StoryId}", storyId);
     }

@@ -44,4 +44,18 @@ export class MediaService {
 
     return this.http.delete<OperationResult>(url, { params });
   }
+
+  uploadUserAnnotatedPdf(storyId: string, blob: Blob): Observable<OperationResult> {
+    const url = `${this.apiUrl}/user-documents?storyId=${storyId}`;
+
+    return this.http.post<OperationResult>(url, blob, {
+      headers: { 'Content-Type': 'application/pdf' },
+    });
+  }
+
+  deleteUserAnnotatedPdf(storyId: string): Observable<OperationResult> {
+    const url = `${this.apiUrl}/user-documents/${storyId}`;
+
+    return this.http.delete<OperationResult>(url);
+  }
 }

@@ -63,4 +63,9 @@ export class UserService {
   readingHistory(): Observable<LastReadAtDateToId[]> {
     return this.http.get<LastReadAtDateToId[]>(`${this.apiUrl}/reading-history`);
   }
+
+  resolveAnnotatedPdfConflict(storyId: string, keepMine: boolean): Observable<void> {
+    const params = new HttpParams().set('storyId', storyId).set('keepMine', keepMine.toString());
+    return this.http.post<void>(`${this.apiUrl}/annotated-pdf/resolve-conflict`, null, { params });
+  }
 }

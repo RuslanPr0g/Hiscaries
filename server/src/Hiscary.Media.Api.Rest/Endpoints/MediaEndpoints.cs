@@ -1,4 +1,5 @@
-﻿using Hiscary.Media.DocumentTools;
+﻿using Hiscary.Media.Application.Write.Services;
+using Hiscary.Media.DocumentTools;
 using Hiscary.Shared.Domain.FileStorage;
 using Microsoft.AspNetCore.Mvc;
 using StackNucleus.DDD.Domain.ResultModels;
@@ -39,6 +40,19 @@ public static class MediaEndpoints
             .Produces<IResult>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status422UnprocessableEntity);
+
+        group.MapPost("/user-documents", UploadUserAnnotatedPdf)
+            .RequireAuthorization()
+            .Accepts<Stream>(MediaTypeNames.Application.Pdf)
+            .Produces<IResult>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status401Unauthorized);
+
+        group.MapDelete("/user-documents/{storyId}", DeleteUserAnnotatedPdf)
+            .RequireAuthorization()
+            .Produces<IResult>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status401Unauthorized);
     }
 
     private static async Task<IResult> GetImage(
@@ -182,5 +196,62 @@ public static class MediaEndpoints
     private static string BuildFileName(Guid fileId, string extension)
     {
         return $"{fileId}.{extension}";
+    }
+
+    private static async Task<IResult> UploadUserAnnotatedPdf(
+        HttpRequest request,
+        HttpContext httpContext,
+        [FromServices] IMediaWriteService service,
+        [FromQuery] Guid storyId,
+        CancellationToken cancellationToken)
+    {
+        if (!request.ContentType?.StartsWith(MediaTypeNames.Application.Pdf) ?? true)
+        {
+            return Results.BadRequest(OperationResult.CreateValidationsError("Please upload a valid PDF file in the request body."));
+        }
+
+        if (storyId == default || storyId == Guid.Empty)
+        {
+            return Results.BadRequest(OperationResult.CreateValidationsError("Please provide a story id to upload the annotated PDF for."));
+        }
+
+        var userId = httpContext.User.GetUserId();
+
+        if (userId is null)
+        {
+            return Results.Unauthorized();
+        }
+
+        await using var stream = new MemoryStream();
+        await request.Body.CopyToAsync(stream, cancellationToken);
+        stream.Position = 0;
+        var bytes = stream.ToArray();
+
+        var result = await service.UploadUserAnnotatedPdf(userId.Value, storyId, bytes, cancellationToken);
+
+        return Results.Ok(result);
+    }
+
+    private static async Task<IResult> DeleteUserAnnotatedPdf(
+        HttpContext httpContext,
+        [FromServices] IMediaWriteService service,
+        [FromRoute] Guid storyId,
+        CancellationToken cancellationToken)
+    {
+        if (storyId == default || storyId == Guid.Empty)
+        {
+            return Results.BadRequest(OperationResult.CreateValidationsError("Please provide a story id to delete the annotated PDF for."));
+        }
+
+        var userId = httpContext.User.GetUserId();
+
+        if (userId is null)
+        {
+            return Results.Unauthorized();
+        }
+
+        var result = await service.DeleteUserAnnotatedPdf(userId.Value, storyId, cancellationToken);
+
+        return Results.Ok(result);
     }
 }

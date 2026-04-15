@@ -27,6 +27,9 @@ public static class DIModule
         builder.Services.AddScoped<IEventHandler<StoryTotalPagesChangedIntegrationEvent>, StoryTotalPagesChangedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<UserAccountCreatedIntegrationEvent>, UserAccountCreatedIntegrationEventHandler>();
         builder.Services.AddScoped<IEventHandler<ImageUploadedIntegrationEvent>, ImageUploadedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<UserAnnotatedPdfUploadedIntegrationEvent>, UserAnnotatedPdfUploadedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<UserAnnotatedPdfDeletedIntegrationEvent>, UserAnnotatedPdfDeletedIntegrationEventHandler>();
+        builder.Services.AddScoped<IEventHandler<StoryPdfUpdatedIntegrationEvent>, StoryPdfUpdatedIntegrationEventHandler>();
 
         var asm = Assembly.GetExecutingAssembly();
         var rabbitMqConnectionString = configuration.GetConnectionString("rabbitmq");

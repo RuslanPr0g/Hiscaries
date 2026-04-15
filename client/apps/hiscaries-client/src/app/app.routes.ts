@@ -2,6 +2,7 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { ModifyStoryComponent } from './stories/modify-story/modify-story.component';
 import { PreviewStoryComponent } from './stories/preview-story/preview-story.component';
 import { PublishStoryComponent } from './stories/publish-story/publish-story.component';
+import { PdfSaveGuard } from './stories/read-story-content/pdf-save.guard';
 import { ReadStoryContentComponent } from './stories/read-story-content/read-story-content.component';
 import { ReadingHistoryComponent } from './stories/reading-history/reading-history.component';
 import { SearchStoryComponent } from './stories/search-story/search-story.component';
@@ -76,6 +77,7 @@ export const routes: Routes = [
     title: 'Read Story',
     component: ReadStoryContentComponent,
     canActivate: [authGuard],
+    canDeactivate: [PdfSaveGuard],
   },
   {
     path: 'search-story/:term',

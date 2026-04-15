@@ -35,6 +35,7 @@ public class PlatformUserWriteRepository(PlatformUsersContext context) :
         .Include(x => x.Bookmarks)
         .Include(x => x.Reviews)
         .Include(x => x.Subscriptions)
+        .Include(x => x.AnnotatedPdfs)
         .FirstOrDefaultAsync(x => x.UserAccountId == userAccountId);
 
     public async Task<List<Guid>> GetStoryReaderUserIdsByStoryId(Guid storyId) =>
@@ -42,5 +43,11 @@ public class PlatformUserWriteRepository(PlatformUsersContext context) :
         .Include(x => x.ReadHistory)
         .Where(x => x.ReadHistory.Any(y => y.StoryId == storyId))
         .Select(x => x.UserAccountId)
+        .ToListAsync();
+
+    public async Task<List<PlatformUser>> GetUsersWithAnnotatedPdfByStoryId(Guid storyId) =>
+        await Context.PlatformUsers
+        .Include(x => x.AnnotatedPdfs)
+        .Where(x => x.AnnotatedPdfs.Any(y => y.StoryId == storyId))
         .ToListAsync();
 }

@@ -16,6 +16,7 @@ public sealed class PlatformUsersContext(DbContextOptions<PlatformUsersContext> 
     public DbSet<PlatformUser> PlatformUsers { get; set; }
     public DbSet<Library> Libraries { get; set; }
     public DbSet<PlatformUserToLibrarySubscription> PlatformUserToLibrarySubscriptions { get; set; }
+    public DbSet<UserAnnotatedPdf> UserAnnotatedPdfs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,4 +1,5 @@
 using Hiscary.Media.Api.Rest.Endpoints;
+using Hiscary.Media.Application.Write;
 using Hiscary.Media.DocumentTools.PdfPig;
 using Hiscary.Media.DocumentTools.PuppeteerSharp;
 using Hiscary.Media.EventHandlers;
@@ -17,6 +18,7 @@ builder.AddServiceDefaults();
 
 builder.Services.AddSharedRestApi(builder.Configuration);
 
+builder.Services.AddMediaApplicationWriteLayer();
 builder.Services.AddMediaFileStorage();
 builder.Services.AddMediaImages();
 builder.AddEventHandlers(builder.Configuration);

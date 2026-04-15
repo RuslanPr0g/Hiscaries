@@ -26,6 +26,7 @@ public sealed class PlatformUser : AggregateRoot<PlatformUserId>
     public ICollection<Review> Reviews { get; } = [];
     public ICollection<ReadingHistory> ReadHistory { get; } = [];
     public ICollection<StoryBookMark> Bookmarks { get; } = [];
+    public ICollection<UserAnnotatedPdf> AnnotatedPdfs { get; } = [];
 
     public ICollection<PlatformUserToLibrarySubscription> Subscriptions { get; } = [];
 
@@ -185,6 +186,59 @@ public sealed class PlatformUser : AggregateRoot<PlatformUserId>
         if (!Bookmarks.Any(x => x.StoryId == storyId))
         {
             Bookmarks.Add(new StoryBookMark(Id, storyId));
+        }
+    }
+
+    public void SetAnnotatedPdf(Guid storyId, string pdfUrl)
+    {
+        var existing = AnnotatedPdfs.FirstOrDefault(x => x.StoryId == storyId);
+
+        if (existing is not null)
+        {
+            existing.PdfUrl = pdfUrl;
+        }
+        else
+        {
+            AnnotatedPdfs.Add(new UserAnnotatedPdf(Id, storyId, pdfUrl));
+        }
+    }
+
+    public void RemoveAnnotatedPdf(Guid storyId)
+    {
+        var existing = AnnotatedPdfs.FirstOrDefault(x => x.StoryId == storyId);
+
+        if (existing is not null)
+        {
+            AnnotatedPdfs.Remove(existing);
+        }
+    }
+
+    public void MarkAnnotatedPdfConflict(Guid storyId)
+    {
+        var existing = AnnotatedPdfs.FirstOrDefault(x => x.StoryId == storyId);
+
+        if (existing is not null)
+        {
+            existing.HasConflict = true;
+        }
+    }
+
+    public void ResolveAnnotatedPdfConflict(Guid storyId, bool keepMine)
+    {
+        var existing = AnnotatedPdfs.FirstOrDefault(x => x.StoryId == storyId);
+
+        if (existing is null)
+        {
+            return;
+        }
+
+        if (keepMine)
+        {
+            existing.HasConflict = false;
+        }
+        else
+        {
+            AnnotatedPdfs.Remove(existing);
         }
     }
 

@@ -1,4 +1,5 @@
 import { routes } from './app.routes';
+import { StoryPdfEffects } from './stories/store/story-pdf.effects';
 import { storyFeatureKey, storyReducer } from './stories/store/story.reducer';
 import { StoryPublishedHandler } from './users/notification-handlers/story-published-notification.handler';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -13,10 +14,12 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withRouterConfig } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '@environments/environment';
+import { provideEffects } from '@ngrx/effects';
 import { provideState, provideStore } from '@ngrx/store';
 import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 import { NotificationHandler } from '@shared/models/notification-handler.model';
+import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 
 export function tokenGetter() {
@@ -37,6 +40,7 @@ export const NotificationHandlerProviders = [
 export const appConfig: ApplicationConfig = {
   providers: [
     ...NotificationHandlerProviders,
+    MessageService,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,
@@ -59,6 +63,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     provideState({ name: storyFeatureKey, reducer: storyReducer }),
+    provideEffects(StoryPdfEffects),
     providePrimeNG({
       theme: {
         preset: definePreset(Aura, {

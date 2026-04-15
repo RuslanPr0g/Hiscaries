@@ -70,6 +70,12 @@ public static class PlatformUserEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status401Unauthorized);
 
+        group.MapPost("/annotated-pdf/resolve-conflict", ResolveAnnotatedPdfConflict)
+            .RequireAuthorization()
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status401Unauthorized);
+
         group.MapPost("/become-publisher", BecomePublisher)
             .RequireAuthorization()
             .Produces(StatusCodes.Status200OK)
@@ -83,6 +89,14 @@ public static class PlatformUserEndpoints
         [FromServices] IPlatformUserWriteService service) =>
         await endpointHandler.WithUser(user =>
             service.BookmarkStory(user.Id, request.StoryId));
+
+    private static async Task<IResult> ResolveAnnotatedPdfConflict(
+        [FromQuery] Guid storyId,
+        [FromQuery] bool keepMine,
+        IAuthorizedEndpointHandler endpointHandler,
+        [FromServices] IPlatformUserWriteService service) =>
+        await endpointHandler.WithUser(user =>
+            service.ResolveAnnotatedPdfConflict(user.Id, storyId, keepMine));
 
     private static async Task<IResult> ReadStory(
         [FromBody] ReadStoryRequest request,

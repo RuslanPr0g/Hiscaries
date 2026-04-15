@@ -1,4 +1,5 @@
 ﻿using Hiscary.Media.IntegrationEvents.Incoming;
+using Hiscary.Media.IntegrationEvents.Outgoing;
 using Hiscary.PlatformUsers.Domain;
 using Hiscary.PlatformUsers.Domain.DataAccess;
 using Hiscary.PlatformUsers.Domain.Services;
@@ -211,6 +212,35 @@ public sealed class PlatformUserWriteService(
         await _repository.SaveChanges();
 
         _logger.LogInformation("Successfully unsubscribed from the library {LibraryId} for the user {UserId}", libraryId, userId);
+        return OperationResult.CreateSuccess();
+    }
+
+    public async Task<OperationResult> ResolveAnnotatedPdfConflict(Guid userId, Guid storyId, bool keepMine)
+    {
+        _logger.LogInformation(
+            "Attempting to resolve annotated PDF conflict for user {UserId}, story {StoryId}, keepMine {KeepMine}",
+            userId, storyId, keepMine);
+
+        PlatformUser? user = await _repository.GetByUserAccountId(userId);
+
+        if (user is null)
+        {
+            _logger.LogWarning("User {UserId} not found when attempting to resolve annotated PDF conflict", userId);
+            return OperationResult.CreateClientSideError(UserFriendlyMessages.UserIsNotFound);
+        }
+
+        user.ResolveAnnotatedPdfConflict(storyId, keepMine);
+
+        if (!keepMine)
+        {
+            await _publisher.Publish(new UserAnnotatedPdfDeletedIntegrationEvent(userId, storyId));
+        }
+
+        await _repository.SaveChanges();
+
+        _logger.LogInformation(
+            "Successfully resolved annotated PDF conflict for user {UserId}, story {StoryId}, keepMine {KeepMine}",
+            userId, storyId, keepMine);
         return OperationResult.CreateSuccess();
     }
 }

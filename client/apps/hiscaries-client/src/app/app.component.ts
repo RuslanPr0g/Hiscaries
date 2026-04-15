@@ -30,7 +30,7 @@ import { filter, takeUntil } from 'rxjs';
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [MessageService, DestroyService],
+  providers: [DestroyService],
 })
 export class AppComponent implements OnInit {
   private router = inject(Router);

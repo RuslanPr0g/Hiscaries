@@ -8,9 +8,13 @@ import {
   ElementRef,
   ViewChild,
   inject,
+  DestroyRef,
+  effect,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { convertToBase64 } from '@shared/helpers/image.helper';
 import { IteratorService } from '@shared/services/statefull/iterator/iterator.service';
@@ -20,12 +24,16 @@ import {
 } from '@stories/models/domain/reading-settings.model';
 import { StoryModelWithContents } from '@stories/models/domain/story-model';
 import { LoadReadingSettingsService } from '@stories/services/load-reading-settings.service';
+import { savePdfAnnotations, resolvePdfConflict } from '@stories/store/story.actions';
+import { selectPdfSaving, selectPdfSaveError } from '@stories/store/story.selector';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { ReadStoryRequest } from '@users/models/requests/read-story.model';
+import { UserReadingStoryMetadataResponse } from '@users/models/response/user-reading-story-metadata.model';
 import { UserService } from '@users/services/user.service';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { NgxExtendedPdfViewerModule, NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { debounceTime, Subject, switchMap, take } from 'rxjs';
 
@@ -39,6 +47,7 @@ import { debounceTime, Subject, switchMap, take } from 'rxjs';
     LoadingSpinnerComponent,
     FormsModule,
     ToastModule,
+    DialogModule,
     ReadingSettingsComponent,
   ],
   providers: [IteratorService, MessageService],
@@ -50,6 +59,12 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
   private storyService = inject(StoryWithMetadataService);
   private userService = inject(UserService);
   private iterator = inject(IteratorService);
+  private store = inject(Store);
+  private pdfViewerService = inject(NgxExtendedPdfViewerService);
+  private destroyRef = inject(DestroyRef);
+
+  pdfSaving = this.store.selectSignal(selectPdfSaving);
+  pdfSaveError = this.store.selectSignal(selectPdfSaveError);
 
   @ViewChild('contentWrapper') contentWrapper!: ElementRef<HTMLDivElement>;
 
@@ -70,16 +85,30 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
   globalError: string | null = null;
   story: StoryModelWithContents | null = null;
   storyNotFound = false;
+  metadata: UserReadingStoryMetadataResponse | null = null;
 
   maximized = false;
 
   pageInput = 1;
   pdfPage = 1;
 
+  /** Conflict resolution modal state */
+  conflictModalVisible = false;
+
+  /** PDF load attempt state for fallback chain */
+  pdfLoadAttempt: 'user' | 'story' | 'fallback-to-text' = 'user';
+
   get pdfUrl(): string | null {
-    return this.story?.HasExternalPdf && this.story.ExternalPdfUrl
-      ? this.story.ExternalPdfUrl
-      : null;
+    if (this.pdfLoadAttempt === 'user' && this.metadata?.UserAnnotatedPdfUrl) {
+      return this.metadata.UserAnnotatedPdfUrl;
+    }
+    if (this.pdfLoadAttempt === 'story' && this.story?.ExternalPdfUrl) {
+      return this.story.ExternalPdfUrl;
+    }
+    if (this.pdfLoadAttempt === 'user' && this.story?.ExternalPdfUrl) {
+      return this.story.ExternalPdfUrl; // No user PDF, go straight to story PDF
+    }
+    return null;
   }
 
   get pdfExists(): boolean {
@@ -111,8 +140,22 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
       .pipe(
         debounceTime(500),
         switchMap((payload) => this.userService.read(payload)),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
+
+    effect(() => {
+      const error = this.pdfSaveError();
+      if (error) {
+        this.messageService.add({
+          key: 'pdf-error',
+          severity: 'error',
+          summary: 'Failed to save annotations',
+          detail: error,
+          life: 5000,
+        });
+      }
+    });
   }
 
   ngOnInit() {
@@ -121,7 +164,12 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.pdfLoadAttempt = 'user';
+
     this.settings = this.settingsService.getSettings();
+
+    // Listen for PDF annotation changes
+    this.setupPdfAnnotationListener();
 
     this.storyService
       .getStoryByIdWithContents({
@@ -140,10 +188,28 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
             story.ImagePreviewUrl?.Medium ??
             story.ImagePreviewUrl?.Small;
 
+          const storyWithMetadata = story as StoryModelWithContents & {
+            UserAnnotatedPdfUrl?: string;
+            HasPdfConflict?: boolean;
+          };
+          this.metadata = {
+            StoryId: story.Id,
+            LibraryName: story.LibraryName,
+            IsEditable: story.IsEditable,
+            PercentageRead: story.PercentageRead,
+            LastPageRead: story.LastPageRead,
+            UserAnnotatedPdfUrl: storyWithMetadata.UserAnnotatedPdfUrl,
+            HasPdfConflict: storyWithMetadata.HasPdfConflict,
+          };
+
           this.story = {
             ...story,
             ImagePreviewUrl: imageUrl ? { Large: convertToBase64(imageUrl) } : {},
           };
+
+          if (this.metadata.HasPdfConflict === true) {
+            this.conflictModalVisible = true;
+          }
 
           if (story.LastPageRead) {
             this.pageInput = story.LastPageRead;
@@ -274,11 +340,19 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (document.fullscreenElement) {
-      document.exitFullscreen().catch((_err) => {
-        /* fullscreen not supported */
+      document.exitFullscreen().catch(() => {
+        // Ignore fullscreen exit errors
       });
     }
     document.removeEventListener('fullscreenchange', this.onFullscreenChange);
+
+    if (this.storyId && this.shouldShowPdf) {
+      this.pdfViewerService.getCurrentDocumentAsBlob().then((blob) => {
+        if (blob) {
+          this.store.dispatch(savePdfAnnotations({ storyId: this.storyId!, blob }));
+        }
+      });
+    }
   }
 
   showSettingss() {
@@ -325,6 +399,76 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
           PageRead: page,
         })
         .subscribe();
+
+      if (this.shouldShowPdf) {
+        this.pdfViewerService.getCurrentDocumentAsBlob().then((blob) => {
+          if (blob) {
+            this.store.dispatch(savePdfAnnotations({ storyId: this.storyId!, blob }));
+          }
+        });
+      }
+    }
+  }
+
+  onKeepMine(): void {
+    if (!this.storyId) return;
+    this.store.dispatch(resolvePdfConflict({ storyId: this.storyId, keepMine: true }));
+    this.conflictModalVisible = false;
+  }
+
+  onLoadLatest(): void {
+    if (!this.storyId) return;
+    this.store.dispatch(resolvePdfConflict({ storyId: this.storyId, keepMine: false }));
+    this.conflictModalVisible = false;
+
+    this.storyService
+      .getStoryByIdWithContents({ Id: this.storyId })
+      .pipe(take(1))
+      .subscribe({
+        next: (story) => {
+          if (story) {
+            const storyWithMetadata = story as StoryModelWithContents & {
+              UserAnnotatedPdfUrl?: string;
+              HasPdfConflict?: boolean;
+            };
+            this.metadata = {
+              StoryId: story.Id,
+              LibraryName: story.LibraryName,
+              IsEditable: story.IsEditable,
+              PercentageRead: story.PercentageRead,
+              LastPageRead: story.LastPageRead,
+              UserAnnotatedPdfUrl: storyWithMetadata.UserAnnotatedPdfUrl,
+              HasPdfConflict: storyWithMetadata.HasPdfConflict,
+            };
+
+            this.story = { ...story };
+          }
+        },
+      });
+  }
+
+  /** PDF error handler: implements fallback chain (user PDF → story PDF → text contents) */
+  onPdfLoadError(): void {
+    if (this.pdfLoadAttempt === 'user' && this.story?.ExternalPdfUrl) {
+      // User's annotated PDF failed — fall back to story's global PDF
+      this.pdfLoadAttempt = 'story';
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Annotated PDF unavailable',
+        detail: 'Loading the original story PDF instead.',
+        life: 3000,
+      });
+      // The pdfUrl getter will now return story.ExternalPdfUrl
+    } else if (this.pdfLoadAttempt === 'story') {
+      // Story's global PDF also failed — fall back to text contents
+      this.pdfLoadAttempt = 'fallback-to-text';
+      this.settings.PreferPdf = false; // Force text mode
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'PDF unavailable',
+        detail: 'Showing text contents instead.',
+        life: 3000,
+      });
     }
   }
 
