@@ -14,24 +14,32 @@ public sealed class StoryPdfUpdatedIntegrationEventHandler(
     private readonly IPlatformUserWriteRepository _repository = repository;
 
     public async Task Handle(
-        StoryPdfUpdatedIntegrationEvent integrationEvent, IMessageContext context)
+        StoryPdfUpdatedIntegrationEvent integrationEvent,
+        IMessageContext context)
     {
         var users = await _repository.GetUsersWithAnnotatedPdfByStoryId(integrationEvent.StoryId);
 
+        var conflictCount = 0;
+
         foreach (var user in users)
         {
-            user.MarkAnnotatedPdfConflict(integrationEvent.StoryId);
+            if (user.MarkAnnotatedPdfConflict(integrationEvent.StoryId))
+            {
+                conflictCount++;
+            }
         }
 
-        if (users.Count > 0)
+        if (conflictCount > 0)
         {
             await _repository.SaveChanges();
         }
 
         logger.LogInformation(
-            "{Handler} handled. Marked conflict for {UserCount} user(s) on StoryId {StoryId}.",
+            "{Handler} handled. Marked conflict for {ConflictCount} out of {TotalUserCount} user(s) on StoryId {StoryId}.",
             nameof(StoryPdfUpdatedIntegrationEventHandler),
+            conflictCount,
             users.Count,
             integrationEvent.StoryId);
     }
+
 }

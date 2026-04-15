@@ -32,54 +32,69 @@
         </div>
       }
       <div class="read-story-container__header">
-        @if (!shouldShowPdf && story) {
-          <div class="read-story-container__navigation">
-            <div class="highligh-btn nav-btn">
+        <div class="header-left">
+          @if (!shouldShowPdf && story) {
+            <div class="read-story-container__navigation">
+              <div class="highligh-btn nav-btn">
+                <p-button
+                  icon="pi pi-angle-left"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="secondary"
+                  (onClick)="movePrev()"
+                />
+              </div>
+              <div class="page-input">
+                <input
+                  type="number"
+                  [max]="contents.length"
+                  [min]="1"
+                  [(ngModel)]="pageInput"
+                  [ngModelOptions]="{ standalone: true }"
+                  (change)="goToPage()"
+                />
+                <span>/ {{ contents.length }}</span>
+              </div>
+              <div class="highligh-btn nav-btn">
+                <p-button
+                  icon="pi pi-angle-right"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="secondary"
+                  (onClick)="moveNext()"
+                />
+              </div>
+            </div>
+          }
+        </div>
+        <div class="header-right">
+          @if (!maximized && shouldShowPdf && shouldShowLoadLatestButton) {
+            <div class="highligh-btn">
               <p-button
-                icon="pi pi-angle-left"
+                icon="pi pi-refresh"
                 [rounded]="true"
                 [text]="true"
                 severity="secondary"
-                (onClick)="movePrev()"
+                (onClick)="loadLatestVersion()"
+                [pTooltip]="'Load latest version'"
+                tooltipPosition="bottom"
               />
             </div>
-            <div class="page-input">
-              <input
-                type="number"
-                [max]="contents.length"
-                [min]="1"
-                [(ngModel)]="pageInput"
-                [ngModelOptions]="{ standalone: true }"
-                (change)="goToPage()"
-              />
-              <span>/ {{ contents.length }}</span>
-            </div>
-            <div class="highligh-btn nav-btn">
-              <p-button
-                icon="pi pi-angle-right"
-                [rounded]="true"
-                [text]="true"
-                severity="secondary"
-                (onClick)="moveNext()"
-              />
-            </div>
-          </div>
-        }
-        <div class="item-wrapper">
-          <div class="focus highligh-btn">
-            @if (!maximized) {
+          }
+          @if (!maximized) {
+            <div class="highligh-btn">
               <p-button
                 icon="pi pi-cog"
                 [rounded]="true"
                 [text]="true"
                 severity="secondary"
                 (onClick)="showSettingss()"
+                [pTooltip]="'Settings'"
+                tooltipPosition="bottom"
               />
-            }
-          </div>
-        </div>
-        <div class="item-wrapper">
-          <div class="focus highligh-btn">
+            </div>
+          }
+          <div class="highligh-btn">
             @if (!maximized) {
               <p-button
                 icon="pi pi-window-maximize"
@@ -87,6 +102,8 @@
                 [text]="true"
                 severity="secondary"
                 (onClick)="maximize()"
+                [pTooltip]="'Fullscreen'"
+                tooltipPosition="bottom"
               />
             }
             @if (maximized) {
@@ -96,6 +113,8 @@
                 [text]="true"
                 severity="secondary"
                 (onClick)="minimize()"
+                [pTooltip]="'Exit fullscreen'"
+                tooltipPosition="bottom"
               />
             }
           </div>
@@ -188,8 +207,11 @@
     The story's PDF has been updated by the publisher since you last annotated it. Would you like to
     keep your annotated copy or load the latest version?
   </p>
+  <p>
+    <i>Note: all your annotations will be removed</i>
+  </p>
   <ng-template pTemplate="footer">
     <p-button label="Keep Mine" severity="secondary" [outlined]="true" (onClick)="onKeepMine()" />
-    <p-button label="Load Latest" severity="primary" (onClick)="onLoadLatest()" />
+    <p-button label="Load Latest" severity="primary" (onClick)="onLoadLatest()" class="ml-2" />
   </ng-template>
 </p-dialog>

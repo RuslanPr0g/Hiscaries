@@ -27,9 +27,12 @@ public sealed class UserAnnotatedPdfDeletedIntegrationEventHandler(
             return;
         }
 
-        user.RemoveAnnotatedPdf(integrationEvent.StoryId);
+        var removed = user.RemoveAnnotatedPdf(integrationEvent.StoryId);
 
-        await _repository.SaveChanges();
+        if (removed)
+        {
+            await _repository.SaveChanges();
+        }
 
         logger.LogInformation("{Handler} handled.", nameof(UserAnnotatedPdfDeletedIntegrationEventHandler));
     }

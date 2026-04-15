@@ -203,24 +203,30 @@ public sealed class PlatformUser : AggregateRoot<PlatformUserId>
         }
     }
 
-    public void RemoveAnnotatedPdf(Guid storyId)
+    public bool RemoveAnnotatedPdf(Guid storyId)
     {
         var existing = AnnotatedPdfs.FirstOrDefault(x => x.StoryId == storyId);
 
         if (existing is not null)
         {
             AnnotatedPdfs.Remove(existing);
+            return true;
         }
+
+        return false;
     }
 
-    public void MarkAnnotatedPdfConflict(Guid storyId)
+    public bool MarkAnnotatedPdfConflict(Guid storyId)
     {
         var existing = AnnotatedPdfs.FirstOrDefault(x => x.StoryId == storyId);
 
         if (existing is not null)
         {
             existing.HasConflict = true;
+            return true;
         }
+
+        return false;
     }
 
     public void ResolveAnnotatedPdfConflict(Guid storyId, bool keepMine)

@@ -35,6 +35,7 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
 import { debounceTime, Subject, switchMap, take } from 'rxjs';
 
 @Component({
@@ -48,6 +49,7 @@ import { debounceTime, Subject, switchMap, take } from 'rxjs';
     FormsModule,
     ToastModule,
     DialogModule,
+    TooltipModule,
     ReadingSettingsComponent,
   ],
   providers: [IteratorService, MessageService],
@@ -97,6 +99,8 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
 
   conflictModalVisible = false;
 
+  userChoseToKeepTheirVersion = false;
+
   pdfLoadAttempt: 'user' | 'story' | 'fallback-to-text' = 'user';
 
   get pdfUrl(): string | null {
@@ -125,6 +129,15 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
       return false;
     }
     return this.settings.PreferPdf && this.pdfExists;
+  }
+
+  get shouldShowLoadLatestButton(): boolean {
+    return !!(
+      this.metadata?.UserAnnotatedPdfUrl &&
+      this.story?.ExternalPdfUrl &&
+      (this.userChoseToKeepTheirVersion || this.pdfLoadAttempt === 'user') &&
+      this.metadata.UserAnnotatedPdfUrl !== this.story.ExternalPdfUrl
+    );
   }
 
   get preferPdfDisabled(): boolean {
@@ -413,6 +426,7 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
 
   onKeepMine(): void {
     if (!this.storyId) return;
+    this.userChoseToKeepTheirVersion = true;
     this.store.dispatch(resolvePdfConflict({ storyId: this.storyId, keepMine: true }));
     this.conflictModalVisible = false;
   }
@@ -443,6 +457,46 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
             };
 
             this.story = { ...story };
+          }
+        },
+      });
+  }
+
+  loadLatestVersion(): void {
+    if (!this.storyId) return;
+
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Loading latest version',
+      detail: 'Your annotations will be removed.',
+      life: 3000,
+    });
+
+    this.userChoseToKeepTheirVersion = false;
+    this.store.dispatch(resolvePdfConflict({ storyId: this.storyId, keepMine: false }));
+
+    this.storyService
+      .getStoryByIdWithContents({ Id: this.storyId })
+      .pipe(take(1))
+      .subscribe({
+        next: (story) => {
+          if (story) {
+            const storyWithMetadata = story as StoryModelWithContents & {
+              UserAnnotatedPdfUrl?: string;
+              HasPdfConflict?: boolean;
+            };
+            this.metadata = {
+              StoryId: story.Id,
+              LibraryName: story.LibraryName,
+              IsEditable: story.IsEditable,
+              PercentageRead: story.PercentageRead,
+              LastPageRead: story.LastPageRead,
+              UserAnnotatedPdfUrl: storyWithMetadata.UserAnnotatedPdfUrl,
+              HasPdfConflict: storyWithMetadata.HasPdfConflict,
+            };
+
+            this.story = { ...story };
+            this.pdfLoadAttempt = 'story';
           }
         },
       });
