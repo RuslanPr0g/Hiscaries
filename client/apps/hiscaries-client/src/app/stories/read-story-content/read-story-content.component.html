@@ -136,6 +136,7 @@
                 [backgroundColor]="settings.DarkMode ? '#1e1e1e' : '#ffffff'"
                 class="pdf-viewer"
                 (pageChange)="onPdfPageChange($event)"
+                (annotationEditorEvent)="onPdfAnnotationChange()"
                 (error)="onPdfLoadError()"
               />
             }

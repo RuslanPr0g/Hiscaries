@@ -69,6 +69,9 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
   @ViewChild('contentWrapper') contentWrapper!: ElementRef<HTMLDivElement>;
 
   private pageRead$ = new Subject<ReadStoryRequest>();
+  private pdfAnnotationChange$ = new Subject<Promise<Blob | undefined>>();
+  private lastPdfHash: string | null = null;
+  private isExportingPdf = false;
 
   private touchStartX = 0;
   private touchEndX = 0;
@@ -92,10 +95,8 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
   pageInput = 1;
   pdfPage = 1;
 
-  /** Conflict resolution modal state */
   conflictModalVisible = false;
 
-  /** PDF load attempt state for fallback chain */
   pdfLoadAttempt: 'user' | 'story' | 'fallback-to-text' = 'user';
 
   get pdfUrl(): string | null {
@@ -106,7 +107,7 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
       return this.story.ExternalPdfUrl;
     }
     if (this.pdfLoadAttempt === 'user' && this.story?.ExternalPdfUrl) {
-      return this.story.ExternalPdfUrl; // No user PDF, go straight to story PDF
+      return this.story.ExternalPdfUrl;
     }
     return null;
   }
@@ -144,6 +145,27 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
+    this.pdfAnnotationChange$
+      .pipe(
+        debounceTime(2000),
+        switchMap(async (blobPromise) => {
+          const blob = await blobPromise;
+          if (!blob) return null;
+
+          const hash = `${blob.size}-${blob.type}`;
+          if (hash === this.lastPdfHash) return null;
+
+          this.lastPdfHash = hash;
+          return blob;
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((blob) => {
+        if (blob && this.storyId) {
+          this.store.dispatch(savePdfAnnotations({ storyId: this.storyId, blob }));
+        }
+      });
+
     effect(() => {
       const error = this.pdfSaveError();
       if (error) {
@@ -167,9 +189,6 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
     this.pdfLoadAttempt = 'user';
 
     this.settings = this.settingsService.getSettings();
-
-    // Listen for PDF annotation changes
-    this.setupPdfAnnotationListener();
 
     this.storyService
       .getStoryByIdWithContents({
@@ -323,7 +342,7 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
     this.maximized = true;
     this.onSettingsClose();
     document.documentElement.requestFullscreen().catch((_err) => {
-      /* fullscreen not supported */
+      // Fullscreen request failed, continue without fullscreen
     });
     document.addEventListener('fullscreenchange', this.onFullscreenChange);
   }
@@ -332,7 +351,7 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
     this.maximized = false;
     if (document.fullscreenElement) {
       document.exitFullscreen().catch((_err) => {
-        /* fullscreen not supported */
+        // Exit fullscreen failed, continue anyway
       });
     }
     document.removeEventListener('fullscreenchange', this.onFullscreenChange);
@@ -341,18 +360,10 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (document.fullscreenElement) {
       document.exitFullscreen().catch(() => {
-        // Ignore fullscreen exit errors
+        // Exit fullscreen failed during cleanup
       });
     }
     document.removeEventListener('fullscreenchange', this.onFullscreenChange);
-
-    if (this.storyId && this.shouldShowPdf) {
-      this.pdfViewerService.getCurrentDocumentAsBlob().then((blob) => {
-        if (blob) {
-          this.store.dispatch(savePdfAnnotations({ storyId: this.storyId!, blob }));
-        }
-      });
-    }
   }
 
   showSettingss() {
@@ -379,10 +390,8 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
     const isNowShowingPdf = this.shouldShowPdf;
 
     if (!wasShowingPdf && isNowShowingPdf) {
-      // switched to PDF — sync PDF page from text page
       this.pdfPage = this.pageInput;
     } else if (wasShowingPdf && !isNowShowingPdf) {
-      // switched to text — sync text page from PDF page
       this.pageInput = this.pdfPage;
       this.iterator.moveTo(this.pdfPage - 1);
     }
@@ -399,14 +408,6 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
           PageRead: page,
         })
         .subscribe();
-
-      if (this.shouldShowPdf) {
-        this.pdfViewerService.getCurrentDocumentAsBlob().then((blob) => {
-          if (blob) {
-            this.store.dispatch(savePdfAnnotations({ storyId: this.storyId!, blob }));
-          }
-        });
-      }
     }
   }
 
@@ -447,10 +448,8 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
       });
   }
 
-  /** PDF error handler: implements fallback chain (user PDF → story PDF → text contents) */
   onPdfLoadError(): void {
     if (this.pdfLoadAttempt === 'user' && this.story?.ExternalPdfUrl) {
-      // User's annotated PDF failed — fall back to story's global PDF
       this.pdfLoadAttempt = 'story';
       this.messageService.add({
         severity: 'warn',
@@ -458,11 +457,9 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
         detail: 'Loading the original story PDF instead.',
         life: 3000,
       });
-      // The pdfUrl getter will now return story.ExternalPdfUrl
     } else if (this.pdfLoadAttempt === 'story') {
-      // Story's global PDF also failed — fall back to text contents
       this.pdfLoadAttempt = 'fallback-to-text';
-      this.settings.PreferPdf = false; // Force text mode
+      this.settings.PreferPdf = false;
       this.messageService.add({
         severity: 'warn',
         summary: 'PDF unavailable',
@@ -494,5 +491,22 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
 
   private scrollPageToTop() {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }
+
+  onPdfAnnotationChange() {
+    if (this.isExportingPdf) return;
+
+    this.isExportingPdf = true;
+    this.pdfViewerService
+      .getCurrentDocumentAsBlob()
+      .then((blob) => {
+        this.pdfAnnotationChange$.next(Promise.resolve(blob));
+      })
+      .catch(() => {
+        // Failed to export PDF blob, silently ignore
+      })
+      .finally(() => {
+        this.isExportingPdf = false;
+      });
   }
 }
