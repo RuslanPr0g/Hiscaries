@@ -14,10 +14,6 @@
   ([8f37fe7](https://github.com/RuslanPr0g/Hiscaries/commit/8f37fe7))
 - finalize pdf feature ([d87d82f](https://github.com/RuslanPr0g/Hiscaries/commit/d87d82f))
 
-### ❤️ Thank You
-
-- RuslanPr0g
-
 # 6.0.0 (2026-04-14)
 
 - v20 Angular

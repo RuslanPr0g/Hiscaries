@@ -432,38 +432,13 @@ export class ReadStoryContentComponent implements OnInit, OnDestroy {
   }
 
   onLoadLatest(): void {
-    if (!this.storyId) return;
-    this.store.dispatch(resolvePdfConflict({ storyId: this.storyId, keepMine: false }));
-    this.conflictModalVisible = false;
-
-    this.storyService
-      .getStoryByIdWithContents({ Id: this.storyId })
-      .pipe(take(1))
-      .subscribe({
-        next: (story) => {
-          if (story) {
-            const storyWithMetadata = story as StoryModelWithContents & {
-              UserAnnotatedPdfUrl?: string;
-              HasPdfConflict?: boolean;
-            };
-            this.metadata = {
-              StoryId: story.Id,
-              LibraryName: story.LibraryName,
-              IsEditable: story.IsEditable,
-              PercentageRead: story.PercentageRead,
-              LastPageRead: story.LastPageRead,
-              UserAnnotatedPdfUrl: storyWithMetadata.UserAnnotatedPdfUrl,
-              HasPdfConflict: storyWithMetadata.HasPdfConflict,
-            };
-
-            this.story = { ...story };
-          }
-        },
-      });
+    this.loadLatestVersion();
   }
 
   loadLatestVersion(): void {
     if (!this.storyId) return;
+
+    this.conflictModalVisible = false;
 
     this.messageService.add({
       severity: 'info',
