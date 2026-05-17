@@ -29,6 +29,7 @@ import { ModifyStoryFormModel } from '@stories/models/form/modify-story-form.mod
 import { ModifyStoryRequest } from '@stories/models/requests/modify-story.model';
 import { StoryWithMetadataService } from '@user-to-story/services/multiple-services-merged/story-with-metadata.service';
 import { AuthService } from '@users/services/auth.service';
+import { MessageService } from 'primeng/api';
 import { Divider } from 'primeng/divider';
 import { Message } from 'primeng/message';
 import { Tabs, Tab, TabList, TabPanel, TabPanels } from 'primeng/tabs';
@@ -78,6 +79,7 @@ export class ModifyStoryComponent implements OnInit {
   storyNotFound = false;
 
   mediaService = inject(MediaService);
+  private messageService = inject(MessageService);
 
   pdfUrl: string | null = null;
   pdfExists = true;
@@ -146,6 +148,12 @@ export class ModifyStoryComponent implements OnInit {
             this.modifyForm.setControl('Contents', newContents);
             this.submitted = false;
             this.pdfControl?.reset();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'PDF Uploaded',
+              detail: 'PDF content has been loaded successfully.',
+              life: 3000,
+            });
           },
           error: (err) => {
             console.error('PDF parsing failed', err);
@@ -182,6 +190,12 @@ export class ModifyStoryComponent implements OnInit {
               return;
             } else {
               this.uploadedPdfFileName = pdfFileName;
+              this.messageService.add({
+                severity: 'success',
+                summary: 'PDF Uploaded',
+                detail: 'PDF has been uploaded successfully.',
+                life: 3000,
+              });
               this.onSubmit();
               return;
             }
