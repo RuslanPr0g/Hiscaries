@@ -33,7 +33,6 @@ import { MessageService } from 'primeng/api';
 import { Divider } from 'primeng/divider';
 import { Message } from 'primeng/message';
 import { Tabs, Tab, TabList, TabPanel, TabPanels } from 'primeng/tabs';
-import { ToastModule } from 'primeng/toast';
 import { take } from 'rxjs';
 
 @Component({
@@ -58,9 +57,7 @@ import { take } from 'rxjs';
     TabPanel,
     TabPanels,
     LoadingSpinnerComponent,
-    ToastModule,
   ],
-  providers: [MessageService],
   templateUrl: './modify-story.component.html',
   styleUrls: ['./modify-story.component.scss'],
 })
