@@ -1,3 +1,5 @@
+Invoke-Expression (Invoke-WebRequest -Uri "https://aspire.dev/install.sh" -UseBasicParsing).Content
+
 Set-Location ../src
 
 dotnet new install Aspire.ProjectTemplates
