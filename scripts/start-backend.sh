@@ -1,10 +1,10 @@
 #!/bin/bash
-# Starts the Aspire backend from server/src.
-# Meant to be sourced or called by other scripts.
+set -e
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SERVER_DIR="$REPO_ROOT/server/src"
+
+curl -sSL https://aspire.dev/install.sh | bash
 
 echo "Starting backend (Aspire)..."
-(cd "$SERVER_DIR" && aspire run) &
+(cd "$REPO_ROOT/server/src" && aspire run) &
 BACKEND_PID=$!
