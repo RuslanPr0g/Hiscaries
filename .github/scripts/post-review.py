@@ -59,6 +59,11 @@ def main():
 
     print(f"Posted review: {event} with {len(findings)} finding(s).")
 
+    if counts["critical"] or counts["high"]:
+        print(f"::error::{counts['critical']} critical, {counts['high']} high severity finding(s) "
+              f"must be resolved before this PR can be merged.", file=sys.stderr)
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

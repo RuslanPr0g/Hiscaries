@@ -18,6 +18,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Fail on unresolved critical/high findings from previous runs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 .github/scripts/check-unresolved.py \
+            --repo ${{ github.repository }} \
+            --pr ${{ github.event.pull_request.number }}
+
       - name: Install Claude CLI
         run: npm install -g @anthropic-ai/claude-code
 
@@ -30,10 +38,11 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          set -o pipefail
           claude --print \
             --system-prompt-file .github/prompts/pr-review.md \
             --output-format json \
-            --json-schema .github/prompts/review-schema.json \
+            --json-schema "$(cat .github/prompts/review-schema.json)" \
             --dangerously-skip-permissions \
             < /tmp/pr.diff \
             | jq '.result | fromjson' > /tmp/review.json
