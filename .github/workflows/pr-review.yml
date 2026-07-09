@@ -6,8 +6,32 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  ai-review:
+  budget-check:
     if: vars.AI_REVIEW_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    outputs:
+      skip: ${{ steps.budget.outputs.skip }}
+    steps:
+      - name: Count today's AI review runs
+        id: budget
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          today=$(date -u +%Y-%m-%d)
+          total=$(gh api "/repos/${{ github.repository }}/actions/workflows/pr-review.yml/runs?created=%3E%3D${today}&per_page=100" --jq '.total_count')
+          prior=$((total - 1)) # exclude this run itself
+          echo "AI review runs today (before this one): $prior"
+          if [ "$prior" -ge 10 ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  ai-review:
+    needs: budget-check
+    if: vars.AI_REVIEW_ENABLED == 'true' && needs.budget-check.outputs.skip != 'true'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -43,7 +67,7 @@ jobs:
             --system-prompt-file .github/prompts/pr-review.md \
             --output-format json \
             --json-schema "$(cat .github/prompts/review-schema.json)" \
-            --dangerously-skip-permissions \
+            --tools "" \
             < /tmp/pr.diff \
             | jq '.result | fromjson' > /tmp/review.json
 

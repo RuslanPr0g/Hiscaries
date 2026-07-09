@@ -7,54 +7,13 @@ Claude call, until those threads are resolved.
 
 Usage: check-unresolved.py --repo owner/repo --pr 42
 """
-import argparse, json, subprocess, sys
+import argparse, os, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from review_threads import fetch_review_threads, bot_authored
 
 # Must match SEVERITY_EMOJI["critical"] / ["high"] in post-review.py
 BLOCKING_PREFIXES = ("🔴", "🟠")
-
-QUERY = """
-query($owner: String!, $repo: String!, $pr: Int!, $after: String) {
-  repository(owner: $owner, name: $repo) {
-    pullRequest(number: $pr) {
-      reviewThreads(first: 100, after: $after) {
-        pageInfo { hasNextPage endCursor }
-        nodes {
-          isResolved
-          comments(first: 1) {
-            nodes { body author { login } }
-          }
-        }
-      }
-    }
-  }
-}
-"""
-
-
-def fetch_threads(owner, repo, pr):
-    threads = []
-    after = None
-    while True:
-        args = [
-            "gh", "api", "graphql",
-            "-f", f"query={QUERY}",
-            "-f", f"owner={owner}",
-            "-f", f"repo={repo}",
-            "-F", f"pr={pr}",
-        ]
-        args += ["-f", f"after={after}"] if after else ["-F", "after=null"]
-
-        result = subprocess.run(args, capture_output=True, text=True)
-        if result.returncode != 0:
-            print(result.stderr, file=sys.stderr)
-            sys.exit(1)
-
-        page = json.loads(result.stdout)["data"]["repository"]["pullRequest"]["reviewThreads"]
-        threads.extend(page["nodes"])
-        if not page["pageInfo"]["hasNextPage"]:
-            break
-        after = page["pageInfo"]["endCursor"]
-    return threads
 
 
 def main():
@@ -64,20 +23,13 @@ def main():
     args = parser.parse_args()
 
     owner, repo = args.repo.split("/", 1)
-    threads = fetch_threads(owner, repo, args.pr)
+    threads = fetch_review_threads(owner, repo, args.pr)
 
     blocking = []
     for thread in threads:
-        if thread["isResolved"]:
+        if thread["isResolved"] or not bot_authored(thread):
             continue
-        comments = thread["comments"]["nodes"]
-        if not comments:
-            continue
-        first = comments[0]
-        author = (first.get("author") or {}).get("login", "")
-        body = first.get("body", "")
-        if "github-actions" not in author:
-            continue
+        body = thread["comments"]["nodes"][0]["body"]
         if body.startswith(BLOCKING_PREFIXES):
             blocking.append(body.splitlines()[0])
 

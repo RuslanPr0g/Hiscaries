@@ -3,7 +3,10 @@
 Reads Claude's findings JSON and posts a single PR review with inline comments.
 Usage: post-review.py --findings /tmp/review.json --diff /tmp/pr.diff --repo owner/repo --pr 42
 """
-import argparse, json, re, subprocess, sys
+import argparse, json, os, re, subprocess, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from review_threads import fetch_review_threads, bot_authored
 
 SEVERITY_EMOJI = {"critical": "🔴", "high": "🟠", "medium": "🟡"}
 
@@ -64,8 +67,26 @@ def main():
     with open(args.diff) as f:
         commentable = parse_commentable_lines(f.read())
 
+    owner, repo = args.repo.split("/", 1)
+
+    # Skip findings already sitting in an unresolved thread at the same
+    # file:line — otherwise every push re-posts the same finding as a new
+    # duplicate comment instead of leaving the existing one to be resolved.
+    already_flagged = {
+        (t["path"], t["line"])
+        for t in fetch_review_threads(owner, repo, args.pr)
+        if not t["isResolved"] and bot_authored(t) and t.get("line") is not None
+    }
+
+    new_findings = [f for f in findings if (f["file"], f["line"]) not in already_flagged]
+    duplicate_count = len(findings) - len(new_findings)
+
+    if not new_findings:
+        print(f"No new findings — {duplicate_count} already flagged in an unresolved thread.")
+        return
+
     inline_comments, folded = [], []
-    for finding in findings:
+    for finding in new_findings:
         if finding["line"] in commentable.get(finding["file"], set()):
             inline_comments.append({"path": finding["file"], "line": finding["line"], "body": format_finding(finding)})
         else:
@@ -82,6 +103,8 @@ def main():
         summary_lines.append(f"🟠 **{counts['high']} high**")
     if counts["medium"]:
         summary_lines.append(f"🟡 {counts['medium']} medium")
+    if duplicate_count:
+        summary_lines.append(f"\n_{duplicate_count} finding(s) already flagged in an earlier unresolved comment — skipped._")
 
     if folded:
         summary_lines.append(
@@ -93,7 +116,6 @@ def main():
 
     event = "REQUEST_CHANGES" if (counts["critical"] or counts["high"]) else "COMMENT"
 
-    owner, repo = args.repo.split("/", 1)
     payload = json.dumps({"body": "\n".join(summary_lines), "event": event, "comments": inline_comments})
 
     result = subprocess.run(
