@@ -59,6 +59,8 @@ jobs:
         run: gh pr diff ${{ github.event.pull_request.number }} > /tmp/pr.diff
 
       - name: Run Claude review
+        id: claude-review
+        continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
@@ -72,6 +74,7 @@ jobs:
             | jq '.result | fromjson' > /tmp/review.json
 
       - name: Post review comments
+        if: steps.claude-review.outcome == 'success'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -80,3 +83,7 @@ jobs:
             --diff /tmp/pr.diff \
             --repo ${{ github.repository }} \
             --pr ${{ github.event.pull_request.number }}
+
+      - name: Warn if review could not run
+        if: steps.claude-review.outcome != 'success'
+        run: echo "::warning::Claude review call failed (e.g. API/credits issue) — skipped without failing CI."
