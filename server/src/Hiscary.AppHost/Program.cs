@@ -1,7 +1,10 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var postgres = builder.AddPostgres("hiscary")
+var pgPassword = builder.AddParameter("postgres-password", secret: true);
+
+var postgres = builder.AddPostgres("hiscary", password: pgPassword)
     .WithDataVolume("hiscarydbdata")
+    .WithHostPort(5432)
     .WithPgAdmin()
     .AddDatabase("postgres");
 var rabbitmq = builder.AddRabbitMQ("rabbitmq")
