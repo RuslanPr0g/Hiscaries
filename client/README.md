@@ -50,6 +50,10 @@ After `npm ci`, Husky is installed via the `prepare` script. Hooks run automatic
 - `pre-commit`: runs `lint-staged`
 - `commit-msg`: validates commit format with Commitlint
 
+**Claude Code hook** — when Claude Code edits any `.ts` file, a PostToolUse hook automatically runs
+`nx lint hiscaries-client --fix`. This keeps AI-generated code lint-compliant without manual
+intervention. No setup required; configured in `.claude/settings.local.json`.
+
 ## Troubleshooting
 
 - If Nx behaves unexpectedly, run `npm run reset`.
