@@ -75,9 +75,12 @@ gh pr create \
   --label "ai"
 ```
 
-If the GitHub MCP server is connected (`mcp__github__*` tools are available):
-- Use `mcp__github__list_issues` to check if any open issue matches the feature — if so, link it in the PR body with `Closes #<N>`.
-- Use `mcp__github__create_pull_request` as an alternative to `gh pr create` if the CLI is not available (note: add assignee and label via `gh pr edit <url> --add-assignee @me --add-label "ai"` after creation if using MCP).
+Create the PR using this priority order:
+
+1. **MCP first** — use `mcp__github__create_pull_request` (owner/repo parsed from `git remote get-url origin`). Then add assignee and label via `gh pr edit <url> --add-assignee @me --add-label "ai"` if `gh` is available.
+2. **gh fallback** — only if MCP fails or is unavailable: use `gh pr create --title ... --body ... --base master --assignee @me --label "ai"`.
+
+Also use `mcp__github__list_issues` to check for a matching open issue and append `Closes #<N>` to the PR body if found.
 
 ### 7. Report
 
