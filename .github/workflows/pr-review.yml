@@ -53,5 +53,6 @@ jobs:
         run: |
           python3 .github/scripts/post-review.py \
             --findings /tmp/review.json \
+            --diff /tmp/pr.diff \
             --repo ${{ github.repository }} \
             --pr ${{ github.event.pull_request.number }}
