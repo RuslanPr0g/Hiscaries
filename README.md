@@ -83,6 +83,71 @@ For full frontend setup, team conventions, and all commands, see
 
 ---
 
+## AI-Assisted Development (Claude Code)
+
+The repo is configured for [Claude Code](https://claude.ai/claude-code) with MCP servers, project skills, and an AI PR review workflow.
+
+### Prerequisites
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+### Environment Variables
+
+Add these to your shell profile (`~/.zshrc` or `~/.bashrc`):
+
+```bash
+# GitHub MCP — Personal Access Token with `repo` scope
+# Create one at: GitHub → Settings → Developer settings → Personal access tokens (classic)
+export HISCARIES_GITHUB_TOKEN="ghp_your_token_here"
+
+# Postgres MCP — must match the password you set in Aspire User Secrets (see below)
+export HISCARIES_POSTGRES_URL="postgresql://postgres:<your-password>@localhost:5432/postgres"
+```
+
+Both are read by `.mcp.json` at the repo root. The MCP servers start automatically when you open Claude Code in this directory.
+
+### Aspire DB Static Password (one-time)
+
+The Postgres MCP connects to the Aspire-managed database. Pick any strong password, set it in .NET User Secrets, and use the same value in `HISCARIES_POSTGRES_URL` above:
+
+```bash
+cd server/src/Hiscary.AppHost
+dotnet user-secrets set "Parameters:postgres-password" "<your-password>"
+```
+
+User Secrets are stored in your OS secret store and never committed to the repo.
+
+### Available Skills
+
+Open Claude Code in this repo and use these slash commands:
+
+| Skill | Example | What it does |
+|-------|---------|-------------|
+| `/spec` | `/spec issue:42` | Fetches GitHub issue, creates a `design.md` spec in `.claude/specs/` |
+| `/implement` | `/implement issue:42` | Reads the spec, creates a branch, implements all tasks |
+| `/ship` | `/ship` | Commits, pushes, opens a PR with auto-generated description and `ai` label |
+| `/automation-ideas` | `/automation-ideas` | Suggests Claude Code automation opportunities for the codebase |
+| `/security-audit` | `/security-audit` | Runs a security audit against the current changes |
+
+### GitHub Actions — AI PR Review
+
+Every PR to `master` is reviewed by Claude, which posts inline comments for defects only (critical / high / medium — no praise, no style notes).
+
+**One-time setup for maintainers:**
+
+1. **Secret** — repo → Settings → Secrets and variables → Actions → Secrets → New repository secret:
+   - Name: `ANTHROPIC_API_KEY`
+   - Value: your Anthropic API key from [console.anthropic.com](https://console.anthropic.com)
+2. **Variable** — repo → Settings → Secrets and variables → Actions → Variables → New repository variable:
+   - Name: `AI_REVIEW_ENABLED`
+   - Value: `true`
+
+To disable the AI review without a code change, set `AI_REVIEW_ENABLED = false` in the repo variable.
+
+---
+
 🎉 **Thank you for visiting the repository!**
 
 Feel free to contribute or raise any issues to improve the application!

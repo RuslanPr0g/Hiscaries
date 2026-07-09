@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["findings"],
+  "additionalProperties": false,
+  "properties": {
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "file", "line", "title", "body"],
+        "additionalProperties": false,
+        "properties": {
+          "severity": { "type": "string", "enum": ["critical", "high", "medium"] },
+          "file":     { "type": "string", "description": "Repo-relative file path, e.g. server/src/Hiscary.Stories.Api.Rest/Controllers/StoryController.cs" },
+          "line":     { "type": "integer", "minimum": 1, "description": "Line number in the file (not the diff position)" },
+          "title":    { "type": "string", "maxLength": 120 },
+          "body":     { "type": "string", "description": "Problem + required fix. No praise. No summary of what is correct." }
+        }
+      }
+    }
+  }
+}

@@ -60,16 +60,27 @@ If `$title` was provided as an argument, use it as the PR title. Otherwise deriv
 
 ### 6. Create the PR
 
+Ensure the "ai" label exists before creating the PR:
+```
+gh label create "ai" --color "0075ca" --description "AI-assisted change" 2>/dev/null || true
+```
+
+Create the PR with assignee and label:
 ```
 gh pr create \
   --title "<title>" \
   --body "<body from step 5>" \
-  --base master
+  --base master \
+  --assignee @me \
+  --label "ai"
 ```
 
-If the GitHub MCP server is connected (`mcp__github__*` tools are available):
-- Use `mcp__github__list_issues` to check if any open issue matches the feature — if so, link it in the PR body with `Closes #<N>`.
-- Use `mcp__github__create_pull_request` as an alternative to `gh pr create` if the CLI is not available.
+Create the PR using this priority order:
+
+1. **MCP first** — use `mcp__github__create_pull_request` (owner/repo parsed from `git remote get-url origin`). Then add assignee and label via `gh pr edit <url> --add-assignee @me --add-label "ai"` if `gh` is available.
+2. **gh fallback** — only if MCP fails or is unavailable: use `gh pr create --title ... --body ... --base master --assignee @me --label "ai"`.
+
+Also use `mcp__github__list_issues` to check for a matching open issue and append `Closes #<N>` to the PR body if found.
 
 ### 7. Report
 
