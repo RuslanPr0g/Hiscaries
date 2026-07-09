@@ -1,0 +1,48 @@
+name: AI PR Review
+
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  ai-review:
+    if: vars.AI_REVIEW_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Claude CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Get PR diff
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr diff ${{ github.event.pull_request.number }} > /tmp/pr.diff
+
+      - name: Run Claude review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude --print \
+            --system-prompt-file .github/prompts/pr-review.md \
+            --output-format json \
+            --json-schema .github/prompts/review-schema.json \
+            --dangerously-skip-permissions \
+            < /tmp/pr.diff \
+            | jq '.result | fromjson' > /tmp/review.json
+
+      - name: Post review comments
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 .github/scripts/post-review.py \
+            --findings /tmp/review.json \
+            --repo ${{ github.repository }} \
+            --pr ${{ github.event.pull_request.number }}
