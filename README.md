@@ -102,20 +102,22 @@ Add these to your shell profile (`~/.zshrc` or `~/.bashrc`):
 # Create one at: GitHub → Settings → Developer settings → Personal access tokens (classic)
 export HISCARIES_GITHUB_TOKEN="ghp_your_token_here"
 
-# Postgres MCP — local Aspire database connection string
-export HISCARIES_POSTGRES_URL="postgresql://postgres:Hisc4ryDev!2025@localhost:5432/postgres"
+# Postgres MCP — must match the password you set in Aspire User Secrets (see below)
+export HISCARIES_POSTGRES_URL="postgresql://postgres:<your-password>@localhost:5432/postgres"
 ```
 
 Both are read by `.mcp.json` at the repo root. The MCP servers start automatically when you open Claude Code in this directory.
 
 ### Aspire DB Static Password (one-time)
 
-The Postgres MCP connects to the Aspire-managed database. Set a fixed password via .NET User Secrets so it is stable across container restarts:
+The Postgres MCP connects to the Aspire-managed database. Pick any strong password, set it in .NET User Secrets, and use the same value in `HISCARIES_POSTGRES_URL` above:
 
 ```bash
 cd server/src/Hiscary.AppHost
-dotnet user-secrets set "Parameters:postgres-password" "Hisc4ryDev!2025"
+dotnet user-secrets set "Parameters:postgres-password" "<your-password>"
 ```
+
+User Secrets are stored in your OS secret store and never committed to the repo.
 
 ### Available Skills
 

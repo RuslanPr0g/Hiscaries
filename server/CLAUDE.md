@@ -65,7 +65,7 @@ Pattern per bounded context:
 - ORM: **EF Core** with **PostgreSQL**
 - Local Postgres runs in Docker via Aspire, always on **port 5432**
 - Password is static, stored in .NET User Secrets (never committed): `dotnet user-secrets set "Parameters:postgres-password" "<pass>" --project server/src/Hiscary.AppHost`
-- Local connection string: `postgresql://postgres:Hisc4ryDev!2025@localhost:5432/postgres`
+- Local connection string: `postgresql://postgres:<your-password>@localhost:5432/postgres` (use whatever password you set in User Secrets)
 - Migrations live in `{Ctx}.Persistence.Context` projects
 - Add a migration:
   ```
