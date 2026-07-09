@@ -31,7 +31,7 @@
           </div>
         </div>
       }
-      <div class="read-story-container__header">
+      <div class="read-story-container__header" [class.header-hidden-small]="maximized">
         <div class="header-left">
           @if (!shouldShowPdf && story) {
             <div class="read-story-container__navigation">
@@ -174,7 +174,11 @@
   }
 }
 
-<!-- Settings toast -->
+@if (maximized) {
+  <button class="compact-exit-btn" (click)="minimize()">
+    <i class="pi pi-window-minimize"></i>
+  </button>
+}
 <p-toast position="top-right" key="settings" (onClose)="onSettingsClose()" [baseZIndex]="5000">
   <ng-template pTemplate="message" let-message let-closeFn="closeFn">
     <section>
