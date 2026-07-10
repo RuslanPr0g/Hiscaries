@@ -22,6 +22,47 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
     private static void DiagLog(string message) =>
         File.AppendAllText(DiagPath, $"{DateTime.UtcNow:O} {message}{Environment.NewLine}");
 
+    private static readonly HashSet<string> DumpedLogsFor = [];
+
+    private static async Task DumpContainerLogsOnceAsync(string resourceName)
+    {
+        if (!DumpedLogsFor.Add(resourceName))
+        {
+            return;
+        }
+
+        try
+        {
+            var psi = new System.Diagnostics.ProcessStartInfo("docker", $"ps -a --filter \"name={resourceName}\" --format \"{{{{.Names}}}}\"")
+            {
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+            };
+            using var listProc = System.Diagnostics.Process.Start(psi)!;
+            var containerNames = (await listProc.StandardOutput.ReadToEndAsync()).Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            await listProc.WaitForExitAsync();
+
+            foreach (var containerName in containerNames)
+            {
+                var logsPsi = new System.Diagnostics.ProcessStartInfo("docker", $"logs {containerName}")
+                {
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                };
+                using var logsProc = System.Diagnostics.Process.Start(logsPsi)!;
+                var stdout = await logsProc.StandardOutput.ReadToEndAsync();
+                var stderr = await logsProc.StandardError.ReadToEndAsync();
+                await logsProc.WaitForExitAsync();
+                DiagLog($"[ContainerLogs:{containerName}] stdout=\n{stdout}\nstderr=\n{stderr}");
+            }
+        }
+        catch (Exception ex)
+        {
+            DiagLog($"[ContainerLogs:{resourceName}] failed to capture: {ex}");
+        }
+    }
+
     public async ValueTask InitializeAsync()
     {
         var appHostBuilder = await DistributedApplicationTestingBuilder
@@ -37,6 +78,10 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
                 await foreach (var evt in _app.ResourceNotifications.WatchAsync(watchCts.Token))
                 {
                     DiagLog($"[ResourceWatch] {evt.Resource.Name} -> {evt.Snapshot.State?.Text} (health: {evt.Snapshot.HealthStatus})");
+                    if (evt.Snapshot.State?.Text is "Exited" or "FailedToStart")
+                    {
+                        await DumpContainerLogsOnceAsync(evt.Resource.Name);
+                    }
                 }
             }
             catch (OperationCanceledException) { }
