@@ -41,6 +41,7 @@ var useraccounts = builder.AddProject<Projects.Hiscary_UserAccounts_Api_Rest>("h
     .WaitFor(redis)
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7010, targetPort: 7010, isProxied: false)
+    .WithHttpHealthCheck("/health", endpointName: "rest")
     .WithReference(postgres)
     .WithReference(rabbitmq)
     .WithReference(azBlobs);
@@ -52,6 +53,7 @@ var notifications = builder.AddProject<Projects.Hiscary_Notifications_Api_Rest>(
     .WaitFor(redis)
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7011, targetPort: 7011, isProxied: false)
+    .WithHttpHealthCheck("/health", endpointName: "rest")
     .WithReference(postgres)
     .WithReference(rabbitmq)
     .WithReference(azBlobs);
@@ -63,6 +65,7 @@ var platformusers = builder.AddProject<Projects.Hiscary_PlatformUsers_Api_Rest>(
     .WaitFor(redis)
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7012, targetPort: 7012, isProxied: false)
+    .WithHttpHealthCheck("/health", endpointName: "rest")
     .WithReference(postgres)
     .WithReference(rabbitmq)
     .WithReference(azBlobs);
@@ -74,6 +77,7 @@ var stories = builder.AddProject<Projects.Hiscary_Stories_Api_Rest>("hc-stories-
     .WaitFor(redis)
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7013, targetPort: 7013, isProxied: false)
+    .WithHttpHealthCheck("/health", endpointName: "rest")
     .WithReference(postgres)
     .WithReference(elasticsearch)
     .WithReference(rabbitmq)
@@ -86,6 +90,7 @@ var media = builder.AddProject<Projects.Hiscary_Media_Api_Rest>("hc-media-api-re
     .WaitFor(redis)
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7014, targetPort: 7014, isProxied: false)
+    .WithHttpHealthCheck("/health", endpointName: "rest")
     .WithEnvironment("ServiceUrls__MediaServiceUrl", "api/v1/media")
     .WithReference(rabbitmq)
     .WithReference(azBlobs);
@@ -97,6 +102,7 @@ var recommendations = builder.AddProject<Projects.Hiscary_Recommendations_Api_Re
     .WaitFor(redis)
     .WithJwtAndSaltSettings(builder.Configuration)
     .WithHttpsEndpoint(name: "rest", port: 7015, targetPort: 7015, isProxied: false)
+    .WithHttpHealthCheck("/health", endpointName: "rest")
     .WithReference(rabbitmq)
     .WithReference(elasticsearch)
     .WithReference(redis)
