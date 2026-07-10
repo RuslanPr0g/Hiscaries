@@ -6,15 +6,14 @@ arguments: [issue]
 ---
 
 ```!
-echo "REPO: $(git remote get-url origin 2>/dev/null | sed 's|.*github.com[:/]||;s|\.git$||')"
-echo "DATE: $(date +%Y-%m-%d)"
+git remote get-url origin
 ```
 
 ## Inputs
 
 - Issue number: `$issue`
-- GitHub repo: `REPO` above (owner/repo)
-- Today's date: `DATE` above
+- GitHub repo: parse `owner/repo` from the URL printed above (strip the `git@github.com:`/`https://github.com/` prefix and the trailing `.git`)
+- Today's date: use the current date already available in session context
 
 If `$issue` is missing, ask the user for the issue number (or a URL, from which extract the number) before doing anything else.
 
