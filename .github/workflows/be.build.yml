@@ -31,14 +31,16 @@ jobs:
 
       - name: Run unit tests
         working-directory: server/src
-        run: dotnet test Hiscary.UserAccounts.Domain.Tests/Hiscary.UserAccounts.Domain.Tests.csproj
+        run: dotnet test Hiscary.UserAccounts.Tests/Hiscary.UserAccounts.Tests.csproj
 
       - name: Run integration tests
         working-directory: server/src
         env:
-          Parameters__postgres-password: ${{ secrets.POSTGRES_PASSWORD }}
-          Parameters__rabbitmq-password: ${{ secrets.RABBITMQ_PASSWORD }}
-          Parameters__elasticsearch-password: ${{ secrets.ELASTICSEARCH_PASSWORD }}
-          Parameters__rediscache-password: ${{ secrets.REDISCACHE_PASSWORD }}
-          Parameters__hiscary-password: ${{ secrets.HISCARY_PASSWORD }}
+          # These parameters only gate short-lived containers scoped to this CI run
+          # (destroyed when the job ends), so a repo secret falls back to a
+          # CI-only placeholder rather than failing the build when unset.
+          Parameters__postgres-password: ${{ secrets.POSTGRES_PASSWORD || 'ci-only-postgres-password' }}
+          Parameters__rabbitmq-password: ${{ secrets.RABBITMQ_PASSWORD || 'ci-only-rabbitmq-password' }}
+          Parameters__elasticsearch-password: ${{ secrets.ELASTICSEARCH_PASSWORD || 'ci-only-elasticsearch-password' }}
+          Parameters__rediscache-password: ${{ secrets.REDISCACHE_PASSWORD || 'ci-only-rediscache-password' }}
         run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj
