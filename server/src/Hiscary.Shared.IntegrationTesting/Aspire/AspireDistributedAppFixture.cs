@@ -1,5 +1,7 @@
 using Aspire.Hosting;
+using Aspire.Hosting.ApplicationModel;
 using Aspire.Hosting.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Hiscary.Shared.IntegrationTesting.Aspire;
@@ -37,6 +39,11 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
         _watchCts = new CancellationTokenSource();
         _watchTask = Task.Run(async () =>
         {
+            // Project resources get per-instance IDs (name plus a suffix), so
+            // ResourceLoggerService.WatchAsync must be keyed by evt.ResourceId,
+            // not the logical resource name — watching by name yields nothing.
+            var loggerService = _app.Services.GetRequiredService<ResourceLoggerService>();
+            var logWatches = new HashSet<string>();
             try
             {
                 await foreach (var evt in _app.ResourceNotifications.WatchAsync(_watchCts.Token))
@@ -45,6 +52,31 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
                         $"{r.Name}:{r.Status}:{r.ExceptionText}"));
                     File.AppendAllText(DiagPath,
                         $"{DateTime.UtcNow:O} {evt.Resource.Name} -> state={evt.Snapshot.State?.Text} health={evt.Snapshot.HealthStatus} reports=[{reports}]{Environment.NewLine}");
+
+                    if (evt.Resource.Name.Contains("api-rest") && logWatches.Add(evt.ResourceId))
+                    {
+                        var resourceId = evt.ResourceId;
+                        _ = Task.Run(async () =>
+                        {
+                            try
+                            {
+                                await foreach (var batch in loggerService.WatchAsync(resourceId).WithCancellation(_watchCts.Token))
+                                {
+                                    foreach (var line in batch)
+                                    {
+                                        File.AppendAllText(DiagPath,
+                                            $"[AppLog:{resourceId}] {line.Content}{Environment.NewLine}");
+                                    }
+                                }
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (Exception ex)
+                            {
+                                File.AppendAllText(DiagPath,
+                                    $"[AppLog:{resourceId}] watch failed: {ex.Message}{Environment.NewLine}");
+                            }
+                        }, CancellationToken.None);
+                    }
                 }
             }
             catch (OperationCanceledException) { }
