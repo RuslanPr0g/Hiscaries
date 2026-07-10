@@ -71,6 +71,17 @@ jobs:
           Parameters__rabbitmq-password: ${{ secrets.RABBITMQ_PASSWORD || 'ci-only-rabbitmq-password' }}
           Parameters__elasticsearch-password: ${{ secrets.ELASTICSEARCH_PASSWORD || 'ci-only-elasticsearch-password' }}
           Parameters__rediscache-password: ${{ secrets.REDISCACHE_PASSWORD || 'ci-only-rediscache-password' }}
+          # Locally these come from .NET user secrets on the AppHost project.
+          # Without them the AppHost forwards empty strings and every API
+          # crashes at startup ("Failed to convert configuration value '' at
+          # 'JwtSettings:TokenLifeTime'"), which is what made StartAsync time
+          # out in CI. CI-only throwaway values, never used outside this job.
+          JwtSettings__Key: ${{ secrets.JWT_KEY || 'ci-only-jwt-signing-key-0123456789abcdefghij' }}
+          JwtSettings__Issuer: hiscary-ci
+          JwtSettings__Audience: hiscary-ci
+          JwtSettings__TokenLifeTime: "01:00:00"
+          # Must be a structurally valid bcrypt salt (BCrypt.HashPassword(password, salt)).
+          SaltSettings__StoredSalt: "$2a$11$abcdefghijklmnopqrstuv"
         run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj
 
       - name: Dump Aspire resource diagnostics
