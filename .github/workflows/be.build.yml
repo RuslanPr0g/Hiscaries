@@ -42,6 +42,15 @@ jobs:
       - name: Raise vm.max_map_count for Elasticsearch
         run: sudo sysctl -w vm.max_map_count=262144
 
+      - name: Prepare Elasticsearch bind-mount directory
+        # Elasticsearch's container runs as non-root UID 1000. On a fresh
+        # checkout this gitignored directory doesn't exist, so Docker
+        # auto-creates it owned by root, and the container can't write its
+        # node.lock file into it (fails with AccessDeniedException).
+        run: |
+          mkdir -p server/src/elasticsearch-data
+          chmod 777 server/src/elasticsearch-data
+
       - name: Run integration tests
         working-directory: server/src
         env:
