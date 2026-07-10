@@ -4,9 +4,9 @@
     "net10.0": {
       "Aspire.Elastic.Clients.Elasticsearch": {
         "type": "Direct",
-        "requested": "[13.2.0, )",
-        "resolved": "13.2.0",
-        "contentHash": "RvqKmOVlrVtvRkG76elskF8fDZh5aw5aYMvhpm2RbiziEFVAMEscKg8tdJSQpq5Oj65dhSv6r+mpY0JDKoSLlw==",
+        "requested": "[13.3.0, )",
+        "resolved": "13.3.0",
+        "contentHash": "nXsVaL7/g9NolKy/uBBhKBjVGGGoV3VE2cXKeeRuebzySUpKjmfn/4/OEVHzaTplXnXcd1OjOPMmMtP4G0vzWQ==",
         "dependencies": {
           "Elastic.Clients.Elasticsearch": "8.19.4",
           "MinVer": "6.0.0",
@@ -703,7 +703,7 @@
       "hiscary.recommendations.domain": {
         "type": "Project",
         "dependencies": {
-          "Aspire.Elastic.Clients.Elasticsearch": "[13.2.0, )",
+          "Aspire.Elastic.Clients.Elasticsearch": "[13.3.0, )",
           "StackNucleus.DDD.Domain": "[4.10.0, )"
         }
       },
@@ -729,7 +729,7 @@
       "hiscary.recommendations.persistence.read": {
         "type": "Project",
         "dependencies": {
-          "Aspire.Elastic.Clients.Elasticsearch": "[13.2.0, )",
+          "Aspire.Elastic.Clients.Elasticsearch": "[13.3.0, )",
           "Hiscary.Recommendations.Domain": "[1.0.0, )",
           "Hiscary.Recommendations.Persistence.Shared": "[1.0.0, )",
           "Polly": "[8.6.6, )",
@@ -742,7 +742,7 @@
       "hiscary.recommendations.persistence.write": {
         "type": "Project",
         "dependencies": {
-          "Aspire.Elastic.Clients.Elasticsearch": "[13.2.0, )",
+          "Aspire.Elastic.Clients.Elasticsearch": "[13.3.0, )",
           "Hiscary.Recommendations.Domain": "[1.0.0, )",
           "Hiscary.Recommendations.Persistence.Shared": "[1.0.0, )"
         }
