@@ -12,12 +12,15 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
     protected DistributedApplication App =>
         _app ?? throw new InvalidOperationException("AppHost is not initialized.");
 
-    // 5 minutes was too tight for a cold CI runner: StartAsync must pull ~4.4GB
-    // across 6 container images (Postgres, RabbitMQ, Elasticsearch, Redis,
-    // Azurite, PgAdmin) with no layer cache before resources become healthy.
-    protected TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(12);
+    protected TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(4);
 
     protected virtual string[] AppHostArgs => ["UseVolumes=false", "--environment=Development"];
+
+    private static readonly string DiagPath = Path.Combine(
+        AppContext.BaseDirectory, "aspire-fixture-diag.log");
+
+    private static void DiagLog(string message) =>
+        File.AppendAllText(DiagPath, $"{DateTime.UtcNow:O} {message}{Environment.NewLine}");
 
     public async ValueTask InitializeAsync()
     {
@@ -25,7 +28,29 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
             .CreateAsync<TEntryPoint>(AppHostArgs);
 
         _app = await appHostBuilder.BuildAsync().WaitAsync(DefaultTimeOut);
-        await _app.StartAsync().WaitAsync(DefaultTimeOut);
+
+        using var watchCts = new CancellationTokenSource();
+        var watchTask = Task.Run(async () =>
+        {
+            try
+            {
+                await foreach (var evt in _app.ResourceNotifications.WatchAsync(watchCts.Token))
+                {
+                    DiagLog($"[ResourceWatch] {evt.Resource.Name} -> {evt.Snapshot.State?.Text} (health: {evt.Snapshot.HealthStatus})");
+                }
+            }
+            catch (OperationCanceledException) { }
+        }, CancellationToken.None);
+
+        try
+        {
+            await _app.StartAsync().WaitAsync(DefaultTimeOut);
+        }
+        finally
+        {
+            watchCts.Cancel();
+            await watchTask;
+        }
     }
 
     public async ValueTask DisposeAsync()

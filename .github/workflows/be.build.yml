@@ -50,3 +50,12 @@ jobs:
           Parameters__elasticsearch-password: ${{ secrets.ELASTICSEARCH_PASSWORD || 'ci-only-elasticsearch-password' }}
           Parameters__rediscache-password: ${{ secrets.REDISCACHE_PASSWORD || 'ci-only-rediscache-password' }}
         run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj
+
+      - name: Dump Aspire resource diagnostics
+        if: always()
+        run: |
+          find server/src -name "aspire-fixture-diag.log" -exec cat {} \;
+          echo "--- docker ps -a ---"
+          docker ps -a
+          echo "--- docker stats (no-stream) ---"
+          docker stats --no-stream || true
