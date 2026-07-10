@@ -18,6 +18,16 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      - name: Create ASP.NET Core HTTPS dev certificate
+        # Every API resource binds an HTTPS endpoint (WithHttpsEndpoint in the
+        # AppHost). Without a dev certificate Kestrel cannot bind and each API
+        # process crashes seconds after starting (Running -> Finished in the
+        # Aspire diag log), so StartAsync times out. The cert only needs to
+        # exist, not be trusted: Aspire's health probe and the testing
+        # HttpClient skip certificate validation (verified locally, where the
+        # cert is untrusted and tests pass).
+        run: dotnet dev-certs https
+
       - name: Install .NET Aspire workload
         run: dotnet workload install aspire
 
