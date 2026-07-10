@@ -168,6 +168,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hiscary.Shared.IntegrationT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hiscary.Media.Application.Write", "Hiscary.Media.Application.Write\Hiscary.Media.Application.Write.csproj", "{2EDDE66F-A12D-4E5B-B029-F1CAD6D0A9C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hiscary.UserAccounts.Domain.Tests", "Hiscary.UserAccounts.Domain.Tests\Hiscary.UserAccounts.Domain.Tests.csproj", "{C40F8AEE-E594-43D3-9311-82A709CD2F0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1030,6 +1032,18 @@ Global
 		{2EDDE66F-A12D-4E5B-B029-F1CAD6D0A9C1}.Release|x64.Build.0 = Release|Any CPU
 		{2EDDE66F-A12D-4E5B-B029-F1CAD6D0A9C1}.Release|x86.ActiveCfg = Release|Any CPU
 		{2EDDE66F-A12D-4E5B-B029-F1CAD6D0A9C1}.Release|x86.Build.0 = Release|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Debug|x64.Build.0 = Debug|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Debug|x86.Build.0 = Debug|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Release|x64.ActiveCfg = Release|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Release|x64.Build.0 = Release|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Release|x86.ActiveCfg = Release|Any CPU
+		{C40F8AEE-E594-43D3-9311-82A709CD2F0C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

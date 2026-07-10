@@ -3,4 +3,8 @@
     <PropertyGroup>
         <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+        <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+        <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+    </PropertyGroup>
 </Project>

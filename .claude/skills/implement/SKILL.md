@@ -7,19 +7,20 @@ arguments: [issue]
 ---
 
 ```!
-echo "PROJECT_DIR: ${CLAUDE_PROJECT_DIR}"
-echo "DATE: $(date +%Y-%m-%d)"
-echo "CURRENT_BRANCH: $(git branch --show-current)"
-echo "AVAILABLE_SPECS:"
-ls "${CLAUDE_PROJECT_DIR}/.claude/specs/" 2>/dev/null || echo "(none yet — run /spec first)"
+git branch --show-current
+```
+
+```!
+ls "${CLAUDE_PROJECT_DIR}/.claude/specs/"
 ```
 
 ## Inputs
 
 - Issue number: `$issue`
-- Project root: taken from `PROJECT_DIR` above
-- Current branch: taken from `CURRENT_BRANCH` above
-- Available specs: listed above under `AVAILABLE_SPECS`
+- Project root: use `${CLAUDE_PROJECT_DIR}`, already available in session context
+- Today's date: use the current date already available in session context
+- Current branch: taken from the `git branch --show-current` output above
+- Available specs: taken from the `ls` output above (if empty or the directory doesn't exist, treat as no specs yet — run `/spec` first)
 
 ---
 

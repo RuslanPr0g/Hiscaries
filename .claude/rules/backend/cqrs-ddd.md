@@ -1,0 +1,14 @@
+---
+paths:
+  - "server/src/*.Application.*/**/*.cs"
+  - "server/src/*.Domain/**/*.cs"
+---
+
+# CQRS / DDD Conventions
+
+- Each bounded context splits Application into `{Ctx}.Application.Read` and `{Ctx}.Application.Write`. This repo does not use a command/handler-per-class (MediatR-style) pattern — write-side use cases are grouped into a single `{Entity}WriteService` per aggregate (e.g. `StoryWriteService`, `UserAccountWriteService`) implementing an `I{Entity}WriteService` interface declared in `{Ctx}.Domain/Services/`. Add new write use cases as methods on the existing service for that aggregate rather than introducing a new per-action class, unless the service is already large enough to warrant a split — ask before introducing a new pattern.
+- Write service methods return `OperationResult` (or `OperationResult<T>`) from `StackNucleus.DDD.Domain.ResultModels` — the Result pattern used repo-wide. Use `OperationResult.CreateSuccess()` / `CreateSuccess(value)` and `OperationResult.CreateClientSideError(message)` for expected failures (not-found, validation). Reserve thrown exceptions for genuinely unexpected states; don't throw for control flow the caller is expected to handle.
+- Domain events derive from `BaseDomainEvent` (`StackNucleus.DDD.Domain.Events`) and live in `{Ctx}.DomainEvents/`, one file per event, named `{Fact}DomainEvent` (e.g. `StoryTotalPagesChangedDomainEvent`). They're raised from aggregate methods and published via `IEventPublisher` (`StackNucleus.DDD.Domain.EventPublishers`), injected into the write service — don't publish domain events directly from the API layer.
+- Integration events (cross-bounded-context) are a distinct concept from domain events: they live in `{Ctx}.IntegrationEvents/{Outgoing,Incoming}` and are consumed by a separate `{Ctx}.EventHandlers` project. Integration event handlers implement `IEventHandler<TEvent>` (`StackNucleus.DDD.Domain.EventHandlers`) and are wired up via WolverineFx (`StackNucleus.DDD.Events.WolverineFx`) against RabbitMQ in each context's `DIModule.AddEventHandlers` — see `Hiscary.Recommendations.EventHandlers/DIModule.cs` for the registration pattern (`AddConfigurableEventHandlers([asm], connectionString, queueName)`). Don't hand-roll a message consumer; extend the existing Wolverine registration.
+- Aggregate roots and value objects live in `{Ctx}.Domain/{AggregateName}/`. Id value objects wrap a `Guid` (e.g. `StoryId`) and are generated via `IIdGenerator` (`StackNucleus.DDD.Domain.Generators`), not `Guid.NewGuid()` directly in application code.
+- Layering is strict: `{Ctx}.Domain` has no dependency on `{Ctx}.Application.*` or `{Ctx}.Persistence.*`; `{Ctx}.Application.*` depends on `{Ctx}.Domain` only (repository interfaces, not implementations); `{Ctx}.Api.Rest` depends on `{Ctx}.Application.*` and does controller/DTO-mapping/routing only — no business logic (see root `CLAUDE.md`).
