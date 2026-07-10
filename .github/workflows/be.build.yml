@@ -33,6 +33,12 @@ jobs:
         working-directory: server/src
         run: dotnet test Hiscary.UserAccounts.Tests/Hiscary.UserAccounts.Tests.csproj
 
+      - name: Verify Docker
+        run: |
+          docker version
+          docker info
+          docker run --rm hello-world
+
       - name: Run integration tests
         working-directory: server/src
         env:
@@ -43,4 +49,7 @@ jobs:
           Parameters__rabbitmq-password: ${{ secrets.RABBITMQ_PASSWORD || 'ci-only-rabbitmq-password' }}
           Parameters__elasticsearch-password: ${{ secrets.ELASTICSEARCH_PASSWORD || 'ci-only-elasticsearch-password' }}
           Parameters__rediscache-password: ${{ secrets.REDISCACHE_PASSWORD || 'ci-only-rediscache-password' }}
-        run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj
+          Logging__LogLevel__Default: Debug
+          Logging__LogLevel__Aspire.Hosting: Trace
+          Logging__LogLevel__Aspire.Hosting.Dcp: Trace
+        run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj --logger "console;verbosity=detailed"
