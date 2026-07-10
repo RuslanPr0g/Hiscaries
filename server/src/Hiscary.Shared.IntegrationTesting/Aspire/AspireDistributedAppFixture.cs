@@ -12,10 +12,20 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
     protected DistributedApplication App =>
         _app ?? throw new InvalidOperationException("AppHost is not initialized.");
 
-    protected TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(5);
+    protected TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(10);
 
     protected virtual string[] AppHostArgs =>
         ["UseVolumes=false", "--environment=Development"];
+
+    // Temporary: diagnosing why StartAsync times out in CI (works locally).
+    // Logs resource state/health transitions so we can tell "still pulling
+    // images" apart from "stuck forever waiting on a health check". Remove
+    // once root cause for the CI-only timeout is confirmed.
+    private static readonly string DiagPath = Path.Combine(
+        AppContext.BaseDirectory, "aspire-fixture-diag.log");
+
+    private CancellationTokenSource? _watchCts;
+    private Task? _watchTask;
 
     public async ValueTask InitializeAsync()
     {
@@ -23,11 +33,35 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
             .CreateAsync<TEntryPoint>(AppHostArgs);
 
         _app = await appHostBuilder.BuildAsync().WaitAsync(DefaultTimeOut);
+
+        _watchCts = new CancellationTokenSource();
+        _watchTask = Task.Run(async () =>
+        {
+            try
+            {
+                await foreach (var evt in _app.ResourceNotifications.WatchAsync(_watchCts.Token))
+                {
+                    File.AppendAllText(DiagPath,
+                        $"{DateTime.UtcNow:O} {evt.Resource.Name} -> state={evt.Snapshot.State?.Text} health={evt.Snapshot.HealthStatus}{Environment.NewLine}");
+                }
+            }
+            catch (OperationCanceledException) { }
+        }, CancellationToken.None);
+
         await _app.StartAsync().WaitAsync(DefaultTimeOut);
     }
 
     public async ValueTask DisposeAsync()
     {
+        if (_watchCts is not null)
+        {
+            _watchCts.Cancel();
+            if (_watchTask is not null)
+            {
+                await _watchTask;
+            }
+        }
+
         if (_app is not null)
         {
             await _app.DisposeAsync();
