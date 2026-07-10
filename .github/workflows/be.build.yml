@@ -49,7 +49,4 @@ jobs:
           Parameters__rabbitmq-password: ${{ secrets.RABBITMQ_PASSWORD || 'ci-only-rabbitmq-password' }}
           Parameters__elasticsearch-password: ${{ secrets.ELASTICSEARCH_PASSWORD || 'ci-only-elasticsearch-password' }}
           Parameters__rediscache-password: ${{ secrets.REDISCACHE_PASSWORD || 'ci-only-rediscache-password' }}
-          Logging__LogLevel__Default: Debug
-          Logging__LogLevel__Aspire.Hosting: Trace
-          Logging__LogLevel__Aspire.Hosting.Dcp: Trace
-        run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj --logger "console;verbosity=detailed"
+        run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj

@@ -12,7 +12,10 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
     protected DistributedApplication App =>
         _app ?? throw new InvalidOperationException("AppHost is not initialized.");
 
-    protected TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(5);
+    // 5 minutes was too tight for a cold CI runner: StartAsync must pull ~4.4GB
+    // across 6 container images (Postgres, RabbitMQ, Elasticsearch, Redis,
+    // Azurite, PgAdmin) with no layer cache before resources become healthy.
+    protected TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(12);
 
     protected virtual string[] AppHostArgs => ["UseVolumes=false", "--environment=Development"];
 
