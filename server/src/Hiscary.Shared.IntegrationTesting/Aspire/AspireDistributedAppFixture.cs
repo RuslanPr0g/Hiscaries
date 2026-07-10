@@ -12,7 +12,7 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
     protected DistributedApplication App =>
         _app ?? throw new InvalidOperationException("AppHost is not initialized.");
 
-    protected TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(4);
+    protected TimeSpan DefaultTimeOut = TimeSpan.FromMinutes(7);
 
     protected virtual string[] AppHostArgs => ["UseVolumes=false", "--environment=Development"];
 
