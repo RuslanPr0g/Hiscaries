@@ -1,7 +1,7 @@
 using Hiscary.UserAccounts.Domain;
 using Xunit;
 
-namespace Hiscary.UserAccounts.Domain.Tests;
+namespace Hiscary.UserAccounts.Tests.Domain;
 
 public sealed class UserAccountTests
 {

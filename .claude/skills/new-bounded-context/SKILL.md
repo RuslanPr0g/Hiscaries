@@ -28,7 +28,7 @@ Hiscary.<Ctx>.Jobs
 Hiscary.<Ctx>.Persistence.Context
 Hiscary.<Ctx>.Persistence.Read
 Hiscary.<Ctx>.Persistence.Write
-Hiscary.<Ctx>.Domain.Tests
+Hiscary.<Ctx>.Tests
 ```
 
 Not every context needs every layer (e.g. `Recommendations` has no `.Api.Rest`... actually check the live repo before assuming — some contexts diverge). Default to the full set above unless the user says otherwise.
@@ -43,7 +43,7 @@ Use an existing context as the structural template — `Hiscary.Notifications.*`
 4. `Application.Read`/`Application.Write` reference `Domain` only (not `Persistence.*` implementations).
 5. `Persistence.Context` derives its `DbContext` from `BaseNucleusContext<TContext>` per `.claude/rules/backend/ef-core.md`, sets a unique `SCHEMA_NAME`, and gets a `NucleusDatabaseDesignTimeDbContextFactory<TContext>` subclass.
 6. `Api.Rest` uses `Microsoft.NET.Sdk.Web`, references `Hiscary.Shared.Api.Rest`, `Hiscary.ServiceDefaults`, and all the context's own layer projects — controllers only, no business logic, per root `CLAUDE.md`.
-7. `Domain.Tests` follows `.claude/rules/backend/unit-testing.md`: `xunit.v3`, `NSubstitute`, `Microsoft.Testing.Extensions.CodeCoverage`, `IsTestProject=true`.
+7. `Tests` is a single project covering every layer, per `.claude/rules/backend/unit-testing.md`: `xunit.v3`, `NSubstitute`, `Microsoft.Testing.Extensions.CodeCoverage`, `IsTestProject=true`. Scaffold a `Domain/` subfolder (referencing `{Ctx}.Domain`) and, once the context has `Application.Write`/`Application.Read` test coverage, an `Application/` subfolder — don't create separate `{Ctx}.Domain.Tests`/`{Ctx}.Application.Tests` projects.
 
 Add every new project to the solution:
 ```

@@ -83,7 +83,12 @@ Pattern per bounded context:
 - SignalR hub: `Hiscary.Notifications.SignalR`
 - Angular client connects via `@microsoft/signalr`
 
+## Unit Tests
+
+- One `Hiscary.<Ctx>.Tests` project per bounded context, covering all layers via subfolders (`Domain/`, `Application/`) rather than a separate project per layer
+- Example test project: `Hiscary.UserAccounts.Tests` (`Domain/`)
+
 ## Integration Tests
 
-- Base helpers: `Hiscary.IntegrationTesting`, `Hiscary.Shared.IntegrationTesting`
+- Base helpers: `Hiscary.Shared.IntegrationTesting`
 - Example test project: `Hiscary.UserAccounts.IntegrationTests`

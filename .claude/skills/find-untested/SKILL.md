@@ -13,7 +13,7 @@ No argument runs both. This does not compute line/branch coverage — it's a str
 ## Backend pass
 
 1. Enumerate write-service classes: `find server/src -path '*.Application.Write/Services/*.cs' -not -path '*/obj/*' -not -path '*/bin/*'`. For each, list its public methods (the "use cases" per `.claude/rules/backend/cqrs-ddd.md`).
-2. Enumerate existing unit test files: `find server/src -path '*.Domain.Tests/*.cs' -not -path '*/obj/*' -not -path '*/bin/*'` (and `*.Application.Tests/*.cs` once any such project exists — none does yet). Also note integration test coverage from `*.IntegrationTests/Scenarios/*.cs` — a method exercised only by an integration test is "covered end-to-end" but not "unit tested"; report both signals separately, don't conflate them.
+2. Enumerate existing unit test files: `find server/src -path '*.Tests/Domain/*.cs' -not -path '*/obj/*' -not -path '*/bin/*'` (and `*.Tests/Application/*.cs` once any such subfolder exists — none does yet). Each bounded context has a single `{Ctx}.Tests` project with per-layer subfolders, not a separate project per layer. Also note integration test coverage from `*.IntegrationTests/Scenarios/*.cs` — a method exercised only by an integration test is "covered end-to-end" but not "unit tested"; report both signals separately, don't conflate them.
 3. For each write-service method, grep the test files for the containing class name or method name to approximate whether it has a corresponding test. This is a heuristic, not exact — report it as such.
 4. Rank by centrality: count how many other projects/files reference the aggregate root or service (`grep -rl` across `server/src` for the type name, excluding the defining project). More references = higher blast radius if untested.
 
@@ -29,4 +29,4 @@ Two ranked tables (backend, frontend), each sorted by centrality descending, col
 
 ## Verifying against this repo
 
-As of the xUnit v3 migration (`.claude/specs/claude-code-config-plan-rules-skills/design.md` TASK-06), `Hiscary.UserAccounts.Domain.Tests` covers `UserAccount.Ban`/`ValidateRefreshToken` — that project's classes should report as "tested" in the backend pass. Every other bounded context's `Application.Write` services currently have zero unit test files and should surface as untested, ranked by centrality, in the same pass — this is the expected baseline until the pattern from TASK-06 is repeated per §Out of Scope of that spec.
+As of the xUnit v3 migration (`.claude/specs/claude-code-config-plan-rules-skills/design.md` TASK-06), `Hiscary.UserAccounts.Tests/Domain/` covers `UserAccount.Ban`/`ValidateRefreshToken` — those classes should report as "tested" in the backend pass. Every other bounded context's `Application.Write` services currently have zero unit test files and should surface as untested, ranked by centrality, in the same pass — this is the expected baseline until the pattern from TASK-06 is repeated per §Out of Scope of that spec.
