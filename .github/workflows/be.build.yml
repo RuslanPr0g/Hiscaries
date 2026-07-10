@@ -25,8 +25,15 @@ jobs:
         # Aspire diag log), so StartAsync times out. The cert only needs to
         # exist, not be trusted: Aspire's health probe and the testing
         # HttpClient skip certificate validation (verified locally, where the
-        # cert is untrusted and tests pass).
-        run: dotnet dev-certs https
+        # cert is untrusted and tests pass). It must ALSO be trusted at the
+        # system level here: the AppHost health probe validates the TLS chain
+        # (fails with AuthenticationException: UntrustedRoot otherwise), so
+        # export the cert and add it to the runner's CA store.
+        run: |
+          dotnet dev-certs https
+          dotnet dev-certs https --export-path /tmp/aspnet-dev-cert.pem --format PEM
+          sudo cp /tmp/aspnet-dev-cert.pem /usr/local/share/ca-certificates/aspnet-dev-cert.crt
+          sudo update-ca-certificates
 
       - name: Install .NET Aspire workload
         run: dotnet workload install aspire
