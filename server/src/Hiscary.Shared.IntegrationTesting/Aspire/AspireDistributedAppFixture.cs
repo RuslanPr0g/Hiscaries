@@ -41,8 +41,10 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
             {
                 await foreach (var evt in _app.ResourceNotifications.WatchAsync(_watchCts.Token))
                 {
+                    var reports = string.Join(" | ", evt.Snapshot.HealthReports.Select(r =>
+                        $"{r.Name}:{r.Status}:{r.ExceptionText}"));
                     File.AppendAllText(DiagPath,
-                        $"{DateTime.UtcNow:O} {evt.Resource.Name} -> state={evt.Snapshot.State?.Text} health={evt.Snapshot.HealthStatus}{Environment.NewLine}");
+                        $"{DateTime.UtcNow:O} {evt.Resource.Name} -> state={evt.Snapshot.State?.Text} health={evt.Snapshot.HealthStatus} reports=[{reports}]{Environment.NewLine}");
                 }
             }
             catch (OperationCanceledException) { }
