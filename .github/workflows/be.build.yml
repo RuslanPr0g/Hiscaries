@@ -50,12 +50,6 @@ jobs:
         working-directory: server/src
         run: dotnet test Hiscary.UserAccounts.Tests/Hiscary.UserAccounts.Tests.csproj
 
-      - name: Verify Docker
-        run: |
-          docker version
-          docker info
-          docker run --rm hello-world
-
       - name: Raise vm.max_map_count for Elasticsearch
         run: sudo sysctl -w vm.max_map_count=262144
 
@@ -90,10 +84,3 @@ jobs:
           # Must be a structurally valid bcrypt salt (BCrypt.HashPassword(password, salt)).
           SaltSettings__StoredSalt: "$2a$11$abcdefghijklmnopqrstuv"
         run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj
-
-      - name: Dump Aspire resource diagnostics
-        if: always()
-        run: |
-          find server/src -name "aspire-fixture-diag.log" -exec cat {} \;
-          echo "--- docker ps -a ---"
-          docker ps -a
