@@ -5,7 +5,7 @@ allowed-tools: mcp__github__create_issue mcp__github__list_issues
 ---
 
 ```!
-echo "REPO: $(git remote get-url origin 2>/dev/null | sed 's|.*github.com[:/]||;s|\.git$||')"
+git remote get-url origin
 ```
 
 ## Step 1 — Generate ideas

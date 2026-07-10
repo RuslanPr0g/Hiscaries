@@ -6,17 +6,15 @@ arguments: [issue]
 ---
 
 ```!
-echo "REPO: $(git remote get-url origin 2>/dev/null | sed 's|.*github.com[:/]||;s|\.git$||')"
-echo "DATE: $(date +%Y-%m-%d)"
-echo "PROJECT_DIR: ${CLAUDE_PROJECT_DIR}"
+git remote get-url origin
 ```
 
 ## Inputs
 
 - Issue number: `$issue`
-- GitHub repo: taken from `REPO` above (owner/repo format)
-- Today's date: taken from `DATE` above
-- Project root: taken from `PROJECT_DIR` above
+- GitHub repo: parse `owner/repo` from the URL printed above (strip the `git@github.com:`/`https://github.com/` prefix and the trailing `.git`)
+- Today's date: use the current date already available in session context
+- Project root: use `${CLAUDE_PROJECT_DIR}`, already available in session context
 
 ---
 

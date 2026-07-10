@@ -165,19 +165,19 @@ flowchart TD
 > Tasks are in execution order. Each references the requirement(s) it satisfies.
 > Each task is scoped to less than 2 hours of focused work.
 
-- [ ] **TASK-01** `[FR-03, FR-04]` — Author backend domain-logic rules
+- [x] **TASK-01** `[FR-03, FR-04]` — Author backend domain-logic rules
   - **What:** Create `.claude/rules/backend/ef-core.md` (paths: `server/src/*.Persistence.*/**/*.cs`) and `.claude/rules/backend/cqrs-ddd.md` (paths: `server/src/*.Application.*/**/*.cs`, `server/src/*.Domain/**/*.cs`) per §3.3/§3.4 of `docs/claude-config-plan.md`.
   - **Acceptance:** Both files exist with valid `paths:` frontmatter; opening any file under `server/src/Hiscary.Stories.Persistence.Write/` in a session surfaces `ef-core.md` content.
 
-- [ ] **TASK-02** `[FR-01, FR-02]` — Author backend testing rules
+- [x] **TASK-02** `[FR-01, FR-02]` — Author backend testing rules
   - **What:** Create `.claude/rules/backend/unit-testing.md` (paths: `server/src/**/*.Tests/**/*.cs`) and `.claude/rules/backend/integration-testing.md` (paths: `server/src/**/*.IntegrationTests/**/*.cs`, `server/src/Hiscary.Shared.IntegrationTesting/**`) per §3.1/§3.2.
   - **Acceptance:** Both files exist with valid `paths:` frontmatter and reference the exact fixture pattern name `AspireDistributedAppFixture<TAppHost>`.
 
-- [ ] **TASK-03** `[FR-05, FR-06, FR-07]` — Author frontend rules
+- [x] **TASK-03** `[FR-05, FR-06, FR-07]` — Author frontend rules
   - **What:** Create `.claude/rules/frontend/unit-testing.md`, `.claude/rules/frontend/ngrx.md`, `.claude/rules/frontend/angular-conventions.md` per §3.5–§3.7, each with matching `paths:` globs.
   - **Acceptance:** All three files exist; `ngrx.md` explicitly states the signals-first, NgRx-only-for-`stories` divergence from `client/CLAUDE.md`.
 
-- [ ] **TASK-04** `[FR-08, FR-09, NFR-02]` — xUnit v3 package and props changes
+- [x] **TASK-04** `[FR-08, FR-09, NFR-02]` — xUnit v3 package and props changes
   - **What:** In `Directory.Packages.props`, replace `xunit 2.9.3` with `xunit.v3` (latest), bump `xunit.runner.visualstudio` to a v3-compatible version, add `Microsoft.Testing.Extensions.CodeCoverage` and `NSubstitute` (alongside, not replacing, `Moq`). In `Directory.Build.props`, add the `IsTestProject`-conditioned `PropertyGroup` setting `UseMicrosoftTestingPlatformRunner` and `TestingPlatformDotnetTestSupport` to `true`.
   - **Acceptance:** `dotnet build server/src/Hiscary.sln` succeeds with the new package versions resolved.
 

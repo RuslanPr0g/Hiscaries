@@ -16,7 +16,7 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
 
     protected virtual string[] AppHostArgs => ["UseVolumes=false", "--environment=Development"];
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
         var appHostBuilder = await DistributedApplicationTestingBuilder
             .CreateAsync<TEntryPoint>(AppHostArgs);
@@ -25,7 +25,7 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
         await _app.StartAsync().WaitAsync(DefaultTimeOut);
     }
 
-    public async Task DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
         if (_app is not null)
         {

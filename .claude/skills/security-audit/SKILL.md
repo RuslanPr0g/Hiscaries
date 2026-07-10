@@ -5,7 +5,7 @@ allowed-tools: Bash(git log *) Bash(git grep *) Grep Read Bash(npm audit *) Bash
 ---
 
 ```!
-echo "REPO: $(git remote get-url origin 2>/dev/null | sed 's|.*github.com[:/]||;s|\.git$||')"
+git remote get-url origin
 ```
 
 ## Hard safety rule — read this first
