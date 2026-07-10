@@ -1,5 +1,7 @@
 using Aspire.Hosting;
+using Aspire.Hosting.ApplicationModel;
 using Aspire.Hosting.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Hiscary.Shared.IntegrationTesting.Aspire;
@@ -63,6 +65,10 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
         }
     }
 
+    private CancellationTokenSource? _watchCts;
+    private Task? _watchTask;
+    private Task? _appLogTask;
+
     public async ValueTask InitializeAsync()
     {
         var appHostBuilder = await DistributedApplicationTestingBuilder
@@ -70,12 +76,12 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
 
         _app = await appHostBuilder.BuildAsync().WaitAsync(DefaultTimeOut);
 
-        using var watchCts = new CancellationTokenSource();
-        var watchTask = Task.Run(async () =>
+        _watchCts = new CancellationTokenSource();
+        _watchTask = Task.Run(async () =>
         {
             try
             {
-                await foreach (var evt in _app.ResourceNotifications.WatchAsync(watchCts.Token))
+                await foreach (var evt in _app.ResourceNotifications.WatchAsync(_watchCts.Token))
                 {
                     DiagLog($"[ResourceWatch] {evt.Resource.Name} -> {evt.Snapshot.State?.Text} (health: {evt.Snapshot.HealthStatus})");
                     if (evt.Snapshot.State?.Text is "Exited" or "FailedToStart")
@@ -87,19 +93,44 @@ public abstract class AspireDistributedAppFixture<TEntryPoint> : IAsyncLifetime
             catch (OperationCanceledException) { }
         }, CancellationToken.None);
 
-        try
+        _appLogTask = Task.Run(async () =>
         {
-            await _app.StartAsync().WaitAsync(DefaultTimeOut);
-        }
-        finally
-        {
-            watchCts.Cancel();
-            await watchTask;
-        }
+            try
+            {
+                var loggerService = _app.Services.GetRequiredService<ResourceLoggerService>();
+                await foreach (var logEvent in loggerService.WatchAsync("hc-useraccounts-api-rest").WithCancellation(_watchCts.Token))
+                {
+                    foreach (var line in logEvent)
+                    {
+                        DiagLog($"[AppLog:hc-useraccounts-api-rest] {line.Content}");
+                    }
+                }
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception ex)
+            {
+                DiagLog($"[AppLog:hc-useraccounts-api-rest] watch failed: {ex}");
+            }
+        }, CancellationToken.None);
+
+        await _app.StartAsync().WaitAsync(DefaultTimeOut);
     }
 
     public async ValueTask DisposeAsync()
     {
+        if (_watchCts is not null)
+        {
+            _watchCts.Cancel();
+            if (_watchTask is not null)
+            {
+                await _watchTask;
+            }
+            if (_appLogTask is not null)
+            {
+                await _appLogTask;
+            }
+        }
+
         if (_app is not null)
         {
             await _app.DisposeAsync();
