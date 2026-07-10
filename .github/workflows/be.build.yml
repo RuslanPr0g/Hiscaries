@@ -28,3 +28,17 @@ jobs:
       - name: Build
         working-directory: server/src
         run: dotnet build Hiscary.sln
+
+      - name: Run unit tests
+        working-directory: server/src
+        run: dotnet test Hiscary.UserAccounts.Domain.Tests/Hiscary.UserAccounts.Domain.Tests.csproj
+
+      - name: Run integration tests
+        working-directory: server/src
+        env:
+          Parameters__postgres-password: ${{ secrets.POSTGRES_PASSWORD }}
+          Parameters__rabbitmq-password: ${{ secrets.RABBITMQ_PASSWORD }}
+          Parameters__elasticsearch-password: ${{ secrets.ELASTICSEARCH_PASSWORD }}
+          Parameters__rediscache-password: ${{ secrets.REDISCACHE_PASSWORD }}
+          Parameters__hiscary-password: ${{ secrets.HISCARY_PASSWORD }}
+        run: dotnet test Hiscary.UserAccounts.IntegrationTests/Hiscary.UserAccounts.IntegrationTests.csproj
